@@ -1076,15 +1076,36 @@
 
 ---
 
+270. 독립 GitHub 저장소 (drbrookskim/beanvoyage.git) 원격 연동 및 최초 배포 완료
+- **일시**: 2026-11-10
+- **사용자 요청**: "아니다. https://github.com/drbrookskim/beanvoyage.git 로 연결해줘"
+- **조치 및 설정 내역**:
+  1. **독립 Git 저장소 초기화**:
+     - `CoBTS/` 디렉토리에 전용 Git 저장소 초기화 (`git init -b main`).
+     - `origin` 원격을 `https://github.com/drbrookskim/beanvoyage.git`로 지정.
+     - `node_modules/`, `.DS_Store` 등을 제외하는 `.gitignore` 생성.
+     - 부모 레포(`Antigravity_code_repository`)의 `.gitignore`에 `CoBTS/`를 등록하여 독립 모듈로 완벽 격리.
+  2. **초기 커밋 & 원격 저장소 푸시 완료**:
+     - 커밋: `feat(beanvoyage): initialize Bean Voyage (CoBTS) repository` (67개 파일, 41,157 라인)
+     - `git push -u origin main` 성공적으로 전송 완료.
+  3. **GitHub Actions 주간 크론 파이프라인 활성화**:
+     - `drbrookskim/beanvoyage` 저장소에 `.github/workflows/update-top-beans.yml` 워크플로우 탑재 완료.
+     - 이제 매주 일요일 21:00 UTC (월요일 06:00 KST)에 `beanvoyage` 저장소에서 단독으로 트렌드 자동 갱신 크론이 실행됩니다.
+- **주요 수정 파일**:
+  - `CoBTS/.git`, `CoBTS/.gitignore`, `CoBTS/.github/workflows/update-top-beans.yml`, `CLAUDE.md`, `memory.md`
+- **검증**: `git status` (clean), `git remote -v` (beanvoyage.git), GitHub 원격 푸시 성공 100% 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 주간 커피 트렌드 자동 데이터 갱신 GitHub Actions 워크플로우 구축 완료 (Phase 3 완료).
-- **완료된 인프라**:
-  - `.github/workflows/update-top-beans.yml` (매주 월요일 06:00 KST 자동 실행 & 수동 트리거 지원).
-  - `scripts/fetch-top-beans.js` (14개 산지 테루아/컵노트 메타데이터 확장 및 Mock 안전 Fallback 완비).
-  - `assets/data/top-beans.json` 자동 갱신 및 커밋/푸시 루틴.
+- **상태**: 독립 GitHub 저장소 (https://github.com/drbrookskim/beanvoyage.git) 연동 및 푸시 완료.
+- **연동된 인프라**:
+  - 저장소: `drbrookskim/beanvoyage` (`main` 브랜치 동기화 완료).
+  - GitHub Actions: `.github/workflows/update-top-beans.yml` (매주 월요일 06:00 KST 자동 실행).
+  - Secrets 등록 위치: https://github.com/drbrookskim/beanvoyage/settings/secrets/actions
 - **다음 가능한 작업**:
-  1. (선택) GitHub Repository Settings > Secrets에 `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` 등록 (미등록 시에도 Mock으로 무중단 작동).
+  1. (선택) beanvoyage 저장소에 `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` 등록.
   2. 첫 화면 마스터 허브 또는 지도 화면(Screen 2)의 추가 기능/디자인 고도화.
-  3. (선택적 4단계) Daum 카페 검색 API 추가 연동.
+  3. GitHub Pages 배포 설정 (필요 시 beanvoyage 저장소에서 바로 호스팅 가능).
 
 
