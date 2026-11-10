@@ -4041,6 +4041,17 @@
       }
       const appFooter = document.getElementById("appFooter");
       if (appFooter) appFooter.classList.remove("hidden");
+
+      // Trigger 3D Coffee Bean resize and ensure immediate visibility upon screen transition
+      if (bean3DRenderer && typeof bean3DRenderer.resize === "function") {
+        bean3DRenderer.resize();
+        requestAnimationFrame(() => {
+          if (bean3DRenderer && typeof bean3DRenderer.resize === "function") bean3DRenderer.resize();
+        });
+        setTimeout(() => {
+          if (bean3DRenderer && typeof bean3DRenderer.resize === "function") bean3DRenderer.resize();
+        }, 150);
+      }
     }
 
     function goToScreen(screenNumber, queryDesc = "") {
@@ -9325,6 +9336,150 @@
     // ================= 3D INTERACTIVE COFFEE BEAN VIEWER (WebGL + Shader / 60FPS) =================
     let bean3DRenderer = null;
 
+    // 2D High-Fidelity Fallback if WebGL is disabled or unsupported
+    function init2DBeanFallback(canvas, stage) {
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      let currentRoastIdx = currentRoastLevelIndex || 3;
+      let rotY = -0.25;
+      let rotX = 0.15;
+      let velX = 0, velY = 0;
+      let isDragging = false;
+      let lastX = 0, lastY = 0;
+      let idlePhase = 0;
+
+      function resize2D() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+        const rect = stage.getBoundingClientRect();
+        const w = Math.max(120, Math.round((rect.width > 10 ? rect.width : 128) * dpr));
+        const h = Math.max(140, Math.round((rect.height > 10 ? rect.height : 144) * dpr));
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+        }
+      }
+      resize2D();
+      window.addEventListener("resize", resize2D);
+
+      stage.addEventListener("pointerdown", (e) => {
+        isDragging = true;
+        velX = 0; velY = 0;
+        lastX = e.clientX; lastY = e.clientY;
+        stage.setPointerCapture(e.pointerId);
+      });
+      stage.addEventListener("pointermove", (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        lastX = e.clientX; lastY = e.clientY;
+        velY = dx * 0.016;
+        velX = dy * 0.016;
+        rotY += velY;
+        rotX = Math.max(-1.1, Math.min(1.1, rotX + velX));
+      });
+      function stopDrag2D() { isDragging = false; }
+      stage.addEventListener("pointerup", stopDrag2D);
+      stage.addEventListener("pointercancel", stopDrag2D);
+
+      function render2D() {
+        const rect = stage.getBoundingClientRect();
+        if (rect.width > 20 && rect.height > 20) {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+          const w = Math.round(rect.width * dpr);
+          const h = Math.round(rect.height * dpr);
+          if (canvas.width !== w || canvas.height !== h) {
+            canvas.width = w; canvas.height = h;
+          }
+        }
+
+        if (!isDragging) {
+          if (Math.abs(velY) > 0.001 || Math.abs(velX) > 0.001) {
+            velY *= 0.92; velX *= 0.90;
+            rotY += velY; rotX = Math.max(-1.1, Math.min(1.1, rotX + velX));
+          } else {
+            idlePhase += 0.018;
+            rotY += (0.35 * Math.sin(idlePhase) - rotY) * 0.04;
+            rotX += (0.12 + 0.06 * Math.cos(idlePhase * 0.8) - rotX) * 0.04;
+          }
+        }
+
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const cx = w * 0.5;
+        const cy = h * 0.5;
+        const rx = Math.min(w, h) * 0.36;
+        const ry = rx * 0.68;
+
+        const rData = ROAST_LEVELS_DATA[currentRoastIdx] || ROAST_LEVELS_DATA[3];
+        const baseColor = rData.color || "#78421D";
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rotY);
+
+        // 3D Shadow
+        ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
+        ctx.shadowBlur = rx * 0.5;
+        ctx.shadowOffsetY = rx * 0.15;
+
+        // Bean Body Gradient
+        const grad = ctx.createRadialGradient(-rx * 0.25, -ry * 0.3, rx * 0.1, 0, 0, rx * 1.1);
+        grad.addColorStop(0, "#C8965A");
+        grad.addColorStop(0.4, baseColor);
+        grad.addColorStop(1, "#240F05");
+
+        ctx.beginPath();
+        ctx.ellipse(0, 0, rx, ry, rotX * 0.3, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        ctx.shadowColor = "transparent";
+
+        // Outer Rim Outline
+        ctx.lineWidth = rx * 0.08;
+        ctx.strokeStyle = "rgba(0, 0, 0, 0.4)";
+        ctx.stroke();
+
+        // Top Lobe Specular Sheen
+        ctx.beginPath();
+        ctx.ellipse(-rx * 0.1, -ry * 0.35, rx * 0.48, ry * 0.2, rotX * 0.3 - 0.1, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${(0.15 + (rData.glossOpacity || 0.2) * 0.25).toFixed(2)})`;
+        ctx.fill();
+
+        // Signature Center S-Curve Cleft
+        ctx.beginPath();
+        ctx.moveTo(-rx * 0.75, ry * 0.06);
+        ctx.bezierCurveTo(-rx * 0.25, -ry * 0.4, rx * 0.25, ry * 0.4, rx * 0.75, -ry * 0.06);
+        ctx.lineWidth = rx * 0.14;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "rgba(30, 15, 8, 0.85)";
+        ctx.stroke();
+
+        // Chaff / Crema Centerline
+        ctx.beginPath();
+        ctx.moveTo(-rx * 0.7, ry * 0.04);
+        ctx.bezierCurveTo(-rx * 0.22, -ry * 0.35, rx * 0.22, ry * 0.35, rx * 0.7, -ry * 0.04);
+        ctx.lineWidth = rx * 0.06;
+        ctx.strokeStyle = currentRoastIdx >= 5 ? "#8C7060" : "#EDE0D4";
+        ctx.stroke();
+
+        ctx.restore();
+
+        requestAnimationFrame(render2D);
+      }
+      requestAnimationFrame(render2D);
+
+      bean3DRenderer = {
+        resize: resize2D,
+        updateRoast: (hexColor, gloss, roastLevelIdx) => {
+          currentRoastIdx = Math.max(0, Math.min(7, typeof roastLevelIdx === "number" ? roastLevelIdx : 3));
+        }
+      };
+    }
+
     function init3DBeanViewer() {
       const canvas = document.getElementById("roastBean3DCanvas");
       const stage = document.getElementById("roastBean3DStage");
@@ -9335,16 +9490,17 @@
                  canvas.getContext("experimental-webgl", { antialias: true, alpha: true });
 
       if (!gl) {
-        console.warn("WebGL not supported for 3D coffee bean");
+        console.warn("WebGL not supported for 3D coffee bean - falling back to 2D Canvas");
+        init2DBeanFallback(canvas, stage);
         return;
       }
 
       // Handle Retina / HiDPI crisp rendering
       function resizeCanvas() {
         const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-        const rect = canvas.getBoundingClientRect();
-        const displayW = Math.max(180, Math.round((rect.width || 120) * dpr));
-        const displayH = Math.max(200, Math.round((rect.height || 140) * dpr));
+        const rect = stage.getBoundingClientRect();
+        const displayW = Math.max(120, Math.round((rect.width > 10 ? rect.width : 128) * dpr));
+        const displayH = Math.max(140, Math.round((rect.height > 10 ? rect.height : 144) * dpr));
         if (canvas.width !== displayW || canvas.height !== displayH) {
           canvas.width = displayW;
           canvas.height = displayH;
@@ -9403,15 +9559,17 @@
 
           // Organic S-curve center cleft trajectory along Y
           float yNorm = clamp(vPosition.y / 0.96, -1.0, 1.0);
-          float cosV = sqrt(max(0.0, 1.0 - yNorm * yNorm));
+          float cosV = sqrt(max(0.0001, 1.0 - yNorm * yNorm));
           float cX = (0.072 * sin(3.14159 * yNorm) + 0.018 * sin(9.4248 * yNorm)) * cosV;
           float distToCleft = abs(vPosition.x - cX);
           float inVentral = smoothstep(-0.02, 0.04, vPosition.z);
           float poleFade = smoothstep(0.95, 0.58, abs(yNorm));
 
-          // 1. Deep Cleft Trench Ambient Occlusion (중앙 홈 깊은 고랑 음영)
-          float cleftTrench = inVentral * poleFade * exp(-pow((distToCleft - 0.024) / 0.018, 2.0));
-          float cleftValley = inVentral * poleFade * exp(-pow(distToCleft / 0.085, 2.0));
+          // 1. Deep Cleft Trench Ambient Occlusion (중앙 홈 깊은 고랑 음영 - safe squaring without negative pow)
+          float tTrench = (distToCleft - 0.024) / 0.018;
+          float cleftTrench = inVentral * poleFade * exp(-(tTrench * tTrench));
+          float tValley = distToCleft / 0.085;
+          float cleftValley = inVentral * poleFade * exp(-(tValley * tValley));
           float cleftOcclusion = 1.0 - 0.70 * cleftTrench - 0.22 * cleftValley;
 
           // 2. Center Cleft Silverskin / Crema Seam (센터컷 중앙 은피/크레마 선)
@@ -9420,20 +9578,25 @@
           vec3 toastedChaff = mix(uChaffColor, vec3(0.72, 0.54, 0.36), darkBoost * 0.50);
 
           // 3. Twin Cleft-Lip Contour Ridges (S자 중앙 홈 양쪽 입술 능선 테두리)
-          float cleftLipPeak = inVentral * poleFade * exp(-pow((distToCleft - 0.052) / 0.016, 2.0));
-          float cleftSlopeContour = inVentral * poleFade * smoothstep(0.18, 0.55, abs(n.x)) * exp(-pow((distToCleft - 0.048) / 0.028, 2.0));
+          float tLip = (distToCleft - 0.052) / 0.016;
+          float cleftLipPeak = inVentral * poleFade * exp(-(tLip * tLip));
+          float tSlope = (distToCleft - 0.048) / 0.028;
+          float cleftSlopeContour = inVentral * poleFade * smoothstep(0.18, 0.55, abs(n.x)) * exp(-(tSlope * tSlope));
           float cleftContourMask = clamp(cleftLipPeak * 0.85 + cleftSlopeContour * 0.55, 0.0, 1.0);
 
           // 4. Twin Lobe Volume Ridge Contours & Dorsal Spine (좌우 반구 볼륨 융기선 및 배면 능선 굴곡 표현)
-          float lobeCrest = inVentral * poleFade * exp(-pow((distToCleft - 0.165) / 0.052, 2.0));
-          float radialWrinkle = inVentral * poleFade * (0.5 + 0.5 * sin(vPosition.y * 26.0 - distToCleft * 18.0)) * exp(-pow((distToCleft - 0.11) / 0.06, 2.0));
-          float dorsalContour = (1.0 - inVentral) * poleFade * exp(-pow((abs(vPosition.x) - 0.15) / 0.06, 2.0));
+          float tLobe = (distToCleft - 0.165) / 0.052;
+          float lobeCrest = inVentral * poleFade * exp(-(tLobe * tLobe));
+          float tWrinkle = (distToCleft - 0.11) / 0.06;
+          float radialWrinkle = inVentral * poleFade * (0.5 + 0.5 * sin(vPosition.y * 26.0 - distToCleft * 18.0)) * exp(-(tWrinkle * tWrinkle));
+          float tDorsal = (abs(vPosition.x) - 0.15) / 0.06;
+          float dorsalContour = (1.0 - inVentral) * poleFade * exp(-(tDorsal * tDorsal));
 
-          // 5. Dual-Lobe Specular (배전도별 표면 오일 피막 광택)
+          // 5. Dual-Lobe Specular (배전도별 표면 오일 피막 광택 - safe base to prevent NaN)
           float shininess = 18.0 + uGloss * 68.0;
-          float specPrimary = pow(max(dot(n, h), 0.0), shininess) * (0.10 + uGloss * 1.15);
+          float specPrimary = pow(max(dot(n, h), 0.0001), shininess) * (0.10 + uGloss * 1.15);
           vec3 hBroad = normalize(vec3(-0.38, 0.48, 1.80));
-          float specSecondary = pow(max(dot(n, hBroad), 0.0), 10.0 + uGloss * 16.0) * (0.04 + uGloss * 0.38 + darkBoost * 0.16);
+          float specSecondary = pow(max(dot(n, hBroad), 0.0001), 10.0 + uGloss * 16.0) * (0.04 + uGloss * 0.38 + darkBoost * 0.16);
           float totalSpec = (specPrimary + specSecondary) * (1.0 - chaffMask * 0.80);
 
           // 6. Crisp 360° Outer Silhouette Rim & Contour Border (원두 외곽 360° 실루엣 테두리)
@@ -9713,6 +9876,18 @@
         curGloss += (targetGloss - curGloss) * 0.14;
         curRoastLevel += (targetRoastLevel - curRoastLevel) * 0.14;
 
+        const rect = stage.getBoundingClientRect();
+        if (rect.width > 20 && rect.height > 20) {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+          const expectedW = Math.round(rect.width * dpr);
+          const expectedH = Math.round(rect.height * dpr);
+          if (canvas.width !== expectedW || canvas.height !== expectedH) {
+            canvas.width = expectedW;
+            canvas.height = expectedH;
+            gl.viewport(0, 0, expectedW, expectedH);
+          }
+        }
+
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -9759,6 +9934,7 @@
       ];
 
       bean3DRenderer = {
+        resize: resizeCanvas,
         updateRoast: (hexColor, gloss, roastLevelIdx) => {
           targetColor = hexToRgb(hexColor);
           targetGloss = typeof gloss === "number" ? gloss : 0.24;
