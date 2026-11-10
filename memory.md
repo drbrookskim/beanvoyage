@@ -1117,44 +1117,16 @@
 
 ---
 
-272. 3D 원두 뷰어 WebGL GLSL 셰이더 NaN 버그 수정 및 반응형 2D Canvas Fallback 탑재
-- **일시**: 2026-11-10
-- **사용자 요청**: "3D 원두 이미지가 표시 안 되고 있음."
-- **원인 분석**:
-  1. **GLSL ES 1.0 규격 상 `pow(x, y)` 음수 인자 미정의(NaN) 버그**:
-     - 프래그먼트 셰이더(`fsSource`)의 가우스 감쇠 수식(`exp(-pow((distToCleft - ...) / ..., 2.0))`)에서 베이스 `(distToCleft - ...)`가 음수가 될 때 하드웨어 GPU(Metal / OpenGL ES)가 `log2(음수) = NaN`을 산출.
-     - 결과적으로 `gl_FragColor`에 `NaN`이 유입되어 픽셀이 완전히 폐기(투명/공백)되는 치명적 버그 발생.
-  2. **숨겨진 컨테이너(`display: none`)의 캔버스 뷰포트 크기 왜곡**:
-     - 첫 화면 로드 시 Screen 2(`#mapExplorerSection`)가 `.map-hidden`(`display: none !important;`) 상태여서 `getBoundingClientRect()`가 0x0을 반환.
-     - 화면 전환 시 뷰포트가 실시간 업데이트되지 않아 3D 원두가 올바른 비율로 렌더링되지 않던 문제.
-  3. **WebGL 비활성화 환경 대비 폴백 부재**:
-     - 저사양 기기나 GPU 가속이 비활성화된 브라우저에서 2D Canvas 대체 렌더러가 부재했음.
-- **조치 및 수정 내역**:
-  1. **GLSL 셰이더 수식 안전화**:
-     - 프래그먼트 셰이더 내 7개 `pow(..., 2.0)` 구문을 안전한 부동소수점 제곱 `float t = ...; t * t;` 구조로 전면 교체.
-     - 스펙큘러 하이라이트 베이스를 `max(dot(n, h), 0.0001)`로 클램핑하여 0이나 음수 pow 연산 원천 차단.
-  2. **반응형 뷰포트 리사이즈 & 화면 전환 동기화**:
-     - `showMapScreen()` 호출 시 `bean3DRenderer.resize()`를 즉시 및 RAF, setTimeout(150ms) 3중 트리거하여 컨테이너 표시 시점의 실측 치수로 캔버스 크기 및 `gl.viewport()` 동기화.
-     - WebGL `render()` 루프 내에도 스테이지 크기 변경 감지 시 자동 뷰포트 갱신 로직 추가.
-  3. **초고화질 2D Canvas Fallback 탑재**:
-     - WebGL 미지원 환경을 위한 `init2DBeanFallback(canvas, stage)` 구현.
-     - 8단계 배전도 색상 실시간 전이, 마우스 드래그 360° 회전 및 관성 감쇠, 센터컷 S자 크레마 라인 등 3D와 동일한 인터랙션을 2D Canvas로 완벽 재현.
-- **주요 수정 파일**:
-  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
-  - [`CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md), [`memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
-- **검증**:
-  - 인라인 JS 문법 검사 (295KB 스크립트 블록 100% 정상).
-  - Tailwind CSS 컴파일 빌드 확인.
-  - GLSL 프래그먼트 셰이더 내 음수 pow 구문 완전 제거 확인.
-
----
-
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 3D 원두 뷰어 WebGL GLSL NaN 셰이더 버그 수정, 뷰포트 리사이즈 동기화 및 2D 캔버스 폴백 적용 완료.
-- **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
-- **다음 작업**:
-  1. 수정된 코드 커밋 및 `drbrookskim/beanvoyage` 원격 저장소(`main`)로 푸시.
-  2. GitHub Actions (`deploy-pages.yml`) 자동 빌드 및 배포 상태 확인.
-  3. 브라우저에서 `https://drbrookskim.github.io/beanvoyage/` 접속 후 Screen 2(지도 탐색)의 타일 2(ROASTING) 3D 원두 렌더링 및 360° 마우스 드래그 최종 확인.
+- **상태**: GitHub Pages (https://drbrookskim.github.io/beanvoyage) 호스팅 파이프라인 구축 및 배포 준비 완료.
+- **구축된 인프라**:
+  - GitHub Pages URL: `https://drbrookskim.github.io/beanvoyage/`
+  - 배포 워크플로우: `.github/workflows/deploy-pages.yml` (main 푸시 시 자동 배포).
+  - 트렌드 크론: `.github/workflows/update-top-beans.yml` (매주 월요일 자동 갱신 및 배포 트리거).
+  - 정적 호스팅 우회: `.nojekyll` 탑재.
+- **다음 가능한 작업**:
+  1. 저장소 Settings > Pages에서 Source를 "GitHub Actions" (또는 Deploy from a branch)로 1회 활성화.
+  2. 실제 배포 URL (`https://drbrookskim.github.io/beanvoyage/`) 브라우저 접속 확인.
+  3. 첫 화면 마스터 허브 또는 지도 화면(Screen 2)의 추가 기능/디자인 고도화.
 
 
