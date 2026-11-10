@@ -1097,15 +1097,36 @@
 
 ---
 
+271. GitHub Pages 호스팅 연결 및 자동 배포 워크플로우 구축 (drbrookskim.github.io/beanvoyage)
+- **일시**: 2026-11-10
+- **사용자 요청**: "https://drbrookskim.github.io/beanvoyage 여기로 연결해줘"
+- **조치 및 설정 내역**:
+  1. **정적 파일 경로 및 호스팅 정합성 검증**:
+     - 서브패스(`/beanvoyage/`) 호스팅 시 에셋 누락 방지를 위해 `index.html` 내 CSS(`assets/css/tailwind.min.css`) 및 JSON(`assets/data/top-beans.json`) 상대경로 참조 100% 정상 확인.
+     - Jekyll 빌드 엔진의 특수 폴더 필터링을 우회하고 순수 정적 웹앱으로 직결 서빙하도록 루트에 `.nojekyll` 파일 생성.
+  2. **GitHub Pages 자동 배포 워크플로우 구축**:
+     - 파일: [`.github/workflows/deploy-pages.yml`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/.github/workflows/deploy-pages.yml)
+     - `main` 브랜치 푸시 시 또는 수동 트리거 시 GitHub Pages에 자동 빌드 및 배포되는 CI/CD 파이프라인 완성.
+     - 매주 월요일 주간 트렌드가 자동 갱신되어 커밋될 때도 GitHub Pages가 자동으로 최신 웹앱을 재배포하도록 연동.
+  3. **저장소 Pages 설정 가이드 확립**:
+     - `drbrookskim/beanvoyage` > Settings > Pages의 Source 설정을 "GitHub Actions" (또는 "Deploy from a branch")로 지정 시 즉시 `https://drbrookskim.github.io/beanvoyage`로 서비스 시작.
+- **주요 수정 파일**:
+  - [`.nojekyll`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/.nojekyll)
+  - [`.github/workflows/deploy-pages.yml`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/.github/workflows/deploy-pages.yml)
+  - [`CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md), [`memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 독립 GitHub 저장소 (https://github.com/drbrookskim/beanvoyage.git) 연동 및 푸시 완료.
-- **연동된 인프라**:
-  - 저장소: `drbrookskim/beanvoyage` (`main` 브랜치 동기화 완료).
-  - GitHub Actions: `.github/workflows/update-top-beans.yml` (매주 월요일 06:00 KST 자동 실행).
-  - Secrets 등록 위치: https://github.com/drbrookskim/beanvoyage/settings/secrets/actions
+- **상태**: GitHub Pages (https://drbrookskim.github.io/beanvoyage) 호스팅 파이프라인 구축 및 배포 준비 완료.
+- **구축된 인프라**:
+  - GitHub Pages URL: `https://drbrookskim.github.io/beanvoyage/`
+  - 배포 워크플로우: `.github/workflows/deploy-pages.yml` (main 푸시 시 자동 배포).
+  - 트렌드 크론: `.github/workflows/update-top-beans.yml` (매주 월요일 자동 갱신 및 배포 트리거).
+  - 정적 호스팅 우회: `.nojekyll` 탑재.
 - **다음 가능한 작업**:
-  1. [완료] beanvoyage 저장소에 `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` 등록 완료 (네이버 실시간 API 연동 활성화).
-  2. 첫 화면 마스터 허브 또는 지도 화면(Screen 2)의 추가 기능/디자인 고도화.
-  3. GitHub Pages 배포 설정 (필요 시 beanvoyage 저장소에서 바로 호스팅 가능).
+  1. 저장소 Settings > Pages에서 Source를 "GitHub Actions" (또는 Deploy from a branch)로 1회 활성화.
+  2. 실제 배포 URL (`https://drbrookskim.github.io/beanvoyage/`) 브라우저 접속 확인.
+  3. 첫 화면 마스터 허브 또는 지도 화면(Screen 2)의 추가 기능/디자인 고도화.
 
 
