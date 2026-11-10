@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>임베딩 지도</title>
+<meta name="description" content="커피 자료(원두·로스팅·원산지·블렌딩)를 bge-m3로 임베딩해 UMAP·t-SNE·PCA 지도로 보고, 질문과 검색 후보를 함께 시각화합니다.">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f4f3f0;
+  --surface-1: #fcfcfb;
+  --surface-2: #efeeea;
+  --border: #dcdad4;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #7a7973;
+  --series-1: #2a78d6;   /* 문서 조각 */
+  --series-2: #eb6834;   /* 그래프 노드 */
+  --accent: #2a78d6;
+  --grid: #e6e4df;
+  --seq-0: #e7f0fc; --seq-1: #9ec5f4; --seq-2: #5598e7; --seq-3: #256abf; --seq-4: #0d366b;
+  --error: #c4302b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121211;
+    --surface-1: #1a1a19;
+    --surface-2: #242422;
+    --border: #34332f;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #8f8e86;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --accent: #5598e7;
+    --grid: #262624;
+    --seq-0: #1f2a3a; --seq-1: #184f95; --seq-2: #2a78d6; --seq-3: #6da7ec; --seq-4: #cde2fb;
+    --error: #e66767;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121211;
+  --surface-1: #1a1a19;
+  --surface-2: #242422;
+  --border: #34332f;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #8f8e86;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --accent: #5598e7;
+  --grid: #262624;
+  --seq-0: #1f2a3a; --seq-1: #184f95; --seq-2: #2a78d6; --seq-3: #6da7ec; --seq-4: #cde2fb;
+  --error: #e66767;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg); color: var(--text-primary);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+  display: flex; flex-direction: column;
+}
+button, input, textarea, select { font: inherit; color: inherit; }
+header {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--surface-1);
+}
+header h1 { font-size: 16px; margin: 0; font-weight: 650; }
+header .meta { color: var(--text-muted); font-size: 12px; }
+header .spacer { flex: 1; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: transparent; padding: 4px 10px; cursor: pointer; font-size: 12px; color: var(--text-secondary); }
+.seg button.on { background: var(--surface-2); color: var(--text-primary); font-weight: 600; }
+.btn { border: 1px solid var(--border); background: var(--surface-1); border-radius: 8px; padding: 4px 10px; cursor: pointer; font-size: 12px; }
+.btn:hover { background: var(--surface-2); }
+
+main { flex: 1; min-height: 0; display: grid; grid-template-columns: 340px minmax(320px, 1fr) 380px; }
+section.panel { min-height: 0; display: flex; flex-direction: column; background: var(--surface-1); }
+#chatPanel { border-right: 1px solid var(--border); }
+#candPanel { border-left: 1px solid var(--border); }
+.panel h2 { font-size: 13px; margin: 0; padding: 10px 14px 6px; font-weight: 650; display: flex; align-items: baseline; gap: 8px; }
+.panel h2 small { color: var(--text-muted); font-weight: 400; font-size: 11px; }
+
+/* 지도 */
+#mapWrap { position: relative; min-height: 0; background: var(--surface-1); overflow: hidden; }
+#map { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+#map.dragging { cursor: grabbing; }
+.legend {
+  position: absolute; left: 12px; top: 12px; background: color-mix(in srgb, var(--surface-1) 92%, transparent);
+  border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; font-size: 12px; max-width: calc(100% - 24px);
+}
+.legend .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.legend .chip { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; padding: 2px 6px; border-radius: 6px; user-select: none; color: var(--text-secondary); }
+.legend .chip:hover { background: var(--surface-2); }
+.legend .chip.off { opacity: .4; text-decoration: line-through; }
+.legend .sw { width: 10px; height: 10px; display: inline-block; }
+.legend .sw.circle { border-radius: 50%; }
+.legend .note { color: var(--text-muted); font-size: 11px; margin-top: 4px; }
+.gradient { width: 140px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--seq-0), var(--seq-1), var(--seq-2), var(--seq-3), var(--seq-4)); }
+#tooltip {
+  position: absolute; pointer-events: none; z-index: 5; max-width: 320px; display: none;
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12); font-size: 12px;
+}
+#tooltip b { display: block; font-size: 13px; }
+#tooltip .g { color: var(--text-muted); font-size: 11px; }
+#tooltip .t { color: var(--text-secondary); margin-top: 4px; }
+#detail {
+  position: absolute; left: 12px; right: 12px; bottom: 12px; max-height: 42%; overflow: auto; display: none;
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.10);
+}
+#detail .close { float: right; border: 0; background: transparent; cursor: pointer; font-size: 16px; color: var(--text-muted); }
+#detail .g { color: var(--text-muted); font-size: 11px; }
+#detail .nn { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+#detail .nn button { border: 1px solid var(--border); background: var(--surface-2); border-radius: 6px; padding: 1px 6px; font-size: 11px; cursor: pointer; }
+.mapHint { position: absolute; right: 12px; top: 12px; font-size: 11px; color: var(--text-muted); text-align: right; }
+
+/* 채팅 */
+#messages { flex: 1; overflow: auto; padding: 4px 14px 10px; display: flex; flex-direction: column; gap: 10px; }
+.msg { padding: 8px 10px; border-radius: 10px; font-size: 13px; word-break: break-word; }
+.msg.user { align-self: flex-end; background: var(--surface-2); max-width: 90%; cursor: pointer; border: 1px solid transparent; }
+.msg.user.sel { border-color: var(--text-secondary); }
+.msg.user .q { font-size: 10px; color: var(--text-muted); font-weight: 650; margin-right: 4px; }
+.msg.bot { border: 1px solid var(--border); }
+.msg.bot p { margin: 0 0 6px; } .msg.bot p:last-child { margin: 0; }
+.msg.bot ul { margin: 4px 0; padding-left: 18px; }
+.msg.bot .foot { margin-top: 6px; color: var(--text-muted); font-size: 11px; }
+.msg.err { color: var(--error); border: 1px solid var(--error); }
+.cite { display: inline-block; min-width: 18px; padding: 0 4px; margin: 0 1px; border-radius: 5px; border: 1px solid var(--border); background: var(--surface-2); font-size: 11px; line-height: 16px; text-align: center; cursor: pointer; }
+.cite:hover { border-color: var(--text-secondary); }
+.examples { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 14px 8px; }
+.examples button { border: 1px solid var(--border); background: var(--surface-1); border-radius: 999px; padding: 3px 10px; font-size: 12px; cursor: pointer; color: var(--text-secondary); }
+.examples button:hover { background: var(--surface-2); color: var(--text-primary); }
+form#ask { display: flex; gap: 6px; padding: 10px 14px; border-top: 1px solid var(--border); }
+form#ask textarea { flex: 1; resize: none; height: 40px; border: 1px solid var(--border); border-radius: 8px; padding: 9px 10px; background: var(--surface-1); }
+form#ask button { border: 0; border-radius: 8px; padding: 0 14px; background: var(--accent); color: #fff; font-weight: 600; cursor: pointer; }
+form#ask button:disabled { opacity: .5; cursor: default; }
+.status { font-size: 11px; color: var(--text-muted); padding: 0 14px 6px; min-height: 16px; }
+
+/* 후보 */
+#candBody { flex: 1; overflow: auto; padding: 0 14px 14px; }
+.empty { color: var(--text-muted); font-size: 13px; padding: 16px 0; }
+.qline { font-size: 12px; color: var(--text-secondary); margin: 2px 0 8px; }
+.qline b { color: var(--text-primary); }
+#scatter { width: 100%; display: block; }
+#scatter text { fill: var(--text-muted); font-size: 10px; }
+#scatter .axis line, #scatter .axis path { stroke: var(--grid); }
+#scatter .lbl { fill: var(--text-secondary); font-size: 10px; font-weight: 600; }
+.key { display: flex; gap: 12px; flex-wrap: wrap; font-size: 11px; color: var(--text-muted); margin: 4px 0 10px; }
+.key span { display: inline-flex; align-items: center; gap: 4px; }
+.key i { width: 10px; height: 10px; display: inline-block; border-radius: 50%; border: 2px solid var(--text-secondary); }
+.key i.fill { background: var(--text-secondary); }
+.cand { display: grid; grid-template-columns: 24px 1fr; gap: 2px 8px; padding: 8px 6px; border-top: 1px solid var(--border); cursor: pointer; border-radius: 6px; }
+.cand:hover, .cand.hot { background: var(--surface-2); }
+.cand .rk { font-weight: 700; font-size: 13px; color: var(--text-secondary); text-align: right; }
+.cand .ti { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; min-width: 0; }
+.cand .ti span.name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cand .sec { grid-column: 2; font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cand .bars { grid-column: 2; display: grid; grid-template-columns: 34px 1fr 78px; gap: 2px 6px; align-items: center; font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.cand .bar { height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+.cand.hot .bar, .cand:hover .bar { background: var(--surface-1); }
+.cand .bar i { display: block; height: 100%; border-radius: 3px; background: var(--text-secondary); }
+.cand .num { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-secondary); }
+.cand .full { grid-column: 2; font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: none; }
+.cand.open .full { display: block; }
+.tag { font-size: 10px; font-weight: 600; padding: 0 5px; border-radius: 4px; border: 1px solid var(--border); color: var(--text-secondary); flex: none; }
+.tag.cited { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
+.shape { width: 9px; height: 9px; flex: none; display: inline-block; }
+.shape.doc { border-radius: 50%; }
+
+@media (max-width: 1100px) {
+  main { grid-template-columns: minmax(0, 1fr); grid-template-rows: 60vh auto auto; }
+  main > * { min-width: 0; }
+  #mapWrap { order: 1; } #chatPanel { order: 2; border: 0; border-top: 1px solid var(--border); }
+  #messages { max-height: 60vh; min-height: 80px; } #candPanel { order: 3; border: 0; border-top: 1px solid var(--border); }
+  body { height: auto; } html, body { height: auto; }
+}
+@media (max-width: 600px) {
+  header { padding: 8px 16px; gap: 8px; } header .meta, .mapHint { display: none; }
+  header h1 { width: 100%; }
+  .legend { left: 8px; right: 8px; top: 8px; }
+  .panel h2, #messages, .examples, form#ask, .status, #candBody { padding-left: 16px; padding-right: 16px; }
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/umap-js@1.4.0/lib/umap-js.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>임베딩 지도</h1>
+  <span class="meta" id="meta">불러오는 중…</span>
+  <span class="spacer"></span>
+  <span class="seg" id="proj" title="2차원 투영 방식">
+    <button data-proj="umap" class="on">UMAP</button>
+    <button data-proj="tsne">t-SNE</button>
+    <button data-proj="pca">PCA</button>
+  </span>
+  <span class="seg" id="colorMode" title="점 색 기준">
+    <button data-mode="topic" class="on">종류</button>
+    <button data-mode="sim">질문 유사도</button>
+  </span>
+  <button class="btn" id="fitBtn">전체 보기</button>
+  <button class="btn" id="clearBtn">질문 지우기</button>
+</header>
+<main>
+  <section class="panel" id="chatPanel">
+    <h2>커피에 대해 질문하기 <small>bge-m3 검색 → GLM-4.7-Flash 답변</small></h2>
+    <div id="messages"></div>
+    <div class="examples" id="examples"></div>
+    <div class="status" id="status"></div>
+    <form id="ask">
+      <textarea id="q" placeholder="예: 게이샤 품종은 어디서 재배돼?" maxlength="500"></textarea>
+      <button id="send" type="submit">보내기</button>
+    </form>
+  </section>
+
+  <div id="mapWrap">
+    <canvas id="map" aria-label="조각 임베딩의 2차원 지도"></canvas>
+    <div class="legend" id="legend"></div>
+    <div class="mapHint">휠: 확대 · 드래그: 이동 · 점 클릭: 내용 보기</div>
+    <div id="tooltip"></div>
+    <div id="detail"></div>
+  </div>
+
+  <section class="panel" id="candPanel">
+    <h2>후보군 <small id="candSub">의미 + 키워드 검색 상위 20개</small></h2>
+    <div id="candBody"><div class="empty">질문하면 검색된 후보 조각이 여기와 지도에 표시됩니다.</div></div>
+  </section>
+</main>
+
+<script>
+const GROUPS = {
+  "coffee-doc":  { label: "문서 조각",   kind: "doc" },
+  "coffee-node": { label: "그래프 노드", kind: "node" },
+};
+const CONTEXT_N = 6;
+const UMAP_PARAMS = { nNeighbors: 12, minDist: 0.15 };
+let umap = null, toMap = null, PTS = null;
+const PROJ = {
+  umap: { label: () => `UMAP (이웃 ${UMAP_PARAMS.nNeighbors}, min_dist ${UMAP_PARAMS.minDist}, 브라우저 계산)`,
+    note: () => "UMAP: 가까운 이웃 관계를 보존하고 군집이 잘 갈라짐 · 축 자체에는 의미가 없음",
+    star: "★ 질문 위치 = 질문 임베딩을 같은 UMAP 모델로 변환(transform)한 위치" },
+  tsne: { label: () => `t-SNE (코사인, perplexity ${PTS.tsne.perplexity})`,
+    note: () => "t-SNE: 가까운 이웃은 잘 보존하지만 군집 사이 거리·군집 크기는 의미가 적음",
+    star: "★ 질문 위치 = 가장 비슷한 조각 5개 위치의 가중 평균 (t-SNE는 새 점 변환이 없어 근사)" },
+  pca: { label: () => `PCA (PC1 ${(PTS.pca.var_ratio[0] * 100).toFixed(1)}% · PC2 ${(PTS.pca.var_ratio[1] * 100).toFixed(1)}%)`,
+    note: () => `PCA: 분산이 가장 큰 두 방향으로 선형 사영 · 두 축이 전체 분산의 ${((PTS.pca.var_ratio[0] + PTS.pca.var_ratio[1]) * 100).toFixed(0)}%만 설명해 군집이 겹쳐 보임`,
+    star: "★ 질문 위치 = 질문 벡터를 같은 주성분에 그대로 사영한 위치 (정확)" },
+};
+function seeded(seed) { return () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296); }          // 답변 문맥으로 넘기는 후보 수
+const EXAMPLES = ["게이샤 품종은 어디서 재배돼?", "다크 로스트는 어떤 맛이야?", "카투아이의 부모 품종은?", "에티오피아 커피의 특징은?", "블렌딩은 어떻게 해?"];
+
+const $ = (s) => document.querySelector(s);
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const state = {
+  chunks: [], points: [], byId: new Map(),
+  hidden: new Set(), colorMode: "topic",
+  queries: [], active: -1,          // 질문 기록과 현재 보는 질문
+  hover: -1, selected: -1, hotCand: -1, ready: false,
+  proj: "umap", layouts: {},
+  transform: d3.zoomIdentity, history: [], busy: false,
+};
+let colors = {};
+function readColors() {
+  colors = {
+    "coffee-doc": css("--series-1"), "coffee-node": css("--series-2"), text: css("--text-primary"), text2: css("--text-secondary"),
+    muted: css("--text-muted"), surface: css("--surface-1"), grid: css("--grid"),
+    seq: [0, 1, 2, 3, 4].map((i) => css(`--seq-${i}`)),
+  };
+}
+
+// ------------------------------------------------------------------ 데이터
+async function load() {
+  const [chunks, pts] = await Promise.all([fetch("data/chunks.json").then((r) => r.json()), fetch("data/points.json").then((r) => r.json())]);
+  state.chunks = chunks;
+  chunks.forEach((c, i) => state.byId.set(c.id, i));
+  const buf = await (await fetch("data/vectors.bin")).arrayBuffer();
+  const f = new Float32Array(buf), D = pts.dim;
+  const X = chunks.map((_, i) => Array.from(f.subarray(i * D, (i + 1) * D)));
+  // UMAP: 고정 시드라 매번 같은 지도가 나온다. 질문은 같은 모델의 transform으로 놓는다.
+  $("#meta").textContent = "UMAP 계산 중…";
+  umap = new UMAP.UMAP({ nComponents: 2, ...UMAP_PARAMS, random: seeded(42) });
+  // fitAsync는 한 회마다 쉬어서 느리므로, 50회씩 묶어 계산하고 그 사이에만 화면을 갱신한다
+  const nEpochs = umap.initializeFit(X);
+  for (let e = 0; e < nEpochs; ) {
+    for (let k = 0; k < 50 && e < nEpochs; k++) e = umap.step();
+    $("#meta").textContent = `UMAP 계산 중… ${Math.round((e / nEpochs) * 100)}%`;
+    await new Promise((r) => setTimeout(r, 0));
+  }
+  const Y = umap.getEmbedding();
+  const xs = Y.map((p) => p[0]), ys = Y.map((p) => p[1]);
+  const cx = (d3.min(xs) + d3.max(xs)) / 2, cy = (d3.min(ys) + d3.max(ys)) / 2;
+  const half = Math.max(d3.max(xs) - d3.min(xs), d3.max(ys) - d3.min(ys)) / 2 || 1;
+  toMap = (p) => [(p[0] - cx) / half, (p[1] - cy) / half];
+  PTS = pts;
+  state.layouts = { umap: Y.map(toMap), tsne: pts.points.map((p) => p.tsne), pca: pts.points.map((p) => p.pca) };
+  state.points = pts.points.map((p, i) => ({ id: p.id, nn: p.nn, x: state.layouts.umap[i][0], y: state.layouts.umap[i][1] }));
+  updateMeta();
+}
+
+// ------------------------------------------------------------------ 지도
+const canvas = $("#map"), ctx = canvas.getContext("2d");
+let W = 0, H = 0, base = 1;
+function resize() {
+  const r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  W = r.width; H = r.height;
+  canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  base = Math.min(W, H) / 2 * 0.88;
+  draw();
+}
+// 데이터 좌표([-1,1]) → 화면 좌표
+const sx = (x) => state.transform.applyX(W / 2 + x * base);
+const sy = (y) => state.transform.applyY(H / 2 - y * base);
+const visible = (i) => !state.hidden.has(state.chunks[i].group);
+
+function seqColor(t) {
+  const s = colors.seq;
+  return d3.interpolateRgbBasis(s)(Math.max(0, Math.min(1, t)));
+}
+function pointColor(i, q) {
+  if (state.colorMode === "sim" && q) {
+    const lo = q.simMin, hi = q.simMax;
+    return seqColor((q.sims[i] - lo) / (hi - lo || 1));
+  }
+  return colors[state.chunks[i].group];
+}
+function mark(x, y, r, kind) {
+  ctx.beginPath();
+  if (kind === "doc") ctx.arc(x, y, r, 0, Math.PI * 2);
+  else ctx.rect(x - r * 0.9, y - r * 0.9, r * 1.8, r * 1.8);
+}
+function star(x, y, r) {
+  ctx.beginPath();
+  for (let k = 0; k < 10; k++) {
+    const a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? r * 0.45 : r;
+    ctx[k ? "lineTo" : "moveTo"](x + Math.cos(a) * rr, y + Math.sin(a) * rr);
+  }
+  ctx.closePath();
+}
+
+function draw() {
+  if (!W) return;
+  ctx.clearRect(0, 0, W, H);
+  if (!state.points.length) {
+    ctx.fillStyle = colors.muted; ctx.font = "13px sans-serif"; ctx.textAlign = "center";
+    ctx.fillText("임베딩을 불러와 UMAP 지도를 계산하는 중…", W / 2, H / 2); ctx.textAlign = "start";
+    return;
+  }
+  const q = state.queries[state.active];
+  const candRank = new Map(q ? q.candidates.map((c) => [c.idx, c]) : []);
+  const R = 4.5;
+
+  // 선택한 점의 이웃 연결선
+  if (state.selected >= 0) {
+    const p = state.points[state.selected];
+    ctx.strokeStyle = colors.muted; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    for (const j of p.nn) { if (!visible(j)) continue; ctx.beginPath(); ctx.moveTo(sx(p.x), sy(p.y)); ctx.lineTo(sx(state.points[j].x), sy(state.points[j].y)); ctx.stroke(); }
+    ctx.setLineDash([]);
+  }
+
+  // 지난 질문들 (흐리게)
+  state.queries.forEach((qq, k) => {
+    if (k === state.active) return;
+    ctx.globalAlpha = 0.35; ctx.fillStyle = colors.text2; star(sx(qq.pos[0]), sy(qq.pos[1]), 7); ctx.fill();
+    ctx.globalAlpha = 0.6; ctx.fillStyle = colors.text2; ctx.font = "600 10px sans-serif"; ctx.fillText(`Q${k + 1}`, sx(qq.pos[0]) + 8, sy(qq.pos[1]) - 6);
+    ctx.globalAlpha = 1;
+  });
+
+  // 질문 → 후보 연결선
+  if (q) {
+    const qx = sx(q.pos[0]), qy = sy(q.pos[1]);
+    for (const c of [...q.candidates].reverse()) {
+      if (!visible(c.idx)) continue;
+      const p = state.points[c.idx], inCtx = c.rank <= CONTEXT_N;
+      ctx.strokeStyle = colors.text2; ctx.globalAlpha = inCtx ? 0.7 : 0.25; ctx.lineWidth = inCtx ? 1.5 : 1;
+      ctx.setLineDash(inCtx ? [] : [2, 3]);
+      ctx.beginPath(); ctx.moveTo(qx, qy); ctx.lineTo(sx(p.x), sy(p.y)); ctx.stroke();
+    }
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
+  }
+
+  // 점: 후보가 아닌 점 먼저, 후보는 위에
+  const order = state.points.map((_, i) => i).filter(visible);
+  order.sort((a, b) => (candRank.has(a) ? 1 : 0) - (candRank.has(b) ? 1 : 0) || (q && state.colorMode === "sim" ? q.sims[a] - q.sims[b] : 0));
+  for (const i of order) {
+    const p = state.points[i], c = state.chunks[i], x = sx(p.x), y = sy(p.y);
+    const isCand = candRank.has(i);
+    ctx.globalAlpha = q && !isCand && state.colorMode === "topic" ? 0.28 : 0.92;
+    ctx.fillStyle = pointColor(i, q);
+    mark(x, y, isCand ? R + 1 : R, c.kind); ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.lineWidth = 1; ctx.strokeStyle = colors.surface; ctx.stroke();  // 겹침 구분용 테두리
+  }
+
+  // 후보 테두리·순위 라벨
+  if (q) {
+    for (const c of q.candidates) {
+      if (!visible(c.idx)) continue;
+      const p = state.points[c.idx], x = sx(p.x), y = sy(p.y), inCtx = c.rank <= CONTEXT_N, cited = q.cited?.has(c.id);
+      const hot = state.hotCand === c.idx;
+      ctx.strokeStyle = colors.text; ctx.lineWidth = hot ? 3 : cited ? 2.5 : inCtx ? 1.75 : 1;
+      ctx.globalAlpha = inCtx || hot ? 1 : 0.6;
+      mark(x, y, R + (cited ? 5 : 3.5), state.chunks[c.idx].kind); ctx.stroke();
+      ctx.globalAlpha = 1;
+      if (inCtx || hot) {
+        const t = String(c.rank);
+        ctx.font = "700 11px sans-serif";
+        ctx.lineWidth = 3; ctx.strokeStyle = colors.surface; ctx.strokeText(t, x + 9, y - 7);
+        ctx.fillStyle = colors.text; ctx.fillText(t, x + 9, y - 7);
+      }
+    }
+    // 현재 질문 별
+    const qx = sx(q.pos[0]), qy = sy(q.pos[1]);
+    ctx.fillStyle = colors.text; ctx.strokeStyle = colors.surface; ctx.lineWidth = 2;
+    star(qx, qy, 11); ctx.fill(); ctx.stroke();
+    ctx.font = "700 12px sans-serif";
+    const label = `Q${state.active + 1}`;
+    ctx.lineWidth = 3; ctx.strokeText(label, qx + 12, qy + 4); ctx.fillText(label, qx + 12, qy + 4);
+  }
+
+  // 마우스를 올린 점
+  for (const i of [state.hover, state.selected]) {
+    if (i < 0 || !visible(i)) continue;
+    const p = state.points[i];
+    ctx.strokeStyle = colors.text; ctx.lineWidth = 2; mark(sx(p.x), sy(p.y), R + 3, state.chunks[i].kind); ctx.stroke();
+  }
+}
+
+function nearest(mx, my) {
+  let best = -1, bd = 12 * 12;
+  state.points.forEach((p, i) => {
+    if (!visible(i)) return;
+    const d = (sx(p.x) - mx) ** 2 + (sy(p.y) - my) ** 2;
+    if (d < bd) { bd = d; best = i; }
+  });
+  return best;
+}
+
+const dur = (ms) => (matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : ms);
+const zoom = d3.zoom().scaleExtent([0.5, 30])
+  .on("start", (e) => e.sourceEvent?.type === "mousedown" && canvas.classList.add("dragging"))
+  .on("end", () => canvas.classList.remove("dragging"))
+  .on("zoom", (e) => { state.transform = e.transform; hideTip(); draw(); });
+d3.select(canvas).call(zoom).on("dblclick.zoom", null);
+
+function fitTo(idxs, pad = 70) {
+  let pts = idxs.map((i) => state.points[i]).filter(Boolean).map((p) => [p.x, p.y]);
+  const q = state.queries[state.active];
+  if (q) pts.push(q.pos);
+  if (!pts.length) return;
+  const xs = pts.map((p) => W / 2 + p[0] * base), ys = pts.map((p) => H / 2 - p[1] * base);
+  const [x0, x1] = d3.extent(xs), [y0, y1] = d3.extent(ys);
+  const k = Math.min(5, (W - pad * 2) / Math.max(x1 - x0, 40), (H - pad * 2) / Math.max(y1 - y0, 40));
+  const t = d3.zoomIdentity.translate(W / 2, H / 2).scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
+  d3.select(canvas).transition().duration(dur(650)).call(zoom.transform, t);
+}
+const fitAll = () => d3.select(canvas).transition().duration(dur(500)).call(zoom.transform, d3.zoomIdentity);
+
+const tip = $("#tooltip");
+function showTip(i, mx, my) {
+  const c = state.chunks[i], q = state.queries[state.active];
+  const cand = q?.candidates.find((x) => x.idx === i);
+  tip.innerHTML = `<span class="g">${esc(GROUPS[c.group].label)} · ${esc(secOf(c))}</span><b>${esc(c.title)}</b>` +
+    (q ? `<span class="g">질문 Q${state.active + 1}과 유사도 ${q.sims[i].toFixed(3)}${cand ? ` · 후보 ${cand.rank}위` : ""}</span>` : "") +
+    `<div class="t">${esc(c.text.slice(0, 180))}${c.text.length > 180 ? "…" : ""}</div>`;
+  tip.style.display = "block";
+  const wrap = $("#mapWrap").getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  tip.style.left = Math.min(mx + 14, wrap.width - tw - 8) + "px";
+  tip.style.top = (my + 14 + th > wrap.height ? my - th - 10 : my + 14) + "px";
+}
+function hideTip() { tip.style.display = "none"; }
+
+canvas.addEventListener("mousemove", (e) => {
+  const r = canvas.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+  const i = nearest(mx, my);
+  if (i !== state.hover) { state.hover = i; draw(); }
+  canvas.style.cursor = i >= 0 ? "pointer" : "";
+  i >= 0 ? showTip(i, mx, my) : hideTip();
+});
+canvas.addEventListener("mouseleave", () => { state.hover = -1; hideTip(); draw(); });
+canvas.addEventListener("click", (e) => {
+  const r = canvas.getBoundingClientRect();
+  const i = nearest(e.clientX - r.left, e.clientY - r.top);
+  select(i);
+});
+
+function select(i, { fly = false } = {}) {
+  state.selected = i;
+  const d = $("#detail");
+  if (i < 0) { d.style.display = "none"; draw(); return; }
+  const c = state.chunks[i], p = state.points[i], q = state.queries[state.active];
+  d.innerHTML = `<button class="close" aria-label="닫기">×</button>
+    <div class="g">${esc(GROUPS[c.group].label)} · ${esc(secOf(c))}${q ? ` · Q${state.active + 1} 유사도 ${q.sims[i].toFixed(3)}` : ""}</div>
+    <b>${esc(c.title)}</b><div>${esc(c.text)}</div>
+    <div class="nn"><span class="g">가까운 조각:</span>${p.nn.map((j) => `<button data-i="${j}">${esc(state.chunks[j].title.slice(0, 28))}</button>`).join("")}</div>`;
+  d.style.display = "block";
+  d.querySelector(".close").onclick = () => select(-1);
+  d.querySelectorAll(".nn button").forEach((b) => (b.onclick = () => select(+b.dataset.i, { fly: true })));
+  if (fly) {
+    const k = Math.max(state.transform.k, 3);
+    d3.select(canvas).transition().duration(dur(500)).call(zoom.transform,
+      d3.zoomIdentity.translate(W / 2, H * 0.35).scale(k).translate(-(W / 2 + p.x * base), -(H / 2 - p.y * base)));
+  }
+  draw();
+}
+
+// ------------------------------------------------------------------ 범례
+function renderLegend() {
+  const L = $("#legend"), q = state.queries[state.active];
+  const chips = Object.entries(GROUPS).map(([g, m]) =>
+    `<span class="chip ${state.hidden.has(g) ? "off" : ""}" data-g="${g}"><i class="sw ${m.kind === "doc" ? "circle" : ""}" style="background:${state.colorMode === "sim" && q ? colors.muted : colors[g]}"></i>${m.label}</span>`).join("");
+  let extra = `<div class="note">${PTS ? PROJ[state.proj].note() : ""}</div>`;
+  if (state.colorMode === "sim") {
+    extra = q ? `<div class="row" style="margin-top:6px"><span class="note" style="margin:0">유사도 ${q.simMin.toFixed(2)}</span><span class="gradient"></span><span class="note" style="margin:0">${q.simMax.toFixed(2)}</span></div>`
+      : `<div class="note">질문하면 모든 점을 질문과의 코사인 유사도로 칠합니다.</div>`;
+  }
+  if (q) extra += `<div class="note">${state.proj === "umap" && q.posBy.umapFallback
+    ? "★ 질문 위치 = 가장 비슷한 조각 5개 위치의 가중 평균 (이 질문은 UMAP transform 결과가 이웃과 멀리 떨어져 근사로 대체)"
+    : PROJ[state.proj].star}</div>`;
+  L.innerHTML = `<div class="row">${chips}</div>${extra}`;
+  L.querySelectorAll(".chip").forEach((el) => (el.onclick = () => {
+    const g = el.dataset.g;
+    state.hidden.has(g) ? state.hidden.delete(g) : state.hidden.add(g);
+    renderLegend(); draw();
+  }));
+}
+document.querySelectorAll("#colorMode button").forEach((b) => (b.onclick = () => {
+  state.colorMode = b.dataset.mode;
+  document.querySelectorAll("#colorMode button").forEach((x) => x.classList.toggle("on", x === b));
+  renderLegend(); draw();
+}));
+$("#fitBtn").onclick = fitAll;
+$("#clearBtn").onclick = () => {
+  state.queries = []; state.active = -1; state.history = []; state.hotCand = -1;
+  $("#messages").innerHTML = ""; renderCandidates(); renderLegend(); select(-1); fitAll(); renderExamples();
+};
+
+// ------------------------------------------------------------------ 후보 패널
+const secOf = (c) => (c.kind === "node" ? c.section.replace(/^그래프 노드 · /, "") : c.section.split(" > ").slice(1).join(" > ") || c.section);
+const shapeHtml = (c) => `<i class="shape ${c.kind}" style="background:${colors[c.group]}"></i>`;
+function renderCandidates() {
+  const body = $("#candBody"), q = state.queries[state.active];
+  if (!q) { body.innerHTML = `<div class="empty">질문하면 검색된 후보 조각이 여기와 지도에 표시됩니다.</div>`; return; }
+  const rows = q.candidates.map((c) => {
+    const ch = state.chunks[c.idx], cited = q.cited?.has(c.id), inCtx = c.rank <= CONTEXT_N;
+    return `<div class="cand" data-i="${c.idx}">
+      <div class="rk">${c.rank}</div>
+      <div class="ti">${shapeHtml(ch)}<span class="name">${esc(ch.title)}</span>${cited ? `<span class="tag cited">인용</span>` : inCtx ? `<span class="tag">문맥</span>` : ""}</div>
+      <div class="sec">${esc(GROUPS[ch.group].label)} · ${esc(secOf(ch))}</div>
+      <div class="bars">
+        <span>의미</span><span class="bar"><i style="width:${Math.max(0, c.dense) * 100}%"></i></span><span class="num">${c.dense.toFixed(3)} · ${c.denseRank}위</span>
+        <span>키워드</span><span class="bar"><i style="width:${c.lex * 100}%"></i></span><span class="num">${c.lexRank ? `${c.lex.toFixed(2)} · ${c.lexRank}위` : "일치 없음"}</span>
+      </div>
+      <div class="full">${esc(ch.text)}</div>
+    </div>`;
+  }).join("");
+  body.innerHTML = `<div class="qline">Q${state.active + 1}. <b>${esc(q.query)}</b></div>
+    <svg id="scatter" role="img" aria-label="후보 20개의 의미 유사도와 키워드 점수"></svg>
+    <div class="key"><span><i class="fill"></i>답변 문맥(상위 ${CONTEXT_N})</span><span><i></i>나머지 후보</span><span>번호 = 최종 순위(RRF)</span></div>
+    ${rows}`;
+  drawScatter(q);
+  body.querySelectorAll(".cand").forEach((el) => {
+    const i = +el.dataset.i;
+    el.onmouseenter = () => hotCand(i);
+    el.onmouseleave = () => hotCand(-1);
+    el.onclick = () => { el.classList.toggle("open"); select(i, { fly: true }); };
+  });
+}
+function hotCand(i) {
+  state.hotCand = i;
+  document.querySelectorAll(".cand").forEach((el) => el.classList.toggle("hot", +el.dataset.i === i));
+  d3.selectAll("#scatter .dot").attr("stroke-width", (d) => (d.idx === i ? 3 : 1.5));
+  draw();
+}
+function drawScatter(q) {
+  const svg = d3.select("#scatter"), w = $("#candBody").clientWidth - 2, h = 190, m = { l: 34, r: 12, t: 10, b: 30 };
+  svg.attr("viewBox", `0 0 ${w} ${h}`).attr("height", h).selectAll("*").remove();
+  const ds = q.candidates.map((c) => c.dense);
+  const x = d3.scaleLinear().domain([Math.min(...ds) - 0.01, Math.max(...ds) + 0.01]).range([m.l, w - m.r]);
+  const y = d3.scaleLinear().domain([0, 1.05]).range([h - m.b, m.t]);
+  svg.append("g").attr("class", "axis").attr("transform", `translate(0,${h - m.b})`).call(d3.axisBottom(x).ticks(4).tickSize(-(h - m.t - m.b)).tickFormat(d3.format(".2f")))
+    .call((g) => g.select(".domain").remove());
+  svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(3).tickSize(-(w - m.l - m.r)).tickFormat(d3.format(".1f")))
+    .call((g) => g.select(".domain").remove());
+  svg.append("text").attr("x", w - m.r).attr("y", h - 4).attr("text-anchor", "end").text("의미 유사도 (코사인) →");
+  svg.append("text").attr("x", m.l - 30).attr("y", m.t - 2 + 8).attr("transform", `rotate(-90 ${m.l - 24} ${m.t + 40})`).text("키워드(BM25) →");
+  const g = svg.append("g");
+  const data = [...q.candidates].reverse();
+  const sym = (c) => d3.symbol().type(state.chunks[c.idx].kind === "doc" ? d3.symbolCircle : d3.symbolSquare).size(c.rank <= CONTEXT_N ? 90 : 64)();
+  g.selectAll("path").data(data).join("path").attr("class", "dot")
+    .attr("d", sym).attr("transform", (c) => `translate(${x(c.dense)},${y(c.lex)})`)
+    .attr("fill", (c) => (c.rank <= CONTEXT_N ? colors[state.chunks[c.idx].group] : colors.surface))
+    .attr("stroke", (c) => colors[state.chunks[c.idx].group]).attr("stroke-width", 1.5)
+    .style("cursor", "pointer")
+    .on("mouseenter", (e, c) => hotCand(c.idx)).on("mouseleave", () => hotCand(-1))
+    .on("click", (e, c) => select(c.idx, { fly: true }))
+    .append("title").text((c) => `${c.rank}. ${state.chunks[c.idx].title}\n의미 ${c.dense.toFixed(3)} · 키워드 ${c.lex.toFixed(2)}`);
+  g.selectAll("text.lbl").data(q.candidates.filter((c) => c.rank <= CONTEXT_N)).join("text").attr("class", "lbl")
+    .attr("x", (c) => x(c.dense) + 7).attr("y", (c) => y(c.lex) - 5).text((c) => c.rank);
+}
+
+// ------------------------------------------------------------------ 채팅
+function md(s) {
+  // 굵게·목록·인용 번호만 처리
+  const lines = esc(s).split(/\n/);
+  let html = "", inList = false;
+  for (const raw of lines) {
+    const l = raw.trim();
+    const li = l.match(/^(?:[-*•]|\d+\.)\s+(.*)/);
+    if (li) { if (!inList) { html += "<ul>"; inList = true; } html += `<li>${li[1]}</li>`; continue; }
+    if (inList) { html += "</ul>"; inList = false; }
+    if (l) html += `<p>${l}</p>`;
+  }
+  if (inList) html += "</ul>";
+  return html.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/^#+\s*/gm, "");
+}
+function addMsg(kind, html, qIndex) {
+  const el = document.createElement("div");
+  el.className = `msg ${kind}`;
+  el.innerHTML = html;
+  if (qIndex !== undefined) el.dataset.q = qIndex;
+  $("#messages").appendChild(el);
+  $("#messages").scrollTop = $("#messages").scrollHeight;
+  return el;
+}
+function setActive(k) {
+  state.active = k; state.hotCand = -1;
+  document.querySelectorAll(".msg.user").forEach((el) => el.classList.toggle("sel", +el.dataset.q === k));
+  renderCandidates(); renderLegend(); draw();
+}
+function renderExamples() {
+  $("#examples").innerHTML = state.queries.length ? "" : EXAMPLES.map((e) => `<button type="button">${esc(e)}</button>`).join("");
+  $("#examples").querySelectorAll("button").forEach((b) => (b.onclick = () => ask(b.textContent)));
+}
+const status = (t) => ($("#status").textContent = t || "");
+
+// 질문의 투영별 위치: UMAP은 transform, PCA는 선형 사영(정확), t-SNE는 이웃 가중 평균(근사)
+function neighborAverage(layout, sims) {
+  const top = sims.map((s, i) => [s, i]).sort((a, b) => b[0] - a[0]).slice(0, 5);
+  const ws = top.map(([s]) => Math.exp((s - top[0][0]) * 30)), wsum = d3.sum(ws);
+  return [0, 1].map((d) => d3.sum(top, ([, i], j) => layout[i][d] * ws[j]) / wsum);
+}
+function queryPositions(qvec, sims) {
+  const { mean, components, center, half } = PTS.pca;
+  const pca = components.map((c, d) => (d3.sum(c, (w, j) => w * (qvec[j] - mean[j])) - center[d]) / half);
+  // umap-js transform은 질문이 이웃과 동떨어진 곳으로 밀려나는 경우가 있어,
+  // 이웃 가중 평균에서 지도 폭의 10%(0.2) 넘게 벗어나면 이웃 평균을 쓰고 근사로 표시한다
+  const near = neighborAverage(state.layouts.umap, sims);
+  let um = null;
+  try { um = toMap(umap.transform([qvec])[0]); } catch {}
+  const umapOk = um && Math.hypot(um[0] - near[0], um[1] - near[1]) <= 0.2;
+  const posBy = { umap: umapOk ? um : near, tsne: neighborAverage(state.layouts.tsne, sims), pca };
+  posBy.umapFallback = !umapOk;
+  return posBy;
+}
+function updateMeta() {
+  $("#meta").textContent = `조각 ${state.chunks.length}개 · ${PTS.model} ${PTS.dim}차원 · ${PROJ[state.proj].label()}`;
+}
+// 투영 전환: 점과 질문 별을 새 좌표로 옮기는 애니메이션
+let projTimer = null;
+function setProjection(name) {
+  if (!state.ready || name === state.proj) return;
+  const from = state.points.map((p) => [p.x, p.y]), to = state.layouts[name];
+  const qFrom = state.queries.map((q) => q.pos);
+  state.proj = name;
+  document.querySelectorAll("#proj button").forEach((b) => b.classList.toggle("on", b.dataset.proj === name));
+  updateMeta(); renderLegend();
+  projTimer?.stop();
+  const ms = dur(700), done = () => {
+    state.points.forEach((p, i) => { p.x = to[i][0]; p.y = to[i][1]; });
+    state.queries.forEach((q) => (q.animPos = null));
+    draw();
+    // 새 좌표에서 현재 질문의 문맥 후보가 화면에 들어오게
+    const q = state.queries[state.active];
+    q ? fitTo(q.candidates.slice(0, CONTEXT_N).map((c) => c.idx)) : fitAll();
+  };
+  if (!ms) return done();
+  projTimer = d3.timer((t) => {
+    const e = d3.easeCubicInOut(Math.min(1, t / ms));
+    state.points.forEach((p, i) => { p.x = from[i][0] + (to[i][0] - from[i][0]) * e; p.y = from[i][1] + (to[i][1] - from[i][1]) * e; });
+    state.queries.forEach((q, k) => { const a = qFrom[k], b = q.posBy[name]; q.animPos = [a[0] + (b[0] - a[0]) * e, a[1] + (b[1] - a[1]) * e]; });
+    draw();
+    if (t >= ms) { projTimer.stop(); done(); }
+  });
+}
+document.querySelectorAll("#proj button").forEach((b) => (b.onclick = () => setProjection(b.dataset.proj)));
+
+async function post(url, body) {
+  const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const data = await r.json().catch(() => ({ error: `서버 응답 오류 (${r.status})` }));
+  if (!r.ok || data.error) throw new Error(data.error || `서버 응답 오류 (${r.status})`);
+  return data;
+}
+
+async function ask(text) {
+  text = text.trim();
+  if (!text || state.busy || !state.ready) return;
+  state.busy = true; $("#send").disabled = true; $("#q").value = "";
+  const k = state.queries.length;
+  const userEl = addMsg("user", `<span class="q">Q${k + 1}</span>${esc(text)}`, k);
+  userEl.onclick = () => setActive(k);
+  $("#examples").innerHTML = "";
+  // 짧은 후속 질문은 직전 질문을 붙여 검색한다
+  const prev = state.history.filter((m) => m.role === "user").slice(-1)[0]?.content;
+  const searchText = prev && text.length < 12 ? `${prev} ${text}` : text;
+  try {
+    status("질문을 임베딩해 후보를 찾는 중…");
+    const res = await post("api/search", { query: searchText });
+    const sims = res.sims;
+    const q = { query: searchText, sims, simMin: d3.min(sims), simMax: d3.max(sims), candidates: res.candidates, cited: new Set(),
+      posBy: queryPositions(res.qvec, sims), animPos: null,
+      get pos() { return this.animPos || this.posBy[state.proj]; } };
+    state.queries.push(q);
+    setActive(k);
+    fitTo(q.candidates.slice(0, CONTEXT_N).map((c) => c.idx));
+
+    status("후보를 근거로 답을 만드는 중…");
+    state.history.push({ role: "user", content: text });
+    const ctxIds = q.candidates.slice(0, CONTEXT_N).map((c) => c.id);
+    const out = await post("api/chat", { messages: state.history, ids: ctxIds });
+    state.history.push({ role: "assistant", content: out.reply });
+    q.cited = new Set(out.cited);
+    const html = md(out.reply).replace(/\[(\d{1,2})\]/g, (m, n) => {
+      const id = out.context[n - 1];
+      return id ? `<span class="cite" data-id="${id}" title="${esc(state.chunks[state.byId.get(id)].title)}">${n}</span>` : m;
+    });
+    const bot = addMsg("bot", html + `<div class="foot">Q${k + 1} · 문맥 ${ctxIds.length}개 중 ${out.cited.length}개 인용 · ${esc(out.model.split("/").pop())}</div>`);
+    bot.querySelectorAll(".cite").forEach((c) => (c.onclick = () => { setActive(k); select(state.byId.get(c.dataset.id), { fly: true }); }));
+    if (state.active === k) { renderCandidates(); draw(); }
+    status("");
+  } catch (e) {
+    addMsg("err", esc(e.message));
+    if (state.history.at(-1)?.role === "user") state.history.pop();
+    status("");
+  } finally {
+    state.busy = false; $("#send").disabled = false; $("#q").focus();
+  }
+}
+$("#ask").onsubmit = (e) => { e.preventDefault(); ask($("#q").value); };
+$("#q").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); ask($("#q").value); } });
+
+// ------------------------------------------------------------------ 시작
+readColors();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { readColors(); renderLegend(); renderCandidates(); draw(); });
+new ResizeObserver(resize).observe($("#mapWrap"));
+$("#send").disabled = true;
+load().then(() => {
+  state.ready = true; $("#send").disabled = false;
+  renderLegend(); renderExamples(); resize();
+  const q0 = new URLSearchParams(location.search).get("q");   // ?q=질문 으로 바로 질문
+  if (q0) ask(q0);
+})
+  .catch((e) => { $("#meta").textContent = "데이터를 불러오지 못했습니다: " + e.message; });
+</script>
+</body>
+</html>

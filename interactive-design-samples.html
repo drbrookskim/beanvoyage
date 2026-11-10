@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoBTS UI/UX 디자인 샘플 쇼케이스 - 사용자 가독성 최적화</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <style>
+    :root {
+      --bg-page: #F4EFE6;
+      --card-bg: #FDFCFA;
+      --card-border: #E8E0D5;
+      --text-main: #241B14;
+      --text-muted: #73675C;
+      --coffee-olive: #3E6D4C;
+      --coffee-brown: #6A3E23;
+      --coffee-amber: #C57B44;
+      --accent-blue: #30679D;
+      --glider-bg: #FFFFFF;
+      --glider-shadow: 0 2px 8px rgba(45, 30, 18, 0.1), 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    html.dark {
+      --bg-page: #0D141C;
+      --card-bg: #151D28;
+      --card-border: #243040;
+      --text-main: #F1EFEA;
+      --text-muted: #94A3B8;
+      --coffee-olive: #86EFAC;
+      --coffee-brown: #FDBA74;
+      --coffee-amber: #F59E0B;
+      --accent-blue: #60A5FA;
+      --glider-bg: #FFFFFF;
+      --glider-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      padding: 36px 20px 100px;
+      line-height: 1.5;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 980px;
+    }
+
+    /* 상단 헤더 */
+    .showcase-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .showcase-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(197, 123, 68, 0.15);
+      color: #9E5A28;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      font-family: "Space Grotesk", sans-serif;
+    }
+    html.dark .showcase-badge {
+      background: rgba(245, 158, 11, 0.2);
+      color: #FBBF24;
+    }
+    .showcase-title {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .showcase-desc {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 20px;
+    }
+
+    /* 테마 및 뷰 전환 툴바 */
+    .top-toolbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--coffee-amber);
+    }
+
+    /* 섹션 레이아웃 */
+    .section-title-wrap {
+      margin-bottom: 20px;
+      border-bottom: 1.5px solid var(--card-border);
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .section-title {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title .sec-num {
+      width: 22px;
+      height: 22px;
+      background: #E8DFD3;
+      color: #634E3C;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: "Space Grotesk", sans-serif;
+    }
+    html.dark .section-title .sec-num {
+      background: #253344;
+      color: #93C5FD;
+    }
+    .section-sub {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* 그리드 레이아웃 */
+    .samples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 640px) {
+      .samples-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 샘플 카드 쉘 */
+    .sample-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 24px -6px rgba(45, 30, 18, 0.07);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .sample-box:hover {
+      border-color: #D3C3B0;
+      box-shadow: 0 12px 30px -4px rgba(45, 30, 18, 0.12);
+    }
+    html.dark .sample-box:hover {
+      border-color: #384A60;
+    }
+
+    .sample-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .sample-tag {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #966138;
+      background: #F4EBE1;
+      padding: 3px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
+    html.dark .sample-tag {
+      background: #29241E;
+      color: #FDBA74;
+    }
+    .sample-tag.recommended {
+      background: #EDF5EE;
+      color: #2F6F44;
+      border: 1px solid #C4DEC9;
+    }
+    html.dark .sample-tag.recommended {
+      background: #172F21;
+      color: #86EFAC;
+      border-color: #245838;
+    }
+
+    .sample-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* 인터랙티브 프리뷰 스테이지 */
+    .interactive-stage {
+      background: #F7F3EC;
+      border: 1px dashed #DCD2C4;
+      border-radius: 14px;
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      min-height: 120px;
+      transition: background-color 0.25s ease;
+    }
+    html.dark .interactive-stage {
+      background: #0F1722;
+      border-color: #223042;
+    }
+
+    /* 설명 및 UX 분석 리스트 */
+    .sample-desc-box {
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--card-border);
+      padding-top: 14px;
+    }
+    .sample-desc-box ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 6px;
+    }
+    .sample-desc-box li {
+      position: relative;
+      padding-left: 16px;
+      margin-bottom: 4px;
+      line-height: 1.45;
+    }
+    .sample-desc-box li::before {
+      content: "•";
+      position: absolute;
+      left: 4px;
+      color: var(--coffee-amber);
+    }
+    .sample-desc-box strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    /* ==========================================================
+       스타일 1: [에디토리얼 마이크로 캡션형] (추천 1순위)
+       ========================================================== */
+    .s1-toggle-wrap {
+      position: relative;
+      background: #EDE4D8;
+      border: 1.5px solid #DCD0C1;
+      border-radius: 9999px;
+      padding: 3.5px;
+      display: grid;
+      grid-template-columns: 140px 140px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+      user-select: none;
+    }
+    html.dark .s1-toggle-wrap {
+      background: #17212F;
+      border-color: #2B3A4F;
+    }
+    .s1-glider {
+      position: absolute;
+      top: 3.5px;
+      bottom: 3.5px;
+      left: 3.5px;
+      width: calc(50% - 3.5px);
+      background: #FFFFFF;
+      border-radius: 9999px;
+      box-shadow: 0 2px 7px rgba(45,30,18,0.12), 0 1px 2px rgba(0,0,0,0.04);
+      transition: transform 0.28s cubic-bezier(0.25, 1, 0.3, 1);
+      z-index: 1;
+      pointer-events: none;
+    }
+    html.dark .s1-glider {
+      background: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    .s1-btn {
+      position: relative;
+      z-index: 2;
+      border: none;
+      background: transparent;
+      padding: 7px 10px;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5px;
+      outline: none;
+      transition: opacity 0.2s ease;
+    }
+    .s1-btn-main {
+      font-size: 13px;
+      font-weight: 600;
+      color: #7D6F61;
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
+    }
+    .s1-btn-sub {
+      font-size: 10px;
+      color: #9C8E80;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      transition: color 0.2s ease;
+    }
+    .s1-btn.active .s1-btn-main {
+      color: #241B14;
+      font-weight: 600;
+    }
+    .s1-btn.active .s1-btn-sub {
+      color: #5C4A3A;
+      font-weight: 500;
+    }
+    html.dark .s1-btn-main { color: #8292A6; }
+    html.dark .s1-btn-sub { color: #64748B; }
+    html.dark .s1-btn.active .s1-btn-main { color: #0A0F17; }
+    html.dark .s1-btn.active .s1-btn-sub { color: #334155; }
+
+    /* ==========================================================
+       스타일 2: [테루아 닷 인디케이터형] (Apple / Notion 스타일)
+       ========================================================== */
+    .s2-toggle-wrap {
+      position: relative;
+      background: #FFFFFF;
+      border: 1px solid #E2D9CC;
+      border-radius: 9999px;
+      padding: 3px;
+      display: grid;
+      grid-template-columns: 135px 135px;
+      box-shadow: 0 2px 8px -2px rgba(45,30,18,0.06);
+      user-select: none;
+    }
+    html.dark .s2-toggle-wrap {
+      background: #111A24;
+      border-color: #28374A;
+    }
+    .s2-glider {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      background: #F1EAE0;
+      border-radius: 9999px;
+      transition: transform 0.28s cubic-bezier(0.25, 1, 0.3, 1);
+      z-index: 1;
+      pointer-events: none;
+    }
+    html.dark .s2-glider {
+      background: #253344;
+    }
+    .s2-btn {
+      position: relative;
+      z-index: 2;
+      border: none;
+      background: transparent;
+      padding: 8px 12px;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      outline: none;
+      font-size: 13px;
+      font-weight: 500;
+      color: #8C7E70;
+      transition: color 0.2s ease;
+    }
+    .s2-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: inline-block;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      opacity: 0.5;
+    }
+    .s2-dot.single { background: #3E6D4C; }
+    .s2-dot.blend { background: #C57B44; }
+    .s2-btn.active {
+      color: #241B14;
+      font-weight: 600;
+    }
+    .s2-btn.active .s2-dot {
+      opacity: 1;
+      transform: scale(1.3);
+      box-shadow: 0 0 6px rgba(62, 109, 76, 0.4);
+    }
+    .s2-btn.active .s2-dot.blend {
+      box-shadow: 0 0 6px rgba(197, 123, 68, 0.4);
+    }
+    html.dark .s2-btn { color: #8A9CAE; }
+    html.dark .s2-btn.active { color: #F1EFEA; }
+
+    /* ==========================================================
+       스타일 3: [스페셜티 카페 메뉴 태그형] (Menu Badge Link)
+       ========================================================== */
+    .s3-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .s3-toggle-wrap {
+      position: relative;
+      background: #EDE6DC;
+      border-radius: 12px;
+      padding: 3px;
+      display: grid;
+      grid-template-columns: 120px 100px;
+      user-select: none;
+    }
+    html.dark .s3-toggle-wrap {
+      background: #17202B;
+    }
+    .s3-glider {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc(54.5% - 3px);
+      background: #FFFFFF;
+      border-radius: 9px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: all 0.26s cubic-bezier(0.25, 1, 0.3, 1);
+      z-index: 1;
+      pointer-events: none;
+    }
+    html.dark .s3-glider {
+      background: #2C3B4E;
+    }
+    .s3-btn {
+      position: relative;
+      z-index: 2;
+      border: none;
+      background: transparent;
+      padding: 7px 10px;
+      border-radius: 9px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: #7D6E60;
+      transition: color 0.2s ease;
+    }
+    .s3-btn.active {
+      color: #241B14;
+      font-weight: 600;
+    }
+    html.dark .s3-btn { color: #8A9CAE; }
+    html.dark .s3-btn.active { color: #F1EFEA; }
+    .s3-badge-pill {
+      font-size: 11px;
+      font-weight: 500;
+      color: #3E6D4C;
+      background: #EDF5EE;
+      border: 1px solid #CCE2D1;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: -0.01em;
+      transition: all 0.25s ease;
+    }
+    html.dark .s3-badge-pill {
+      background: #13271D;
+      border-color: #244C36;
+      color: #86EFAC;
+    }
+
+    /* ==========================================================
+       스타일 4: [모던 플랫 세그먼트 + 프리뷰 툴팁] (Hover Card)
+       ========================================================== */
+    .s4-container {
+      position: relative;
+    }
+    .s4-toggle-wrap {
+      position: relative;
+      background: #EBE3D7;
+      border-radius: 999px;
+      padding: 3px;
+      display: grid;
+      grid-template-columns: 125px 95px;
+      user-select: none;
+    }
+    html.dark .s4-toggle-wrap {
+      background: #192330;
+    }
+    .s4-glider {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc(56.8% - 3px);
+      background: #FFFFFF;
+      border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      transition: all 0.26s cubic-bezier(0.25, 1, 0.3, 1);
+      z-index: 1;
+      pointer-events: none;
+    }
+    html.dark .s4-glider {
+      background: #FFFFFF;
+    }
+    .s4-btn {
+      position: relative;
+      z-index: 2;
+      border: none;
+      background: transparent;
+      padding: 7px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: #7E7063;
+      transition: color 0.2s ease;
+    }
+    .s4-btn.active {
+      color: #241B14;
+      font-weight: 600;
+    }
+    html.dark .s4-btn { color: #8F9FA8; }
+    html.dark .s4-btn.active { color: #0A0F17; }
+    .s4-tooltip-card {
+      margin-top: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================
+       섹션 2: 산지 정보 카드 (에디토리얼 일반체 최적화 프리뷰)
+       ========================================================== */
+    .editorial-preview-wrap {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    .editorial-preview-card {
+      width: 374px;
+      background: #FAF8F5;
+      border-radius: 22px;
+      border: 1px solid #EBE4DA;
+      box-shadow: 0 16px 36px -8px rgba(45, 30, 18, 0.16), 0 4px 12px rgba(0, 0, 0, 0.04);
+      padding: 18px 20px;
+      color: #241B14;
+      box-sizing: border-box;
+      user-select: none;
+      transition: background-color 0.25s ease, border-color 0.25s ease;
+    }
+    html.dark .editorial-preview-card {
+      background: #171412 !important;
+      border-color: #362D25;
+      color: #ECE5DC;
+    }
+    .ed-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    .ed-country-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8F6848;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: "Space Grotesk", sans-serif;
+    }
+    html.dark .ed-country-tag { color: #D4A373; }
+    .ed-country-dot {
+      width: 6.5px;
+      height: 6.5px;
+      border-radius: 50%;
+      background: #C57B44;
+      display: inline-block;
+    }
+    .ed-hs-badge {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: #7D7266;
+      background: #F1EAE0;
+      padding: 2.5px 7.5px;
+      border-radius: 6px;
+      letter-spacing: 0.03em;
+    }
+    html.dark .ed-hs-badge {
+      background: #26201B;
+      color: #C5B6A5;
+    }
+    .ed-title-row {
+      margin-bottom: 12px;
+    }
+    .ed-region-title {
+      font-size: 21px;
+      font-weight: 400; /* 일반체 */
+      color: #241B14;
+      letter-spacing: -0.02em;
+      margin: 4px 0 4px 0;
+      line-height: 1.25;
+    }
+    html.dark .ed-region-title { color: #F8F4EC; }
+    .ed-specs-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      color: #6A5E52;
+      flex-wrap: wrap;
+    }
+    html.dark .ed-specs-row { color: #A39382; }
+    .ed-alt-pill {
+      font-family: "Instrument Serif", Georgia, serif;
+      font-size: 14.5px;
+      font-style: italic;
+      color: #3E6D4C;
+      background: #EDF5EE;
+      padding: 1.5px 8px;
+      border-radius: 999px;
+      border: 1px solid #CCE2D1;
+      line-height: 1.2;
+    }
+    html.dark .ed-alt-pill {
+      background: #172B21;
+      border-color: #2D583F;
+      color: #86EFAC;
+    }
+    .ed-bullet { color: #D0C7BD; font-size: 12px; }
+    .ed-spec-text { font-size: 12.5px; color: #6A5E52; font-weight: 400; }
+    html.dark .ed-spec-text { color: #A39382; }
+
+    /* 카드 내 탭 */
+    .ed-seg-wrap {
+      position: relative;
+      background: #F0E8DC;
+      border-radius: 14px;
+      padding: 4px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin: 12px 0 11px 0;
+      overflow: hidden;
+    }
+    html.dark .ed-seg-wrap { background: #231E19; }
+    .ed-seg-glider {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      background: #FFFFFF;
+      border-radius: 11px;
+      box-shadow: 0 3px 10px rgba(45, 30, 18, 0.09), 0 1px 2px rgba(0,0,0,0.04);
+      transition: transform 0.28s cubic-bezier(0.25, 1, 0.3, 1);
+      z-index: 1;
+      pointer-events: none;
+    }
+    html.dark .ed-seg-glider {
+      background: #342C24;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    .ed-seg-btn {
+      position: relative;
+      z-index: 2;
+      border: none;
+      background: transparent;
+      padding: 7.5px 10px;
+      border-radius: 11px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 400;
+      color: #8C7E70;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: color 0.22s ease;
+      outline: none;
+    }
+    html.dark .ed-seg-btn { color: #9C8E80; }
+    .ed-seg-btn.active {
+      color: #241B14;
+      font-weight: 500;
+    }
+    html.dark .ed-seg-btn.active { color: #F8F4EC; }
+    .ed-tab-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .ed-tab-dot.roasted { background: #6A3E23; }
+    .ed-tab-dot.green { background: #3E6D4C; }
+
+    /* 카드 액션 버튼 */
+    .ed-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8.5px;
+    }
+    .ed-action-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8.5px 11px;
+      background: #FFFFFF;
+      border: 1px solid #EBE4DA;
+      border-radius: 13px;
+      text-decoration: none;
+      color: #241B14;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    html.dark .ed-action-card {
+      background: #221D18;
+      border-color: #3D332A;
+      color: #ECE5DC;
+    }
+    .ed-action-card:hover {
+      border-color: #CBBAA5;
+      transform: translateY(-1.5px);
+      box-shadow: 0 5px 12px -2px rgba(45,30,18,0.08);
+    }
+    .ed-action-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ed-brand-icon {
+      width: 25px;
+      height: 25px;
+      border-radius: 6.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #FFFFFF;
+      flex-shrink: 0;
+    }
+    .ed-brand-icon.naver { background: #03C75A; }
+    .ed-brand-icon.amazon { background: #232F3E; color: #FF9900; font-size: 13px; }
+    .ed-action-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: #241B14;
+      line-height: 1.2;
+    }
+    html.dark .ed-action-title { color: #F8F4EC; }
+    .ed-action-sub {
+      font-size: 9.5px;
+      color: #8D7E70;
+      margin-top: 1.5px;
+    }
+    html.dark .ed-action-sub { color: #9C8E80; }
+    .ed-arrow {
+      color: #AD9E90;
+      font-size: 12px;
+      font-weight: 400;
+    }
+
+    /* 하단 추천 및 비교 테이블 */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 13px;
+    }
+    .compare-table th, .compare-table td {
+      padding: 10px 14px;
+      border: 1px solid var(--card-border);
+      text-align: left;
+    }
+    .compare-table th {
+      background: rgba(0,0,0,0.03);
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    html.dark .compare-table th {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 상단 헤더 -->
+    <header class="showcase-header">
+      <span class="showcase-badge">Design Options Showcase</span>
+      <h1 class="showcase-title">사용자 가독성 중심 인터페이스 디자인 샘플</h1>
+      <p class="showcase-desc">
+        영문 표기(Single Origin / Blend)의 미니멀한 세련됨을 유지하면서도, 일반 사용자가 한눈에 직관적으로 기능을 이해하고 편안하게 탐색할 수 있는 4가지 UX 개선안입니다.
+      </p>
+
+      <div class="top-toolbar">
+        <button type="button" class="theme-toggle-btn" onclick="toggleTheme()">
+          <span id="themeIcon">🌓</span>
+          <span id="themeLabel">다크 모드로 보기</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 섹션 1: Single Origin ↔ Blend 추출 모드 토글 4가지 샘플 -->
+    <div class="section-title-wrap">
+      <h2 class="section-title">
+        <span class="sec-num">1</span>
+        커피 추출 모드 (Single Origin ↔ Blend) 토글 4대 디자인 안
+      </h2>
+      <span class="section-sub">각 샘플의 버튼을 직접 클릭하여 부드러운 슬라이딩과 시각적 피드백을 체험해보세요.</span>
+    </div>
+
+    <div class="samples-grid">
+
+      <!-- 스타일 A: 에디토리얼 마이크로 캡션형 (강력 추천) -->
+      <div class="sample-box">
+        <div class="sample-header">
+          <span class="sample-name">안 A. 에디토리얼 마이크로 캡션형</span>
+          <span class="sample-tag recommended">⭐ 1순위 추천</span>
+        </div>
+        
+        <div class="interactive-stage">
+          <div class="s1-toggle-wrap" role="tablist">
+            <div id="s1Glider" class="s1-glider"></div>
+            <button type="button" id="s1Single" class="s1-btn active" onclick="setS1Mode('single')">
+              <span class="s1-btn-main">Single Origin</span>
+              <span class="s1-btn-sub">단일 산지 탐색</span>
+            </button>
+            <button type="button" id="s1Blend" class="s1-btn" onclick="setS1Mode('blend')">
+              <span class="s1-btn-main">Blend</span>
+              <span class="s1-btn-sub">맞춤 원두 배합</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sample-desc-box">
+          <strong>설계 의도 및 사용자 관점 장점:</strong>
+          <ul>
+            <li><strong>최고의 직관성</strong>: 영문 <code>Single Origin</code> / <code>Blend</code>의 모던함을 100% 살리면서, 하단에 10px 미니멀 한글 캡션을 은은하게 배치하여 커피 전문 지식이 없는 일반 사용자도 0.1초 만에 이해합니다.</li>
+            <li><strong>아이콘 없는 단정함</strong>: 유치한 이모지를 일체 배제하고 단아한 타이포그래피로 고급 로스터리 카페 감성을 완성합니다.</li>
+            <li><strong>균형 잡힌 대칭성</strong>: 50:50 좌우 균등 그리드로 글라이더가 정확하게 대칭 슬라이딩됩니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 스타일 B: 테루아 미니 닷 인디케이터형 -->
+      <div class="sample-box">
+        <div class="sample-header">
+          <span class="sample-name">안 B. 테루아 미니 닷 인디케이터형</span>
+          <span class="sample-tag">Apple / Notion 스타일</span>
+        </div>
+        
+        <div class="interactive-stage">
+          <div class="s2-toggle-wrap" role="tablist">
+            <div id="s2Glider" class="s2-glider"></div>
+            <button type="button" id="s2Single" class="s2-btn active" onclick="setS2Mode('single')">
+              <span class="s2-dot single"></span>
+              <span>Single Origin</span>
+            </button>
+            <button type="button" id="s2Blend" class="s2-btn" onclick="setS2Mode('blend')">
+              <span class="s2-dot blend"></span>
+              <span>Blend</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sample-desc-box">
+          <strong>설계 의도 및 사용자 관점 장점:</strong>
+          <ul>
+            <li><strong>극도의 미니멀리즘</strong>: 이모지 대신 6px 마이크로 보석 컬러 닷(산지: 딥 올리브 그린 `•` / 블렌드: 코퍼 앰버 `•`)을 적용하여 세련된 시각 앵커를 제공합니다.</li>
+            <li><strong>선택 확신 피드백</strong>: 활성화된 탭의 컬러 닷이 부드럽게 강조(Glow & Scale)되어 현재 모드를 명확히 인지할 수 있습니다.</li>
+            <li><strong>슬림하고 컴팩트</strong>: 높이가 낮고 슬림하여 맵 상단 바 여백을 여유롭게 확보합니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 스타일 C: 스페셜티 카페 메뉴 태그형 -->
+      <div class="sample-box">
+        <div class="sample-header">
+          <span class="sample-name">안 C. 스페셜티 카페 메뉴 태그형</span>
+          <span class="sample-tag">로스터리 메뉴판 감성</span>
+        </div>
+        
+        <div class="interactive-stage">
+          <div class="s3-row">
+            <div class="s3-toggle-wrap" role="tablist">
+              <div id="s3Glider" class="s3-glider"></div>
+              <button type="button" id="s3Single" class="s3-btn active" onclick="setS3Mode('single')">
+                <span>Single Origin</span>
+              </button>
+              <button type="button" id="s3Blend" class="s3-btn" onclick="setS3Mode('blend')">
+                <span>Blend</span>
+              </button>
+            </div>
+            <div id="s3Badge" class="s3-badge-pill">100% 단일 산지 모드</div>
+          </div>
+        </div>
+
+        <div class="sample-desc-box">
+          <strong>설계 의도 및 사용자 관점 장점:</strong>
+          <ul>
+            <li><strong>역동적 상태 배지</strong>: 버튼 자체는 심플한 영문 탭으로 두고, 선택 상태에 따라 우측 필 배지가 <code>100% 단일 산지 모드</code> ↔ <code>3원두 황금비율 배합</code>으로 유기적 전환됩니다.</li>
+            <li><strong>스페셜티 카페 아이덴티티</strong>: 전문 바리스타가 엄선한 싱글과 블렌드의 콘셉트가 배지로 바로 전달됩니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 스타일 D: 모던 플랫 세그먼트 + 인터랙티브 프리뷰 -->
+      <div class="sample-box">
+        <div class="sample-header">
+          <span class="sample-name">안 D. 모던 플랫 + 인터랙티브 안내 칩</span>
+          <span class="sample-tag">프로덕트 대시보드 룩</span>
+        </div>
+        
+        <div class="interactive-stage">
+          <div class="s4-container">
+            <div class="s4-toggle-wrap" role="tablist">
+              <div id="s4Glider" class="s4-glider"></div>
+              <button type="button" id="s4Single" class="s4-btn active" onclick="setS4Mode('single')">
+                <span>Single Origin</span>
+              </button>
+              <button type="button" id="s4Blend" class="s4-btn" onclick="setS4Mode('blend')">
+                <span>Blend</span>
+              </button>
+            </div>
+            <div id="s4Tooltip" class="s4-tooltip-card">
+              <span>📍 현재 에티오피아 시다모 등 전 세계 60개 산지 1:1 매칭 중</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sample-desc-box">
+          <strong>설계 의도 및 사용자 관점 장점:</strong>
+          <ul>
+            <li><strong>컨텍스트 안내</strong>: 모드를 전환할 때마다 하단에 현재 모드의 핵심 가치와 상태를 1줄 팁으로 안내합니다.</li>
+            <li><strong>군더더기 없는 버튼</strong>: 상단 스위치 자체는 가장 콤팩트하며, 호버 및 클릭 시 매끄러운 반응을 보입니다.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 섹션 2: 산지 정보 카드 (에디토리얼 일반체 최적화 프리뷰) -->
+    <div class="section-title-wrap">
+      <h2 class="section-title">
+        <span class="sec-num">2</span>
+        산지 정보 카드 (에디토리얼 일반체 폰트 적용 프리뷰)
+      </h2>
+      <span class="section-sub">이전 요청으로 볼드체(800)를 일반체(400)로 개선한 현재 실제 카드의 정갈한 타이포그래피입니다.</span>
+    </div>
+
+    <div class="editorial-preview-wrap" style="margin-bottom: 48px;">
+      <div class="editorial-preview-card">
+        <!-- 1. 상단 메타 바 -->
+        <div class="ed-top-meta">
+          <div class="ed-country-tag">
+            <span class="ed-country-dot"></span>
+            <span>ETHIOPIA ORIGIN</span>
+          </div>
+          <span class="ed-hs-badge">HS 0901.21</span>
+        </div>
+
+        <!-- 2. 산지 타이틀 및 테루아 스펙 (일반체 400 적용) -->
+        <div class="ed-title-row">
+          <h3 class="ed-region-title">에티오피아 시다모 · 구지</h3>
+          <div class="ed-specs-row">
+            <span class="ed-alt-pill">2,000m 고산지</span>
+            <span class="ed-bullet">•</span>
+            <span class="ed-spec-text">Heirloom 품종</span>
+            <span class="ed-bullet">•</span>
+            <span class="ed-spec-text">Washed / Natural</span>
+          </div>
+        </div>
+
+        <!-- 3. 원두 / 생두 슬라이딩 탭 -->
+        <div class="ed-seg-wrap" role="tablist">
+          <div id="cardGlider" class="ed-seg-glider"></div>
+          <button type="button" id="cardTabRoasted" class="ed-seg-btn active" onclick="setCardTab('roasted')">
+            <span class="ed-tab-dot roasted"></span>
+            <span>원두 (홈카페용)</span>
+          </button>
+          <button type="button" id="cardTabGreen" class="ed-seg-btn" onclick="setCardTab('green')">
+            <span class="ed-tab-dot green"></span>
+            <span>생두 (로스팅·도매)</span>
+          </button>
+        </div>
+
+        <!-- 4. 구매 채널 카드 -->
+        <div class="ed-actions-grid">
+          <div class="ed-action-card">
+            <div class="ed-action-info">
+              <div class="ed-brand-icon naver">N</div>
+              <div>
+                <div class="ed-action-title">네이버 원두</div>
+                <div class="ed-action-sub">국내 로스터리 배송</div>
+              </div>
+            </div>
+            <span class="ed-arrow">↗</span>
+          </div>
+
+          <div class="ed-action-card">
+            <div class="ed-action-info">
+              <div class="ed-brand-icon amazon">a</div>
+              <div>
+                <div class="ed-action-title">Amazon 직구</div>
+                <div class="ed-action-sub">해외 오리지널 패키지</div>
+              </div>
+            </div>
+            <span class="ed-arrow">↗</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 섹션 3: 4개 시안 비교 요약표 -->
+    <div class="section-title-wrap">
+      <h2 class="section-title">
+        <span class="sec-num">3</span>
+        디자인 안별 특성 및 사용자 가독성 비교표
+      </h2>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>디자인 안</th>
+          <th>영문 모던함</th>
+          <th>일반 사용자 이해도</th>
+          <th>시각적 피드백</th>
+          <th>권장 사용 시나리오</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>안 A. 마이크로 캡션형 (추천)</strong></td>
+          <td>★★★★★</td>
+          <td>★★★★★ (최고)</td>
+          <td>부드러운 슬라이딩 캡슐</td>
+          <td>대중적인 스페셜티 서비스 (누구나 쉽게 이해)</td>
+        </tr>
+        <tr>
+          <td><strong>안 B. 테루아 미니 닷</strong></td>
+          <td>★★★★★ (최고)</td>
+          <td>★★★★☆</td>
+          <td>미니 컬러 보석 닷 글로우</td>
+          <td>애플/노션 스타일의 극단적 미니멀리즘 지향 시</td>
+        </tr>
+        <tr>
+          <td><strong>안 C. 카페 메뉴 태그형</strong></td>
+          <td>★★★★☆</td>
+          <td>★★★★☆</td>
+          <td>우측 실시간 모드 배지 반응</td>
+          <td>스페셜티 카페 로스터리 콘셉트 강조 시</td>
+        </tr>
+        <tr>
+          <td><strong>안 D. 모던 플랫 + 안내 칩</strong></td>
+          <td>★★★★☆</td>
+          <td>★★★★☆</td>
+          <td>하단 컨텍스트 1줄 툴팁</td>
+          <td>데이터 대시보드 및 전문가용 분석 모드 시</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="footer-note">
+      💡 위 샘플 중 가장 마음에 드는 디자인(예: 안 A, 안 B 등)을 말씀해주시면 실제 메인 화면(index.html)에 즉시 정밀 반영해 드리겠습니다!
+    </p>
+
+  </div>
+
+  <script>
+    // 1. 테마 토글 (라이트 ↔ 다크)
+    let isDark = false;
+    function toggleTheme() {
+      isDark = !isDark;
+      document.documentElement.classList.toggle('dark', isDark);
+      document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌓';
+      document.getElementById('themeLabel').textContent = isDark ? '라이트 모드로 보기' : '다크 모드로 보기';
+    }
+
+    // 2. 스타일 1 (에디토리얼 마이크로 캡션) 인터랙션
+    function setS1Mode(mode) {
+      const glider = document.getElementById('s1Glider');
+      const btnS = document.getElementById('s1Single');
+      const btnB = document.getElementById('s1Blend');
+      if (mode === 'single') {
+        glider.style.transform = 'translateX(0%)';
+        btnS.classList.add('active');
+        btnB.classList.remove('active');
+      } else {
+        glider.style.transform = 'translateX(100%)';
+        btnB.classList.add('active');
+        btnS.classList.remove('active');
+      }
+    }
+
+    // 3. 스타일 2 (테루아 미니 닷) 인터랙션
+    function setS2Mode(mode) {
+      const glider = document.getElementById('s2Glider');
+      const btnS = document.getElementById('s2Single');
+      const btnB = document.getElementById('s2Blend');
+      if (mode === 'single') {
+        glider.style.transform = 'translateX(0%)';
+        btnS.classList.add('active');
+        btnB.classList.remove('active');
+      } else {
+        glider.style.transform = 'translateX(100%)';
+        btnB.classList.add('active');
+        btnS.classList.remove('active');
+      }
+    }
+
+    // 4. 스타일 3 (카페 메뉴 태그) 인터랙션
+    function setS3Mode(mode) {
+      const glider = document.getElementById('s3Glider');
+      const btnS = document.getElementById('s3Single');
+      const btnB = document.getElementById('s3Blend');
+      const badge = document.getElementById('s3Badge');
+      if (mode === 'single') {
+        glider.style.transform = 'translateX(0%)';
+        glider.style.width = 'calc(54.5% - 3px)';
+        btnS.classList.add('active');
+        btnB.classList.remove('active');
+        badge.textContent = '100% 단일 산지 모드';
+        badge.style.color = '#3E6D4C';
+      } else {
+        glider.style.transform = 'translateX(120px)';
+        glider.style.width = 'calc(45.5% - 3px)';
+        btnB.classList.add('active');
+        btnS.classList.remove('active');
+        badge.textContent = '3원두 황금비율 배합 모드';
+        badge.style.color = '#C57B44';
+      }
+    }
+
+    // 5. 스타일 4 (모던 플랫 세그먼트) 인터랙션
+    function setS4Mode(mode) {
+      const glider = document.getElementById('s4Glider');
+      const btnS = document.getElementById('s4Single');
+      const btnB = document.getElementById('s4Blend');
+      const tip = document.getElementById('s4Tooltip');
+      if (mode === 'single') {
+        glider.style.transform = 'translateX(0%)';
+        glider.style.width = 'calc(56.8% - 3px)';
+        btnS.classList.add('active');
+        btnB.classList.remove('active');
+        tip.innerHTML = '<span>📍 현재 에티오피아 시다모 등 전 세계 60개 산지 1:1 매칭 중</span>';
+      } else {
+        glider.style.transform = 'translateX(125px)';
+        glider.style.width = 'calc(43.2% - 3px)';
+        btnB.classList.add('active');
+        btnS.classList.remove('active');
+        tip.innerHTML = '<span>✨ 산미·단맛·바디 슬라이더 기반 실시간 3원두 최적 비율 배합 중</span>';
+      }
+    }
+
+    // 6. 산지 카드 내 원두/생두 탭 인터랙션
+    function setCardTab(tab) {
+      const glider = document.getElementById('cardGlider');
+      const tabR = document.getElementById('cardTabRoasted');
+      const tabG = document.getElementById('cardTabGreen');
+      if (tab === 'roasted') {
+        glider.style.transform = 'translateX(0%)';
+        tabR.classList.add('active');
+        tabG.classList.remove('active');
+      } else {
+        glider.style.transform = 'translateX(100%)';
+        tabG.classList.add('active');
+        tabR.classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>

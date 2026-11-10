@@ -1,0 +1,131 @@
+id,class,label,attrs
+T_process,Technique,가공,{}
+T_roasting,Technique,로스팅,{}
+T_blending,Technique,블렌딩,{}
+SP_arabica,Species,아라비카 (C. arabica),"{""share_pct"": 60, ""caffeine_min"": 0.8, ""caffeine_max"": 1.4, ""temp_c"": ""15-24"", ""cga_mg_g"": 65}"
+SP_robusta,Species,로부스타 (C. canephora),"{""share_pct"": 40, ""caffeine_min"": 1.7, ""caffeine_max"": 4.0, ""temp_c"": ""24-30"", ""cga_mg_g"": 140}"
+SP_liberica,Species,리베리카 (C. liberica),{}
+SP_racemosa,Species,라세모사 (C. racemosa),{}
+CT_latam,Continent,중남미,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Latin_America_%28orthographic_projection%29.svg/330px-Latin_America_%28orthographic_projection%29.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Latin_America_%28orthographic_projection%29.svg"", ""image_source"": ""Wikipedia · Latin America"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Latin_America""}"
+CT_asia,Continent,아시아,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Asia_%28orthographic_projection%29_without_New_Guinea.svg/330px-Asia_%28orthographic_projection%29_without_New_Guinea.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Asia_%28orthographic_projection%29_without_New_Guinea.svg"", ""image_source"": ""Wikipedia · Asia"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Asia""}"
+CT_africa,Continent,아프리카,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Africa_%28orthographic_projection%29.svg/330px-Africa_%28orthographic_projection%29.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Africa_%28orthographic_projection%29.svg"", ""image_source"": ""Wikipedia · Africa"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Africa""}"
+CT_europe,Continent,유럽,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg/330px-Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg"", ""image_source"": ""Wikipedia · Europe"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Europe""}"
+CT_oceania,Continent,오세아니아,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Oceania_%28centered_orthographic_projection%29.svg/330px-Oceania_%28centered_orthographic_projection%29.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Oceania_%28centered_orthographic_projection%29.svg"", ""image_source"": ""Wikipedia · Oceania"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Oceania""}"
+CT_namerica,Continent,북미,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Location_North_America.svg/330px-Location_North_America.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Location_North_America.svg"", ""image_source"": ""Wikipedia · North America"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/North_America""}"
+CO_brazil,Country,브라질,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Fazenda_Da_Lagoa.jpg/330px-Fazenda_Da_Lagoa.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Fazenda_Da_Lagoa.jpg"", ""image_source"": ""Wikipedia · Coffee production in Brazil"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Brazil""}"
+CO_colombia,Country,콜롬비아,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Paisaje-Cafetero-Colombiano.png/330px-Paisaje-Cafetero-Colombiano.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Paisaje-Cafetero-Colombiano.png"", ""image_source"": ""Wikipedia · Coffee production in Colombia"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Colombia""}"
+CO_honduras,Country,온두라스,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Coffeebeansorting.jpg/330px-Coffeebeansorting.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Coffeebeansorting.jpg"", ""image_source"": ""Wikipedia · Coffee production in Honduras"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Honduras""}"
+CO_mexico,Country,멕시코,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/330px-Flag_of_Mexico.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_Mexico.svg"", ""image_source"": ""Wikipedia · Mexico"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Mexico""}"
+CO_nicaragua,Country,니카라과,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg/330px-Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg"", ""image_source"": ""Wikipedia · Coffee production in Nicaragua"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Nicaragua""}"
+CO_guatemala,Country,과테말라,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Las_Merceditas_18.jpg/330px-Las_Merceditas_18.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Las_Merceditas_18.jpg"", ""image_source"": ""Wikipedia · Coffee production in Guatemala"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Guatemala""}"
+CO_elsalvador,Country,엘살바도르,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg/330px-Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg"", ""image_source"": ""Wikipedia · Coffee production in El Salvador"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_El_Salvador""}"
+CO_costarica,Country,코스타리카,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/DirkvdM_orosi_valley_bird.jpg/330px-DirkvdM_orosi_valley_bird.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:DirkvdM_orosi_valley_bird.jpg"", ""image_source"": ""Wikipedia · Coffee production in Costa Rica"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Costa_Rica""}"
+CO_panama,Country,파나마,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Flag_of_Panama.svg/330px-Flag_of_Panama.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_Panama.svg"", ""image_source"": ""Wikipedia · Panama"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Panama""}"
+CO_peru,Country,페루,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Medici%C3%B3n8.jpg/330px-Medici%C3%B3n8.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Medici%C3%B3n8.jpg"", ""image_source"": ""Wikipedia · Coffee production in Peru"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Peru""}"
+CO_jamaica,Country,자메이카,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg/330px-Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg"", ""image_source"": ""Wikipedia · Coffee production in Jamaica"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Jamaica""}"
+CO_vietnam,Country,베트남,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Coffee_GL_2020.jpg/330px-Coffee_GL_2020.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Coffee_GL_2020.jpg"", ""image_source"": ""Wikipedia · Coffee production in Vietnam"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Vietnam""}"
+CO_india,Country,인도,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/India_coffee_forests.jpg/330px-India_coffee_forests.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:India_coffee_forests.jpg"", ""image_source"": ""Wikipedia · Coffee production in India"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_India""}"
+CO_indonesia,Country,인도네시아,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg/330px-COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg"", ""image_source"": ""Wikipedia · Coffee production in Indonesia"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Indonesia""}"
+CO_yemen,Country,예멘,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Yemen.svg/330px-Flag_of_Yemen.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_Yemen.svg"", ""image_source"": ""Wikipedia · Yemen"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Yemen""}"
+CO_china,Country,중국,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/330px-Flag_of_the_People%27s_Republic_of_China.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_the_People%27s_Republic_of_China.svg"", ""image_source"": ""Wikipedia · China"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/China""}"
+CO_timor,Country,동티모르(티모르),"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Flag_of_East_Timor.svg/330px-Flag_of_East_Timor.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_East_Timor.svg"", ""image_source"": ""Wikipedia · Timor-Leste"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Timor-Leste""}"
+CO_ethiopia,Country,에티오피아,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Coffee_berry_sorting_process%2C_near_Hawassa.jpg/330px-Coffee_berry_sorting_process%2C_near_Hawassa.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Coffee_berry_sorting_process%2C_near_Hawassa.jpg"", ""image_source"": ""Wikipedia · Coffee production in Ethiopia"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Ethiopia""}"
+CO_uganda,Country,우간다,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg/330px-Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg"", ""image_source"": ""Wikipedia · Coffee production in Uganda"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Uganda""}"
+CO_kenya,Country,케냐,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/330px-Flag_of_Kenya.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_Kenya.svg"", ""image_source"": ""Wikipedia · Kenya"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Kenya""}"
+CO_rwanda,Country,르완다,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Rwandan_Coffee.jpg/330px-Rwandan_Coffee.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Rwandan_Coffee.jpg"", ""image_source"": ""Wikipedia · Coffee production in Rwanda"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Rwanda""}"
+CO_tanzania,Country,탄자니아,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Coffee_zones_of_tanzania.png/330px-Coffee_zones_of_tanzania.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Coffee_zones_of_tanzania.png"", ""image_source"": ""Wikipedia · Coffee production in Tanzania"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Tanzania""}"
+CO_cameroon,Country,카메룬,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/The_National_Archives_UK_-_CO_1069-24-27.jpg/330px-The_National_Archives_UK_-_CO_1069-24-27.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:The_National_Archives_UK_-_CO_1069-24-27.jpg"", ""image_source"": ""Wikipedia · Coffee production in Cameroon"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Cameroon""}"
+CO_ivorycoast,Country,코트디부아르,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg/330px-Flag_of_C%C3%B4te_d%27Ivoire.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_C%C3%B4te_d%27Ivoire.svg"", ""image_source"": ""Wikipedia · Ivory Coast"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Ivory_Coast""}"
+CO_ghana,Country,가나,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/330px-Flag_of_Ghana.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_Ghana.svg"", ""image_source"": ""Wikipedia · Ghana"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Ghana""}"
+CO_madagascar,Country,마다가스카르,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/French_Africa_coffee_stamp_1956.jpg/330px-French_Africa_coffee_stamp_1956.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:French_Africa_coffee_stamp_1956.jpg"", ""image_source"": ""Wikipedia · Coffee production in Madagascar"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Coffee_production_in_Madagascar""}"
+CO_portugal,Country,포르투갈,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Flag_of_Portugal_%28official%29.svg/330px-Flag_of_Portugal_%28official%29.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_Portugal_%28official%29.svg"", ""image_source"": ""Wikipedia · Portugal"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Portugal""}"
+CO_france,Country,프랑스,"{""image"": ""https://thumb.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/330px-Flag_of_France.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_France.svg"", ""image_source"": ""Wikipedia · France"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/France""}"
+CO_usa,Country,미국,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg/330px-Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg"", ""image_source"": ""Wikipedia · United States"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/United_States""}"
+R_mandheling,Region,만델링 (수마트라),"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg/330px-Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg"", ""image_source"": ""Wikipedia · Mandailing Natal Regency"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Mandailing_Natal_Regency""}"
+R_java,Region,자바 이젠 고원,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg/330px-Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg"", ""image_source"": ""Wikipedia · Ijen"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Ijen""}"
+R_toraja,Region,토라자 (술라웨시),"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Ke%27te%27_Kesu%27_1.jpg/330px-Ke%27te%27_Kesu%27_1.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Ke%27te%27_Kesu%27_1.jpg"", ""image_source"": ""Wikipedia · Tana Toraja Regency"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Tana_Toraja_Regency""}"
+R_kintamani,Region,킨타마니 (발리),"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Bali_in_Indonesia_%28special_marker%29.svg/330px-Bali_in_Indonesia_%28special_marker%29.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Bali_in_Indonesia_%28special_marker%29.svg"", ""image_source"": ""Wikipedia · Bali"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Bali""}"
+R_sumatra_low,Region,수마트라 저지대,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Sumatra_Topography.png/330px-Sumatra_Topography.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Sumatra_Topography.png"", ""image_source"": ""Wikipedia · Sumatra"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Sumatra""}"
+R_bahia,Region,바이아,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Bandeira_da_Bahia.svg/330px-Bandeira_da_Bahia.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Bandeira_da_Bahia.svg"", ""image_source"": ""Wikipedia · Bahia"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Bahia""}"
+R_hawaii,Region,하와이 빅아일랜드,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Kona_Coffee_fruits%282%29.jpg/330px-Kona_Coffee_fruits%282%29.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Kona_Coffee_fruits%282%29.jpg"", ""image_source"": ""Wikipedia · Kona coffee"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Kona_coffee""}"
+R_reunion,Region,레위니옹,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Armoiries_R%C3%A9union.svg/330px-Armoiries_R%C3%A9union.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Armoiries_R%C3%A9union.svg"", ""image_source"": ""Wikipedia · Réunion"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/R%C3%A9union""}"
+R_yirgacheffe,Region,예가체프,{}
+R_sidamo,Region,시다모,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Sidama.svg/330px-Flag_of_Sidama.svg.png"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Flag_of_Sidama.svg"", ""image_source"": ""Wikipedia · Sidama Region"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Sidama_Region""}"
+R_harar,Region,하라르,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg/330px-City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg"", ""image_source"": ""Wikipedia · Harar"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Harar""}"
+R_malabar,Region,말라바르 해안,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/2015_0117_Monsooned_Malabar_beans_unroosted.jpg/330px-2015_0117_Monsooned_Malabar_beans_unroosted.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:2015_0117_Monsooned_Malabar_beans_unroosted.jpg"", ""image_source"": ""Wikipedia · Monsooned Malabar"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Monsooned_Malabar""}"
+R_campinas,Region,캄피나스 (IAC),"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg/330px-Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg"", ""image_source"": ""Wikipedia · Instituto Agronômico de Campinas"", ""image_kind"": ""coffee"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Instituto_Agron%C3%B4mico_de_Campinas""}"
+R_mocha_port,Region,모카 항,"{""image"": ""https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Mocha_Red_Sea_-_panoramio.jpg/330px-Mocha_Red_Sea_-_panoramio.jpg"", ""image_file"": ""https://commons.wikimedia.org/wiki/File:Mocha_Red_Sea_-_panoramio.jpg"", ""image_source"": ""Wikipedia · Mokha"", ""image_kind"": ""general"", ""wiki_url"": ""https://en.wikipedia.org/wiki/Mokha""}"
+V_typica,Variety,티피카,{}
+V_bourbon,Variety,버번,"{""note"": ""티피카보다 열매 20~30% 많음""}"
+V_caturra,Variety,카투라,"{""note"": ""키 작고 수확량↑, 컵 품질↓""}"
+V_mundonovo,Variety,문도 노보,{}
+V_catuai,Variety,카투아이,{}
+V_geisha,Variety,게이샤,"{""note"": ""경매 최고가 US$803/lb (2018)""}"
+V_sl28,Variety,SL28,{}
+V_sl34,Variety,SL34,{}
+V_pacas,Variety,파카스,{}
+V_maragogipe,Variety,마라고지페,{}
+V_pacamara,Variety,파카마라,{}
+V_villasarchi,Variety,비야 사르치,{}
+V_kent,Variety,켄트,{}
+V_s795,Variety,S795,{}
+V_s288,Variety,S.288,{}
+V_timor,Variety,티모르 하이브리드,"{""interspecific"": true}"
+V_catimor,Variety,카티모르,"{""interspecific"": true}"
+V_sarchimor,Variety,사르치모르,"{""interspecific"": true}"
+V_heirloom,Variety,에티오피아 토착종 (하라르·시다모·예가체프),{}
+V_kona,Variety,코나,{}
+V_bluemountain,Variety,블루마운틴,{}
+V_javastyle,Variety,자바 (지역 스타일),"{""interspecific"": true, ""note"": ""단일 품종이 아닌 지역 스타일(②)""}"
+V_mocha,Variety,모카,{}
+V_tanzania_dr,Variety,탄자니아 가뭄 저항 품종,{}
+V_frenchmission,Variety,프렌치 미션,{}
+V_criollo,Variety,크리올로,{}
+V_robusta_v,Variety,로부스타 (재배종),{}
+F_acidity,Flavor,산미,{}
+F_body,Flavor,바디,{}
+F_sweet,Flavor,단맛,{}
+F_origin,Flavor,원산지 특성,{}
+F_roast,Flavor,로스팅 풍미,{}
+F_caramel,Flavor,캐러멜,{}
+F_burnt,Flavor,탄 맛,{}
+F_bittersweet,Flavor,쌉싸름한 단맛,{}
+F_grassy,Flavor,풀 냄새,{}
+F_fruity,Flavor,과일향,{}
+F_cocoa,Flavor,코코아·흙·담배·삼나무,{}
+F_spice,Flavor,견과·향신료,{}
+F_citrus,Flavor,시트러스,{}
+F_floral,Flavor,꽃향,{}
+F_chocolate,Flavor,다크 초콜릿·흙,{}
+F_mild,Flavor,순하고 단 여운,{}
+F_mochanote,Flavor,모카 같은 풍미,{}
+P_washed,Process,워시드 (습식),"{""note"": ""과육 제거 → 약 2일 수중 발효 → 점액질 세척. 역사적으로 중미·아프리카 일부""}"
+P_natural,Process,내추럴 (건식),"{""note"": ""체리째 2~3주 햇볕 건조. 역사적으로 브라질·아프리카 대부분""}"
+P_honey,Process,허니 (펄프드 내추럴),{}
+P_wethulled,Process,웻헐링 (기링 바사),{}
+P_civet,Process,코피 루왁 (사향고양이),{}
+P_monsoon,Process,몬순 처리,{}
+P_aging,Process,숙성 (Old Java),{}
+RS_drying,RoastStage,건조 (옐로잉),"{""order"": 1, ""temp_c"": 175}"
+RS_browning,RoastStage,갈변 (마이야르·캐러멜화),"{""order"": 2}"
+RS_expansion,RoastStage,팽창,"{""order"": 3}"
+RS_first,RoastStage,1차 크랙,"{""order"": 4, ""temp_c"": 196}"
+RS_second,RoastStage,2차 크랙,"{""order"": 5, ""temp_c"": 224}"
+RS_cooling,RoastStage,냉각,"{""order"": 6}"
+RL_cinnamon,RoastLevel,시나몬,"{""category"": ""light"", ""temp_c"": 196}"
+RL_newengland,RoastLevel,뉴잉글랜드,"{""category"": ""light"", ""temp_c"": 205}"
+RL_american,RoastLevel,아메리칸,"{""category"": ""medium"", ""temp_c"": 210}"
+RL_city,RoastLevel,시티,"{""category"": ""medium"", ""temp_c"": 219, ""note"": ""스페셜티 커피에서 흔한 배전도""}"
+RL_fullcity,RoastLevel,풀 시티,"{""category"": ""dark"", ""temp_c"": 225}"
+RL_vienna,RoastLevel,비엔나,"{""category"": ""dark"", ""temp_c"": 230}"
+RL_french,RoastLevel,프렌치,"{""category"": ""dark"", ""temp_c"": 240}"
+RL_italian,RoastLevel,이탈리안,"{""category"": ""dark"", ""temp_c"": 245}"
+EQ_drum,Equipment,드럼 로스터,"{""note"": ""수평 회전 드럼, 대부분 간접 가열""}"
+EQ_hotair,Equipment,열풍(유동층) 로스터,{}
+EQ_packed,Equipment,패킹 베드 로스터,{}
+EQ_tangential,Equipment,탄젠셜 로스터,{}
+EQ_centrifugal,Equipment,원심식 로스터,{}
+BM_pre,BlendMethod,선블렌딩 (Pre-roast),"{""pros"": ""효율, 색 균일성"", ""cons"": ""밀도·크기 차이로 불균일 배전""}"
+BM_post,BlendMethod,후블렌딩 (Post-roast),"{""pros"": ""성분 비율 조정·교체 쉬움, 스페셜티 선호"", ""cons"": ""(출처에 없음)""}"
+B_mochajava,Blend,모카 자바 (전통),{}
+B_mochajava_modern,Blend,모카 자바 (현대 변형),{}

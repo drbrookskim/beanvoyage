@@ -1,0 +1,26 @@
+{
+  "name": "cobts-service",
+  "version": "1.1.0",
+  "description": "CoBTS (Coffee Bean Tracking Service) - Taste-to-Origin Cartography, 7 Countries & 14 Regions Matching, AI Blending & Commerce Guide",
+  "scripts": {
+    "dev": "npx serve -l 3000 .",
+    "start": "npx serve -l 3000 .",
+    "build:css": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind.min.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind.min.css --watch",
+    "update:trends": "node scripts/fetch-top-beans.js"
+  },
+  "keywords": [
+    "cobts",
+    "coffee-bean-tracking-service",
+    "specialty-coffee",
+    "cartography",
+    "sketch-map",
+    "ai-blend",
+    "naver-shopping"
+  ],
+  "author": "CoBTS Agent Team",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

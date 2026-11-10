@@ -1,0 +1,3910 @@
+{
+ "classes": {
+  "Technique": "기술 분야(가공·로스팅·블렌딩)",
+  "Species": "커피 종",
+  "Variety": "품종",
+  "Continent": "대륙·권역",
+  "Country": "국가",
+  "Region": "산지(지역)",
+  "Process": "가공 방식",
+  "RoastStage": "로스팅 단계",
+  "RoastLevel": "배전도",
+  "Equipment": "로스터 장비",
+  "BlendMethod": "블렌딩 방법",
+  "Blend": "블렌드",
+  "Flavor": "풍미·특성"
+ },
+ "relations": {
+  "belongsTo": {
+   "domain": [
+    "Variety"
+   ],
+   "range": [
+    "Species"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "mutationOf": {
+   "domain": [
+    "Variety"
+   ],
+   "range": [
+    "Variety"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "selectedFrom": {
+   "domain": [
+    "Variety"
+   ],
+   "range": [
+    "Variety"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "crossOf": {
+   "domain": [
+    "Variety"
+   ],
+   "range": [
+    "Variety"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "descendsFrom": {
+   "domain": [
+    "Variety"
+   ],
+   "range": [
+    "Variety"
+   ],
+   "property": "derived",
+   "inverse": null
+  },
+  "originatesIn": {
+   "domain": [
+    "Variety",
+    "Process"
+   ],
+   "range": [
+    "Continent",
+    "Country",
+    "Region"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "grownIn": {
+   "domain": [
+    "Variety",
+    "Species"
+   ],
+   "range": [
+    "Continent",
+    "Country",
+    "Region"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "produces": {
+   "domain": [
+    "Country"
+   ],
+   "range": [
+    "Species"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "mainlyProducedIn": {
+   "domain": [
+    "Species"
+   ],
+   "range": [
+    "Continent"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "locatedIn": {
+   "domain": [
+    "Country",
+    "Region"
+   ],
+   "range": [
+    "Country",
+    "Continent"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "usesProcess": {
+   "domain": [
+    "Continent",
+    "Country",
+    "Region"
+   ],
+   "range": [
+    "Process"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "partOf": {
+   "domain": [
+    "Process",
+    "RoastStage",
+    "RoastLevel",
+    "Equipment",
+    "BlendMethod"
+   ],
+   "range": [
+    "Technique"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "nextStage": {
+   "domain": [
+    "RoastStage"
+   ],
+   "range": [
+    "RoastStage"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "darkerThan": {
+   "domain": [
+    "RoastLevel"
+   ],
+   "range": [
+    "RoastLevel"
+   ],
+   "property": "derived",
+   "inverse": null
+  },
+  "reachedAfter": {
+   "domain": [
+    "RoastLevel"
+   ],
+   "range": [
+    "RoastStage"
+   ],
+   "property": "derived",
+   "inverse": null
+  },
+  "increases": {
+   "domain": [
+    "Process",
+    "RoastLevel"
+   ],
+   "range": [
+    "Flavor"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "decreases": {
+   "domain": [
+    "Process",
+    "RoastLevel"
+   ],
+   "range": [
+    "Flavor"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "emphasizes": {
+   "domain": [
+    "RoastLevel",
+    "Region",
+    "Variety",
+    "Process",
+    "Blend"
+   ],
+   "range": [
+    "Flavor"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "hasComponent": {
+   "domain": [
+    "Blend"
+   ],
+   "range": [
+    "Variety",
+    "Region",
+    "Continent"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "usesMethod": {
+   "domain": [
+    "Blend"
+   ],
+   "range": [
+    "BlendMethod"
+   ],
+   "property": "",
+   "inverse": null
+  },
+  "contrastsWith": {
+   "domain": [
+    "BlendMethod"
+   ],
+   "range": [
+    "BlendMethod"
+   ],
+   "property": "symmetric",
+   "inverse": null
+  }
+ },
+ "nodes": [
+  {
+   "id": "T_process",
+   "cls": "Technique",
+   "label": "가공"
+  },
+  {
+   "id": "T_roasting",
+   "cls": "Technique",
+   "label": "로스팅"
+  },
+  {
+   "id": "T_blending",
+   "cls": "Technique",
+   "label": "블렌딩"
+  },
+  {
+   "id": "SP_arabica",
+   "cls": "Species",
+   "label": "아라비카 (C. arabica)",
+   "share_pct": 60,
+   "caffeine_min": 0.8,
+   "caffeine_max": 1.4,
+   "temp_c": "15-24",
+   "cga_mg_g": 65
+  },
+  {
+   "id": "SP_robusta",
+   "cls": "Species",
+   "label": "로부스타 (C. canephora)",
+   "share_pct": 40,
+   "caffeine_min": 1.7,
+   "caffeine_max": 4.0,
+   "temp_c": "24-30",
+   "cga_mg_g": 140
+  },
+  {
+   "id": "SP_liberica",
+   "cls": "Species",
+   "label": "리베리카 (C. liberica)"
+  },
+  {
+   "id": "SP_racemosa",
+   "cls": "Species",
+   "label": "라세모사 (C. racemosa)"
+  },
+  {
+   "id": "CT_latam",
+   "cls": "Continent",
+   "label": "중남미",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Latin_America_%28orthographic_projection%29.svg/330px-Latin_America_%28orthographic_projection%29.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Latin_America_%28orthographic_projection%29.svg",
+   "image_source": "Wikipedia · Latin America",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Latin_America"
+  },
+  {
+   "id": "CT_asia",
+   "cls": "Continent",
+   "label": "아시아",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Asia_%28orthographic_projection%29_without_New_Guinea.svg/330px-Asia_%28orthographic_projection%29_without_New_Guinea.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Asia_%28orthographic_projection%29_without_New_Guinea.svg",
+   "image_source": "Wikipedia · Asia",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Asia"
+  },
+  {
+   "id": "CT_africa",
+   "cls": "Continent",
+   "label": "아프리카",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Africa_%28orthographic_projection%29.svg/330px-Africa_%28orthographic_projection%29.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Africa_%28orthographic_projection%29.svg",
+   "image_source": "Wikipedia · Africa",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Africa"
+  },
+  {
+   "id": "CT_europe",
+   "cls": "Continent",
+   "label": "유럽",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg/330px-Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg",
+   "image_source": "Wikipedia · Europe",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Europe"
+  },
+  {
+   "id": "CT_oceania",
+   "cls": "Continent",
+   "label": "오세아니아",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Oceania_%28centered_orthographic_projection%29.svg/330px-Oceania_%28centered_orthographic_projection%29.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Oceania_%28centered_orthographic_projection%29.svg",
+   "image_source": "Wikipedia · Oceania",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Oceania"
+  },
+  {
+   "id": "CT_namerica",
+   "cls": "Continent",
+   "label": "북미",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Location_North_America.svg/330px-Location_North_America.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Location_North_America.svg",
+   "image_source": "Wikipedia · North America",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/North_America"
+  },
+  {
+   "id": "CO_brazil",
+   "cls": "Country",
+   "label": "브라질",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Fazenda_Da_Lagoa.jpg/330px-Fazenda_Da_Lagoa.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Fazenda_Da_Lagoa.jpg",
+   "image_source": "Wikipedia · Coffee production in Brazil",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Brazil"
+  },
+  {
+   "id": "CO_colombia",
+   "cls": "Country",
+   "label": "콜롬비아",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Paisaje-Cafetero-Colombiano.png/330px-Paisaje-Cafetero-Colombiano.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Paisaje-Cafetero-Colombiano.png",
+   "image_source": "Wikipedia · Coffee production in Colombia",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Colombia"
+  },
+  {
+   "id": "CO_honduras",
+   "cls": "Country",
+   "label": "온두라스",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Coffeebeansorting.jpg/330px-Coffeebeansorting.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Coffeebeansorting.jpg",
+   "image_source": "Wikipedia · Coffee production in Honduras",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Honduras"
+  },
+  {
+   "id": "CO_mexico",
+   "cls": "Country",
+   "label": "멕시코",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/330px-Flag_of_Mexico.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Mexico.svg",
+   "image_source": "Wikipedia · Mexico",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Mexico"
+  },
+  {
+   "id": "CO_nicaragua",
+   "cls": "Country",
+   "label": "니카라과",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg/330px-Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg",
+   "image_source": "Wikipedia · Coffee production in Nicaragua",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Nicaragua"
+  },
+  {
+   "id": "CO_guatemala",
+   "cls": "Country",
+   "label": "과테말라",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Las_Merceditas_18.jpg/330px-Las_Merceditas_18.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Las_Merceditas_18.jpg",
+   "image_source": "Wikipedia · Coffee production in Guatemala",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Guatemala"
+  },
+  {
+   "id": "CO_elsalvador",
+   "cls": "Country",
+   "label": "엘살바도르",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg/330px-Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg",
+   "image_source": "Wikipedia · Coffee production in El Salvador",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_El_Salvador"
+  },
+  {
+   "id": "CO_costarica",
+   "cls": "Country",
+   "label": "코스타리카",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/DirkvdM_orosi_valley_bird.jpg/330px-DirkvdM_orosi_valley_bird.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:DirkvdM_orosi_valley_bird.jpg",
+   "image_source": "Wikipedia · Coffee production in Costa Rica",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Costa_Rica"
+  },
+  {
+   "id": "CO_panama",
+   "cls": "Country",
+   "label": "파나마",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Flag_of_Panama.svg/330px-Flag_of_Panama.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Panama.svg",
+   "image_source": "Wikipedia · Panama",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Panama"
+  },
+  {
+   "id": "CO_peru",
+   "cls": "Country",
+   "label": "페루",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Medici%C3%B3n8.jpg/330px-Medici%C3%B3n8.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Medici%C3%B3n8.jpg",
+   "image_source": "Wikipedia · Coffee production in Peru",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Peru"
+  },
+  {
+   "id": "CO_jamaica",
+   "cls": "Country",
+   "label": "자메이카",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg/330px-Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg",
+   "image_source": "Wikipedia · Coffee production in Jamaica",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Jamaica"
+  },
+  {
+   "id": "CO_vietnam",
+   "cls": "Country",
+   "label": "베트남",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Coffee_GL_2020.jpg/330px-Coffee_GL_2020.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_GL_2020.jpg",
+   "image_source": "Wikipedia · Coffee production in Vietnam",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Vietnam"
+  },
+  {
+   "id": "CO_india",
+   "cls": "Country",
+   "label": "인도",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/India_coffee_forests.jpg/330px-India_coffee_forests.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:India_coffee_forests.jpg",
+   "image_source": "Wikipedia · Coffee production in India",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_India"
+  },
+  {
+   "id": "CO_indonesia",
+   "cls": "Country",
+   "label": "인도네시아",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg/330px-COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg",
+   "image_source": "Wikipedia · Coffee production in Indonesia",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Indonesia"
+  },
+  {
+   "id": "CO_yemen",
+   "cls": "Country",
+   "label": "예멘",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Yemen.svg/330px-Flag_of_Yemen.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Yemen.svg",
+   "image_source": "Wikipedia · Yemen",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Yemen"
+  },
+  {
+   "id": "CO_china",
+   "cls": "Country",
+   "label": "중국",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/330px-Flag_of_the_People%27s_Republic_of_China.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_the_People%27s_Republic_of_China.svg",
+   "image_source": "Wikipedia · China",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/China"
+  },
+  {
+   "id": "CO_timor",
+   "cls": "Country",
+   "label": "동티모르(티모르)",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Flag_of_East_Timor.svg/330px-Flag_of_East_Timor.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_East_Timor.svg",
+   "image_source": "Wikipedia · Timor-Leste",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Timor-Leste"
+  },
+  {
+   "id": "CO_ethiopia",
+   "cls": "Country",
+   "label": "에티오피아",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Coffee_berry_sorting_process%2C_near_Hawassa.jpg/330px-Coffee_berry_sorting_process%2C_near_Hawassa.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_berry_sorting_process%2C_near_Hawassa.jpg",
+   "image_source": "Wikipedia · Coffee production in Ethiopia",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Ethiopia"
+  },
+  {
+   "id": "CO_uganda",
+   "cls": "Country",
+   "label": "우간다",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg/330px-Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg",
+   "image_source": "Wikipedia · Coffee production in Uganda",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Uganda"
+  },
+  {
+   "id": "CO_kenya",
+   "cls": "Country",
+   "label": "케냐",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/330px-Flag_of_Kenya.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Kenya.svg",
+   "image_source": "Wikipedia · Kenya",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Kenya"
+  },
+  {
+   "id": "CO_rwanda",
+   "cls": "Country",
+   "label": "르완다",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Rwandan_Coffee.jpg/330px-Rwandan_Coffee.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Rwandan_Coffee.jpg",
+   "image_source": "Wikipedia · Coffee production in Rwanda",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Rwanda"
+  },
+  {
+   "id": "CO_tanzania",
+   "cls": "Country",
+   "label": "탄자니아",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Coffee_zones_of_tanzania.png/330px-Coffee_zones_of_tanzania.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_zones_of_tanzania.png",
+   "image_source": "Wikipedia · Coffee production in Tanzania",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Tanzania"
+  },
+  {
+   "id": "CO_cameroon",
+   "cls": "Country",
+   "label": "카메룬",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/The_National_Archives_UK_-_CO_1069-24-27.jpg/330px-The_National_Archives_UK_-_CO_1069-24-27.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:The_National_Archives_UK_-_CO_1069-24-27.jpg",
+   "image_source": "Wikipedia · Coffee production in Cameroon",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Cameroon"
+  },
+  {
+   "id": "CO_ivorycoast",
+   "cls": "Country",
+   "label": "코트디부아르",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg/330px-Flag_of_C%C3%B4te_d%27Ivoire.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_C%C3%B4te_d%27Ivoire.svg",
+   "image_source": "Wikipedia · Ivory Coast",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Ivory_Coast"
+  },
+  {
+   "id": "CO_ghana",
+   "cls": "Country",
+   "label": "가나",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/330px-Flag_of_Ghana.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Ghana.svg",
+   "image_source": "Wikipedia · Ghana",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Ghana"
+  },
+  {
+   "id": "CO_madagascar",
+   "cls": "Country",
+   "label": "마다가스카르",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/French_Africa_coffee_stamp_1956.jpg/330px-French_Africa_coffee_stamp_1956.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:French_Africa_coffee_stamp_1956.jpg",
+   "image_source": "Wikipedia · Coffee production in Madagascar",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Madagascar"
+  },
+  {
+   "id": "CO_portugal",
+   "cls": "Country",
+   "label": "포르투갈",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Flag_of_Portugal_%28official%29.svg/330px-Flag_of_Portugal_%28official%29.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Portugal_%28official%29.svg",
+   "image_source": "Wikipedia · Portugal",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Portugal"
+  },
+  {
+   "id": "CO_france",
+   "cls": "Country",
+   "label": "프랑스",
+   "image": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/330px-Flag_of_France.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_France.svg",
+   "image_source": "Wikipedia · France",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/France"
+  },
+  {
+   "id": "CO_usa",
+   "cls": "Country",
+   "label": "미국",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg/330px-Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg",
+   "image_source": "Wikipedia · United States",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/United_States"
+  },
+  {
+   "id": "R_mandheling",
+   "cls": "Region",
+   "label": "만델링 (수마트라)",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg/330px-Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg",
+   "image_source": "Wikipedia · Mandailing Natal Regency",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Mandailing_Natal_Regency"
+  },
+  {
+   "id": "R_java",
+   "cls": "Region",
+   "label": "자바 이젠 고원",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg/330px-Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg",
+   "image_source": "Wikipedia · Ijen",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Ijen"
+  },
+  {
+   "id": "R_toraja",
+   "cls": "Region",
+   "label": "토라자 (술라웨시)",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Ke%27te%27_Kesu%27_1.jpg/330px-Ke%27te%27_Kesu%27_1.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Ke%27te%27_Kesu%27_1.jpg",
+   "image_source": "Wikipedia · Tana Toraja Regency",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Tana_Toraja_Regency"
+  },
+  {
+   "id": "R_kintamani",
+   "cls": "Region",
+   "label": "킨타마니 (발리)",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Bali_in_Indonesia_%28special_marker%29.svg/330px-Bali_in_Indonesia_%28special_marker%29.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Bali_in_Indonesia_%28special_marker%29.svg",
+   "image_source": "Wikipedia · Bali",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Bali"
+  },
+  {
+   "id": "R_sumatra_low",
+   "cls": "Region",
+   "label": "수마트라 저지대",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Sumatra_Topography.png/330px-Sumatra_Topography.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Sumatra_Topography.png",
+   "image_source": "Wikipedia · Sumatra",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Sumatra"
+  },
+  {
+   "id": "R_bahia",
+   "cls": "Region",
+   "label": "바이아",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Bandeira_da_Bahia.svg/330px-Bandeira_da_Bahia.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Bandeira_da_Bahia.svg",
+   "image_source": "Wikipedia · Bahia",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Bahia"
+  },
+  {
+   "id": "R_hawaii",
+   "cls": "Region",
+   "label": "하와이 빅아일랜드",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Kona_Coffee_fruits%282%29.jpg/330px-Kona_Coffee_fruits%282%29.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Kona_Coffee_fruits%282%29.jpg",
+   "image_source": "Wikipedia · Kona coffee",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Kona_coffee"
+  },
+  {
+   "id": "R_reunion",
+   "cls": "Region",
+   "label": "레위니옹",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Armoiries_R%C3%A9union.svg/330px-Armoiries_R%C3%A9union.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Armoiries_R%C3%A9union.svg",
+   "image_source": "Wikipedia · Réunion",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/R%C3%A9union"
+  },
+  {
+   "id": "R_yirgacheffe",
+   "cls": "Region",
+   "label": "예가체프"
+  },
+  {
+   "id": "R_sidamo",
+   "cls": "Region",
+   "label": "시다모",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Sidama.svg/330px-Flag_of_Sidama.svg.png",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Sidama.svg",
+   "image_source": "Wikipedia · Sidama Region",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Sidama_Region"
+  },
+  {
+   "id": "R_harar",
+   "cls": "Region",
+   "label": "하라르",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg/330px-City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg",
+   "image_source": "Wikipedia · Harar",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Harar"
+  },
+  {
+   "id": "R_malabar",
+   "cls": "Region",
+   "label": "말라바르 해안",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/2015_0117_Monsooned_Malabar_beans_unroosted.jpg/330px-2015_0117_Monsooned_Malabar_beans_unroosted.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:2015_0117_Monsooned_Malabar_beans_unroosted.jpg",
+   "image_source": "Wikipedia · Monsooned Malabar",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Monsooned_Malabar"
+  },
+  {
+   "id": "R_campinas",
+   "cls": "Region",
+   "label": "캄피나스 (IAC)",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg/330px-Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg",
+   "image_source": "Wikipedia · Instituto Agronômico de Campinas",
+   "image_kind": "coffee",
+   "wiki_url": "https://en.wikipedia.org/wiki/Instituto_Agron%C3%B4mico_de_Campinas"
+  },
+  {
+   "id": "R_mocha_port",
+   "cls": "Region",
+   "label": "모카 항",
+   "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Mocha_Red_Sea_-_panoramio.jpg/330px-Mocha_Red_Sea_-_panoramio.jpg",
+   "image_file": "https://commons.wikimedia.org/wiki/File:Mocha_Red_Sea_-_panoramio.jpg",
+   "image_source": "Wikipedia · Mokha",
+   "image_kind": "general",
+   "wiki_url": "https://en.wikipedia.org/wiki/Mokha"
+  },
+  {
+   "id": "V_typica",
+   "cls": "Variety",
+   "label": "티피카"
+  },
+  {
+   "id": "V_bourbon",
+   "cls": "Variety",
+   "label": "버번",
+   "note": "티피카보다 열매 20~30% 많음"
+  },
+  {
+   "id": "V_caturra",
+   "cls": "Variety",
+   "label": "카투라",
+   "note": "키 작고 수확량↑, 컵 품질↓"
+  },
+  {
+   "id": "V_mundonovo",
+   "cls": "Variety",
+   "label": "문도 노보"
+  },
+  {
+   "id": "V_catuai",
+   "cls": "Variety",
+   "label": "카투아이"
+  },
+  {
+   "id": "V_geisha",
+   "cls": "Variety",
+   "label": "게이샤",
+   "note": "경매 최고가 US$803/lb (2018)"
+  },
+  {
+   "id": "V_sl28",
+   "cls": "Variety",
+   "label": "SL28"
+  },
+  {
+   "id": "V_sl34",
+   "cls": "Variety",
+   "label": "SL34"
+  },
+  {
+   "id": "V_pacas",
+   "cls": "Variety",
+   "label": "파카스"
+  },
+  {
+   "id": "V_maragogipe",
+   "cls": "Variety",
+   "label": "마라고지페"
+  },
+  {
+   "id": "V_pacamara",
+   "cls": "Variety",
+   "label": "파카마라"
+  },
+  {
+   "id": "V_villasarchi",
+   "cls": "Variety",
+   "label": "비야 사르치"
+  },
+  {
+   "id": "V_kent",
+   "cls": "Variety",
+   "label": "켄트"
+  },
+  {
+   "id": "V_s795",
+   "cls": "Variety",
+   "label": "S795"
+  },
+  {
+   "id": "V_s288",
+   "cls": "Variety",
+   "label": "S.288"
+  },
+  {
+   "id": "V_timor",
+   "cls": "Variety",
+   "label": "티모르 하이브리드",
+   "interspecific": true
+  },
+  {
+   "id": "V_catimor",
+   "cls": "Variety",
+   "label": "카티모르",
+   "interspecific": true
+  },
+  {
+   "id": "V_sarchimor",
+   "cls": "Variety",
+   "label": "사르치모르",
+   "interspecific": true
+  },
+  {
+   "id": "V_heirloom",
+   "cls": "Variety",
+   "label": "에티오피아 토착종 (하라르·시다모·예가체프)"
+  },
+  {
+   "id": "V_kona",
+   "cls": "Variety",
+   "label": "코나"
+  },
+  {
+   "id": "V_bluemountain",
+   "cls": "Variety",
+   "label": "블루마운틴"
+  },
+  {
+   "id": "V_javastyle",
+   "cls": "Variety",
+   "label": "자바 (지역 스타일)",
+   "interspecific": true,
+   "note": "단일 품종이 아닌 지역 스타일(②)"
+  },
+  {
+   "id": "V_mocha",
+   "cls": "Variety",
+   "label": "모카"
+  },
+  {
+   "id": "V_tanzania_dr",
+   "cls": "Variety",
+   "label": "탄자니아 가뭄 저항 품종"
+  },
+  {
+   "id": "V_frenchmission",
+   "cls": "Variety",
+   "label": "프렌치 미션"
+  },
+  {
+   "id": "V_criollo",
+   "cls": "Variety",
+   "label": "크리올로"
+  },
+  {
+   "id": "V_robusta_v",
+   "cls": "Variety",
+   "label": "로부스타 (재배종)"
+  },
+  {
+   "id": "F_acidity",
+   "cls": "Flavor",
+   "label": "산미"
+  },
+  {
+   "id": "F_body",
+   "cls": "Flavor",
+   "label": "바디"
+  },
+  {
+   "id": "F_sweet",
+   "cls": "Flavor",
+   "label": "단맛"
+  },
+  {
+   "id": "F_origin",
+   "cls": "Flavor",
+   "label": "원산지 특성"
+  },
+  {
+   "id": "F_roast",
+   "cls": "Flavor",
+   "label": "로스팅 풍미"
+  },
+  {
+   "id": "F_caramel",
+   "cls": "Flavor",
+   "label": "캐러멜"
+  },
+  {
+   "id": "F_burnt",
+   "cls": "Flavor",
+   "label": "탄 맛"
+  },
+  {
+   "id": "F_bittersweet",
+   "cls": "Flavor",
+   "label": "쌉싸름한 단맛"
+  },
+  {
+   "id": "F_grassy",
+   "cls": "Flavor",
+   "label": "풀 냄새"
+  },
+  {
+   "id": "F_fruity",
+   "cls": "Flavor",
+   "label": "과일향"
+  },
+  {
+   "id": "F_cocoa",
+   "cls": "Flavor",
+   "label": "코코아·흙·담배·삼나무"
+  },
+  {
+   "id": "F_spice",
+   "cls": "Flavor",
+   "label": "견과·향신료"
+  },
+  {
+   "id": "F_citrus",
+   "cls": "Flavor",
+   "label": "시트러스"
+  },
+  {
+   "id": "F_floral",
+   "cls": "Flavor",
+   "label": "꽃향"
+  },
+  {
+   "id": "F_chocolate",
+   "cls": "Flavor",
+   "label": "다크 초콜릿·흙"
+  },
+  {
+   "id": "F_mild",
+   "cls": "Flavor",
+   "label": "순하고 단 여운"
+  },
+  {
+   "id": "F_mochanote",
+   "cls": "Flavor",
+   "label": "모카 같은 풍미"
+  },
+  {
+   "id": "P_washed",
+   "cls": "Process",
+   "label": "워시드 (습식)",
+   "note": "과육 제거 → 약 2일 수중 발효 → 점액질 세척. 역사적으로 중미·아프리카 일부"
+  },
+  {
+   "id": "P_natural",
+   "cls": "Process",
+   "label": "내추럴 (건식)",
+   "note": "체리째 2~3주 햇볕 건조. 역사적으로 브라질·아프리카 대부분"
+  },
+  {
+   "id": "P_honey",
+   "cls": "Process",
+   "label": "허니 (펄프드 내추럴)"
+  },
+  {
+   "id": "P_wethulled",
+   "cls": "Process",
+   "label": "웻헐링 (기링 바사)"
+  },
+  {
+   "id": "P_civet",
+   "cls": "Process",
+   "label": "코피 루왁 (사향고양이)"
+  },
+  {
+   "id": "P_monsoon",
+   "cls": "Process",
+   "label": "몬순 처리"
+  },
+  {
+   "id": "P_aging",
+   "cls": "Process",
+   "label": "숙성 (Old Java)"
+  },
+  {
+   "id": "RS_drying",
+   "cls": "RoastStage",
+   "label": "건조 (옐로잉)",
+   "order": 1,
+   "temp_c": 175
+  },
+  {
+   "id": "RS_browning",
+   "cls": "RoastStage",
+   "label": "갈변 (마이야르·캐러멜화)",
+   "order": 2
+  },
+  {
+   "id": "RS_expansion",
+   "cls": "RoastStage",
+   "label": "팽창",
+   "order": 3
+  },
+  {
+   "id": "RS_first",
+   "cls": "RoastStage",
+   "label": "1차 크랙",
+   "order": 4,
+   "temp_c": 196
+  },
+  {
+   "id": "RS_second",
+   "cls": "RoastStage",
+   "label": "2차 크랙",
+   "order": 5,
+   "temp_c": 224
+  },
+  {
+   "id": "RS_cooling",
+   "cls": "RoastStage",
+   "label": "냉각",
+   "order": 6
+  },
+  {
+   "id": "RL_cinnamon",
+   "cls": "RoastLevel",
+   "label": "시나몬",
+   "category": "light",
+   "temp_c": 196
+  },
+  {
+   "id": "RL_newengland",
+   "cls": "RoastLevel",
+   "label": "뉴잉글랜드",
+   "category": "light",
+   "temp_c": 205
+  },
+  {
+   "id": "RL_american",
+   "cls": "RoastLevel",
+   "label": "아메리칸",
+   "category": "medium",
+   "temp_c": 210
+  },
+  {
+   "id": "RL_city",
+   "cls": "RoastLevel",
+   "label": "시티",
+   "category": "medium",
+   "temp_c": 219,
+   "note": "스페셜티 커피에서 흔한 배전도"
+  },
+  {
+   "id": "RL_fullcity",
+   "cls": "RoastLevel",
+   "label": "풀 시티",
+   "category": "dark",
+   "temp_c": 225
+  },
+  {
+   "id": "RL_vienna",
+   "cls": "RoastLevel",
+   "label": "비엔나",
+   "category": "dark",
+   "temp_c": 230
+  },
+  {
+   "id": "RL_french",
+   "cls": "RoastLevel",
+   "label": "프렌치",
+   "category": "dark",
+   "temp_c": 240
+  },
+  {
+   "id": "RL_italian",
+   "cls": "RoastLevel",
+   "label": "이탈리안",
+   "category": "dark",
+   "temp_c": 245
+  },
+  {
+   "id": "EQ_drum",
+   "cls": "Equipment",
+   "label": "드럼 로스터",
+   "note": "수평 회전 드럼, 대부분 간접 가열"
+  },
+  {
+   "id": "EQ_hotair",
+   "cls": "Equipment",
+   "label": "열풍(유동층) 로스터"
+  },
+  {
+   "id": "EQ_packed",
+   "cls": "Equipment",
+   "label": "패킹 베드 로스터"
+  },
+  {
+   "id": "EQ_tangential",
+   "cls": "Equipment",
+   "label": "탄젠셜 로스터"
+  },
+  {
+   "id": "EQ_centrifugal",
+   "cls": "Equipment",
+   "label": "원심식 로스터"
+  },
+  {
+   "id": "BM_pre",
+   "cls": "BlendMethod",
+   "label": "선블렌딩 (Pre-roast)",
+   "pros": "효율, 색 균일성",
+   "cons": "밀도·크기 차이로 불균일 배전"
+  },
+  {
+   "id": "BM_post",
+   "cls": "BlendMethod",
+   "label": "후블렌딩 (Post-roast)",
+   "pros": "성분 비율 조정·교체 쉬움, 스페셜티 선호",
+   "cons": "(출처에 없음)"
+  },
+  {
+   "id": "B_mochajava",
+   "cls": "Blend",
+   "label": "모카 자바 (전통)"
+  },
+  {
+   "id": "B_mochajava_modern",
+   "cls": "Blend",
+   "label": "모카 자바 (현대 변형)"
+  }
+ ],
+ "edges": [
+  {
+   "source": "CO_brazil",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_colombia",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_honduras",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_mexico",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_nicaragua",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_guatemala",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_elsalvador",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_costarica",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_panama",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_peru",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_jamaica",
+   "rel": "locatedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_vietnam",
+   "rel": "locatedIn",
+   "target": "CT_asia",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_india",
+   "rel": "locatedIn",
+   "target": "CT_asia",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_indonesia",
+   "rel": "locatedIn",
+   "target": "CT_asia",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_yemen",
+   "rel": "locatedIn",
+   "target": "CT_asia",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_china",
+   "rel": "locatedIn",
+   "target": "CT_asia",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_timor",
+   "rel": "locatedIn",
+   "target": "CT_asia",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_ethiopia",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_uganda",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_kenya",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_rwanda",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_tanzania",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_cameroon",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_ivorycoast",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_ghana",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_madagascar",
+   "rel": "locatedIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_portugal",
+   "rel": "locatedIn",
+   "target": "CT_europe",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_france",
+   "rel": "locatedIn",
+   "target": "CT_europe",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_usa",
+   "rel": "locatedIn",
+   "target": "CT_namerica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "R_mandheling",
+   "rel": "locatedIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_java",
+   "rel": "locatedIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_toraja",
+   "rel": "locatedIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_kintamani",
+   "rel": "locatedIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_sumatra_low",
+   "rel": "locatedIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_bahia",
+   "rel": "locatedIn",
+   "target": "CO_brazil",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "R_hawaii",
+   "rel": "locatedIn",
+   "target": "CO_usa",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "R_reunion",
+   "rel": "locatedIn",
+   "target": "CO_france",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "R_yirgacheffe",
+   "rel": "locatedIn",
+   "target": "CO_ethiopia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "R_sidamo",
+   "rel": "locatedIn",
+   "target": "CO_ethiopia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "R_harar",
+   "rel": "locatedIn",
+   "target": "CO_ethiopia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "R_malabar",
+   "rel": "locatedIn",
+   "target": "CO_india",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "R_campinas",
+   "rel": "locatedIn",
+   "target": "CO_brazil",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "R_mocha_port",
+   "rel": "locatedIn",
+   "target": "CO_yemen",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_brazil",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "rank": 1
+  },
+  {
+   "source": "CO_colombia",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "rank": 2
+  },
+  {
+   "source": "CO_ethiopia",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "rank": 3
+  },
+  {
+   "source": "CO_honduras",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "rank": 4
+  },
+  {
+   "source": "CO_vietnam",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "rank": 1
+  },
+  {
+   "source": "CO_brazil",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "rank": 2
+  },
+  {
+   "source": "CO_indonesia",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "rank": 3
+  },
+  {
+   "source": "CO_india",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "rank": 4
+  },
+  {
+   "source": "CO_vietnam",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_india",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_indonesia",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_uganda",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_uganda",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_mexico",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_mexico",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "note": "최근 재배 시작"
+  },
+  {
+   "source": "CO_nicaragua",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_nicaragua",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "note": "최근 재배 시작"
+  },
+  {
+   "source": "CO_guatemala",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_guatemala",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "note": "최근 재배 시작"
+  },
+  {
+   "source": "CO_cameroon",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "claimed",
+   "src": "3",
+   "derived": false,
+   "note": "재배 부활 시도"
+  },
+  {
+   "source": "CO_ivorycoast",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "claimed",
+   "src": "3",
+   "derived": false,
+   "note": "재배 부활 시도"
+  },
+  {
+   "source": "CO_ghana",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "claimed",
+   "src": "3",
+   "derived": false,
+   "note": "재배 부활 시도"
+  },
+  {
+   "source": "CO_madagascar",
+   "rel": "produces",
+   "target": "SP_robusta",
+   "confidence": "claimed",
+   "src": "3",
+   "derived": false,
+   "note": "재배 부활 시도"
+  },
+  {
+   "source": "SP_arabica",
+   "rel": "mainlyProducedIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "SP_robusta",
+   "rel": "mainlyProducedIn",
+   "target": "CT_asia",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "SP_arabica",
+   "rel": "grownIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "note": "주로 동부"
+  },
+  {
+   "source": "SP_robusta",
+   "rel": "grownIn",
+   "target": "CT_africa",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false,
+   "note": "동부·서부"
+  },
+  {
+   "source": "SP_robusta",
+   "rel": "grownIn",
+   "target": "R_sumatra_low",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "V_typica",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_bourbon",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_geisha",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sl28",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sl34",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_heirloom",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_mocha",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_kent",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_s288",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_tanzania_dr",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_frenchmission",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_timor",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_timor",
+   "rel": "belongsTo",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_javastyle",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "claimed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_javastyle",
+   "rel": "belongsTo",
+   "target": "SP_robusta",
+   "confidence": "claimed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_robusta_v",
+   "rel": "belongsTo",
+   "target": "SP_robusta",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_caturra",
+   "rel": "mutationOf",
+   "target": "V_bourbon",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_pacas",
+   "rel": "mutationOf",
+   "target": "V_bourbon",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_villasarchi",
+   "rel": "mutationOf",
+   "target": "V_bourbon",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_maragogipe",
+   "rel": "mutationOf",
+   "target": "V_typica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_kona",
+   "rel": "mutationOf",
+   "target": "V_typica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_bluemountain",
+   "rel": "mutationOf",
+   "target": "V_typica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_kent",
+   "rel": "mutationOf",
+   "target": "V_typica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_criollo",
+   "rel": "mutationOf",
+   "target": "V_typica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sl28",
+   "rel": "selectedFrom",
+   "target": "V_tanzania_dr",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sl34",
+   "rel": "selectedFrom",
+   "target": "V_frenchmission",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_mundonovo",
+   "rel": "crossOf",
+   "target": "V_bourbon",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_mundonovo",
+   "rel": "crossOf",
+   "target": "V_typica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catuai",
+   "rel": "crossOf",
+   "target": "V_mundonovo",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catuai",
+   "rel": "crossOf",
+   "target": "V_caturra",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "crossOf",
+   "target": "V_pacas",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "crossOf",
+   "target": "V_maragogipe",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catimor",
+   "rel": "crossOf",
+   "target": "V_timor",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catimor",
+   "rel": "crossOf",
+   "target": "V_caturra",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "crossOf",
+   "target": "V_villasarchi",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "crossOf",
+   "target": "V_timor",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_s795",
+   "rel": "crossOf",
+   "target": "V_kent",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_s795",
+   "rel": "crossOf",
+   "target": "V_s288",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_typica",
+   "rel": "originatesIn",
+   "target": "CO_yemen",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_pacas",
+   "rel": "originatesIn",
+   "target": "CO_elsalvador",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "originatesIn",
+   "target": "CO_elsalvador",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catuai",
+   "rel": "originatesIn",
+   "target": "CO_brazil",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_maragogipe",
+   "rel": "originatesIn",
+   "target": "R_bahia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_timor",
+   "rel": "originatesIn",
+   "target": "CO_timor",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catimor",
+   "rel": "originatesIn",
+   "target": "CO_portugal",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_mocha",
+   "rel": "originatesIn",
+   "target": "R_mocha_port",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_heirloom",
+   "rel": "originatesIn",
+   "target": "CO_ethiopia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_bourbon",
+   "rel": "grownIn",
+   "target": "R_reunion",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_bourbon",
+   "rel": "grownIn",
+   "target": "CO_rwanda",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_bourbon",
+   "rel": "grownIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_caturra",
+   "rel": "grownIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catuai",
+   "rel": "grownIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_mundonovo",
+   "rel": "grownIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_geisha",
+   "rel": "grownIn",
+   "target": "CO_ethiopia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_geisha",
+   "rel": "grownIn",
+   "target": "CO_panama",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_geisha",
+   "rel": "grownIn",
+   "target": "CO_colombia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_geisha",
+   "rel": "grownIn",
+   "target": "CO_peru",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sl28",
+   "rel": "grownIn",
+   "target": "CO_kenya",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sl34",
+   "rel": "grownIn",
+   "target": "CO_kenya",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_pacas",
+   "rel": "grownIn",
+   "target": "CO_elsalvador",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "grownIn",
+   "target": "CO_elsalvador",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_maragogipe",
+   "rel": "grownIn",
+   "target": "R_bahia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_villasarchi",
+   "rel": "grownIn",
+   "target": "CO_costarica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_kent",
+   "rel": "grownIn",
+   "target": "CO_india",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_kent",
+   "rel": "grownIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_s795",
+   "rel": "grownIn",
+   "target": "CO_india",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_s795",
+   "rel": "grownIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_timor",
+   "rel": "grownIn",
+   "target": "CO_timor",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_timor",
+   "rel": "grownIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catimor",
+   "rel": "grownIn",
+   "target": "CT_latam",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catimor",
+   "rel": "grownIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catimor",
+   "rel": "grownIn",
+   "target": "CO_india",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catimor",
+   "rel": "grownIn",
+   "target": "CO_vietnam",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_catimor",
+   "rel": "grownIn",
+   "target": "CO_china",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "grownIn",
+   "target": "CO_costarica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "grownIn",
+   "target": "CO_india",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_heirloom",
+   "rel": "grownIn",
+   "target": "R_harar",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_heirloom",
+   "rel": "grownIn",
+   "target": "R_sidamo",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_heirloom",
+   "rel": "grownIn",
+   "target": "R_yirgacheffe",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_kona",
+   "rel": "grownIn",
+   "target": "R_hawaii",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_bluemountain",
+   "rel": "grownIn",
+   "target": "CO_jamaica",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_bluemountain",
+   "rel": "grownIn",
+   "target": "CO_kenya",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_bluemountain",
+   "rel": "grownIn",
+   "target": "R_hawaii",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_javastyle",
+   "rel": "grownIn",
+   "target": "CO_indonesia",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_mocha",
+   "rel": "grownIn",
+   "target": "CO_yemen",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "V_robusta_v",
+   "rel": "grownIn",
+   "target": "CO_vietnam",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "R_mandheling",
+   "rel": "emphasizes",
+   "target": "F_cocoa",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_toraja",
+   "rel": "emphasizes",
+   "target": "F_spice",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_kintamani",
+   "rel": "emphasizes",
+   "target": "F_citrus",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_java",
+   "rel": "emphasizes",
+   "target": "F_body",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "V_heirloom",
+   "rel": "emphasizes",
+   "target": "F_fruity",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false,
+   "note": "하라르"
+  },
+  {
+   "source": "V_s795",
+   "rel": "emphasizes",
+   "target": "F_mochanote",
+   "confidence": "confirmed",
+   "src": "2",
+   "derived": false
+  },
+  {
+   "source": "P_washed",
+   "rel": "partOf",
+   "target": "T_process",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false
+  },
+  {
+   "source": "P_natural",
+   "rel": "partOf",
+   "target": "T_process",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false
+  },
+  {
+   "source": "P_honey",
+   "rel": "partOf",
+   "target": "T_process",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false
+  },
+  {
+   "source": "P_wethulled",
+   "rel": "partOf",
+   "target": "T_process",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false
+  },
+  {
+   "source": "P_civet",
+   "rel": "partOf",
+   "target": "T_process",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false
+  },
+  {
+   "source": "P_monsoon",
+   "rel": "partOf",
+   "target": "T_process",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false
+  },
+  {
+   "source": "P_aging",
+   "rel": "partOf",
+   "target": "T_process",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false
+  },
+  {
+   "source": "CT_latam",
+   "rel": "usesProcess",
+   "target": "P_washed",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false,
+   "note": "중미, 역사적"
+  },
+  {
+   "source": "CO_brazil",
+   "rel": "usesProcess",
+   "target": "P_natural",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false,
+   "note": "역사적"
+  },
+  {
+   "source": "CT_africa",
+   "rel": "usesProcess",
+   "target": "P_natural",
+   "confidence": "confirmed",
+   "src": "1",
+   "derived": false,
+   "note": "아프리카 대부분, 역사적"
+  },
+  {
+   "source": "R_kintamani",
+   "rel": "usesProcess",
+   "target": "P_washed",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_mandheling",
+   "rel": "usesProcess",
+   "target": "P_wethulled",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "CO_indonesia",
+   "rel": "usesProcess",
+   "target": "P_wethulled",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "CO_indonesia",
+   "rel": "usesProcess",
+   "target": "P_civet",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "R_malabar",
+   "rel": "usesProcess",
+   "target": "P_monsoon",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "R_java",
+   "rel": "usesProcess",
+   "target": "P_aging",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "P_honey",
+   "rel": "originatesIn",
+   "target": "R_campinas",
+   "confidence": "confirmed",
+   "src": "3",
+   "derived": false
+  },
+  {
+   "source": "P_wethulled",
+   "rel": "decreases",
+   "target": "F_acidity",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "P_wethulled",
+   "rel": "increases",
+   "target": "F_body",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "P_civet",
+   "rel": "emphasizes",
+   "target": "F_mild",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "RS_drying",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_browning",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_drying",
+   "rel": "nextStage",
+   "target": "RS_browning",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_expansion",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_browning",
+   "rel": "nextStage",
+   "target": "RS_expansion",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_first",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_expansion",
+   "rel": "nextStage",
+   "target": "RS_first",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_second",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_first",
+   "rel": "nextStage",
+   "target": "RS_second",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_cooling",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RS_second",
+   "rel": "nextStage",
+   "target": "RS_cooling",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_cinnamon",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_cinnamon",
+   "rel": "emphasizes",
+   "target": "F_acidity",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_cinnamon",
+   "rel": "emphasizes",
+   "target": "F_grassy",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_newengland",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_newengland",
+   "rel": "emphasizes",
+   "target": "F_origin",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_newengland",
+   "rel": "emphasizes",
+   "target": "F_acidity",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_american",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_american",
+   "rel": "emphasizes",
+   "target": "F_origin",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_american",
+   "rel": "decreases",
+   "target": "F_acidity",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_city",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_city",
+   "rel": "emphasizes",
+   "target": "F_origin",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_fullcity",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_fullcity",
+   "rel": "emphasizes",
+   "target": "F_roast",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_fullcity",
+   "rel": "emphasizes",
+   "target": "F_body",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_vienna",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_vienna",
+   "rel": "emphasizes",
+   "target": "F_bittersweet",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_vienna",
+   "rel": "emphasizes",
+   "target": "F_caramel",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_vienna",
+   "rel": "decreases",
+   "target": "F_acidity",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_french",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_french",
+   "rel": "emphasizes",
+   "target": "F_caramel",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_french",
+   "rel": "decreases",
+   "target": "F_origin",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_italian",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_italian",
+   "rel": "emphasizes",
+   "target": "F_burnt",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_italian",
+   "rel": "decreases",
+   "target": "F_acidity",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "RL_italian",
+   "rel": "decreases",
+   "target": "F_body",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "EQ_drum",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "EQ_hotair",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "EQ_packed",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "EQ_tangential",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "EQ_centrifugal",
+   "rel": "partOf",
+   "target": "T_roasting",
+   "confidence": "confirmed",
+   "src": "4",
+   "derived": false
+  },
+  {
+   "source": "BM_pre",
+   "rel": "partOf",
+   "target": "T_blending",
+   "confidence": "claimed",
+   "src": "7",
+   "derived": false
+  },
+  {
+   "source": "BM_post",
+   "rel": "partOf",
+   "target": "T_blending",
+   "confidence": "claimed",
+   "src": "7",
+   "derived": false
+  },
+  {
+   "source": "BM_pre",
+   "rel": "contrastsWith",
+   "target": "BM_post",
+   "confidence": "claimed",
+   "src": "7",
+   "derived": false
+  },
+  {
+   "source": "B_mochajava",
+   "rel": "hasComponent",
+   "target": "V_mocha",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "B_mochajava",
+   "rel": "hasComponent",
+   "target": "V_javastyle",
+   "confidence": "confirmed",
+   "src": "5",
+   "derived": false
+  },
+  {
+   "source": "B_mochajava_modern",
+   "rel": "hasComponent",
+   "target": "CT_africa",
+   "confidence": "claimed",
+   "src": "7",
+   "derived": false,
+   "note": "동아프리카 원두"
+  },
+  {
+   "source": "B_mochajava_modern",
+   "rel": "hasComponent",
+   "target": "R_kintamani",
+   "confidence": "claimed",
+   "src": "7",
+   "derived": false,
+   "note": "한 로스터: 발리 원두"
+  },
+  {
+   "source": "B_mochajava_modern",
+   "rel": "usesMethod",
+   "target": "BM_post",
+   "confidence": "claimed",
+   "src": "7",
+   "derived": false
+  },
+  {
+   "source": "B_mochajava_modern",
+   "rel": "emphasizes",
+   "target": "F_floral",
+   "confidence": "claimed",
+   "src": "7",
+   "derived": false
+  },
+  {
+   "source": "B_mochajava_modern",
+   "rel": "emphasizes",
+   "target": "F_chocolate",
+   "confidence": "claimed",
+   "src": "7",
+   "derived": false
+  },
+  {
+   "source": "BM_post",
+   "rel": "contrastsWith",
+   "target": "BM_pre",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R3 대칭(contrastsWith)"
+  },
+  {
+   "source": "V_caturra",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_pacas",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_villasarchi",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_maragogipe",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_kona",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_bluemountain",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_criollo",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_mundonovo",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_catuai",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_catimor",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_catimor",
+   "rel": "belongsTo",
+   "target": "SP_robusta",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "belongsTo",
+   "target": "SP_robusta",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_s795",
+   "rel": "belongsTo",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R4 계보로 종 상속"
+  },
+  {
+   "source": "V_caturra",
+   "rel": "descendsFrom",
+   "target": "V_bourbon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_pacas",
+   "rel": "descendsFrom",
+   "target": "V_bourbon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_villasarchi",
+   "rel": "descendsFrom",
+   "target": "V_bourbon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_maragogipe",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_kona",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_bluemountain",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_kent",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_criollo",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_sl28",
+   "rel": "descendsFrom",
+   "target": "V_tanzania_dr",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_sl34",
+   "rel": "descendsFrom",
+   "target": "V_frenchmission",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_mundonovo",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_mundonovo",
+   "rel": "descendsFrom",
+   "target": "V_bourbon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_catuai",
+   "rel": "descendsFrom",
+   "target": "V_caturra",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_catuai",
+   "rel": "descendsFrom",
+   "target": "V_bourbon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_catuai",
+   "rel": "descendsFrom",
+   "target": "V_mundonovo",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_catuai",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "descendsFrom",
+   "target": "V_pacas",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "descendsFrom",
+   "target": "V_bourbon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "descendsFrom",
+   "target": "V_maragogipe",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_pacamara",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_catimor",
+   "rel": "descendsFrom",
+   "target": "V_timor",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_catimor",
+   "rel": "descendsFrom",
+   "target": "V_caturra",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_catimor",
+   "rel": "descendsFrom",
+   "target": "V_bourbon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "descendsFrom",
+   "target": "V_timor",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "descendsFrom",
+   "target": "V_villasarchi",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_sarchimor",
+   "rel": "descendsFrom",
+   "target": "V_bourbon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_s795",
+   "rel": "descendsFrom",
+   "target": "V_s288",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_s795",
+   "rel": "descendsFrom",
+   "target": "V_kent",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "V_s795",
+   "rel": "descendsFrom",
+   "target": "V_typica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R5 계보 이행(descendsFrom)"
+  },
+  {
+   "source": "SP_robusta",
+   "rel": "grownIn",
+   "target": "CO_indonesia",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(grownIn)"
+  },
+  {
+   "source": "V_bourbon",
+   "rel": "grownIn",
+   "target": "CO_france",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(grownIn)"
+  },
+  {
+   "source": "V_maragogipe",
+   "rel": "grownIn",
+   "target": "CO_brazil",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(grownIn)"
+  },
+  {
+   "source": "V_heirloom",
+   "rel": "grownIn",
+   "target": "CO_ethiopia",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(grownIn)"
+  },
+  {
+   "source": "V_kona",
+   "rel": "grownIn",
+   "target": "CO_usa",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(grownIn)"
+  },
+  {
+   "source": "V_bluemountain",
+   "rel": "grownIn",
+   "target": "CO_usa",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(grownIn)"
+  },
+  {
+   "source": "CO_indonesia",
+   "rel": "usesProcess",
+   "target": "P_washed",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(usesProcess)"
+  },
+  {
+   "source": "CO_india",
+   "rel": "usesProcess",
+   "target": "P_monsoon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(usesProcess)"
+  },
+  {
+   "source": "CO_indonesia",
+   "rel": "usesProcess",
+   "target": "P_aging",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R6 지역 → 국가 상향(usesProcess)"
+  },
+  {
+   "source": "RL_newengland",
+   "rel": "darkerThan",
+   "target": "RL_cinnamon",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R7 온도 순 배전도 순서(darkerThan)"
+  },
+  {
+   "source": "RL_american",
+   "rel": "darkerThan",
+   "target": "RL_newengland",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R7 온도 순 배전도 순서(darkerThan)"
+  },
+  {
+   "source": "RL_city",
+   "rel": "darkerThan",
+   "target": "RL_american",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R7 온도 순 배전도 순서(darkerThan)"
+  },
+  {
+   "source": "RL_fullcity",
+   "rel": "darkerThan",
+   "target": "RL_city",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R7 온도 순 배전도 순서(darkerThan)"
+  },
+  {
+   "source": "RL_vienna",
+   "rel": "darkerThan",
+   "target": "RL_fullcity",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R7 온도 순 배전도 순서(darkerThan)"
+  },
+  {
+   "source": "RL_french",
+   "rel": "darkerThan",
+   "target": "RL_vienna",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R7 온도 순 배전도 순서(darkerThan)"
+  },
+  {
+   "source": "RL_italian",
+   "rel": "darkerThan",
+   "target": "RL_french",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R7 온도 순 배전도 순서(darkerThan)"
+  },
+  {
+   "source": "RL_cinnamon",
+   "rel": "reachedAfter",
+   "target": "RS_drying",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_cinnamon",
+   "rel": "reachedAfter",
+   "target": "RS_first",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_newengland",
+   "rel": "reachedAfter",
+   "target": "RS_drying",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_newengland",
+   "rel": "reachedAfter",
+   "target": "RS_first",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_american",
+   "rel": "reachedAfter",
+   "target": "RS_drying",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_american",
+   "rel": "reachedAfter",
+   "target": "RS_first",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_city",
+   "rel": "reachedAfter",
+   "target": "RS_drying",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_city",
+   "rel": "reachedAfter",
+   "target": "RS_first",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_fullcity",
+   "rel": "reachedAfter",
+   "target": "RS_drying",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_fullcity",
+   "rel": "reachedAfter",
+   "target": "RS_first",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_fullcity",
+   "rel": "reachedAfter",
+   "target": "RS_second",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_vienna",
+   "rel": "reachedAfter",
+   "target": "RS_drying",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_vienna",
+   "rel": "reachedAfter",
+   "target": "RS_first",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_vienna",
+   "rel": "reachedAfter",
+   "target": "RS_second",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_french",
+   "rel": "reachedAfter",
+   "target": "RS_drying",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_french",
+   "rel": "reachedAfter",
+   "target": "RS_first",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_french",
+   "rel": "reachedAfter",
+   "target": "RS_second",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_italian",
+   "rel": "reachedAfter",
+   "target": "RS_drying",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_italian",
+   "rel": "reachedAfter",
+   "target": "RS_first",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "RL_italian",
+   "rel": "reachedAfter",
+   "target": "RS_second",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R8 온도 기준 단계 도달(reachedAfter)"
+  },
+  {
+   "source": "CO_rwanda",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_panama",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_peru",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_kenya",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_elsalvador",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_costarica",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_jamaica",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_yemen",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_france",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  },
+  {
+   "source": "CO_usa",
+   "rel": "produces",
+   "target": "SP_arabica",
+   "confidence": "inferred",
+   "src": "derived",
+   "derived": true,
+   "rule": "R9 재배 품종 ⇒ 국가의 종 생산"
+  }
+ ]
+}

@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoBTS — 원두 리포트(Coffee Dossier) 디자인 & 레이아웃 샘플</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+
+  <style>
+    /* ================= EDWARD HOPPER "ROOMS BY THE SEA" THEME PALETTE ================= */
+    :root {
+      --sea-blue: #30679D;
+      --sea-navy: #1E3B5C;
+      --sea-sky: #97B6CB;
+      --wall-cream: #FAF9ED;
+      --paper-white: #FFFFFF;
+      --sand-ochre: #BDB989;
+      --foliage-olive: #516B50;
+      --roasted-mocha: #78482B;
+      --roasted-caramel: #C68B59;
+      --ink-dark: #1E3B5C;
+      --ink-muted: #5A758D;
+      --border-subtle: rgba(189, 185, 137, 0.45);
+      --bg-page: #F4EFE6;
+      --bg-card: #FFFFFF;
+      --stamp-red: #A33B26;
+      --seal-gold: #966138;
+    }
+
+    html.dark {
+      --sea-blue: #30679D;
+      --sea-navy: #0F1E2E;
+      --sea-sky: #97B6CB;
+      --wall-cream: #0D1926;
+      --paper-white: #122336;
+      --sand-ochre: #BDB989;
+      --foliage-olive: #516B50;
+      --roasted-mocha: #A86B42;
+      --roasted-caramel: #DFB995;
+      --ink-dark: #F0F0D8;
+      --ink-muted: #97B6CB;
+      --border-subtle: rgba(48, 103, 157, 0.4);
+      --bg-page: #080E16;
+      --bg-card: #0F1E2E;
+      --stamp-red: #D9534F;
+      --seal-gold: #BDB989;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--ink-dark);
+      line-height: 1.5;
+      font-size: 14px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .font-serif { font-family: 'Instrument Serif', Georgia, serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .font-space { font-family: 'Space Grotesk', sans-serif; }
+
+    /* ================= TOP CONTROL TOOLBAR ================= */
+    header.sample-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    html.dark header.sample-toolbar {
+      background: rgba(13, 25, 38, 0.88);
+    }
+
+    .toolbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--sea-navy);
+    }
+    html.dark .toolbar-brand {
+      color: #F0F0D8;
+    }
+
+    .badge-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      background: rgba(48, 103, 157, 0.12);
+      color: var(--sea-blue);
+      border: 1px solid rgba(48, 103, 157, 0.3);
+      font-weight: 600;
+    }
+
+    .toolbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--sand-ochre);
+      background: var(--paper-white);
+      color: var(--ink-dark);
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .btn-control:hover {
+      background: var(--wall-cream);
+      border-color: var(--sea-blue);
+      transform: translateY(-1px);
+    }
+    .btn-control.primary {
+      background: var(--sea-blue);
+      color: #FFFFFF;
+      border-color: var(--sea-navy);
+    }
+    .btn-control.primary:hover {
+      background: var(--sea-navy);
+    }
+
+    .segmented-tabs {
+      display: flex;
+      background: rgba(189, 185, 137, 0.2);
+      border-radius: 8px;
+      padding: 2px;
+      border: 1px solid var(--border-subtle);
+    }
+    .tab-btn {
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--paper-white);
+      color: var(--sea-navy);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    html.dark .tab-btn.active {
+      background: #15273C;
+      color: #F0F0D8;
+    }
+
+    /* ================= MAIN CONTAINER ================= */
+    main.sample-body {
+      flex: 1;
+      max-width: 1380px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ================= TAB 1: REPORT DOCUMENT ITSELF ================= */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* The A4 Archival Certificate Container */
+    .archival-dossier-sheet {
+      max-width: 860px;
+      margin: 0 auto;
+      background-color: #FFFFFF;
+      border: 1px solid #D6CEBE;
+      box-shadow: 0 12px 36px rgba(30, 59, 92, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+      padding: 44px 50px;
+      position: relative;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(189, 185, 137, 0.12) 0%, transparent 40%),
+        linear-gradient(180deg, #FFFFFF 0%, #FAF8F2 100%);
+      border-radius: 4px;
+    }
+    html.dark .archival-dossier-sheet {
+      background-color: #101B2B;
+      border-color: #264363;
+      background-image: 
+        radial-gradient(circle at 100% 0%, rgba(48, 103, 157, 0.15) 0%, transparent 40%),
+        linear-gradient(180deg, #101B2B 0%, #0B1320 100%);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Architectural Pen Grid Texture Overlay */
+    .archival-dossier-sheet::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(189, 185, 137, 0.35);
+      pointer-events: none;
+    }
+    .archival-dossier-sheet::after {
+      content: "";
+      position: absolute;
+      inset: 15px;
+      border: 1px dashed rgba(189, 185, 137, 0.25);
+      pointer-events: none;
+    }
+
+    /* Header Block */
+    .dossier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--sea-navy);
+      padding-bottom: 18px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    html.dark .dossier-header {
+      border-bottom-color: var(--sea-sky);
+    }
+
+    .dossier-title-wrap h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--sea-navy);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    html.dark .dossier-title-wrap h1 { color: #F0F0D8; }
+
+    .dossier-sub-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--sea-blue);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .dossier-serial-box {
+      text-align: right;
+      font-size: 11px;
+    }
+    .serial-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--roasted-mocha);
+      background: rgba(120, 72, 43, 0.08);
+      padding: 4px 8px;
+      border: 1px solid rgba(120, 72, 43, 0.25);
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    /* 2x2 Grid of 4 Key Sections */
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .dossier-grid { grid-template-columns: 1fr; }
+      .archival-dossier-sheet { padding: 24px; }
+    }
+
+    .dossier-card {
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.7);
+      padding: 16px 18px;
+      border-radius: 6px;
+      position: relative;
+    }
+    html.dark .dossier-card {
+      background: rgba(18, 35, 54, 0.6);
+      border-color: #264363;
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sea-blue);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    html.dark .card-label { color: var(--sea-sky); }
+
+    /* Key-Value Pair rows */
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 5px 0;
+      border-bottom: 1px dashed rgba(189, 185, 137, 0.3);
+      font-size: 12px;
+    }
+    .data-row:last-child { border-bottom: none; }
+    .data-key { color: var(--ink-muted); font-weight: 500; }
+    .data-val { font-weight: 600; color: var(--ink-dark); text-align: right; }
+
+    /* Sensory Radar Bar */
+    .sensory-meter-row {
+      margin-bottom: 8px;
+    }
+    .meter-label-wrap {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .meter-track {
+      height: 6px;
+      background: rgba(189, 185, 137, 0.25);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+    .meter-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fill-acidity { background: #3E8E7E; }
+    .fill-sweetness { background: #C57B44; }
+    .fill-body { background: #78482B; }
+    .fill-nutty { background: #516B50; }
+
+    /* Flavor Tag Pills */
+    .flavor-chip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .flavor-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      background: rgba(48, 103, 157, 0.08);
+      color: var(--sea-navy);
+      border: 1px solid rgba(48, 103, 157, 0.25);
+    }
+    html.dark .flavor-chip {
+      background: rgba(151, 182, 203, 0.12);
+      color: #F0F0D8;
+      border-color: rgba(151, 182, 203, 0.3);
+    }
+
+    /* Brew Step Icons */
+    .brew-recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+      text-align: center;
+    }
+    .brew-stat-box {
+      background: rgba(189, 185, 137, 0.12);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 8px 4px;
+    }
+    .brew-stat-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--sea-navy);
+    }
+    html.dark .brew-stat-val { color: #F0F0D8; }
+    .brew-stat-lbl {
+      font-size: 10px;
+      color: var(--ink-muted);
+      margin-top: 2px;
+    }
+
+    /* Official Seals & Stamp */
+    .dossier-footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .dossier-notice {
+      font-size: 11px;
+      color: var(--ink-muted);
+      max-width: 580px;
+      line-height: 1.4;
+    }
+    .official-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 2px solid var(--stamp-red);
+      color: var(--stamp-red);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transform: rotate(-3deg);
+      user-select: none;
+    }
+
+    /* ================= TAB 2: BUTTON POSITION MOCKUP SIMULATOR ================= */
+    .mockup-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 900px) {
+      .mockup-container { grid-template-columns: 1fr; }
+    }
+
+    .mockup-window {
+      background: var(--paper-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+    }
+    .mockup-titlebar {
+      background: var(--wall-cream);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mockup-body {
+      padding: 20px;
+      background: var(--bg-page);
+      flex: 1;
+    }
+
+    /* Pulse Highlight for the Proposed Button */
+    .proposed-btn-highlight {
+      position: relative;
+      display: inline-block;
+    }
+    .proposed-btn-highlight::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 8px;
+      border: 2px solid #30679D;
+      animation: pulseBorder 1.8s infinite;
+      pointer-events: none;
+    }
+    @keyframes pulseBorder {
+      0% { transform: scale(0.96); opacity: 1; }
+      50% { transform: scale(1.06); opacity: 0.3; }
+      100% { transform: scale(0.96); opacity: 1; }
+    }
+
+    /* ================= PRINT MEDIA STYLES ================= */
+    @media print {
+      body { background: #FFFFFF !important; color: #000000 !important; }
+      header.sample-toolbar, .mockup-view-only, .no-print { display: none !important; }
+      main.sample-body { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+      .archival-dossier-sheet {
+        box-shadow: none !important;
+        border: 1px solid #999 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20mm !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= TOP CONTROL TOOLBAR ================= -->
+  <header class="sample-toolbar no-print">
+    <div class="toolbar-brand">
+      <span style="font-size: 20px;">☕</span>
+      <div>
+        <span class="font-space">CoBTS Dossier Studio</span>
+        <span class="badge-pill ml-2">원두 리포트 디자인 검토안</span>
+      </div>
+    </div>
+
+    <div class="toolbar-controls">
+      <!-- Origin Selector -->
+      <label class="flex items-center gap-1 font-mono text-xs">
+        <span style="color: var(--ink-muted);">원두 선택:</span>
+        <select id="originPicker" class="btn-control font-semibold" style="padding: 5px 10px;">
+          <option value="yirgacheffe" selected>에티오피아 예가체프 (화사한 꽃향·산미)</option>
+          <option value="huila">콜롬비아 우일라 (밀크초콜릿·단맛 균형)</option>
+          <option value="mandheling">수마트라 만델링 (묵직한 흙내음·다크초콜릿)</option>
+          <option value="nyeri">케냐 니에리 (블랙커런트·와이니한 산미)</option>
+        </select>
+      </label>
+
+      <!-- View Tabs -->
+      <div class="segmented-tabs" role="tablist">
+        <button class="tab-btn active" onclick="switchTab('reportView')">📄 리포트 디자인 (A4/모달)</button>
+        <button class="tab-btn" onclick="switchTab('buttonMockupView')">📍 기능 버튼 위치 비교 (A안 vs B안)</button>
+      </div>
+
+      <!-- Action Buttons -->
+      <button class="btn-control primary" onclick="window.print()">
+        <span>🖨️ 인쇄 / PDF 저장</span>
+      </button>
+
+      <button id="themeToggleBtn" class="btn-control" onclick="toggleTheme()" title="다크/라이트 전환">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN BODY ================= -->
+  <main class="sample-body">
+
+    <!-- ================= VIEW 1: THE ARCHIVAL DOSSIER REPORT ================= -->
+    <div id="reportView" class="tab-content active">
+
+      <div class="archival-dossier-sheet" id="dossierSheet">
+        <!-- Header -->
+        <header class="dossier-header">
+          <div class="dossier-title-wrap">
+            <div class="dossier-sub-title font-mono">CoBTS ARCHIVAL SPECIALTY COFFEE DOSSIER</div>
+            <h1 id="dossierName">
+              <span id="dossierKorean">에티오피아 예가체프</span>
+              <span class="font-serif" id="dossierEnglish" style="font-size: 20px; font-weight: normal; color: var(--sea-blue);">Yirgacheffe G1 Washed</span>
+            </h1>
+            <div style="font-size: 12px; color: var(--ink-muted); margin-top: 4px;">
+              지리적 테루아 · 식물학 계통 · 4대 감각 스펙트럼 · 골든 브루잉 마스터 레시피
+            </div>
+          </div>
+
+          <div class="dossier-serial-box font-mono">
+            <div class="serial-tag" id="dossierSerial">DOSSIER NO. CoBTS-2026-ETH01</div>
+            <div style="color: var(--ink-muted);">발행처: CoBTS Cartography Lab</div>
+            <div style="color: var(--ink-muted);" id="dossierDate">2026.11.08 VERIFIED</div>
+          </div>
+        </header>
+
+        <!-- 4-Grid Dossier Body -->
+        <div class="dossier-grid">
+
+          <!-- 1. Geographic Terroir & Lineage -->
+          <section class="dossier-card">
+            <div class="card-label font-mono">
+              <span>01. 산지 테루아 & 식물학적 계통</span>
+              <span>TERROIR</span>
+            </div>
+
+            <div class="data-row">
+              <span class="data-key">국가 및 산지</span>
+              <span class="data-val" id="dossierCountryRegion">에티오피아 · 남부 게디오(Gedeo)</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">재배 표고 (Altitude)</span>
+              <span class="data-val font-mono" id="dossierAltitude">1,950m ~ 2,200m ASL (초고지대)</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">품종 (Varietal)</span>
+              <span class="data-val" id="dossierVarietal">에티오피아 토착 야생종 (Heirloom)</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">가공 방식 (Process)</span>
+              <span class="data-val" id="dossierProcess">워시드 (Washed / 36h 수중 발효 세척)</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">토양 & 미세기후</span>
+              <span class="data-val" id="dossierTerroir">철분 풍부 약산성 적색토 · 큰 일교차</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">계통 수형도</span>
+              <span class="data-val font-mono" id="dossierLineage" style="font-size: 11px;">카파 원시림 ➔ 쿠루메·데가 셀렉션</span>
+            </div>
+          </section>
+
+          <!-- 2. Sensory Profile & Cup Notes -->
+          <section class="dossier-card">
+            <div class="card-label font-mono">
+              <span>02. 4대 감각 스펙트럼 & 컵 노트</span>
+              <span>SENSORY</span>
+            </div>
+
+            <!-- Acidity -->
+            <div class="sensory-meter-row">
+              <div class="meter-label-wrap">
+                <span class="data-key">산미 (Acidity)</span>
+                <span class="font-mono" id="valAcidity">7.5 / 10</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill fill-acidity" id="barAcidity" style="width: 75%;"></div>
+              </div>
+            </div>
+
+            <!-- Sweetness -->
+            <div class="sensory-meter-row">
+              <div class="meter-label-wrap">
+                <span class="data-key">단맛 (Sweetness)</span>
+                <span class="font-mono" id="valSweetness">6.0 / 10</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill fill-sweetness" id="barSweetness" style="width: 60%;"></div>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="sensory-meter-row">
+              <div class="meter-label-wrap">
+                <span class="data-key">바디 (Body)</span>
+                <span class="font-mono" id="valBody">4.5 / 10</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill fill-body" id="barBody" style="width: 45%;"></div>
+              </div>
+            </div>
+
+            <!-- Nutty -->
+            <div class="sensory-meter-row">
+              <div class="meter-label-wrap">
+                <span class="data-key">고소함 / 밸런스</span>
+                <span class="font-mono" id="valNutty">4.0 / 10</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill fill-nutty" id="barNutty" style="width: 40%;"></div>
+              </div>
+            </div>
+
+            <div style="font-size: 11px; font-weight: 600; color: var(--ink-muted); margin-top: 10px;">
+              대표 향미 (Key Flavor Tags):
+            </div>
+            <div class="flavor-chip-grid" id="dossierFlavorChips">
+              <span class="flavor-chip">🌸 재스민 꽃향</span>
+              <span class="flavor-chip">🍋 베르가못 시트러스</span>
+              <span class="flavor-chip">🍑 백도 복숭아</span>
+              <span class="flavor-chip">🫖 홍차 얼그레이 피니시</span>
+            </div>
+          </section>
+
+          <!-- 3. Master Brewing & Roasting Recipe -->
+          <section class="dossier-card">
+            <div class="card-label font-mono">
+              <span>03. 바리스타 브루잉 & 로스팅 가이드</span>
+              <span>BREWING</span>
+            </div>
+
+            <div class="data-row">
+              <span class="data-key">권장 배전도</span>
+              <span class="data-val font-mono" id="dossierRoast">Light-Medium (Cinnamon ~ City)</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">추천 추출 기구</span>
+              <span class="data-val" id="dossierDripper">하리오 V60 / 칼리타 웨이브 (드립)</span>
+            </div>
+
+            <!-- 3 Mini Brew Stats -->
+            <div class="brew-recipe-grid font-mono">
+              <div class="brew-stat-box">
+                <div class="brew-stat-val" id="brewTemp">93℃</div>
+                <div class="brew-stat-lbl">추출수 온도</div>
+              </div>
+              <div class="brew-stat-box">
+                <div class="brew-stat-val" id="brewRatio">1 : 15</div>
+                <div class="brew-stat-lbl">원두 : 물 비율</div>
+              </div>
+              <div class="brew-stat-box">
+                <div class="brew-stat-val" id="brewTime">2m 30s</div>
+                <div class="brew-stat-lbl">총 추출 시간</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 10px; font-size: 11px; color: var(--ink-muted); line-height: 1.45;" id="dossierBrewTip">
+              💡 <strong>추출 팁:</strong> 원두 20g 기준 40ml로 35초간 뜸을 들인 후, 중심부 위주로 부드럽게 2회 나누어 푸어링하면 잡미 없이 화사한 꽃향기를 극대화할 수 있습니다.
+            </div>
+          </section>
+
+          <!-- 4. Logistics & Customs Clearance -->
+          <section class="dossier-card">
+            <div class="card-label font-mono">
+              <span>04. 통관 요건 & 유통 채널</span>
+              <span>COMMERCE</span>
+            </div>
+
+            <div class="data-row">
+              <span class="data-key">관세청 HS-Code</span>
+              <span class="data-val font-mono">0901.11-0000 (미배전 생두)</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">식물방역 검역</span>
+              <span class="data-val">농림축산검역본부 정밀검역 통과 품목</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">수입 요건 고시</span>
+              <span class="data-val">식품위생법 제19조 수입신고 필</span>
+            </div>
+            <div class="data-row">
+              <span class="data-key">신선 로스터리 배송</span>
+              <span class="data-val" style="color: var(--sea-blue);">국내 당일 로스팅 전문점 매칭</span>
+            </div>
+
+            <div style="margin-top: 12px; display: flex; gap: 8px;">
+              <a href="#" class="btn-control primary" style="flex: 1; justify-content: center; text-decoration: none; font-size: 11px;">
+                🟢 네이버 쇼핑 원두 비교
+              </a>
+              <a href="#" class="btn-control" style="flex: 1; justify-content: center; text-decoration: none; font-size: 11px;">
+                📦 생두 직구 유통처
+              </a>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Official Seal & Disclaimer Footer -->
+        <footer class="dossier-footer">
+          <div class="dossier-notice">
+            * 본 리포트는 CoBTS 14개 산지 데이터베이스 및 온톨로지 지식 그래프 표준 이론값을 바탕으로 산출된 아카이벌 문서입니다. 개인의 추출 환경 및 기호에 따라 미각적 체감은 차이가 있을 수 있습니다.
+          </div>
+
+          <div class="official-stamp font-mono">
+            <span>✓ CoBTS CERTIFIED</span>
+          </div>
+        </footer>
+      </div>
+
+    </div>
+
+    <!-- ================= VIEW 2: BUTTON PLACEMENT MOCKUP SIMULATOR ================= -->
+    <div id="buttonMockupView" class="tab-content">
+
+      <div style="margin-bottom: 16px;">
+        <h2 style="font-size: 18px; font-weight: 700; color: var(--sea-navy);">📍 원두 리포트 진입 버튼 위치 비교 검토</h2>
+        <p style="color: var(--ink-muted); font-size: 13px; margin-top: 4px;">
+          사용자의 시선 흐름과 조작 동선에 맞춘 2가지 진입 위치 시뮬레이션입니다. (둘 다 탑재하는 상호 보완 구성 권장)
+        </p>
+      </div>
+
+      <div class="mockup-container">
+
+        <!-- OPTION A: Inside recommendationCard (Primary) -->
+        <div class="mockup-window">
+          <div class="mockup-titlebar">
+            <div style="font-weight: 700; font-size: 13px;">
+              ⭐ [추천 A안] 추천 결과 카드 우측 상단 (주 진입점)
+            </div>
+            <span class="badge-pill">가장 직관적</span>
+          </div>
+          <div class="mockup-body">
+            <p style="font-size: 12px; color: var(--ink-muted); margin-bottom: 12px;">
+              👉 사용자가 맛 검색 결과를 보고 "이 원두 마음에 든다!"고 느끼는 순간, 카드 우측 상단에서 바로 원두 리포트를 열람할 수 있습니다.
+            </p>
+
+            <!-- Card Wireframe Mockup -->
+            <div style="background: var(--paper-white); border: 1px solid var(--sand-ochre); border-radius: 10px; padding: 16px; box-shadow: 2px 2px 0px rgba(0,0,0,0.06);">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(189,185,137,0.4); padding-bottom: 10px; margin-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-size: 18px;">☕</span>
+                  <span style="font-weight: 700; font-size: 14px;">에티오피아 예가체프</span>
+                  <span style="font-size: 11px; background: rgba(81,107,80,0.12); color: #516B50; padding: 2px 6px; border-radius: 4px; font-weight: 600;">94% 매칭</span>
+                </div>
+
+                <!-- Proposed Button Placed Right Here! -->
+                <div class="proposed-btn-highlight">
+                  <button class="btn-control primary" onclick="switchTab('reportView')" style="padding: 5px 12px; font-size: 11px; gap: 4px;">
+                    <span>📄 원두 리포트 발급</span>
+                  </button>
+                </div>
+              </div>
+
+              <div style="font-size: 12px; color: var(--ink-muted); line-height: 1.6;">
+                <div>• 품종: 에티오피아 토착 야생종 (Heirloom)</div>
+                <div>• 가공: 워시드 (Washed) / 고도: 1,950m</div>
+                <div>• 특징: 화사한 재스민 꽃향기와 투명한 시트러스 산미</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPTION B: Inside editorialOriginPopup on Map (Secondary) -->
+        <div class="mockup-window">
+          <div class="mockup-titlebar">
+            <div style="font-weight: 700; font-size: 13px;">
+              [보조 B안] 지도 산지 핀 팝업 하단 (보조 진입점)
+            </div>
+            <span class="badge-pill">지도 탐색 연계</span>
+          </div>
+          <div class="mockup-body">
+            <p style="font-size: 12px; color: var(--ink-muted); margin-bottom: 12px;">
+              👉 지도를 패닝/줌인하며 특정 산지 핀을 클릭했을 때, 쇼핑 링크와 함께 산지 감정서를 즉시 열 수 있도록 배치합니다.
+            </p>
+
+            <!-- Popup Wireframe Mockup -->
+            <div style="max-width: 340px; margin: 0 auto; background: var(--paper-white); border: 1px solid var(--sand-ochre); border-radius: 12px; padding: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px;">
+                <span style="font-weight: 800; font-size: 15px; color: var(--sea-navy);">YIRGACHEFFE</span>
+                <span class="font-mono" style="font-size: 11px; color: var(--sea-blue);">1950m</span>
+              </div>
+              <div style="font-size: 11px; color: var(--ink-muted); margin-bottom: 12px;">
+                에티오피아 남부 고원지대 · 워시드 가공
+              </div>
+
+              <!-- Shop Buttons -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px;">
+                <div style="padding: 7px 10px; text-align: center; background: rgba(3,199,90,0.08); border: 1px solid rgba(3,199,90,0.3); border-radius: 13px; font-size: 11px; font-weight: 600; color: #03C75A;">
+                  네이버 원두
+                </div>
+                <div style="padding: 7px 10px; text-align: center; background: rgba(255,153,0,0.08); border: 1px solid rgba(255,153,0,0.3); border-radius: 13px; font-size: 11px; font-weight: 600; color: #FF9900;">
+                  Amazon 직구
+                </div>
+              </div>
+
+              <!-- Proposed Button Placed Right Here! -->
+              <div class="proposed-btn-highlight" style="width: 100%;">
+                <button class="btn-control" onclick="switchTab('reportView')" style="width: 100%; justify-content: center; font-size: 11px; padding: 8px; border-radius: 13px; background: var(--wall-cream); border-color: var(--sea-blue);">
+                  <span>📜 이 산지 원두 리포트 열기</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= INTERACTIVE LOGIC SCRIPT ================= -->
+  <script>
+    // Sample Bean Profiles Dataset
+    const BEAN_PROFILES = {
+      yirgacheffe: {
+        korean: "에티오피아 예가체프",
+        english: "Yirgacheffe G1 Washed",
+        serial: "DOSSIER NO. CoBTS-2026-ETH01",
+        countryRegion: "에티오피아 · 남부 게디오(Gedeo)",
+        altitude: "1,950m ~ 2,200m ASL (초고지대)",
+        varietal: "에티오피아 토착 야생종 (Heirloom)",
+        process: "워시드 (Washed / 36h 수중 발효 세척)",
+        terroir: "철분 풍부 약산성 적색토 · 큰 일교차",
+        lineage: "카파 원시림 ➔ 쿠루메·데가 셀렉션",
+        acidity: 7.5,
+        sweetness: 6.0,
+        body: 4.5,
+        nutty: 4.0,
+        roast: "Light-Medium (Cinnamon ~ City)",
+        dripper: "하리오 V60 / 칼리타 웨이브 (드립)",
+        temp: "93℃",
+        ratio: "1 : 15",
+        time: "2m 30s",
+        tip: "💡 원두 20g 기준 40ml로 35초간 뜸을 들인 후, 중심부 위주로 부드럽게 2회 나누어 푸어링하면 잡미 없이 화사한 꽃향기를 극대화할 수 있습니다.",
+        chips: ["🌸 재스민 꽃향", "🍋 베르가못 시트러스", "🍑 백도 복숭아", "🫖 홍차 얼그레이 피니시"]
+      },
+      huila: {
+        korean: "콜롬비아 우일라",
+        english: "Huila Supremo Washed",
+        serial: "DOSSIER NO. CoBTS-2026-COL01",
+        countryRegion: "콜롬비아 · 우일라 안데스 산맥",
+        altitude: "1,650m ~ 1,900m ASL",
+        varietal: "카투라 (Caturra), 카스티요 (Castillo)",
+        process: "워시드 (Washed / 맑은 안데스 빙하수)",
+        terroir: "화산재 풍부 미네랄 토양 · 온화한 기후",
+        lineage: "버번(Bourbon) 자연 돌연변이 왜소종",
+        acidity: 6.0,
+        sweetness: 7.0,
+        body: 6.0,
+        nutty: 6.5,
+        roast: "Medium (City ~ Full City)",
+        dripper: "에어로프레스 / 클레버 / 핸드드립",
+        temp: "91℃",
+        ratio: "1 : 14",
+        time: "2m 15s",
+        tip: "💡 밀크초콜릿의 부드러운 단맛과 구운 견과류의 고소함이 탁월한 균형을 이룹니다. 91℃의 약간 낮은 물로 추출하면 부드러운 바디감이 돋보입니다.",
+        chips: ["🍫 밀크 초콜릿", "🌰 구운 아몬드", "🍎 붉은 사과 산미", "🍯 카라멜 단맛"]
+      },
+      mandheling: {
+        korean: "수마트라 만델링",
+        english: "Sumatra Mandheling Grade 1",
+        serial: "DOSSIER NO. CoBTS-2026-IDN01",
+        countryRegion: "인도네시아 · 수마트라 토바 호수",
+        altitude: "1,200m ~ 1,500m ASL",
+        varietal: "아텡(Ateng), 팀팀(Tim Tim)",
+        process: "길링바사 (Wet-Hulled / 고유 습식 탈곡)",
+        terroir: "열대 화산성 토양 · 잦은 열대 강우",
+        lineage: "티피카 & 하이브리드 데 티모르 교배종",
+        acidity: 3.0,
+        sweetness: 5.0,
+        body: 8.5,
+        nutty: 5.0,
+        roast: "Medium-Dark (Full City)",
+        dripper: "에스프레소 머신 / 모카포트 / 프렌치프레스",
+        temp: "89℃",
+        ratio: "1 : 13",
+        time: "3m 00s",
+        tip: "💡 묵직한 풀바디와 깊은 흙내음, 다크초콜릿의 여운이 일품입니다. 에스프레소나 진한 라떼 베이스로 가장 이상적입니다.",
+        chips: ["🌲 삼나무 흙내음", "🍫 다크 카카오", "🌿 허브 스파이스", "🍯 흑설탕 묵직한 바디"]
+      },
+      nyeri: {
+        korean: "케냐 니에리",
+        english: "Kenya Nyeri AA Top Washed",
+        serial: "DOSSIER NO. CoBTS-2026-KEN01",
+        countryRegion: "케냐 · 케냐산 남부 화산 고원",
+        altitude: "1,800m ~ 2,100m ASL",
+        varietal: "SL28, SL34 (스코트 연구소 선발종)",
+        process: "더블 워시드 (Double Washed / 72h 발효)",
+        terroir: "비옥한 적색 화산토 · 뚜렷한 건기와 우기",
+        lineage: "부르봉 계열 가뭄 저항성 우수 선발종",
+        acidity: 8.0,
+        sweetness: 5.5,
+        body: 6.0,
+        nutty: 4.0,
+        roast: "Light-Medium (High Roast)",
+        dripper: "하리오 V60 (빠른 추출 유도)",
+        temp: "94℃",
+        ratio: "1 : 16",
+        time: "2m 10s",
+        tip: "💡 와인처럼 터지는 농익은 블랙커런트와 자몽 시트러스의 선명한 산미가 특징입니다. 높은 온도(94℃)에서 빠르게 투과시켜 산뜻함을 극대화하세요.",
+        chips: ["🍇 블랙커런트", "🍷 레드 와인 산미", "🍊 자몽 시트러스", "🍯 브라운 슈가"]
+      }
+    };
+
+    function updateDossier(beanKey) {
+      const data = BEAN_PROFILES[beanKey];
+      if (!data) return;
+
+      document.getElementById("dossierKorean").textContent = data.korean;
+      document.getElementById("dossierEnglish").textContent = data.english;
+      document.getElementById("dossierSerial").textContent = data.serial;
+      document.getElementById("dossierCountryRegion").textContent = data.countryRegion;
+      document.getElementById("dossierAltitude").textContent = data.altitude;
+      document.getElementById("dossierVarietal").textContent = data.varietal;
+      document.getElementById("dossierProcess").textContent = data.process;
+      document.getElementById("dossierTerroir").textContent = data.terroir;
+      document.getElementById("dossierLineage").textContent = data.lineage;
+
+      document.getElementById("valAcidity").textContent = data.acidity.toFixed(1) + " / 10";
+      document.getElementById("barAcidity").style.width = (data.acidity * 10) + "%";
+
+      document.getElementById("valSweetness").textContent = data.sweetness.toFixed(1) + " / 10";
+      document.getElementById("barSweetness").style.width = (data.sweetness * 10) + "%";
+
+      document.getElementById("valBody").textContent = data.body.toFixed(1) + " / 10";
+      document.getElementById("barBody").style.width = (data.body * 10) + "%";
+
+      document.getElementById("valNutty").textContent = data.nutty.toFixed(1) + " / 10";
+      document.getElementById("barNutty").style.width = (data.nutty * 10) + "%";
+
+      document.getElementById("dossierRoast").textContent = data.roast;
+      document.getElementById("dossierDripper").textContent = data.dripper;
+      document.getElementById("brewTemp").textContent = data.temp;
+      document.getElementById("brewRatio").textContent = data.ratio;
+      document.getElementById("brewTime").textContent = data.time;
+      document.getElementById("dossierBrewTip").innerHTML = data.tip;
+
+      const chipWrap = document.getElementById("dossierFlavorChips");
+      chipWrap.innerHTML = data.chips.map(c => `<span class="flavor-chip">${c}</span>`).join("");
+    }
+
+    document.getElementById("originPicker").addEventListener("change", (e) => {
+      updateDossier(e.target.value);
+    });
+
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
+
+      document.getElementById(tabId).classList.add("active");
+      const btnIndex = tabId === 'reportView' ? 0 : 1;
+      document.querySelectorAll(".tab-btn")[btnIndex].classList.add("active");
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle("dark");
+      document.getElementById("themeIcon").textContent = isDark ? "☀️" : "🌙";
+    }
+  </script>
+</body>
+</html>

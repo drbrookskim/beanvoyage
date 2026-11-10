@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>커피 그래프 MCP</title>
+<style>
+:root{
+  --bg1:#ffffff;--bg2:#f6f6f6;--bg3:#ebebeb;--border:#e0e0e0;--text:#222222;--muted:#6f6f6f;--faint:#a8a8a8;
+  --accent:#7f6df2;--accent-soft:rgba(127,109,242,.12);--code:#f3f1fb;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg1:#1e1e1e;--bg2:#262626;--bg3:#303030;--border:#363636;--text:#dadada;--muted:#9a9a9a;--faint:#666666;
+    --accent:#8b7cf6;--accent-soft:rgba(139,124,246,.16);--code:#2a2830;
+  }
+}
+:root[data-theme="dark"]{
+  --bg1:#1e1e1e;--bg2:#262626;--bg3:#303030;--border:#363636;--text:#dadada;--muted:#9a9a9a;--faint:#666666;
+  --accent:#8b7cf6;--accent-soft:rgba(139,124,246,.16);--code:#2a2830;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--text);font:15px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",sans-serif}
+.top{position:sticky;top:0;z-index:2;background:var(--bg2);border-bottom:1px solid var(--border);height:44px;display:flex;align-items:center;gap:10px;padding:0 16px;font-size:13px}
+.top a{color:var(--muted);text-decoration:none}
+.top a:hover{color:var(--text)}
+.top .sep{color:var(--faint)}
+.top .grow{flex:1}
+.top button{border:0;background:none;color:var(--muted);cursor:pointer;font-size:13px}
+main{max-width:780px;margin:0 auto;padding:28px 16px 80px}
+h1{font-size:28px;line-height:1.3;margin:6px 0 4px}
+h2{font-size:20px;margin:40px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+h3{font-size:16px;margin:24px 0 6px}
+p{margin:8px 0}
+.lead{color:var(--muted)}
+.tag{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:10px;padding:0 9px;font-size:12px;margin-right:4px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;background:var(--code);padding:1px 5px;border-radius:4px}
+.block{position:relative;margin:8px 0 12px}
+.block pre{margin:0;background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px 14px;overflow:auto;font-size:13px;line-height:1.55}
+.block pre code{background:none;padding:0}
+.copy{position:absolute;top:6px;right:6px;border:1px solid var(--border);background:var(--bg1);color:var(--muted);border-radius:5px;font-size:12px;padding:2px 8px;cursor:pointer}
+.copy:hover{color:var(--text);border-color:var(--accent)}
+.endpoint{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;padding:10px 12px;margin:14px 0}
+.endpoint code{background:none;font-size:15px;word-break:break-all;color:var(--text)}
+.endpoint .copy{position:static}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+th,td{border-bottom:1px solid var(--border);padding:7px 8px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12.5px}
+td code{white-space:nowrap}
+.callout{border-left:3px solid var(--accent);background:var(--bg2);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:14px}
+.callout.warn{border-left-color:#e5a50a}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:12px 0 0;border-bottom:1px solid var(--border)}
+.tabs button{border:1px solid transparent;border-bottom:0;background:none;color:var(--muted);padding:6px 12px;border-radius:7px 7px 0 0;cursor:pointer;font-size:13.5px;margin-bottom:-1px}
+.tabs button.on{background:var(--bg1);border-color:var(--border);color:var(--text)}
+.panel{display:none;padding:6px 0}
+.panel.on{display:block}
+.status{font-size:13px;color:var(--muted)}
+.ok{color:#2e9d5b}.bad{color:#d14b4b}
+ol li,ul li{margin:4px 0}
+.muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="top">
+  <a href="./">☕ 커피 지식 그래프</a><span class="sep">/</span><span>MCP 연결 안내</span>
+  <span class="grow"></span>
+  <button id="theme" title="테마 전환">◐ 테마</button>
+</div>
+<main>
+  <span class="tag">MCP</span><span class="tag">WebMCP</span><span class="tag">인증 없음</span>
+  <h1>커피 지식 그래프 MCP 서버</h1>
+  <p class="lead">AI 도구가 이 사이트의 커피 지식 그래프를 직접 검색하고 탐색할 수 있도록 두 가지 방식을 제공합니다.</p>
+  <table>
+    <tr><th>방식</th><th>대상</th><th>할 수 있는 것</th></tr>
+    <tr><td><a href="#mcp" style="color:var(--accent)">원격 MCP 서버</a></td><td>Claude Code, Claude, Cursor, VS Code 등 <a href="https://modelcontextprotocol.io" style="color:var(--accent)">MCP</a> 클라이언트</td><td>그래프 조회 (읽기 전용)</td></tr>
+    <tr><td><a href="#webmcp" style="color:var(--accent)">WebMCP</a></td><td>브라우저 안의 AI 에이전트 (그래프 페이지를 연 상태)</td><td>그래프 조회 + 화면 조작(노드 이동·필터·하이라이트) + 메모·포스트잇 작성</td></tr>
+    <tr><td><a href="#chat" style="color:var(--accent)">내장 AI 채팅</a></td><td>그래프 페이지의 채팅 창 (설치 없이 바로)</td><td>질문하면 MCP로 그래프를 조회해 답하고, 관련 노드를 그래프에 하이라이트</td></tr>
+  </table>
+  <h2 id="mcp" style="margin-top:28px">원격 MCP 서버</h2>
+
+  <div class="endpoint"><strong>엔드포인트</strong><code id="ep">https://coffee-graph.pages.dev/mcp</code><button class="copy" data-copy="ep">복사</button></div>
+  <p class="status" id="live">서버 상태 확인 중…</p>
+
+  <table>
+    <tr><th>항목</th><th>내용</th></tr>
+    <tr><td>전송 방식</td><td>Streamable HTTP (POST, JSON 응답). 세션 없음(stateless), 서버 → 클라이언트 스트림(SSE) 없음</td></tr>
+    <tr><td>프로토콜 버전</td><td><code>2025-06-18</code>, <code>2025-03-26</code>, <code>2024-11-05</code></td></tr>
+    <tr><td>인증</td><td>없음. 누구나 읽을 수 있는 공개 데이터이며 쓰기 도구는 없습니다</td></tr>
+    <tr><td>제공 기능</td><td>도구(tools) 10개, 리소스(resources) 4개</td></tr>
+  </table>
+
+  <h2>연결 방법</h2>
+  <p>사용하는 AI 도구를 고르세요. 아래 예시는 모두 위 엔드포인트 주소를 씁니다.</p>
+  <div class="tabs" id="tabs">
+    <button class="on" data-tab="cc">Claude Code</button>
+    <button data-tab="claude">Claude (웹·데스크톱)</button>
+    <button data-tab="cursor">Cursor</button>
+    <button data-tab="vscode">VS Code</button>
+    <button data-tab="stdio">stdio 전용 도구</button>
+  </div>
+
+  <div class="panel on" id="p-cc">
+    <p>터미널에서 한 줄로 추가합니다.</p>
+    <div class="block"><pre><code data-tpl>claude mcp add --transport http coffee-graph {{URL}}</code></pre></div>
+    <p>모든 프로젝트에서 쓰려면 <code>--scope user</code>를 붙이세요. Claude Code 안에서 <code>/mcp</code>를 입력하면 연결 상태와 도구 목록을 볼 수 있습니다.</p>
+  </div>
+
+  <div class="panel" id="p-claude">
+    <ol>
+      <li>Claude에서 <strong>설정 → 커넥터</strong>로 갑니다.</li>
+      <li><strong>커스텀 커넥터 추가</strong>를 누릅니다.</li>
+      <li>이름에 <code>coffee-graph</code>, 원격 MCP 서버 URL에 아래 주소를 넣고 추가합니다.</li>
+    </ol>
+    <div class="block"><pre><code data-tpl>{{URL}}</code></pre></div>
+    <div class="callout">커스텀 커넥터 메뉴의 이름과 위치, 사용 가능 여부는 요금제와 앱 버전에 따라 다를 수 있습니다. 인증 설정(OAuth)은 비워 두면 됩니다.</div>
+  </div>
+
+  <div class="panel" id="p-cursor">
+    <p><code>~/.cursor/mcp.json</code>(전체) 또는 프로젝트의 <code>.cursor/mcp.json</code>에 추가합니다.</p>
+    <div class="block"><pre><code data-tpl>{
+  "mcpServers": {
+    "coffee-graph": {
+      "url": "{{URL}}"
+    }
+  }
+}</code></pre></div>
+  </div>
+
+  <div class="panel" id="p-vscode">
+    <p>프로젝트의 <code>.vscode/mcp.json</code>에 추가하고, Copilot 채팅을 에이전트 모드로 쓰면 도구가 나타납니다.</p>
+    <div class="block"><pre><code data-tpl>{
+  "servers": {
+    "coffee-graph": {
+      "type": "http",
+      "url": "{{URL}}"
+    }
+  }
+}</code></pre></div>
+  </div>
+
+  <div class="panel" id="p-stdio">
+    <p>원격(HTTP) MCP를 직접 지원하지 않고 로컬 명령(stdio)만 받는 도구는 <code>mcp-remote</code>로 중계할 수 있습니다. Node.js가 필요합니다.</p>
+    <div class="block"><pre><code data-tpl>{
+  "mcpServers": {
+    "coffee-graph": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "{{URL}}"]
+    }
+  }
+}</code></pre></div>
+  </div>
+
+  <div class="callout warn">위 설정 형식은 각 도구의 2026년 현재 문서 기준으로 작성했습니다. 이 서버로 직접 검증한 것은 아래 curl 요청뿐이며, 도구별 메뉴나 키 이름은 버전에 따라 다를 수 있습니다.</div>
+
+  <h3>직접 확인 (curl)</h3>
+  <p>도구 목록을 받아 봅니다.</p>
+  <div class="block"><pre><code data-tpl>curl -s {{URL}} \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'</code></pre></div>
+  <p>도구를 호출해 봅니다 (카투아이의 계보).</p>
+  <div class="block"><pre><code data-tpl>curl -s {{URL}} \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"get_lineage","arguments":{"variety":"카투아이"}}}'</code></pre></div>
+
+  <h2>도구</h2>
+  <p class="muted" id="toolsNote">서버에서 실시간으로 불러온 목록입니다.</p>
+  <table id="toolsTable">
+    <tr><th>이름</th><th>설명</th><th>주요 인자</th></tr>
+    <tr><td><code>get_overview</code></td><td>클래스·관계·출처 개요</td><td>—</td></tr>
+    <tr><td><code>search_nodes</code></td><td>라벨·id·속성 검색</td><td>query, class, limit</td></tr>
+    <tr><td><code>get_node</code></td><td>노드 속성과 모든 간선</td><td>id, include_derived</td></tr>
+    <tr><td><code>get_neighbors</code></td><td>관계·방향별 이웃</td><td>id, relation, direction</td></tr>
+    <tr><td><code>find_path</code></td><td>두 노드 사이 최단 경로</td><td>from, to, max_depth</td></tr>
+    <tr><td><code>list_nodes</code></td><td>클래스별 노드 목록</td><td>class</td></tr>
+    <tr><td><code>query_edges</code></td><td>조건으로 간선 찾기</td><td>relation, source, target, confidence</td></tr>
+    <tr><td><code>get_lineage</code></td><td>품종 계보 트리와 종</td><td>variety, direction</td></tr>
+    <tr><td><code>get_roast_levels</code></td><td>배전도 8단계 표</td><td>—</td></tr>
+    <tr><td><code>get_ontology</code></td><td>온톨로지 규칙과 검증 보고서</td><td>—</td></tr>
+  </table>
+
+  <h2>리소스</h2>
+  <table>
+    <tr><th>URI</th><th>내용</th></tr>
+    <tr><td><code>coffee://summary</code></td><td>수집 문서 (원두·로스팅·원산지·블렌딩, 출처·한계 포함)</td></tr>
+    <tr><td><code>coffee://ontology</code></td><td>온톨로지 정의 (클래스, 관계, 추론·검증 규칙)</td></tr>
+    <tr><td><code>coffee://validation-report</code></td><td>규칙 검증 보고서</td></tr>
+    <tr><td><code>coffee://graph.json</code></td><td>그래프 전체 (노드·간선 JSON)</td></tr>
+  </table>
+
+  <h2 id="webmcp">WebMCP (브라우저 안 AI 에이전트)</h2>
+  <p><a href="./" style="color:var(--accent)">그래프 페이지</a>는 W3C Web Machine Learning 커뮤니티 그룹의 <a href="https://github.com/webmachinelearning/webmcp" style="color:var(--accent)">WebMCP</a> 초안에 따라 <code>document.modelContext.registerTool()</code>로 도구 20개를 등록합니다. 브라우저에 내장되었거나 확장으로 붙은 AI 에이전트가 페이지를 연 상태에서 이 도구를 직접 호출할 수 있습니다.</p>
+  <h3>사용 조건</h3>
+  <ul>
+    <li>WebMCP를 지원하는 브라우저와 에이전트가 필요합니다. 현재 Chrome에서 초기 미리보기(오리진 트라이얼·실험 기능)로 제공됩니다. 켜는 방법은 <a href="https://developer.chrome.com/docs/ai/webmcp/imperative-api" style="color:var(--accent)">Chrome WebMCP 문서</a>를 참고하세요.</li>
+    <li>그래프 페이지 오른쪽 아래 상태 표시줄에 <strong>“WebMCP 도구 20개 등록”</strong>이 보이면 사용할 수 있는 상태입니다. 지원하지 않는 브라우저에서는 “WebMCP 미지원”으로 나오고, 페이지는 평소처럼 동작합니다.</li>
+    <li>예전 초안의 <code>navigator.modelContext</code>만 있는 환경(일부 폴리필)도 대체 경로로 지원합니다.</li>
+  </ul>
+  <h3>도구</h3>
+  <p>조회 도구 10개는 위 MCP 서버와 같은 코드이고, 아래 10개는 페이지에서만 쓸 수 있습니다.</p>
+  <table>
+    <tr><th>이름</th><th>하는 일</th><th>주석</th></tr>
+    <tr><td><code>focus_node</code></td><td>노드를 선택하고 화면 가운데로 이동, 노트 패널 열기</td><td>—</td></tr>
+    <tr><td><code>set_search_filter</code></td><td>그래프 검색 필터 변경 (빈 값이면 해제)</td><td>—</td></tr>
+    <tr><td><code>set_class_visibility</code></td><td>클래스 보이기·숨기기</td><td>—</td></tr>
+    <tr><td><code>reset_filters</code></td><td>검색어·클래스·관계 필터를 기본값으로</td><td>—</td></tr>
+    <tr><td><code>fit_view</code></td><td>그래프 전체를 화면에 맞춤</td><td>—</td></tr>
+    <tr><td><code>get_view_state</code></td><td>선택 노드, 필터, 보이는 노드 수</td><td>readOnly</td></tr>
+    <tr><td><code>get_memos</code></td><td>사용자가 쓴 노드 메모·포스트잇 읽기</td><td>readOnly, untrustedContent</td></tr>
+    <tr><td><code>set_node_memo</code></td><td>노드 메모 쓰기·덧붙이기</td><td>—</td></tr>
+    <tr><td><code>delete_node_memo</code></td><td>노드 메모 삭제</td><td>consequential</td></tr>
+    <tr><td><code>add_postit</code></td><td>포스트잇 붙이기 (노드에 붙이거나 화면 가운데)</td><td>—</td></tr>
+  </table>
+  <div class="callout">WebMCP 도구로 쓴 메모와 포스트잇은 원격 MCP 서버가 아니라 그 브라우저(localStorage)에만 저장됩니다. <code>get_memos</code>의 내용은 사용자가 쓴 글이라 <code>untrustedContentHint</code>를 붙였고, <code>delete_node_memo</code>는 되돌릴 수 없어 <code>consequentialHint</code>를 붙였습니다.</div>
+  <div class="callout warn">WebMCP는 아직 초안(Draft Community Group Report)이라 API가 바뀔 수 있습니다. 이 페이지는 2026-10-27에 확인한 Chrome 문서와 명세 저장소 기준이며, 실제 WebMCP 지원 브라우저로는 시험하지 못했습니다(대역 객체로 등록·호출만 검증).</div>
+
+  <h2 id="chat">내장 AI 채팅</h2>
+  <p>그래프 페이지 오른쪽 아래의 채팅 버튼(또는 왼쪽 리본의 말풍선)을 누르면 바로 쓸 수 있습니다. 별도 설정이 필요 없습니다.</p>
+  <table>
+    <tr><th>항목</th><th>내용</th></tr>
+    <tr><td>모델</td><td>Cloudflare Workers AI <code>@cf/zai-org/glm-4.7-flash</code> (Workers 무료 플랜에서 사용 가능, 함수 호출 지원). 실패하면 <code>@cf/google/gemma-4-26b-a4b-it</code>로 한 번 대체</td></tr>
+    <tr><td>동작</td><td><code>/api/chat</code>이 이 사이트의 MCP 서버에 <code>initialize</code> → <code>tools/list</code> → <code>tools/call</code>로 그래프를 조회하고, 모델이 요청한 화면 동작(하이라이트·노드 이동·필터·화면 맞춤)을 브라우저가 실행합니다</td></tr>
+    <tr><td>화면 반영</td><td>답변 속 노드 이름은 클릭하면 그래프의 그 노드로 이동합니다. 관련 노드는 하이라이트되고 나머지는 흐려집니다. 사용한 MCP 도구는 답변 아래에서 펼쳐 볼 수 있습니다</td></tr>
+    <tr><td>제한</td><td>계정의 Workers AI 무료 할당(하루 10,000 뉴런, UTC 0시 초기화)을 함께 씁니다. 다 쓰면 다음 날까지 채팅이 멈춥니다. 질문당 도구 왕복은 최대 5회입니다</td></tr>
+    <tr><td>개인정보</td><td>질문과 대화 기록, 선택한 노드 이름이 Workers AI로 전송됩니다. 노드 메모와 포스트잇은 보내지 않습니다</td></tr>
+  </table>
+  <div class="callout warn">소형 무료 모델이라 도구 결과를 잘못 요약할 때가 있습니다. 중요한 내용은 답변 속 노드 링크를 눌러 노트 패널의 간선(출처·confidence)으로 확인하세요.</div>
+
+  <h2>검색 하이라이트</h2>
+  <p>그래프 설정의 검색 필터나 탐색기 검색창에 입력한 글자는 그래프에서 일치하는 노드를 하이라이트하고, 탐색기와 노트 패널의 일치하는 글자에 형광 표시를 합니다. 채팅 답변과 WebMCP의 <code>highlight_nodes</code>도 같은 하이라이트를 씁니다. 위쪽의 하이라이트 표시줄에서 해제할 수 있습니다.</p>
+
+  <h2>이렇게 물어보세요</h2>
+  <ul>
+    <li>카투아이는 어떤 품종들에서 나왔고, 종은 무엇이야?</li>
+    <li>종간 교잡 품종을 모두 찾아서 부모를 알려 줘.</li>
+    <li>웻헐링 가공은 어디서 쓰이고 맛에 어떤 영향을 줘?</li>
+    <li>시티 로스트와 프렌치 로스트의 차이를 그래프 기준으로 비교해 줘.</li>
+    <li>게이샤와 인도네시아는 그래프에서 어떻게 연결돼?</li>
+    <li>(WebMCP) 버번 계열 품종만 그래프에 보여 주고, 카투라에 “녹병 저항 비교” 메모를 남겨 줘.</li>
+  </ul>
+
+  <h2>데이터를 읽을 때 주의할 점</h2>
+  <ul>
+    <li>모든 간선에 <code>confidence</code>가 있습니다. <code>confirmed</code>는 출처에 직접 서술, <code>claimed</code>는 업계 자료 등의 주장, <code>inferred</code>는 암시 또는 규칙 도출입니다.</li>
+    <li><code>derived: true</code>인 간선은 온톨로지 규칙(R3~R9)으로 추론한 것이고, <code>rule</code>에 규칙 이름이 있습니다.</li>
+    <li>출처는 위키백과 문서 6개입니다. 블렌딩 방법은 위키백과에 문서가 없어 웹 검색 요약(업계 자료)에 기대므로 모두 <code>claimed</code>입니다.</li>
+    <li>대륙·국가·산지 노드 48개에는 위키백과 대표 이미지 속성(<code>image</code>, <code>image_file</code>, <code>image_source</code>, <code>image_kind</code>, <code>wiki_url</code>)이 있습니다. <code>image_kind</code>가 <code>coffee</code>면 “Coffee production in ○○” 문서의 커피 사진, <code>general</code>이면 국가·지역 문서의 대표 이미지(국기·지도 등)입니다. 이미지 라이선스는 <code>image_file</code>의 Wikimedia Commons 페이지를 따릅니다.</li>
+    <li>그래프에 적은 메모(포스트잇·노드 메모)는 각자의 브라우저에만 저장되어 MCP 서버로는 전달되지 않습니다.</li>
+  </ul>
+  <p class="muted" style="margin-top:40px"><a href="./" style="color:var(--accent)">← 그래프로 돌아가기</a></p>
+</main>
+<script>
+const URL_ = location.protocol.startsWith("http") ? location.origin + "/mcp" : "https://coffee-graph.pages.dev/mcp";
+document.getElementById("ep").textContent = URL_;
+document.querySelectorAll("[data-tpl]").forEach(el => el.textContent = el.textContent.split("{{URL}}").join(URL_));
+document.querySelectorAll(".block").forEach(b => {
+  const btn = document.createElement("button"); btn.className = "copy"; btn.textContent = "복사";
+  btn.onclick = () => copy(b.querySelector("code").textContent, btn); b.appendChild(btn);
+});
+document.querySelectorAll("[data-copy]").forEach(btn => btn.onclick = () => copy(document.getElementById(btn.dataset.copy).textContent, btn));
+function copy(text, btn){
+  const done = () => { const t = btn.textContent; btn.textContent = "복사됨"; setTimeout(() => btn.textContent = t, 1200); };
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => {});
+}
+document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#tabs button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll(".panel").forEach(p => p.classList.toggle("on", p.id === "p-" + b.dataset.tab));
+});
+const mq = matchMedia("(prefers-color-scheme: dark)");
+try { const t = localStorage.getItem("theme:mcp"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+document.getElementById("theme").onclick = () => {
+  const cur = document.documentElement.getAttribute("data-theme") || (mq.matches ? "dark" : "light");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("theme:mcp", next); } catch (e) {}
+};
+// 서버에서 도구 목록을 받아 표를 갱신
+if (location.protocol.startsWith("http")) {
+  const live = document.getElementById("live");
+  fetch("/mcp", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json, text/event-stream" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/list" }) })
+    .then(r => r.json()).then(d => {
+      const tools = d.result.tools, tb = document.getElementById("toolsTable");
+      tb.innerHTML = "<tr><th>이름</th><th>설명</th><th>인자</th></tr>";
+      tools.forEach(t => {
+        const tr = document.createElement("tr");
+        const a = document.createElement("td"), b = document.createElement("td"), c = document.createElement("td");
+        const code = document.createElement("code"); code.textContent = t.name; a.appendChild(code);
+        b.textContent = t.description;
+        const props = Object.keys((t.inputSchema && t.inputSchema.properties) || {});
+        const req = (t.inputSchema && t.inputSchema.required) || [];
+        c.textContent = props.length ? props.map(p => req.includes(p) ? p + "*" : p).join(", ") : "—";
+        tr.append(a, b, c); tb.appendChild(tr);
+      });
+      live.innerHTML = '<span class="ok">● 서버 응답 정상</span> · 도구 ' + tools.length + "개 (* 필수 인자)";
+    }).catch(() => { live.innerHTML = '<span class="bad">● 서버에 연결하지 못했습니다.</span> 잠시 후 다시 시도하세요.'; });
+} else {
+  document.getElementById("live").textContent = "로컬 파일로 열려 있어 서버 상태를 확인하지 않았습니다.";
+  document.getElementById("toolsNote").textContent = "배포된 사이트에서는 서버의 실제 도구 목록으로 표가 갱신됩니다.";
+}
+</script>
+</body>
+</html>

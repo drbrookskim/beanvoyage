@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoBTS — 1번(허브) + 3번(티켓) 융합 디자인 샘플 (주간·월간 × 산미·고소 Top)</title>
+
+  <!-- Google & Pretendard Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+
+  <style>
+    /* ================= EDWARD HOPPER "ROOMS BY THE SEA" THEME PALETTE ================= */
+    :root {
+      --sea-blue: #30679D;
+      --sea-navy: #1E3B5C;
+      --sea-sky: #97B6CB;
+      --wall-cream: #FAF9ED;
+      --paper-white: #FFFFFF;
+      --sand-ochre: #BDB989;
+      --foliage-olive: #516B50;
+      --roasted-mocha: #78482B;
+      --roasted-caramel: #C68B59;
+      --ink-dark: #1E3B5C;
+      --ink-muted: #5A758D;
+      --border-subtle: rgba(189, 185, 137, 0.45);
+      --bg-page: #F4EFE6;
+      --bg-card: #FFFFFF;
+      --stamp-red: #A33B26;
+      --nut-amber: #B46A36;
+      --acid-rose: #C24D68;
+    }
+
+    html.dark {
+      --sea-blue: #4D84BB;
+      --sea-navy: #0F1E2E;
+      --sea-sky: #97B6CB;
+      --wall-cream: #0D1926;
+      --paper-white: #122336;
+      --sand-ochre: #BDB989;
+      --foliage-olive: #688C67;
+      --roasted-mocha: #C68B59;
+      --roasted-caramel: #DFB995;
+      --ink-dark: #F0F0D8;
+      --ink-muted: #97B6CB;
+      --border-subtle: rgba(77, 132, 187, 0.35);
+      --bg-page: #080E16;
+      --bg-card: #0F1E2E;
+      --stamp-red: #E26A5A;
+      --nut-amber: #D68A56;
+      --acid-rose: #E6738F;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--ink-dark);
+      padding: 32px 16px 80px;
+      line-height: 1.5;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      min-height: 100vh;
+    }
+
+    .max-container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .showcase-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 24px;
+    }
+
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--ink-dark);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--sea-blue);
+      transform: translateY(-1px);
+    }
+
+    /* AS-IS Section */
+    .as-is-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 32px;
+    }
+    .as-is-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .as-is-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--stamp-red);
+      background: rgba(163, 59, 38, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: "JetBrains Mono", monospace;
+    }
+    .as-is-img-wrap {
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #FFFFFF;
+      margin-bottom: 10px;
+    }
+    .as-is-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .as-is-critique {
+      font-size: 12px;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    /* Requirement Summary Box */
+    .request-summary-box {
+      background: rgba(48, 103, 157, 0.08);
+      border-left: 4px solid var(--sea-blue);
+      padding: 14px 18px;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 32px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink-dark);
+    }
+
+    /* Option Cards */
+    .option-card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 36px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    .option-card:hover {
+      border-color: var(--sea-blue);
+      box-shadow: 0 8px 24px rgba(48, 103, 157, 0.08);
+    }
+    .option-card.recommended {
+      border-color: var(--sea-blue);
+    }
+
+    .option-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .option-badge {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(48, 103, 157, 0.12);
+      color: var(--sea-blue);
+    }
+    .option-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink-dark);
+      margin-bottom: 4px;
+    }
+    .option-desc {
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      margin-bottom: 18px;
+    }
+
+    .preview-canvas {
+      background: var(--wall-cream);
+      border: 1px dashed var(--border-subtle);
+      border-radius: 12px;
+      padding: 26px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    /* ================= FUSION 1: DUAL TICKET MATRIX HUB (RECOMMENDED) ================= */
+    .fusion1-ticket {
+      width: 100%;
+      max-width: 716px;
+      background: var(--paper-white);
+      border: 1.5px solid var(--sand-ochre);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s;
+    }
+    .fusion1-ticket:focus-within {
+      border-color: var(--sea-blue);
+      box-shadow: 0 6px 20px rgba(48, 103, 157, 0.12);
+    }
+
+    .f1-header {
+      background: var(--wall-cream);
+      border-bottom: 1px solid rgba(189, 185, 137, 0.45);
+      padding: 7px 12px;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .f1-header::-webkit-scrollbar { display: none; }
+
+    .f1-controls-left {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    /* Control Cluster with RANK: and TASTE: Labels */
+    .f1-control-cluster {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .f1-cluster-label {
+      font-family: "Space Grotesk", "JetBrains Mono", sans-serif;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      user-select: none;
+    }
+    .f1-cluster-label.rank-label {
+      color: var(--sea-blue);
+    }
+    html.dark .f1-cluster-label.rank-label {
+      color: var(--sea-sky);
+    }
+    .f1-cluster-label.taste-label {
+      color: var(--roasted-mocha);
+    }
+    html.dark .f1-cluster-label.taste-label {
+      color: var(--roasted-caramel);
+    }
+
+    /* Period Segment Pill */
+    .period-seg-pill {
+      display: inline-flex;
+      background: var(--paper-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .period-seg-btn {
+      padding: 3px 7px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .period-seg-btn.active {
+      background: var(--sea-blue);
+      color: #FFFFFF;
+      box-shadow: 0 1px 3px rgba(48, 103, 157, 0.25);
+    }
+
+    .divider-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--sand-ochre);
+    }
+
+    /* Taste Mood Buttons */
+    .taste-tabs-group {
+      display: inline-flex;
+      background: rgba(189, 185, 137, 0.15);
+      border: 1px solid rgba(189, 185, 137, 0.35);
+      border-radius: 8px;
+      padding: 2px;
+      gap: 2px;
+    }
+    .taste-tab-btn {
+      padding: 3px 6.5px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .taste-tab-btn.active {
+      background: var(--paper-white);
+      color: var(--ink-dark);
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(189, 185, 137, 0.5);
+    }
+
+    .f1-metric-badge {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--foliage-olive);
+      background: rgba(81, 107, 80, 0.12);
+      padding: 3px 8px;
+      border-radius: 5px;
+      white-space: nowrap;
+    }
+
+    /* Search & Action Row */
+    .f1-search-row {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .f1-search-icon {
+      font-size: 16px;
+      color: var(--sea-blue);
+      flex-shrink: 0;
+    }
+    .f1-search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 13.5px;
+      color: var(--ink-dark);
+      font-weight: 500;
+      outline: none;
+    }
+    .f1-search-input::placeholder {
+      color: var(--ink-muted);
+      font-size: 12.5px;
+    }
+    .f1-submit-btn {
+      padding: 8px 16px;
+      border-radius: 9px;
+      background: var(--sea-blue);
+      color: #FFFFFF;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .f1-submit-btn:hover {
+      background: var(--sea-navy);
+      transform: translateY(-1px);
+    }
+
+    /* Dynamic Sub-Info Rail (Subtle, 0px waste) */
+    .f1-sub-rail {
+      padding: 4px 14px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--ink-muted);
+      border-top: 1px dashed rgba(189, 185, 137, 0.25);
+      background: rgba(250, 249, 237, 0.35);
+    }
+    .f1-bean-summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .f1-bean-name {
+      font-weight: 700;
+      color: var(--sea-blue);
+    }
+
+    /* ================= FUSION 2: ARCHIVAL TICKET WITH INTEGRATED BEAN CHIPS ================= */
+    .fusion2-ticket {
+      width: 100%;
+      max-width: 716px;
+      background: var(--paper-white);
+      border: 1.5px solid var(--sand-ochre);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+    .f2-header {
+      background: var(--wall-cream);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .f2-chips-rail {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+    .f2-taste-chip {
+      padding: 4px 9px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      background: var(--paper-white);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-dark);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .f2-taste-chip.active {
+      border-color: var(--sea-blue);
+      background: var(--sea-blue);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+    .f2-taste-chip .sub {
+      font-size: 9.5px;
+      opacity: 0.8;
+    }
+
+    /* ================= FUSION 3: ONE-LINE COMPACT TICKET HUB ================= */
+    .fusion3-card {
+      width: 100%;
+      max-width: 716px;
+      background: var(--paper-white);
+      border: 1.5px solid var(--sand-ochre);
+      border-radius: 14px;
+      padding: 10px 14px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    }
+    .f3-top-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .f3-pill-group {
+      display: inline-flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .f3-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 20px;
+      border: 1px solid var(--border-subtle);
+      background: var(--wall-cream);
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .f3-pill.active {
+      background: var(--sea-navy);
+      border-color: var(--sea-navy);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .key-points-list {
+      margin-top: 12px;
+      padding-left: 20px;
+      font-size: 12px;
+      color: var(--ink-dark);
+      line-height: 1.6;
+    }
+    .key-points-list li strong {
+      color: var(--sea-blue);
+    }
+
+    /* Live Toast */
+    .toast-notice {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--sea-navy);
+      color: #FAF9ED;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toast-notice.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="max-container">
+
+    <!-- Header -->
+    <header class="showcase-header">
+      <div>
+        <span style="font-size: 11px; font-weight: 700; color: var(--foliage-olive); font-family: 'JetBrains Mono', monospace; background: rgba(81,107,80,0.12); padding: 3px 8px; border-radius: 6px;">
+          COBTS UI CONSOLIDATION LAB v2
+        </span>
+        <h1 style="font-size: 22px; font-weight: 800; margin-top: 6px; letter-spacing: -0.02em;">
+          1번(허브) + 3번(티켓) 융합 디자인 샘플
+        </h1>
+        <p style="font-size: 12.5px; color: var(--ink-muted); margin-top: 3px;">
+          주간 · 월간 랭킹과 4대 취향(산미 · 고소 · 밸런스 · 바디)을 하나로 묶은 일체형 검색 아키텍처
+        </p>
+      </div>
+
+      <button type="button" class="theme-toggle-btn" onclick="toggleTheme()">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">다크모드</span>
+      </button>
+    </header>
+
+    <!-- Request Reflection Box -->
+    <div class="request-summary-box">
+      <strong>💡 최신 반영 사항</strong>: 
+      1번(듀얼 티켓 매트릭스 허브)의 일체형 구조를 기본으로 채택하고, 3번에 있던 <strong>RANK:</strong>와 <strong>TASTE:</strong> 타이포그래피 레이블을 1번 상단 헤더의 각 세그먼트/탭 그룹 앞머리에 세련되게 추가했습니다.
+      이제 기간별 랭킹(주간/월간)과 4대 취향(산미/고소/밸런스/바디)이 명확한 시각적 위계 속에서 직관적으로 구분됩니다.
+    </div>
+
+    <!-- AS-IS Critique Section (User Uploaded Reference) -->
+    <section class="as-is-banner">
+      <div class="as-is-header">
+        <strong style="font-size: 13px; color: var(--ink-dark);">기존 3단 분절 화면 (AS-IS 문제점)</strong>
+        <span class="as-is-tag">원두 중복 &amp; 3단 분산 &amp; 2개 버튼 충돌</span>
+      </div>
+
+      <div class="as-is-img-wrap">
+        <img src="assets/user-reference-search.jpg" alt="현재 화면 3단 분절 상태">
+      </div>
+
+      <p class="as-is-critique">
+        ⚠️ <strong>기존 문제</strong>: 상단 트렌드 바(예가체프) + 중간 검색창 + 하단 칩(예가체프, 콜롬비아, 만델링)으로 정보가 3층으로 나뉘고 원두 이름이 2번 중복되었습니다. 우측에도 <code>[지도 바로보기]</code>와 <code>[BV]</code> 버튼이 2개 존재해 혼란을 주었습니다.
+      </p>
+    </section>
+
+    <!-- ================= FUSION OPTION 1 (RECOMMENDED) ================= -->
+    <article class="option-card recommended">
+      <div class="option-header">
+        <span class="option-badge">FUSION 1 · 강력 추천</span>
+        <span style="font-size: 11px; font-weight: 700; color: var(--foliage-olive);">듀얼 티켓 매트릭스 허브</span>
+      </div>
+      <h2 class="option-title">1. 듀얼 티켓 매트릭스 허브 (Dual Ticket Matrix Hub)</h2>
+      <p class="option-desc">
+        호퍼 풍의 월크림 상단 헤더에 <strong>[주간/월간]</strong> 세그먼트와 <strong>[산미 / 고소 / 밸런스 / 바디]</strong> 4대 취향 탭을 가지런히 배치하고, 하단에 메인 검색창과 단 하나의 <strong>[지도 바로보기 ➔]</strong> 버튼을 일체화했습니다.
+      </p>
+
+      <div class="preview-canvas">
+        <!-- Interactive Preview Component -->
+        <div class="fusion1-ticket">
+          <!-- Ticket Header (Archival Style) -->
+          <div class="f1-header">
+            <!-- LEFT: RANK: Period Switcher -->
+            <div class="f1-control-cluster">
+              <span class="f1-cluster-label rank-label">RANK:</span>
+              <div class="period-seg-pill">
+                <button type="button" class="period-seg-btn active" id="f1PWeek" onclick="setF1Period('week')">
+                  <span>🔥 주간</span>
+                </button>
+                <button type="button" class="period-seg-btn" id="f1PMonth" onclick="setF1Period('month')">
+                  <span>👑 월간</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- RIGHT: TASTE: Taste Mood Filter Tabs -->
+            <div class="f1-control-cluster">
+              <span class="f1-cluster-label taste-label">TASTE:</span>
+              <div class="taste-tabs-group">
+                <button type="button" class="taste-tab-btn active" id="f1TFloral" onclick="setF1Taste('floral')">
+                  <span>🌸 산미</span>
+                </button>
+                <button type="button" class="taste-tab-btn" id="f1TNutty" onclick="setF1Taste('nutty')">
+                  <span>🥜 고소</span>
+                </button>
+                <button type="button" class="taste-tab-btn" id="f1TSweet" onclick="setF1Taste('sweet')">
+                  <span>🍫 밸런스</span>
+                </button>
+                <button type="button" class="taste-tab-btn" id="f1TBody" onclick="setF1Taste('body')">
+                  <span>🪵 바디</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Legacy metric container kept hidden for clean layout -->
+            <span id="f1MetricBadge" style="display: none;"></span>
+          </div>
+
+          <!-- Main Search & Action Row -->
+          <div class="f1-search-row">
+            <span class="f1-search-icon">🔍</span>
+            <input type="text" class="f1-search-input" id="f1Input" placeholder="에티오피아 예가체프 (화사한 꽃향기와 감귤 산미) 또는 자유 검색...">
+            <button type="button" class="f1-submit-btn" onclick="triggerExplore('f1')">
+              <span>지도 바로보기</span>
+              <span>➔</span>
+            </button>
+          </div>
+
+          <!-- Micro Sub-Rail (Actual Terroir & Cup Notes) -->
+          <div class="f1-sub-rail">
+            <div class="f1-bean-summary" style="flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <span style="font-weight: 800; color: var(--sea-blue); font-family: 'Space Grotesk', sans-serif; font-size: 10.5px;">TERROIR:</span>
+              <span id="f1Terroir" style="color: var(--ink-dark); font-weight: 600;">1,950m ASL · 워시드(Washed) · 고원 화산재 토양</span>
+              <span style="color: var(--sand-ochre); margin: 0 4px;">·</span>
+              <span style="font-weight: 800; color: var(--roasted-mocha); font-family: 'Space Grotesk', sans-serif; font-size: 10.5px;">CUP NOTES:</span>
+              <span id="f1CupNotes" style="color: var(--foliage-olive); font-weight: 600;">자스민 꽃향기, 백도 복숭아, 화사한 감귤 산미</span>
+            </div>
+            <span style="font-size: 10px; opacity: 0.85; color: var(--sea-blue); white-space: nowrap; margin-left: 8px;">지도 바로보기 ➔</span>
+          </div>
+        </div>
+      </div>
+
+      <ul class="key-points-list">
+        <li><strong>원클릭 매트릭스</strong>: <code>[주간/월간]</code>과 <code>[산미/고소/밸런스/바디]</code>를 누르면 하단 검색창 플레이스홀더와 대표 원두명이 실시간으로 즉시 바뀝니다.</li>
+        <li><strong>완벽한 군더더기 제거</strong>: 기존 3층 구조(배너, 검색창, 칩)를 <strong>단 하나의 티켓형 카드</strong>로 통합하여 세로 공간을 70px 이상 절약하고 2개였던 버튼을 1개로 정리했습니다.</li>
+        <li><strong>자유 검색 호환</strong>: 탭을 클릭하여 추천 원두를 바로 볼 수도 있고, 사용자가 입력창에 직접 "초콜릿 향 나는 원두"를 타이핑해도 그대로 동작합니다.</li>
+      </ul>
+    </article>
+
+    <!-- ================= FUSION OPTION 2 ================= -->
+    <article class="option-card">
+      <div class="option-header">
+        <span class="option-badge">FUSION 2 · 직관적 칩 융합</span>
+        <span style="font-size: 11px; font-weight: 700; color: var(--sea-blue);">헤더 칩 일체형 티켓</span>
+      </div>
+      <h2 class="option-title">2. 원두명 직관 칩 티켓 (Direct Origin-Chip Ticket)</h2>
+      <p class="option-desc">
+        상단 헤더에 주간/월간 스위처를 두고, 우측에 <strong>원두명이 직접 적힌 4대 취향 칩</strong>(`[🌸 산미: 예가체프]`, `[🥜 고소: 브라질]` 등)을 상시 노출하여 원클릭으로 선택할 수 있는 형태입니다.
+      </p>
+
+      <div class="preview-canvas">
+        <!-- Interactive Preview Component -->
+        <div class="fusion2-ticket">
+          <div class="f2-header">
+            <!-- Period Selector -->
+            <div class="period-seg-pill">
+              <button type="button" class="period-seg-btn active" id="f2PWeek" onclick="setF2Period('week')">🔥 주간</button>
+              <button type="button" class="period-seg-btn" id="f2PMonth" onclick="setF2Period('month')">👑 월간</button>
+            </div>
+
+            <!-- Origin Chips directly inside Header -->
+            <div class="f2-chips-rail" id="f2ChipsRail">
+              <button type="button" class="f2-taste-chip active" id="f2C1" onclick="setF2Chip('floral')">
+                <span>🌸 산미</span>
+                <span class="sub" id="f2Sub1">예가체프</span>
+              </button>
+              <button type="button" class="f2-taste-chip" id="f2C2" onclick="setF2Chip('nutty')">
+                <span>🥜 고소</span>
+                <span class="sub" id="f2Sub2">세하도</span>
+              </button>
+              <button type="button" class="f2-taste-chip" id="f2C3" onclick="setF2Chip('sweet')">
+                <span>🍫 밸런스</span>
+                <span class="sub" id="f2Sub3">우일라</span>
+              </button>
+              <button type="button" class="f2-taste-chip" id="f2C4" onclick="setF2Chip('body')">
+                <span>🪵 바디</span>
+                <span class="sub" id="f2Sub4">만델링</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Search Row -->
+          <div class="f1-search-row">
+            <span class="f1-search-icon">🔍</span>
+            <input type="text" class="f1-search-input" id="f2Input" placeholder="에티오피아 예가체프 (화사한 꽃향기와 높은 산미) 또는 자유 검색...">
+            <button type="button" class="f1-submit-btn" onclick="triggerExplore('f2')">
+              <span>지도 탐색 ➔</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ul class="key-points-list">
+        <li><strong>특징</strong>: <code>[주간/월간]</code>을 누르면 칩 안의 원두명(예: 주간 산미 <code>예가체프</code> ↔ 월간 산미 <code>케냐 AA</code>)이 자연스럽게 교체됩니다.</li>
+        <li><strong>장점</strong>: 어떤 원두가 각 취향의 1위인지 칩 라벨만 보고도 즉시 인지할 수 있습니다.</li>
+      </ul>
+    </article>
+
+    <!-- ================= FUSION OPTION 3 ================= -->
+    <article class="option-card">
+      <div class="option-header">
+        <span class="option-badge">FUSION 3 · 초슬림</span>
+        <span style="font-size: 11px; font-weight: 700; color: var(--ink-muted);">슬림 듀얼 레일 허브</span>
+      </div>
+      <h2 class="option-title">3. 슬림 듀얼 레일 허브 (Slim Dual-Rail Hub)</h2>
+      <p class="option-desc">
+        박스를 나누지 않고 단 하나의 둥근 카드 안에 상단 필터 레일과 검색 레일을 가장 얇고 가볍게 담아낸 스타일입니다.
+      </p>
+
+      <div class="preview-canvas">
+        <div class="fusion3-card">
+          <div class="f3-top-row">
+            <div class="f3-pill-group">
+              <span style="font-size: 10px; font-weight: 800; color: var(--sea-blue); padding: 3px 0; margin-right: 2px;">RANK:</span>
+              <button type="button" class="f3-pill active" id="f3P1" onclick="setF3('week', currentF3Taste)">🔥 주간</button>
+              <button type="button" class="f3-pill" id="f3P2" onclick="setF3('month', currentF3Taste)">👑 월간</button>
+            </div>
+
+            <div class="f3-pill-group">
+              <span style="font-size: 10px; font-weight: 800; color: var(--roasted-mocha); padding: 3px 0; margin-right: 2px;">TASTE:</span>
+              <button type="button" class="f3-pill active" id="f3T1" onclick="setF3(currentF3Period, 'floral')">🌸 산미</button>
+              <button type="button" class="f3-pill" id="f3T2" onclick="setF3(currentF3Period, 'nutty')">🥜 고소</button>
+              <button type="button" class="f3-pill" id="f3T3" onclick="setF3(currentF3Period, 'sweet')">🍫 단맛</button>
+              <button type="button" class="f3-pill" id="f3T4" onclick="setF3(currentF3Period, 'body')">🪵 묵직</button>
+            </div>
+          </div>
+
+          <div class="f1-search-row" style="padding: 4px 0 0 0;">
+            <span class="f1-search-icon">🔍</span>
+            <input type="text" class="f1-search-input" id="f3Input" placeholder="원하는 커피 맛이나 산지명을 입력하세요...">
+            <button type="button" class="f1-submit-btn" style="padding: 6px 14px; font-size: 11.5px;" onclick="triggerExplore('f3')">
+              <span>지도 바로보기 ➔</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ul class="key-points-list">
+        <li><strong>특징</strong>: 상하 구분을 완전히 없애고 단 하나의 슬림 카드 안에서 최소 높이로 구현했습니다.</li>
+      </ul>
+    </article>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notice" id="toastNotice">
+    <span>🧭</span>
+    <span id="toastMsg">에티오피아 예가체프 지도로 즉시 이동합니다!</span>
+  </div>
+
+  <script>
+    /* ================= DATA STORE (주간 / 월간 × 4대 취향 매트릭스) ================= */
+    const COFFEE_MATRIX = {
+      week: {
+        floral: {
+          bean: "에티오피아 예가체프 G1",
+          terroir: "1,950m ASL · 워시드(Washed) · 고원 화산재 토양",
+          cupNotes: "자스민 꽃향기, 백도 복숭아, 화사한 감귤 산미",
+          taste: "화사한 꽃향기와 감귤·복숭아 산미",
+          placeholder: "에티오피아 예가체프 (화사한 꽃향기와 높은 산미) 또는 자유 검색...",
+          subName: "예가체프"
+        },
+        nutty: {
+          bean: "브라질 세하도 NY2",
+          terroir: "1,100m ASL · 내추럴(Natural) · 평원 사바나 테루아",
+          cupNotes: "구운 아몬드, 브라운슈가, 마일드 너티 밸런스",
+          taste: "구운 아몬드의 고소함과 부드러운 단맛",
+          placeholder: "브라질 세하도 (구운 견과류의 고소함과 마일드 바디) 또는 자유 검색...",
+          subName: "세하도"
+        },
+        sweet: {
+          bean: "콜롬비아 우일라 수프레모",
+          terroir: "1,750m ASL · 워시드(Washed) · 안데스 산맥 화산토",
+          cupNotes: "밀크초콜릿, 오렌지 단맛, 편안한 데일리 밸런스",
+          taste: "밀크초콜릿 단맛과 편안한 균형감",
+          placeholder: "콜롬비아 우일라 (밀크초콜릿 단맛과 부드러운 밸런스) 또는 자유 검색...",
+          subName: "우일라"
+        },
+        body: {
+          bean: "인도네시아 만델링 G1",
+          terroir: "1,450m ASL · 웻헐링(Giling Basah) · 토바 호수 화산암",
+          cupNotes: "다크초콜릿, 허브 흙내음, 중후한 풀바디",
+          taste: "묵직한 흙내음과 다크초콜릿의 긴 여운",
+          placeholder: "인도네시아 만델링 (묵직한 흙내음과 깊은 바디감) 또는 자유 검색...",
+          subName: "만델링"
+        }
+      },
+      month: {
+        floral: {
+          bean: "케냐 AA 키암부",
+          terroir: "1,800m ASL · 더블 워시드 · 케냐산 붉은 화산토",
+          cupNotes: "자몽, 블랙커런트 과즙, 선명한 과일 산미",
+          taste: "자몽과 블랙커런트의 선명한 산미",
+          placeholder: "케냐 AA (자몽과 블랙커런트의 톡 쏘는 화사한 산미) 또는 자유 검색...",
+          subName: "케냐 AA"
+        },
+        nutty: {
+          bean: "과테말라 안티구아 SHB",
+          terroir: "1,600m ASL · 워시드(Washed) · 3개 화산 계곡 테루아",
+          cupNotes: "스모키 너트, 구운 헤이즐넛, 카카오 아로마",
+          taste: "스모키한 견과류와 헤이즐넛 풍미",
+          placeholder: "과테말라 안티구아 (스모키한 아몬드와 묵직한 고소함) 또는 자유 검색...",
+          subName: "안티구아"
+        },
+        sweet: {
+          bean: "코스타리카 타라주 따라수",
+          terroir: "1,650m ASL · 워시드(Washed) · 태평양 분지 고지대 토양",
+          cupNotes: "청사과 산미, 아카시아 꿀단맛, 클린 밸런스",
+          taste: "청사과 산미와 꿀 같은 단맛 밸런스",
+          placeholder: "코스타리카 타라주 (달콤한 꿀과 사과산의 환상 밸런스) 또는 자유 검색...",
+          subName: "타라주"
+        },
+        body: {
+          bean: "인도네시아 가요 마운틴",
+          terroir: "1,700m ASL · 웻헐링 / 워시드 · 술라웨시 산악 고원",
+          cupNotes: "스파이시 허브, 오크통 풍미, 진한 카카오 바디",
+          taste: "쌉싸름한 카카오닙스와 오크통 바디",
+          placeholder: "인도네시아 가요 마운틴 (진한 카카오와 묵직한 풀바디) 또는 자유 검색...",
+          subName: "가요마운틴"
+        }
+      }
+    };
+
+    /* ================= FUSION 1 CONTROLLER ================= */
+    let f1Period = "week";
+    let f1Taste = "floral";
+
+    function setF1Period(period) {
+      f1Period = period;
+      document.getElementById("f1PWeek").classList.toggle("active", period === "week");
+      document.getElementById("f1PMonth").classList.toggle("active", period === "month");
+      updateF1View();
+    }
+
+    function setF1Taste(taste) {
+      f1Taste = taste;
+      document.getElementById("f1TFloral").classList.toggle("active", taste === "floral");
+      document.getElementById("f1TNutty").classList.toggle("active", taste === "nutty");
+      document.getElementById("f1TSweet").classList.toggle("active", taste === "sweet");
+      document.getElementById("f1TBody").classList.toggle("active", taste === "body");
+      updateF1View();
+    }
+
+    function updateF1View() {
+      const data = COFFEE_MATRIX[f1Period][f1Taste];
+      const metricEl = document.getElementById("f1MetricBadge");
+      if (metricEl) metricEl.textContent = "";
+      document.getElementById("f1Input").value = data.bean;
+      document.getElementById("f1Input").placeholder = data.placeholder;
+      const tEl = document.getElementById("f1Terroir");
+      if (tEl) tEl.textContent = data.terroir;
+      const cEl = document.getElementById("f1CupNotes");
+      if (cEl) cEl.textContent = data.cupNotes;
+    }
+
+    /* ================= FUSION 2 CONTROLLER ================= */
+    let f2Period = "week";
+    let f2Taste = "floral";
+
+    function setF2Period(period) {
+      f2Period = period;
+      document.getElementById("f2PWeek").classList.toggle("active", period === "week");
+      document.getElementById("f2PMonth").classList.toggle("active", period === "month");
+
+      // Update chip sublabels based on period
+      const map = COFFEE_MATRIX[period];
+      document.getElementById("f2Sub1").textContent = map.floral.subName;
+      document.getElementById("f2Sub2").textContent = map.nutty.subName;
+      document.getElementById("f2Sub3").textContent = map.sweet.subName;
+      document.getElementById("f2Sub4").textContent = map.body.subName;
+
+      updateF2View();
+    }
+
+    function setF2Chip(taste) {
+      f2Taste = taste;
+      document.getElementById("f2C1").classList.toggle("active", taste === "floral");
+      document.getElementById("f2C2").classList.toggle("active", taste === "nutty");
+      document.getElementById("f2C3").classList.toggle("active", taste === "sweet");
+      document.getElementById("f2C4").classList.toggle("active", taste === "body");
+      updateF2View();
+    }
+
+    function updateF2View() {
+      const data = COFFEE_MATRIX[f2Period][f2Taste];
+      document.getElementById("f2Input").placeholder = data.placeholder;
+    }
+
+    /* ================= FUSION 3 CONTROLLER ================= */
+    let currentF3Period = "week";
+    let currentF3Taste = "floral";
+
+    function setF3(period, taste) {
+      currentF3Period = period;
+      currentF3Taste = taste;
+
+      document.getElementById("f3P1").classList.toggle("active", period === "week");
+      document.getElementById("f3P2").classList.toggle("active", period === "month");
+
+      document.getElementById("f3T1").classList.toggle("active", taste === "floral");
+      document.getElementById("f3T2").classList.toggle("active", taste === "nutty");
+      document.getElementById("f3T3").classList.toggle("active", taste === "sweet");
+      document.getElementById("f3T4").classList.toggle("active", taste === "body");
+
+      const data = COFFEE_MATRIX[period][taste];
+      document.getElementById("f3Input").placeholder = `${data.bean} (${data.taste}) 또는 자유 검색...`;
+    }
+
+    /* ================= TOAST EXPLORE TRIGGER ================= */
+    function triggerExplore(type) {
+      let activeData;
+      if (type === "f1") activeData = COFFEE_MATRIX[f1Period][f1Taste];
+      else if (type === "f2") activeData = COFFEE_MATRIX[f2Period][f2Taste];
+      else activeData = COFFEE_MATRIX[currentF3Period][currentF3Taste];
+
+      const toast = document.getElementById("toastNotice");
+      const msg = document.getElementById("toastMsg");
+      msg.textContent = `🧭 [${activeData.bean}] 산지로 지도 시점을 즉시 이동합니다!`;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+    }
+
+    /* ================= THEME SWITCHER ================= */
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle("dark");
+      document.getElementById("themeIcon").textContent = isDark ? "☀️" : "🌙";
+      document.getElementById("themeText").textContent = isDark ? "라이트모드" : "다크모드";
+    }
+
+    // Init
+    updateF1View();
+    setF2Period("week");
+  </script>
+</body>
+</html>

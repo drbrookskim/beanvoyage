@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoBTS — 트렌드 × 취향 실제 1:1 실물 크기 뷰</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+
+  <style>
+    /* ================= EDWARD HOPPER "ROOMS BY THE SEA" THEME PALETTE ================= */
+    :root {
+      --sea-blue: #30679D;
+      --sea-navy: #1E3B5C;
+      --sea-sky: #97B6CB;
+      --wall-cream: #FAF9ED;
+      --paper-white: #FFFFFF;
+      --sand-ochre: #BDB989;
+      --foliage-olive: #516B50;
+      --roasted-mocha: #78482B;
+      --roasted-caramel: #C68B59;
+      --ink-dark: #1E3B5C;
+      --ink-muted: #5A758D;
+      --border-subtle: rgba(189, 185, 137, 0.45);
+      --bg-page: #F4EFE6;
+      --bg-card: #FFFFFF;
+      --stamp-red: #A33B26;
+      --card-radius: 13px;
+    }
+
+    html.dark {
+      --sea-blue: #30679D;
+      --sea-navy: #0F1E2E;
+      --sea-sky: #97B6CB;
+      --wall-cream: #0D1926;
+      --paper-white: #122336;
+      --sand-ochre: #BDB989;
+      --foliage-olive: #516B50;
+      --roasted-mocha: #A86B42;
+      --roasted-caramel: #DFB995;
+      --ink-dark: #F0F0D8;
+      --ink-muted: #97B6CB;
+      --border-subtle: rgba(48, 103, 157, 0.4);
+      --bg-page: #080E16;
+      --bg-card: #0F1E2E;
+      --stamp-red: #D9534F;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--ink-dark);
+      padding: 24px 16px 80px;
+      line-height: 1.5;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      min-height: 100vh;
+    }
+
+    .max-container {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    /* Top Comparison Switcher */
+    .view-mode-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .view-tabs {
+      display: inline-flex;
+      background: var(--wall-cream);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      gap: 3px;
+    }
+    .view-tab-btn {
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .view-tab-btn.active {
+      background: var(--sea-blue);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .theme-toggle-btn {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--wall-cream);
+      border: 1px solid var(--border-subtle);
+      color: var(--ink-dark);
+      cursor: pointer;
+    }
+
+    /* Callout Note */
+    .reassurance-callout {
+      background: rgba(81, 107, 80, 0.08);
+      border: 1px solid rgba(81, 107, 80, 0.3);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      font-size: 12.5px;
+      color: var(--ink-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* ================= REAL 1:1 SCALE MOCKUP SECTION ================= */
+    .mockup-frame {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      margin-bottom: 24px;
+    }
+    .mockup-header-bar {
+      background: var(--wall-cream);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-family: "JetBrains Mono", monospace;
+      color: var(--ink-muted);
+    }
+
+    /* Screen 1 Real Scale (Only 716px width, compact height) */
+    .screen1-preview-wrap {
+      padding: 32px 16px;
+      text-align: center;
+      background: var(--bg-card);
+    }
+    .mockup-brand-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--ink-dark);
+      margin-bottom: 4px;
+    }
+    .mockup-sub {
+      font-size: 13px;
+      color: var(--sea-blue);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    /* THE EXACT SLIM TREND BAR (실제 크기: 716px x 42px) */
+    .real-trend-bar {
+      max-width: 716px;
+      margin: 0 auto 16px;
+      background: var(--paper-white);
+      border: 1px solid var(--sand-ochre);
+      border-radius: 14px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .real-seg-track {
+      display: inline-flex;
+      background: var(--wall-cream);
+      border: 1px solid rgba(189, 185, 137, 0.4);
+      padding: 2px;
+      border-radius: 9px;
+      gap: 2px;
+      shrink: 0;
+    }
+    .real-seg-btn {
+      padding: 4px 9px;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .real-seg-btn.active {
+      background: var(--sea-blue);
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+    .real-bean-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      min-width: 0;
+      cursor: pointer;
+    }
+    .real-bean-name {
+      font-weight: 800;
+      color: var(--ink-dark);
+      white-space: nowrap;
+    }
+    .real-bean-metric {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10.5px;
+      color: var(--foliage-olive);
+      background: rgba(81, 107, 80, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .real-action-btn {
+      padding: 5px 11px;
+      border-radius: 9px;
+      background: var(--sea-blue);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .real-action-btn:hover {
+      background: var(--sea-navy);
+    }
+
+    /* Screen 2 Cockpit Real Scale (Map Bar + Minimal Inset Pill) */
+    .screen2-preview-wrap {
+      padding: 16px;
+      background: var(--wall-cream);
+    }
+    .real-map-statusbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(189, 185, 137, 0.5);
+      margin-bottom: 14px;
+    }
+    .real-badge-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .pill-taste {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--paper-white);
+      border: 1px solid var(--sand-ochre);
+    }
+    /* THIS IS THE SYNC PILL - Super compact! */
+    .pill-sync {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(81, 107, 80, 0.12);
+      color: var(--foliage-olive);
+      border: 1px solid rgba(81, 107, 80, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Mockup Map & Right Panel Grid */
+    .cockpit-grid {
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      gap: 14px;
+    }
+    @media (max-width: 820px) {
+      .cockpit-grid { grid-template-columns: 1fr; }
+    }
+
+    .mock-map-box {
+      height: 340px;
+      background: #FFFFFF;
+      border: 1px solid var(--sand-ochre);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+    }
+    .mock-map-bg-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.25;
+      background: repeating-linear-gradient(45deg, #FAF9ED 0, #FAF9ED 10px, #EAE8D4 10px, #EAE8D4 20px);
+      pointer-events: none;
+    }
+    .mock-pin-center {
+      position: absolute;
+      top: 45%; left: 48%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .mock-pin-bubble {
+      background: var(--sea-navy);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .mock-pin-dot {
+      width: 14px;
+      height: 14px;
+      background: var(--foliage-olive);
+      border: 2px solid #FFFFFF;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(81, 107, 80, 0.3);
+    }
+
+    /* IN-MAP INLINE TUNING TIP (단 1줄!) */
+    .mock-map-tuning-bar {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--sand-ochre);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-blur: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .mock-tuning-text {
+      color: var(--ink-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mock-tuning-btn {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 5px;
+      background: var(--roasted-mocha);
+      color: #FFFFFF;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Right Panel (Knobs + AI Blend Compact) */
+    .mock-right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mock-panel-card {
+      background: var(--paper-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 11.5px;
+    }
+    .mock-card-header {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--sea-blue);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* AI BLEND PILL (트렌드 1위 원두 50% 베이스) */
+    .mock-blend-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: var(--wall-cream);
+      margin-bottom: 4px;
+      font-size: 11px;
+    }
+    .mock-blend-row.base {
+      border: 1px solid var(--sea-blue);
+      background: rgba(48, 103, 157, 0.06);
+    }
+
+    /* Explainer Section */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 14px;
+    }
+    .comparison-table th, .comparison-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+    .comparison-table th {
+      background: var(--wall-cream);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="max-container">
+
+    <!-- Top Mode Selector Bar -->
+    <div class="view-mode-bar">
+      <div>
+        <strong style="font-size: 14px; color: var(--sea-blue);">CoBTS 디자인 스케일 비교기</strong>
+        <span style="font-size: 11px; color: var(--ink-muted); margin-left: 8px;">(실제 적용 크기 vs 데모 상세)</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div class="view-tabs">
+          <button type="button" class="view-tab-btn active" onclick="switchView('real')">✨ 실제 서비스 1:1 크기 뷰</button>
+          <button type="button" class="view-tab-btn" onclick="switchView('detail')">🔍 기능 상세 분해 뷰</button>
+        </div>
+        <button type="button" class="theme-toggle-btn" onclick="toggleTheme()">🌙 테마</button>
+      </div>
+    </div>
+
+    <!-- Reassurance Banner -->
+    <div class="reassurance-callout">
+      <span style="font-size: 20px;">💡</span>
+      <div>
+        <strong>"이게 이렇게 크진 않겠지?" — 네, 맞습니다! 절대 크지 않습니다.</strong><br>
+        이전 샘플은 기능 검증을 위해 크게 확대한 것이며, <strong>실제 서비스에서는 아래 1:1 실물 뷰처럼 단 1픽셀의 낭비도 없이 초슬림 한 줄로 컴팩트하게 탑재</strong>됩니다.
+      </div>
+    </div>
+
+    <!-- ================= VIEW 1: REAL 1:1 SCALE MOCKUP ================= -->
+    <div id="viewRealScale">
+
+      <!-- 1. Screen 1 Real Scale Preview -->
+      <div class="mockup-frame">
+        <div class="mockup-header-bar">
+          <span>SCREEN 1 : 첫 화면 (Hero Search) 실제 적용 형태</span>
+          <span>너비 716px 고정 컴팩트 바</span>
+        </div>
+
+        <div class="screen1-preview-wrap">
+          <div class="mockup-brand-title">Bean Voyage</div>
+          <div class="mockup-sub">취향을 따라 떠나는 커피 여행</div>
+
+          <!-- THE ACTUAL REAL SLIM TREND BAR -->
+          <div class="real-trend-bar">
+            <!-- 3 Mood Buttons (Same slim height) -->
+            <div class="real-seg-track">
+              <button type="button" class="real-seg-btn active" id="btnFloral" onclick="selectMood('floral')">
+                <span>🌸 산미 Top</span>
+              </button>
+              <button type="button" class="real-seg-btn" id="btnSweet" onclick="selectMood('sweet')">
+                <span>🍫 밸런스 Top</span>
+              </button>
+              <button type="button" class="real-seg-btn" id="btnBody" onclick="selectMood('body')">
+                <span>🪵 바디 Top</span>
+              </button>
+            </div>
+
+            <!-- Bean Info & Metric -->
+            <div class="real-bean-info" onclick="scrollToScreen2()">
+              <span id="realIcon">🌸</span>
+              <span class="real-bean-name" id="realName">에티오피아 예가체프</span>
+              <span class="real-bean-metric" id="realMetric">주간 언급량 +48%</span>
+            </div>
+
+            <!-- Action Button -->
+            <button type="button" class="real-action-btn" onclick="scrollToScreen2()">
+              <span>지도 바로보기</span>
+              <span>➔</span>
+            </button>
+          </div>
+
+          <!-- Search Box Mock -->
+          <div style="max-width: 716px; margin: 0 auto; height: 46px; border: 1px solid var(--sand-ochre); border-radius: 12px; background: var(--paper-white); display: flex; align-items: center; padding: 0 16px; font-size: 13px; color: var(--ink-muted); box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+            <span>🔍 원하는 맛을 자유롭게 입력해보세요 (예: 꽃향기 나는 산미)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Screen 2 Real Scale Cockpit Preview -->
+      <div class="mockup-frame" id="mockScreen2">
+        <div class="mockup-header-bar">
+          <span>SCREEN 2 : 지도 화면 (Cockpit) 실제 적용 형태</span>
+          <span>기존 상태 바 및 카드 내 1줄 인라인 자연 결합</span>
+        </div>
+
+        <div class="screen2-preview-wrap">
+          <!-- Status Bar with Compact Sync Pill -->
+          <div class="real-map-statusbar">
+            <div class="real-badge-group">
+              <span class="pill-taste">🌸 화사한 산미 매칭</span>
+              <span style="font-size: 11px; color: var(--ink-muted);">→</span>
+              <span style="font-weight: 700; font-size: 12px; color: var(--sea-blue);" id="realMatchedOrigin">에티오피아 예가체프 (주간 1위)</span>
+
+              <!-- THIS COMPACT PILL IS THE ONLY THING ADDED! -->
+              <span class="pill-sync" id="realSyncPill">
+                <span>🎯</span>
+                <span id="realSyncText">내 취향 88% 일치</span>
+              </span>
+            </div>
+
+            <div style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--ink-muted);">
+              ZOOM 1.05x · Global Nav
+            </div>
+          </div>
+
+          <!-- Cockpit 2-Column (Map Left + Sliders/Blend Right) -->
+          <div class="cockpit-grid">
+            <!-- Map Left -->
+            <div class="mock-map-box">
+              <div class="mock-map-bg-lines"></div>
+
+              <div style="position: relative; z-index: 10; font-size: 11px; font-weight: 700; color: var(--sea-blue);">
+                KOR 부산항 ➔ ETH 예가체프 (항로 9,820km)
+              </div>
+
+              <!-- Pin Center -->
+              <div class="mock-pin-center">
+                <div class="mock-pin-bubble" id="pinBubbleText">📍 에티오피아 예가체프 (1950m)</div>
+                <div class="mock-pin-dot"></div>
+              </div>
+
+              <!-- IN-MAP 1-LINE TUNING TIP (지도 하단 바) -->
+              <div class="mock-map-tuning-bar">
+                <div class="mock-tuning-text">
+                  <span>💡</span>
+                  <span id="realTipText">예가체프 산미를 부드럽게 낮추고 단맛을 살리려면: <strong>시티(City) 배전</strong> 추천</span>
+                </div>
+                <button type="button" class="mock-tuning-btn" onclick="alert('배전도가 시뮬레이터에 즉시 적용되었습니다!')">시티 배전 적용</button>
+              </div>
+            </div>
+
+            <!-- Right Panel (Existing 4 Dials + AI Blend) -->
+            <div class="mock-right-panel">
+              <!-- Sliders Block Mock -->
+              <div class="mock-panel-card">
+                <div class="mock-card-header">
+                  <span>4대 감각 축 점수</span>
+                  <span style="color: var(--foliage-olive);">내 입맛 설정</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 10.5px;">
+                  <div style="background: var(--wall-cream); padding: 4px 6px; border-radius: 4px;">산미: <strong>Lv.3 (6.0)</strong></div>
+                  <div style="background: var(--wall-cream); padding: 4px 6px; border-radius: 4px;">단맛: <strong>Lv.4 (7.5)</strong></div>
+                  <div style="background: var(--wall-cream); padding: 4px 6px; border-radius: 4px;">바디: <strong>Lv.3 (6.0)</strong></div>
+                  <div style="background: var(--wall-cream); padding: 4px 6px; border-radius: 4px;">고소: <strong>Lv.4 (7.5)</strong></div>
+                </div>
+              </div>
+
+              <!-- AI Blend with Trend Bean 50% Lock -->
+              <div class="mock-panel-card">
+                <div class="mock-card-header">
+                  <span>AI 맞춤 블렌드</span>
+                  <span style="color: var(--foliage-olive); font-size: 10.5px; font-weight: 700;">일치율 96% (+8%)</span>
+                </div>
+
+                <div class="mock-blend-row base">
+                  <span>☕ <strong id="blend1Name">예가체프</strong> (1위 베이스)</span>
+                  <span style="font-weight: 800; color: var(--sea-blue);">50%</span>
+                </div>
+                <div class="mock-blend-row">
+                  <span>☕ <span id="blend2Name">우일라 (단맛 보완)</span></span>
+                  <span style="font-weight: 700;">30%</span>
+                </div>
+                <div class="mock-blend-row">
+                  <span>☕ <span id="blend3Name">세하두 (고소함 보완)</span></span>
+                  <span style="font-weight: 700;">20%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Size Comparison Table -->
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 16px; margin-top: 20px;">
+        <strong style="font-size: 13px; color: var(--sea-blue);">📐 크기 및 공간 점유 비교 요약</strong>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>영역</th>
+              <th>기존 UI</th>
+              <th>취향 결합 후 (변경 사항)</th>
+              <th>추가되는 공간 크기</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Screen 1 (첫 화면)</strong></td>
+              <td>[주간 Top | 월간 Top] 2버튼 배너</td>
+              <td>[산미 Top | 밸런스 Top | 바디 Top] 3버튼 배너</td>
+              <td><span style="color: var(--foliage-olive); font-weight: 700;">0px 추가 (기존 배너 높이·너비 100% 동일)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Screen 2 (상태 바)</strong></td>
+              <td>14개 산지 매칭 완료 텍스트</td>
+              <td>옆에 작은 <code>🎯 내 취향 88% 일치</code> 뱃지 하나 추가</td>
+              <td><span style="color: var(--foliage-olive); font-weight: 700;">단 20px 뱃지 하나 (인라인 배치)</span></td>
+            </tr>
+            <tr>
+              <td><strong>Screen 2 (지도/블렌드)</strong></td>
+              <td>일반 AI 3원두 블렌드 레시피</td>
+              <td>1위 원두 50% 뱃지가 붙은 블렌드 레시피</td>
+              <td><span style="color: var(--foliage-olive); font-weight: 700;">0px 추가 (기존 블렌드 카드 내부 텍스트만 교체)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ================= VIEW 2: DETAIL BREAKDOWN ================= -->
+    <div id="viewDetail" style="display: none; padding: 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-subtle); margin-top: 10px;">
+      <h3 style="font-size: 15px; margin-bottom: 8px;">🔍 3가지 기능의 데이터 연산 원리</h3>
+      <p style="font-size: 12.5px; color: var(--ink-muted); margin-bottom: 12px;">
+        1. <strong>취향 3대 무드 분기</strong>: 산미파(에티오피아), 단맛파(콜롬비아), 바디파(인도네시아) 1위 원두를 상시 매핑.<br>
+        2. <strong>싱크로율 산출</strong>: 4차원 유클리드 공간 거리 공식으로 내 슬라이더 값과 원두 이론값 간의 일치율(%)을 45~99% 범위로 정규화.<br>
+        3. <strong>로스팅 보정 알고리즘</strong>: 산미가 내 목표보다 높으면 배전도를 1단계 올려 산미를 억제하고 단맛을 보강하는 팁을 동적 생성.
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    const MOODS = {
+      floral: {
+        icon: "🌸",
+        name: "에티오피아 예가체프",
+        metric: "주간 언급량 +48%",
+        matchedOrigin: "에티오피아 예가체프 (주간 1위)",
+        syncText: "내 취향 88% 일치",
+        pinText: "📍 에티오피아 예가체프 (1950m)",
+        tipText: "예가체프 산미를 부드럽게 낮추고 단맛을 살리려면: <strong>시티(City) 배전</strong> 추천",
+        blend1: "예가체프 (1위 베이스)",
+        blend2: "우일라 (단맛 보완)",
+        blend3: "세하두 (고소함 보완)"
+      },
+      sweet: {
+        icon: "🍫",
+        name: "콜롬비아 우일라",
+        metric: "월간 리뷰 1,850건 최다",
+        matchedOrigin: "콜롬비아 우일라 (월간 1위)",
+        syncText: "내 취향 94% 일치",
+        pinText: "📍 콜롬비아 우일라 (1700m)",
+        tipText: "밀크초콜릿 단맛과 바디를 극대화하려면: <strong>풀시티(Full City) 배전</strong> 추천",
+        blend1: "우일라 (1위 베이스)",
+        blend2: "안티구아 (스모키 바디)",
+        blend3: "예가체프 (은은한 꽃향)"
+      },
+      body: {
+        icon: "🪵",
+        name: "인도네시아 만델링",
+        metric: "바디 누적판매 1위",
+        matchedOrigin: "인도네시아 만델링 (스테디 1위)",
+        syncText: "내 취향 81% 일치",
+        pinText: "📍 인도네시아 만델링 (1250m)",
+        tipText: "묵직한 흙내음을 줄이고 단맛을 살리려면: <strong>하이(High)~시티 배전</strong> 추천",
+        blend1: "만델링 (1위 베이스)",
+        blend2: "술 드 미나스 (너티 단맛)",
+        blend3: "타라쥬 (허니 클린컵)"
+      }
+    };
+
+    function selectMood(moodKey) {
+      document.querySelectorAll(".real-seg-btn").forEach(b => b.classList.remove("active"));
+      if (moodKey === "floral") document.getElementById("btnFloral").classList.add("active");
+      if (moodKey === "sweet") document.getElementById("btnSweet").classList.add("active");
+      if (moodKey === "body") document.getElementById("btnBody").classList.add("active");
+
+      const m = MOODS[moodKey];
+      document.getElementById("realIcon").textContent = m.icon;
+      document.getElementById("realName").textContent = m.name;
+      document.getElementById("realMetric").textContent = m.metric;
+      document.getElementById("realMatchedOrigin").textContent = m.matchedOrigin;
+      document.getElementById("realSyncText").textContent = m.syncText;
+      document.getElementById("pinBubbleText").textContent = m.pinText;
+      document.getElementById("realTipText").innerHTML = m.tipText;
+      document.getElementById("blend1Name").textContent = m.blend1;
+      document.getElementById("blend2Name").textContent = m.blend2;
+      document.getElementById("blend3Name").textContent = m.blend3;
+    }
+
+    function scrollToScreen2() {
+      const el = document.getElementById("mockScreen2");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function switchView(mode) {
+      document.querySelectorAll(".view-tab-btn").forEach(b => b.classList.remove("active"));
+      if (mode === "real") {
+        document.querySelectorAll(".view-tab-btn")[0].classList.add("active");
+        document.getElementById("viewRealScale").style.display = "block";
+        document.getElementById("viewDetail").style.display = "none";
+      } else {
+        document.querySelectorAll(".view-tab-btn")[1].classList.add("active");
+        document.getElementById("viewRealScale").style.display = "none";
+        document.getElementById("viewDetail").style.display = "block";
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle("dark");
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,338 @@
+{
+ "CT_latam": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Latin_America_%28orthographic_projection%29.svg/330px-Latin_America_%28orthographic_projection%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Latin_America_%28orthographic_projection%29.svg",
+  "wiki_title": "Latin America",
+  "wiki_url": "https://en.wikipedia.org/wiki/Latin_America",
+  "wiki_desc": "Region of the Americas"
+ },
+ "CT_asia": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Asia_%28orthographic_projection%29_without_New_Guinea.svg/330px-Asia_%28orthographic_projection%29_without_New_Guinea.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Asia_%28orthographic_projection%29_without_New_Guinea.svg",
+  "wiki_title": "Asia",
+  "wiki_url": "https://en.wikipedia.org/wiki/Asia",
+  "wiki_desc": "Continent"
+ },
+ "CT_africa": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Africa_%28orthographic_projection%29.svg/330px-Africa_%28orthographic_projection%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Africa_%28orthographic_projection%29.svg",
+  "wiki_title": "Africa",
+  "wiki_url": "https://en.wikipedia.org/wiki/Africa",
+  "wiki_desc": "Continent"
+ },
+ "CT_europe": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg/330px-Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Europe_orthographic_Caucasus_Urals_boundary_%28with_borders%29.svg",
+  "wiki_title": "Europe",
+  "wiki_url": "https://en.wikipedia.org/wiki/Europe",
+  "wiki_desc": "Continent"
+ },
+ "CT_oceania": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Oceania_%28centered_orthographic_projection%29.svg/330px-Oceania_%28centered_orthographic_projection%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Oceania_%28centered_orthographic_projection%29.svg",
+  "wiki_title": "Oceania",
+  "wiki_url": "https://en.wikipedia.org/wiki/Oceania",
+  "wiki_desc": "Continent/Geographical region in the Pacific Ocean"
+ },
+ "CT_namerica": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Location_North_America.svg/330px-Location_North_America.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Location_North_America.svg",
+  "wiki_title": "North America",
+  "wiki_url": "https://en.wikipedia.org/wiki/North_America",
+  "wiki_desc": "Continent"
+ },
+ "R_mandheling": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg/330px-Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Lokasi_Sumatra_Utara_Kabupaten_Mandailing_Natal.svg",
+  "wiki_title": "Mandailing Natal Regency",
+  "wiki_url": "https://en.wikipedia.org/wiki/Mandailing_Natal_Regency",
+  "wiki_desc": "Regency in North Sumatra, Indonesia"
+ },
+ "R_java": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg/330px-Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Sulfur_mining_in_Kawah_Ijen_-_Indonesia_-_20110608.jpg",
+  "wiki_title": "Ijen",
+  "wiki_url": "https://en.wikipedia.org/wiki/Ijen",
+  "wiki_desc": "Volcano in East Java"
+ },
+ "R_toraja": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Ke%27te%27_Kesu%27_1.jpg/330px-Ke%27te%27_Kesu%27_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Ke%27te%27_Kesu%27_1.jpg",
+  "wiki_title": "Tana Toraja Regency",
+  "wiki_url": "https://en.wikipedia.org/wiki/Tana_Toraja_Regency",
+  "wiki_desc": "Regency in South Sulawesi, Indonesia"
+ },
+ "R_kintamani": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Bali_in_Indonesia_%28special_marker%29.svg/330px-Bali_in_Indonesia_%28special_marker%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Bali_in_Indonesia_%28special_marker%29.svg",
+  "wiki_title": "Bali",
+  "wiki_url": "https://en.wikipedia.org/wiki/Bali",
+  "wiki_desc": "Province in Lesser Sunda Islands, Indonesia"
+ },
+ "R_sumatra_low": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Sumatra_Topography.png/330px-Sumatra_Topography.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Sumatra_Topography.png",
+  "wiki_title": "Sumatra",
+  "wiki_url": "https://en.wikipedia.org/wiki/Sumatra",
+  "wiki_desc": "Region & island in western Indonesia"
+ },
+ "R_bahia": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/28/Bandeira_da_Bahia.svg/330px-Bandeira_da_Bahia.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Bandeira_da_Bahia.svg",
+  "wiki_title": "Bahia",
+  "wiki_url": "https://en.wikipedia.org/wiki/Bahia",
+  "wiki_desc": "State of Brazil"
+ },
+ "R_hawaii": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Kona_Coffee_fruits%282%29.jpg/330px-Kona_Coffee_fruits%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Kona_Coffee_fruits%282%29.jpg",
+  "wiki_title": "Kona coffee",
+  "wiki_url": "https://en.wikipedia.org/wiki/Kona_coffee",
+  "wiki_desc": "Market name for Hawaiian coffee brand"
+ },
+ "R_reunion": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Armoiries_R%C3%A9union.svg/330px-Armoiries_R%C3%A9union.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Armoiries_R%C3%A9union.svg",
+  "wiki_title": "Réunion",
+  "wiki_url": "https://en.wikipedia.org/wiki/R%C3%A9union",
+  "wiki_desc": "Overseas department of France"
+ },
+ "R_sidamo": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_Sidama.svg/330px-Flag_of_Sidama.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Sidama.svg",
+  "wiki_title": "Sidama Region",
+  "wiki_url": "https://en.wikipedia.org/wiki/Sidama_Region",
+  "wiki_desc": "Regional state of Ethiopia"
+ },
+ "R_harar": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg/330px-City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:City_Gate%2C_Harar_Jugol_%2814464345823%29.jpg",
+  "wiki_title": "Harar",
+  "wiki_url": "https://en.wikipedia.org/wiki/Harar",
+  "wiki_desc": "Capital of Harari Region, Ethiopia"
+ },
+ "R_malabar": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/2015_0117_Monsooned_Malabar_beans_unroosted.jpg/330px-2015_0117_Monsooned_Malabar_beans_unroosted.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:2015_0117_Monsooned_Malabar_beans_unroosted.jpg",
+  "wiki_title": "Monsooned Malabar",
+  "wiki_url": "https://en.wikipedia.org/wiki/Monsooned_Malabar",
+  "wiki_desc": "Coffee beans processing"
+ },
+ "R_campinas": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg/330px-Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Instituto_Agron%C3%B4mico_de_Campinas_-_panoramio.jpg",
+  "wiki_title": "Instituto Agronômico de Campinas",
+  "wiki_url": "https://en.wikipedia.org/wiki/Instituto_Agron%C3%B4mico_de_Campinas",
+  "wiki_desc": "Brazilian research institute"
+ },
+ "R_mocha_port": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Mocha_Red_Sea_-_panoramio.jpg/330px-Mocha_Red_Sea_-_panoramio.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Mocha_Red_Sea_-_panoramio.jpg",
+  "wiki_title": "Mokha",
+  "wiki_url": "https://en.wikipedia.org/wiki/Mokha",
+  "wiki_desc": "City in Taiz Governorate, Yemen"
+ },
+ "CO_brazil": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Fazenda_Da_Lagoa.jpg/330px-Fazenda_Da_Lagoa.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Fazenda_Da_Lagoa.jpg",
+  "wiki_title": "Coffee production in Brazil",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Brazil",
+  "wiki_desc": "Largest national coffee production in the world"
+ },
+ "CO_colombia": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Paisaje-Cafetero-Colombiano.png/330px-Paisaje-Cafetero-Colombiano.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Paisaje-Cafetero-Colombiano.png",
+  "wiki_title": "Coffee production in Colombia",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Colombia",
+  "wiki_desc": "UNESCO World Heritage Site in Colombia"
+ },
+ "CO_honduras": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Coffeebeansorting.jpg/330px-Coffeebeansorting.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Coffeebeansorting.jpg",
+  "wiki_title": "Coffee production in Honduras",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Honduras",
+  "wiki_desc": ""
+ },
+ "CO_mexico": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/330px-Flag_of_Mexico.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Mexico.svg",
+  "wiki_title": "Mexico",
+  "wiki_url": "https://en.wikipedia.org/wiki/Mexico",
+  "wiki_desc": "Country in North America"
+ },
+ "CO_nicaragua": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg/330px-Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_Plant_near_the_Quilal%C3%AD_-_San_Juan_del_R%C3%ADo_Coco_border.jpg",
+  "wiki_title": "Coffee production in Nicaragua",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Nicaragua",
+  "wiki_desc": ""
+ },
+ "CO_guatemala": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Las_Merceditas_18.jpg/330px-Las_Merceditas_18.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Las_Merceditas_18.jpg",
+  "wiki_title": "Coffee production in Guatemala",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Guatemala",
+  "wiki_desc": ""
+ },
+ "CO_elsalvador": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg/330px-Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_Processing_in_Ahuachapan%2C_El_Salvador.jpg",
+  "wiki_title": "Coffee production in El Salvador",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_El_Salvador",
+  "wiki_desc": ""
+ },
+ "CO_costarica": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/DirkvdM_orosi_valley_bird.jpg/330px-DirkvdM_orosi_valley_bird.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:DirkvdM_orosi_valley_bird.jpg",
+  "wiki_title": "Coffee production in Costa Rica",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Costa_Rica",
+  "wiki_desc": ""
+ },
+ "CO_panama": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Flag_of_Panama.svg/330px-Flag_of_Panama.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Panama.svg",
+  "wiki_title": "Panama",
+  "wiki_url": "https://en.wikipedia.org/wiki/Panama",
+  "wiki_desc": "Country in Central America"
+ },
+ "CO_peru": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/Medici%C3%B3n8.jpg/330px-Medici%C3%B3n8.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Medici%C3%B3n8.jpg",
+  "wiki_title": "Coffee production in Peru",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Peru",
+  "wiki_desc": ""
+ },
+ "CO_jamaica": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg/330px-Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Jamaica_Blue_Mountain_Coffee_in_a_packet.jpg",
+  "wiki_title": "Coffee production in Jamaica",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Jamaica",
+  "wiki_desc": ""
+ },
+ "CO_vietnam": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Coffee_GL_2020.jpg/330px-Coffee_GL_2020.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_GL_2020.jpg",
+  "wiki_title": "Coffee production in Vietnam",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Vietnam",
+  "wiki_desc": ""
+ },
+ "CO_india": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/India_coffee_forests.jpg/330px-India_coffee_forests.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:India_coffee_forests.jpg",
+  "wiki_title": "Coffee production in India",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_India",
+  "wiki_desc": ""
+ },
+ "CO_indonesia": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg/330px-COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Een_man_op_leeftijd_tijdens_het_pellen_van_koffie_bij_megalieten_in_het_dorp_Bena_TMnr_20018314.jpg",
+  "wiki_title": "Coffee production in Indonesia",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Indonesia",
+  "wiki_desc": ""
+ },
+ "CO_yemen": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Flag_of_Yemen.svg/330px-Flag_of_Yemen.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Yemen.svg",
+  "wiki_title": "Yemen",
+  "wiki_url": "https://en.wikipedia.org/wiki/Yemen",
+  "wiki_desc": "Country in West Asia"
+ },
+ "CO_china": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/330px-Flag_of_the_People%27s_Republic_of_China.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_the_People%27s_Republic_of_China.svg",
+  "wiki_title": "China",
+  "wiki_url": "https://en.wikipedia.org/wiki/China",
+  "wiki_desc": "Country in East Asia"
+ },
+ "CO_timor": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Flag_of_East_Timor.svg/330px-Flag_of_East_Timor.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_East_Timor.svg",
+  "wiki_title": "Timor-Leste",
+  "wiki_url": "https://en.wikipedia.org/wiki/Timor-Leste",
+  "wiki_desc": "Country in Southeast Asia"
+ },
+ "CO_ethiopia": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Coffee_berry_sorting_process%2C_near_Hawassa.jpg/330px-Coffee_berry_sorting_process%2C_near_Hawassa.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_berry_sorting_process%2C_near_Hawassa.jpg",
+  "wiki_title": "Coffee production in Ethiopia",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Ethiopia",
+  "wiki_desc": "Aspect of agriculture"
+ },
+ "CO_uganda": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/63/Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg/330px-Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Female_farmer_benefits_from_agricultural_training_%286594883811%29.jpg",
+  "wiki_title": "Coffee production in Uganda",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Uganda",
+  "wiki_desc": ""
+ },
+ "CO_kenya": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Kenya.svg/330px-Flag_of_Kenya.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Kenya.svg",
+  "wiki_title": "Kenya",
+  "wiki_url": "https://en.wikipedia.org/wiki/Kenya",
+  "wiki_desc": "Country in East Africa"
+ },
+ "CO_rwanda": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Rwandan_Coffee.jpg/330px-Rwandan_Coffee.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Rwandan_Coffee.jpg",
+  "wiki_title": "Coffee production in Rwanda",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Rwanda",
+  "wiki_desc": ""
+ },
+ "CO_tanzania": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Coffee_zones_of_tanzania.png/330px-Coffee_zones_of_tanzania.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Coffee_zones_of_tanzania.png",
+  "wiki_title": "Coffee production in Tanzania",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Tanzania",
+  "wiki_desc": ""
+ },
+ "CO_cameroon": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9b/The_National_Archives_UK_-_CO_1069-24-27.jpg/330px-The_National_Archives_UK_-_CO_1069-24-27.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:The_National_Archives_UK_-_CO_1069-24-27.jpg",
+  "wiki_title": "Coffee production in Cameroon",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Cameroon",
+  "wiki_desc": ""
+ },
+ "CO_ivorycoast": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_C%C3%B4te_d%27Ivoire.svg/330px-Flag_of_C%C3%B4te_d%27Ivoire.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_C%C3%B4te_d%27Ivoire.svg",
+  "wiki_title": "Ivory Coast",
+  "wiki_url": "https://en.wikipedia.org/wiki/Ivory_Coast",
+  "wiki_desc": "Country in West Africa"
+ },
+ "CO_ghana": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/330px-Flag_of_Ghana.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Ghana.svg",
+  "wiki_title": "Ghana",
+  "wiki_url": "https://en.wikipedia.org/wiki/Ghana",
+  "wiki_desc": "Country in West Africa"
+ },
+ "CO_madagascar": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/French_Africa_coffee_stamp_1956.jpg/330px-French_Africa_coffee_stamp_1956.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:French_Africa_coffee_stamp_1956.jpg",
+  "wiki_title": "Coffee production in Madagascar",
+  "wiki_url": "https://en.wikipedia.org/wiki/Coffee_production_in_Madagascar",
+  "wiki_desc": ""
+ },
+ "CO_portugal": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Flag_of_Portugal_%28official%29.svg/330px-Flag_of_Portugal_%28official%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_Portugal_%28official%29.svg",
+  "wiki_title": "Portugal",
+  "wiki_url": "https://en.wikipedia.org/wiki/Portugal",
+  "wiki_desc": "Country in Southwestern Europe"
+ },
+ "CO_france": {
+  "image": "https://thumb.wikimedia.org/wikipedia/en/thumb/c/c3/Flag_of_France.svg/330px-Flag_of_France.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_France.svg",
+  "wiki_title": "France",
+  "wiki_url": "https://en.wikipedia.org/wiki/France",
+  "wiki_desc": "Country primarily in Western Europe"
+ },
+ "CO_usa": {
+  "image": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg/330px-Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "image_file": "https://commons.wikimedia.org/wiki/File:Flag_of_the_United_States_%28DDD-F-416E_specifications%29.svg",
+  "wiki_title": "United States",
+  "wiki_url": "https://en.wikipedia.org/wiki/United_States",
+  "wiki_desc": "Country primarily in North America"
+ }
+}

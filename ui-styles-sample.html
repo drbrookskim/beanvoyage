@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>커피 맵 팝업 UI/UX 디자인 샘플 쇼케이스</title>
+  <!-- Google Fonts: Inter, Pretendard, Playfair Display, Instrument Serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+  <style>
+    :root {
+      --bg-canvas: #f4ede4;
+      --coffee-primary: #5c3a21;
+      --coffee-dark: #2c1a0e;
+      --coffee-light: #d4a373;
+      --coffee-green: #3b5e43;
+      --coffee-green-light: #52795b;
+      --accent-naver: #03c75a;
+      --accent-amazon: #ff9900;
+      --glass-bg: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(0, 0, 0, 0.08);
+      --glass-shadow: 0 12px 36px -6px rgba(44, 26, 14, 0.16), 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #e5ded3;
+      background-image: 
+        radial-gradient(#c8beaf 1px, transparent 1px),
+        linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);
+      background-size: 24px 24px, 120px 120px, 120px 120px;
+      color: #2b231d;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 16px 80px;
+    }
+
+    /* 상단 헤더 & 컨트롤러 */
+    header {
+      text-align: center;
+      max-width: 820px;
+      margin-bottom: 28px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #dfd5c6;
+      color: #634d3b;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #2a1f17;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    p.subtitle {
+      font-size: 14px;
+      color: #726255;
+      line-height: 1.5;
+    }
+
+    /* 스타일 선택 탭 바 */
+    .style-switcher {
+      display: flex;
+      gap: 6px;
+      background: #ded4c5;
+      padding: 5px;
+      border-radius: 14px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+      margin: 20px 0 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .switch-btn {
+      padding: 9px 18px;
+      border-radius: 10px;
+      border: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: #68584b;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .switch-btn:hover {
+      color: #2a1f17;
+    }
+    .switch-btn.active {
+      background: #ffffff;
+      color: #2a1f17;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    /* 쇼케이스 스테이지 */
+    .stage {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      min-height: 380px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* 배경 가상 지도 그리드 */
+    .map-mock-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #ede3d5;
+      overflow: hidden;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+      z-index: 1;
+    }
+    .map-topo-lines {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.35;
+      stroke: #8d7966;
+    }
+    .map-pin {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+    .map-pin-circle {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #8b3a1a;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      animation: pulse 2.4s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 58, 26, 0.4); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(139, 58, 26, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(139, 58, 26, 0); }
+    }
+
+    /* ==========================================================
+       스타일 0: 현재 버전 (Current As-Is 재현)
+       ========================================================== */
+    .sample-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 440px;
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .sample-container.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 현재 스타일 재현 카드 */
+    .as-is-card {
+      background: #ffffff;
+      border-radius: 28px;
+      border: 3px solid #dce8ef;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+      padding: 18px 22px 22px;
+    }
+    .as-is-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .as-is-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0d2745;
+    }
+    .as-is-divider { color: #ccd5dc; font-weight: 300; }
+    .as-is-alt {
+      font-family: "Instrument Serif", serif;
+      font-size: 22px;
+      color: #2e593a;
+      font-weight: 500;
+    }
+    .as-is-tabs {
+      display: flex;
+      gap: 8px;
+      position: relative;
+      margin-bottom: 2px;
+    }
+    .as-is-tab {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .as-is-tab.roasted {
+      background: #6a3e23;
+      color: #fff;
+    }
+    .as-is-tab.green {
+      background: #e3ebf3;
+      color: #6f8698;
+    }
+    .as-is-tab.green.active {
+      background: #3e6d4c;
+      color: #fff;
+    }
+    .as-is-tab.roasted:not(.active) {
+      background: #e3ebf3;
+      color: #6f8698;
+    }
+    /* 뾰족한 캐럿 */
+    .as-is-caret {
+      position: relative;
+      width: 14px;
+      height: 8px;
+      margin-left: 12px;
+      margin-bottom: -1px;
+      z-index: 2;
+    }
+    .as-is-caret svg { display: block; width: 14px; height: 8px; fill: #fbf7ee; stroke: #e8dccb; }
+    .as-is-subbox {
+      background: #fbf7ee;
+      border: 1.5px solid #e8dccb;
+      border-radius: 20px;
+      padding: 14px 16px 16px;
+    }
+    .as-is-box-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #5c3e29;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .as-is-box-sub {
+      font-weight: 400;
+      color: #8c7665;
+      font-size: 12px;
+      margin-left: 2px;
+    }
+    .as-is-btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .as-is-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 42px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #d4c5b3;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .as-is-btn .badge-n {
+      width: 18px;
+      height: 18px;
+      background: #03c75a;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+    .as-is-btn .badge-a {
+      width: 18px;
+      height: 18px;
+      background: #232f3e;
+      color: #ff9900;
+      border-radius: 4px;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ==========================================================
+       스타일 1: 스페셜티 아카이브 (Editorial Specialty) - 추천
+       ========================================================== */
+    .style1-card {
+      background: #fdfcf9;
+      border-radius: 20px;
+      border: 1px solid #e6ded3;
+      box-shadow: 0 16px 36px -8px rgba(45, 30, 18, 0.16), 0 4px 12px rgba(0, 0, 0, 0.03);
+      padding: 20px 22px;
+      color: #2c221a;
+    }
+    .style1-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .style1-country-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8f6848;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .style1-country-tag::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #c57b44;
+    }
+    .style1-hs-badge {
+      font-size: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 500;
+      color: #7d7266;
+      background: #f1eae0;
+      padding: 3px 7px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
+    .style1-header {
+      margin-bottom: 16px;
+    }
+    .style1-region-name {
+      font-size: 21px;
+      font-weight: 400;
+      color: #241b14;
+      letter-spacing: -0.02em;
+      margin-bottom: 3px;
+    }
+    .style1-flavor-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #6a5e52;
+    }
+    .style1-alt-pill {
+      font-family: "Instrument Serif", serif;
+      font-size: 15px;
+      font-style: italic;
+      color: #3e6d4c;
+      background: #edf5ee;
+      padding: 1px 8px;
+      border-radius: 999px;
+      border: 1px solid #cce2d1;
+    }
+    .style1-divider-dot { color: #d0c7bd; }
+
+    /* 모던 세그먼트 컨트롤 탭 (부드러운 슬라이딩 인디케이터) */
+    .style1-segmented-wrap {
+      position: relative;
+      background: #f0e8dc;
+      padding: 4px;
+      border-radius: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    /* 슬라이딩 백그라운드 필 (Glider) */
+    .style1-seg-glider {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(45, 30, 18, 0.1), 0 1px 2px rgba(0,0,0,0.04);
+      transition: transform 0.32s cubic-bezier(0.25, 1, 0.3, 1);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .style1-seg-btn {
+      position: relative;
+      z-index: 2;
+      border: none;
+      background: transparent;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 400;
+      color: #8c7e70;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: color 0.25s ease;
+      user-select: none;
+    }
+    .style1-seg-btn.active {
+      color: #241b14;
+      font-weight: 500;
+    }
+    .style1-seg-btn .icon-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      transition: transform 0.25s ease, background-color 0.25s ease;
+    }
+    .style1-seg-btn.active .icon-dot {
+      transform: scale(1.2);
+    }
+    .style1-seg-btn.btn-roasted .icon-dot { background: #6a3e23; }
+    .style1-seg-btn.btn-green .icon-dot { background: #3e6d4c; }
+
+    /* 채널 카드 컨테이너 페이드 효과 */
+    .style1-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .style1-actions.content-switching {
+      opacity: 0.3;
+      transform: translateY(3px);
+    }
+    .style1-action-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #e7ded2;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #2b2118;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .style1-action-card:hover {
+      border-color: #cbbaa5;
+      transform: translateY(-1.5px);
+      box-shadow: 0 6px 14px -3px rgba(45,30,18,0.08);
+    }
+    .style1-action-info {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .style1-brand-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .style1-brand-icon.naver {
+      background: #03c75a;
+      color: #ffffff;
+    }
+    .style1-brand-icon.amazon {
+      background: #232f3e;
+      color: #ff9900;
+      font-size: 13px;
+    }
+    .style1-action-title {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #241b14;
+      line-height: 1.2;
+    }
+    .style1-action-sub {
+      font-size: 10.5px;
+      color: #8d7e70;
+      margin-top: 1px;
+    }
+    .style1-arrow {
+      color: #ad9e90;
+      font-size: 13px;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .style1-action-card:hover .style1-arrow {
+      color: #241b14;
+      transform: translate(2px, -2px);
+    }
+
+    /* ==========================================================
+       스타일 2: 클린 글래스 맵 오버레이 (Apple / Airbnb Maps)
+       ========================================================== */
+    .style2-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0,0,0,0.05);
+      padding: 20px 22px;
+      color: #1a1a1a;
+    }
+    .style2-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+    .style2-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .style2-origin-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: #0071e3;
+      letter-spacing: -0.01em;
+    }
+    .style2-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: -0.02em;
+    }
+    .style2-alt-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 9px;
+      background: rgba(0, 0, 0, 0.04);
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #3b744d;
+    }
+
+    .style2-tab-group {
+      display: flex;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      padding: 3px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .style2-tab-item {
+      flex: 1;
+      text-align: center;
+      padding: 7px 0;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #666;
+      border: none;
+      background: transparent;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .style2-tab-item.active {
+      background: #ffffff;
+      color: #111;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .style2-pill-btn-row {
+      display: flex;
+      gap: 8px;
+    }
+    .style2-pill-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      height: 42px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #222;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .style2-pill-btn:hover {
+      background: #f7f7f8;
+      border-color: rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+    }
+    .style2-pill-btn .logo-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    .style2-pill-btn .logo-circle.naver { background: #03c75a; color: white; }
+    .style2-pill-btn .logo-circle.amazon { background: #232f3e; color: #ff9900; }
+    .style2-footer-hint {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2px;
+    }
+
+    /* ==========================================================
+       스타일 3: 패키지 라벨 / 커핑 티켓 (Specialty Coffee Label)
+       ========================================================== */
+    .style3-card {
+      background: #f9f8f4;
+      border: 2px solid #231b15;
+      border-radius: 8px;
+      box-shadow: 6px 6px 0px #231b15;
+      padding: 20px;
+      color: #231b15;
+    }
+    .style3-card-header {
+      border-bottom: 2px dashed #d1c7b8;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .style3-title-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #857463;
+    }
+    .style3-title-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: #231b15;
+      letter-spacing: -0.01em;
+    }
+    .style3-elev {
+      font-family: ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 14px;
+      color: #3b5e43;
+    }
+    .style3-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .style3-tab-btn {
+      border: 1.5px solid #231b15;
+      background: #f9f8f4;
+      padding: 8px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      color: #231b15;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .style3-tab-btn.active {
+      background: #231b15;
+      color: #f9f8f4;
+      box-shadow: 2px 2px 0px #857463;
+    }
+    .style3-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .style3-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 12px;
+      border: 1.5px solid #231b15;
+      border-radius: 6px;
+      background: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      color: #231b15;
+      text-decoration: none;
+      box-shadow: 3px 3px 0px #231b15;
+      transition: all 0.1s;
+      cursor: pointer;
+    }
+    .style3-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px #231b15;
+    }
+    .style3-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #231b15;
+    }
+
+    /* 하단 가이드 및 비교 테이블 */
+    .comparison-section {
+      margin-top: 48px;
+      width: 100%;
+      max-width: 820px;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px 28px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    }
+    .comparison-section h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: #2b231d;
+    }
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #55483d;
+    }
+    .feature-item {
+      padding: 14px;
+      background: #faf7f2;
+      border-radius: 12px;
+      border-left: 3px solid #8f6848;
+    }
+    .feature-item strong {
+      display: block;
+      color: #231b15;
+      margin-bottom: 4px;
+      font-size: 13.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Interactive UI/UX Prototype</div>
+    <h1>커피 지도 산지 팝업 디자인 샘플</h1>
+    <p class="subtitle">
+      현재 적용된 화면과 3가지 개선 추천 스타일을 상단 버튼으로 전환하며<br>
+      <strong>[원두 / 생두]</strong> 탭 전환 및 버튼 인터랙션을 직접 체험해보세요.
+    </p>
+
+    <!-- 스타일 전환 컨트롤러 -->
+    <div class="style-switcher">
+      <button class="switch-btn" onclick="switchStyle('asis')">기존 화면 (As-Is)</button>
+      <button class="switch-btn active" onclick="switchStyle('style1')">① 에디토리얼 스페셜티 (강력 추천)</button>
+      <button class="switch-btn" onclick="switchStyle('style2')">② 모던 글래스 맵 (Apple/Airbnb)</button>
+      <button class="switch-btn" onclick="switchStyle('style3')">③ 커핑 패키지 라벨 (Retro)</button>
+    </div>
+  </header>
+
+  <!-- 프로토타입 스테이지 -->
+  <div class="stage">
+    <!-- 배경 가상 지도 -->
+    <div class="map-mock-bg">
+      <svg class="map-topo-lines" viewBox="0 0 500 400" preserveAspectRatio="none">
+        <path d="M-50,80 Q120,40 250,90 T550,60" fill="none" stroke-width="1.5" />
+        <path d="M-50,150 Q100,120 280,170 T550,130" fill="none" stroke-width="1" />
+        <path d="M-50,230 Q160,200 320,240 T550,210" fill="none" stroke-width="1.5" />
+        <path d="M-50,310 Q140,290 290,330 T550,290" fill="none" stroke-width="1" />
+        <circle cx="250" cy="190" r="120" fill="none" stroke-width="0.8" stroke-dasharray="3,4" />
+        <circle cx="250" cy="190" r="60" fill="none" stroke-width="0.8" stroke-dasharray="2,3" />
+      </svg>
+      <div class="map-pin">
+        <div class="map-pin-circle"></div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         0. 기존 화면 (As-Is)
+         ========================================== -->
+    <div id="sample-asis" class="sample-container">
+      <div class="as-is-card">
+        <div class="as-is-header">
+          <span class="as-is-title">에티오피아 시다모·구지</span>
+          <span class="as-is-divider">|</span>
+          <span class="as-is-alt">2000m</span>
+        </div>
+
+        <div class="as-is-tabs">
+          <button id="asis-tab-roasted" class="as-is-tab roasted active" onclick="setAsisType('roasted')">원두</button>
+          <button id="asis-tab-green" class="as-is-tab green" onclick="setAsisType('green')">생두</button>
+        </div>
+
+        <!-- 뾰족한 캐럿 위치 (동적 이동) -->
+        <div id="asis-caret" class="as-is-caret">
+          <svg viewBox="0 0 14 8">
+            <polygon points="0,8 7,1 14,8" />
+            <path d="M 0,8 L 7,1 L 14,8" fill="none" />
+          </svg>
+        </div>
+
+        <!-- 내부 박스 -->
+        <div class="as-is-subbox">
+          <div class="as-is-box-label">
+            <span id="asis-icon">☕</span>
+            <span id="asis-box-title">원두 구매처</span>
+            <span id="asis-box-sub" class="as-is-box-sub">· 홈카페용 (HS 0901.21)</span>
+          </div>
+          <div class="as-is-btn-row">
+            <a class="as-is-btn" href="#" onclick="alert('네이버 쇼핑 원두 검색으로 연결됩니다.'); return false;">
+              <span class="badge-n">N</span>
+              <span id="asis-btn-naver-label">네이버 원두</span>
+            </a>
+            <a class="as-is-btn" href="#" onclick="alert('Amazon 직구 검색으로 연결됩니다.'); return false;">
+              <span class="badge-a">📦</span>
+              <span id="asis-btn-amazon-label">Amazon 직구</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         1. 추천: 에디토리얼 스페셜티 (Editorial Specialty)
+         ========================================== -->
+    <div id="sample-style1" class="sample-container active">
+      <div class="style1-card">
+        <!-- 상단 메타태그 및 HS 코드 -->
+        <div class="style1-top-meta">
+          <span class="style1-country-tag">ETHIOPIA ORIGIN</span>
+          <span id="style1-hs" class="style1-hs-badge">HS 0901.21</span>
+        </div>
+
+        <!-- 산지 및 고도 헤더 -->
+        <div class="style1-header">
+          <div class="style1-region-name">에티오피아 시다모 · 구지</div>
+          <div class="style1-flavor-row">
+            <span class="style1-alt-pill">2,000m 고산지</span>
+            <span class="style1-divider-dot">•</span>
+            <span>Heirloom 품종</span>
+            <span class="style1-divider-dot">•</span>
+            <span>Washed / Natural</span>
+          </div>
+        </div>
+
+        <!-- 모던 세그먼트 컨트롤 탭 (부드러운 슬라이딩 글라이더 적용) -->
+        <div class="style1-segmented-wrap">
+          <div id="s1-glider" class="style1-seg-glider"></div>
+          <button id="s1-tab-roasted" class="style1-seg-btn btn-roasted active" onclick="setStyle1Type('roasted')">
+            <span class="icon-dot"></span>
+            <span>원두 (홈카페용)</span>
+          </button>
+          <button id="s1-tab-green" class="style1-seg-btn btn-green" onclick="setStyle1Type('green')">
+            <span class="icon-dot"></span>
+            <span>생두 (로스팅·도매)</span>
+          </button>
+        </div>
+
+        <!-- 구매 채널 액션 카드 -->
+        <div id="s1-actions-container" class="style1-actions">
+          <a class="style1-action-card" href="#" onclick="alert('네이버 쇼핑으로 이동합니다.'); return false;">
+            <div class="style1-action-info">
+              <div class="style1-brand-icon naver">N</div>
+              <div>
+                <div id="s1-naver-title" class="style1-action-title">네이버 원두</div>
+                <div id="s1-naver-sub" class="style1-action-sub">국내 빠른배송</div>
+              </div>
+            </div>
+            <span class="style1-arrow">↗</span>
+          </a>
+
+          <a class="style1-action-card" href="#" onclick="alert('글로벌 마켓으로 이동합니다.'); return false;">
+            <div class="style1-action-info">
+              <div id="s1-global-icon" class="style1-brand-icon amazon">a</div>
+              <div>
+                <div id="s1-global-title" class="style1-action-title">Amazon 직구</div>
+                <div id="s1-global-sub" class="style1-action-sub">해외 오리지널</div>
+              </div>
+            </div>
+            <span class="style1-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         2. 모던 글래스 맵 (Glassmorphism Map UI)
+         ========================================== -->
+    <div id="sample-style2" class="sample-container">
+      <div class="style2-card">
+        <div class="style2-top">
+          <div class="style2-title-wrap">
+            <span class="style2-origin-badge">ETHIOPIA · GUJI</span>
+            <h2 class="style2-title">에티오피아 시다모·구지</h2>
+          </div>
+          <div class="style2-alt-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+            <span>2,000m</span>
+          </div>
+        </div>
+
+        <!-- 탭 버튼 -->
+        <div class="style2-tab-group">
+          <button id="s2-tab-roasted" class="style2-tab-item active" onclick="setStyle2Type('roasted')">☕ 원두 (Roasted)</button>
+          <button id="s2-tab-green" class="style2-tab-item" onclick="setStyle2Type('green')">🌱 생두 (Green)</button>
+        </div>
+
+        <!-- 알약형 버튼 -->
+        <div class="style2-pill-btn-row">
+          <a class="style2-pill-btn" href="#" onclick="alert('네이버 검색'); return false;">
+            <span class="logo-circle naver">N</span>
+            <span id="s2-naver-text">네이버 쇼핑</span>
+          </a>
+          <a class="style2-pill-btn" href="#" onclick="alert('직구 검색'); return false;">
+            <span id="s2-global-circle" class="logo-circle amazon">a</span>
+            <span id="s2-global-text">Amazon 직구</span>
+          </a>
+        </div>
+
+        <div class="style2-footer-hint">
+          <span id="s2-hs-text">세번: HS 0901.21 (볶은원두)</span>
+          <span>마켓 링크 ↗</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         3. 레트로 커핑 패키지 라벨 (Specialty Coffee Label)
+         ========================================== -->
+    <div id="sample-style3" class="sample-container">
+      <div class="style3-card">
+        <div class="style3-card-header">
+          <div>
+            <div class="style3-title-label">SINGLE ORIGIN LOT</div>
+            <div class="style3-title-text">에티오피아 시다모·구지</div>
+          </div>
+          <div class="style3-elev">▲ 2000M</div>
+        </div>
+
+        <div class="style3-tabs">
+          <button id="s3-tab-roasted" class="style3-tab-btn active" onclick="setStyle3Type('roasted')">[1] 원두 홈카페</button>
+          <button id="s3-tab-green" class="style3-tab-btn" onclick="setStyle3Type('green')">[2] 생두 사업자</button>
+        </div>
+
+        <div class="style3-buttons">
+          <a class="style3-btn" href="#" onclick="alert('네이버 연결'); return false;">
+            <span>[N]</span>
+            <span id="s3-naver-text">네이버 검색</span>
+          </a>
+          <a class="style3-btn" href="#" onclick="alert('아마존 연결'); return false;">
+            <span id="s3-global-icon">[A]</span>
+            <span id="s3-global-text">아마존 직구</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 스타일 상세 분석 설명 카드 -->
+  <section class="comparison-section">
+    <h3>💡 추천 디자인 스타일별 장점 및 설계 의도</h3>
+    <div class="features-list">
+      <div class="feature-item">
+        <strong>① 에디토리얼 스페셜티 (추천)</strong>
+        블루보틀, 피키(Pickey) 등 스페셜티 브랜드의 감성을 적용. 원두 팩 라벨과 같은 자연스러운 웜톤 색감과 정갈한 세그먼트 탭으로 시각적 피로도를 대폭 낮췄습니다.
+      </div>
+      <div class="feature-item">
+        <strong>② 모던 글래스 맵 (Apple 스타일)</strong>
+        지도 위에서 뒷배경을 은은하게 비춰주어 답답함을 해소합니다. 간결한 정보 위계로 일반 소비자가 가장 빠르게 버튼을 누를 수 있는 인터랙션 구조입니다.
+      </div>
+      <div class="feature-item">
+        <strong>③ 커핑 라벨 (데이터 밀도형)</strong>
+        실제 로스터리 커핑 폼이나 스탬프 티켓 같은 위트 있는 브루탈리즘 감성. B2B 생두 수입 및 무역 정보(HS Code)가 많은 경우 어울립니다.
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // 1. 전체 스타일 전환 스위처
+    function switchStyle(styleName) {
+      document.querySelectorAll('.sample-container').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.switch-btn').forEach(btn => btn.classList.remove('active'));
+
+      const targetSample = document.getElementById('sample-' + styleName);
+      if (targetSample) targetSample.classList.add('active');
+
+      const buttons = document.querySelectorAll('.switch-btn');
+      if (styleName === 'asis') buttons[0].classList.add('active');
+      else if (styleName === 'style1') buttons[1].classList.add('active');
+      else if (styleName === 'style2') buttons[2].classList.add('active');
+      else if (styleName === 'style3') buttons[3].classList.add('active');
+    }
+
+    // 2. [As-Is] 기존 화면 원두/생두 인터랙션
+    function setAsisType(type) {
+      const btnRoasted = document.getElementById('asis-tab-roasted');
+      const btnGreen = document.getElementById('asis-tab-green');
+      const caret = document.getElementById('asis-caret');
+      const boxTitle = document.getElementById('asis-box-title');
+      const boxSub = document.getElementById('asis-box-sub');
+      const icon = document.getElementById('asis-icon');
+      const naverLabel = document.getElementById('asis-btn-naver-label');
+      const amazonLabel = document.getElementById('asis-btn-amazon-label');
+
+      if (type === 'roasted') {
+        btnRoasted.classList.add('active');
+        btnGreen.classList.remove('active');
+        caret.style.marginLeft = '12px';
+        icon.textContent = '☕';
+        boxTitle.textContent = '원두 구매처';
+        boxSub.textContent = '· 홈카페용 (HS 0901.21)';
+        naverLabel.textContent = '네이버 원두';
+        amazonLabel.textContent = 'Amazon 직구';
+      } else {
+        btnRoasted.classList.remove('active');
+        btnGreen.classList.add('active');
+        caret.style.marginLeft = '58px';
+        icon.textContent = '🌿';
+        boxTitle.textContent = '생두 구매처';
+        boxSub.textContent = '· 홈로스팅/사업자 (HS 0901.11)';
+        naverLabel.textContent = '네이버 생두';
+        amazonLabel.textContent = '수입·도매 업체';
+      }
+    }
+
+    // 3. [스타일 1] 에디토리얼 스페셜티 인터랙션 (부드러운 슬라이딩 탭)
+    function setStyle1Type(type) {
+      const tabR = document.getElementById('s1-tab-roasted');
+      const tabG = document.getElementById('s1-tab-green');
+      const glider = document.getElementById('s1-glider');
+      const hs = document.getElementById('style1-hs');
+      const actionsContainer = document.getElementById('s1-actions-container');
+      const naverTitle = document.getElementById('s1-naver-title');
+      const naverSub = document.getElementById('s1-naver-sub');
+      const globalTitle = document.getElementById('s1-global-title');
+      const globalSub = document.getElementById('s1-global-sub');
+      const globalIcon = document.getElementById('s1-global-icon');
+
+      // 콘텐츠 살짝 페이드아웃 후 교체
+      if (actionsContainer) actionsContainer.classList.add('content-switching');
+
+      if (type === 'roasted') {
+        tabR.classList.add('active');
+        tabG.classList.remove('active');
+        // 부드럽게 원두 위치(왼쪽)로 슬라이드
+        glider.style.transform = 'translateX(0%)';
+        hs.textContent = 'HS 0901.21';
+
+        setTimeout(() => {
+          naverTitle.textContent = '네이버 원두';
+          naverSub.textContent = '국내 로스터리 배송';
+          globalTitle.textContent = 'Amazon 직구';
+          globalSub.textContent = '해외 오리지널 패키지';
+          globalIcon.textContent = 'a';
+          globalIcon.className = 'style1-brand-icon amazon';
+          globalIcon.style.background = '#232f3e';
+          globalIcon.style.color = '#ff9900';
+          if (actionsContainer) actionsContainer.classList.remove('content-switching');
+        }, 120);
+      } else {
+        tabR.classList.remove('active');
+        tabG.classList.add('active');
+        // 부드럽게 생두 위치(오른쪽)로 슬라이드
+        glider.style.transform = 'translateX(100%)';
+        hs.textContent = 'HS 0901.11';
+
+        setTimeout(() => {
+          naverTitle.textContent = '네이버 생두';
+          naverSub.textContent = '소량 홈로스팅 생두';
+          globalTitle.textContent = '생두 수입사·도매';
+          globalSub.textContent = '알마씨엘로 / GCS';
+          globalIcon.textContent = '🏢';
+          globalIcon.className = 'style1-brand-icon';
+          globalIcon.style.background = '#3e6d4c';
+          globalIcon.style.color = '#fff';
+          if (actionsContainer) actionsContainer.classList.remove('content-switching');
+        }, 120);
+      }
+    }
+
+    // 4. [스타일 2] 글래스 모던 인터랙션
+    function setStyle2Type(type) {
+      const tabR = document.getElementById('s2-tab-roasted');
+      const tabG = document.getElementById('s2-tab-green');
+      const naver = document.getElementById('s2-naver-text');
+      const global = document.getElementById('s2-global-text');
+      const hs = document.getElementById('s2-hs-text');
+      const globalCircle = document.getElementById('s2-global-circle');
+
+      if (type === 'roasted') {
+        tabR.classList.add('active');
+        tabG.classList.remove('active');
+        naver.textContent = '네이버 원두';
+        global.textContent = 'Amazon 직구';
+        hs.textContent = '세번: HS 0901.21 (볶은원두)';
+        globalCircle.textContent = 'a';
+        globalCircle.className = 'logo-circle amazon';
+      } else {
+        tabR.classList.remove('active');
+        tabG.classList.add('active');
+        naver.textContent = '네이버 생두';
+        global.textContent = '수입·도매 업체';
+        hs.textContent = '세번: HS 0901.11 (생두)';
+        globalCircle.textContent = '🏢';
+        globalCircle.className = 'logo-circle';
+        globalCircle.style.background = '#3e6d4c';
+        globalCircle.style.color = '#fff';
+      }
+    }
+
+    // 5. [스타일 3] 레트로 라벨 인터랙션
+    function setStyle3Type(type) {
+      const tabR = document.getElementById('s3-tab-roasted');
+      const tabG = document.getElementById('s3-tab-green');
+      const naver = document.getElementById('s3-naver-text');
+      const global = document.getElementById('s3-global-text');
+      const icon = document.getElementById('s3-global-icon');
+
+      if (type === 'roasted') {
+        tabR.classList.add('active');
+        tabG.classList.remove('active');
+        naver.textContent = '네이버 원두 검색';
+        global.textContent = '아마존 직구';
+        icon.textContent = '[A]';
+      } else {
+        tabR.classList.remove('active');
+        tabG.classList.add('active');
+        naver.textContent = '네이버 생두 검색';
+        global.textContent = '수입도매 업체 검색';
+        icon.textContent = '[B2B]';
+      }
+    }
+  </script>
+</body>
+</html>

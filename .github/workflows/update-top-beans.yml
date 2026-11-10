@@ -1,0 +1,76 @@
+name: Update CoBTS Weekly Top Beans
+
+on:
+  schedule:
+    # 매주 일요일 21:00 UTC (한국 시간 매주 월요일 06:00 KST 정기 실행)
+    - cron: '0 21 * * 0'
+  workflow_dispatch:
+    inputs:
+      force_mock:
+        description: 'Mock 모드로 강제 실행 (API 키 없이 시뮬레이션)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  update-top-beans:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run CoBTS Trend Collector
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+        run: |
+          if [ -d "CoBTS" ]; then
+            cd CoBTS
+          fi
+          
+          if [ "${{ inputs.force_mock }}" = "true" ]; then
+            echo "⚡ Force Mock Mode requested via workflow dispatch"
+            node scripts/fetch-top-beans.js --mock
+          else
+            # NAVER_CLIENT_ID 미설정 시 스크립트 내부에서 자동으로 안전하게 Mock Fallback 모드로 실행됩니다.
+            node scripts/fetch-top-beans.js
+          fi
+
+      - name: Commit and Push if Changed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 변경된 top-beans.json 스테이징
+          if [ -f "CoBTS/assets/data/top-beans.json" ]; then
+            git add CoBTS/assets/data/top-beans.json
+          elif [ -f "assets/data/top-beans.json" ]; then
+            git add assets/data/top-beans.json
+          fi
+
+          if ! git diff --cached --quiet; then
+            JSON_PATH="CoBTS/assets/data/top-beans.json"
+            if [ ! -f "$JSON_PATH" ]; then
+              JSON_PATH="assets/data/top-beans.json"
+            fi
+            
+            WEEK_LABEL=$(node -e "try { const d = JSON.parse(require('fs').readFileSync('$JSON_PATH', 'utf8')); console.log(d.week.period + ' - ' + d.week.countryName + ' ' + d.week.regionName); } catch(e) { console.log('Weekly Top Bean'); }")
+            
+            git commit -m "chore(cobts): 주간 커피 트렌드 Top 원두 자동 갱신 ($WEEK_LABEL) [skip ci]"
+            git pull --rebase origin main
+            git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main
+            echo "🚀 Successfully updated and pushed top-beans.json!"
+          else
+            echo "ℹ️ 새로 변경된 트렌드 데이터가 없습니다. 안전하게 종료합니다."
+          fi
