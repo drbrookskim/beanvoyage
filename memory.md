@@ -1104,7 +1104,7 @@
   - GitHub Actions: `.github/workflows/update-top-beans.yml` (매주 월요일 06:00 KST 자동 실행).
   - Secrets 등록 위치: https://github.com/drbrookskim/beanvoyage/settings/secrets/actions
 - **다음 가능한 작업**:
-  1. (선택) beanvoyage 저장소에 `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` 등록.
+  1. [완료] beanvoyage 저장소에 `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` 등록 완료 (네이버 실시간 API 연동 활성화).
   2. 첫 화면 마스터 허브 또는 지도 화면(Screen 2)의 추가 기능/디자인 고도화.
   3. GitHub Pages 배포 설정 (필요 시 beanvoyage 저장소에서 바로 호스팅 가능).
 
