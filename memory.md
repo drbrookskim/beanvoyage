@@ -1168,8 +1168,36 @@
 
 ---
 
+274. 태블릿 화면 4대 감각 축 가로 배열 반응형 레이아웃 구현 및 원두 검색 키워드 보강
+- **일시**: 2026-11-11
+- **사용자 요청**: "태블릿 화면 사이즈가 되면 4대 감각축은 세로 배열에서 가로배열로 보이도록 해줘"
+- **조치 및 수정 내역**:
+  1. **태블릿 뷰포트 반응형 그리드 도입**:
+     - `#sensorySlidersBlock` 내부 감각 축 카드 래퍼를 단일 컬럼(`flex flex-col gap-2`)에서 반응형 그리드(`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-1 gap-2 sm:gap-2.5`)로 전면 개편.
+     - **태블릿 화면(`md: 768px ~ 1023px`)**: 지도 하단에 전폭(`w-full`)으로 배치되며, 4대 감각 축(산미, 단맛, 바디감, 고소함)이 1행 4열의 가로 배열(`md:grid-cols-4`)로 정렬되어 불필요한 세로 스크롤을 방지하고 태블릿의 넓은 가로 화면을 극대화.
+     - **데스크톱 화면(`lg: 1024px+`)**: 지도 우측 사이드바 컬럼(`lg:w-[220px] xl:w-[235px]`) 위치를 유지하며, 단일 세로 컬럼(`lg:grid-cols-1`)으로 깔끔하게 배치.
+     - **모바일 화면(`< 640px`)**: 단일 세로 컬럼(`grid-cols-1`)으로 유지하여 손쉬운 한 손 조작성 보장.
+  2. **감각 축 헤더 및 컨트롤 버튼 비율 최적화**:
+     - 감각 축 헤더: 태블릿 화면(`md`)에서 타이틀/배지와 배전도 체크박스를 가로 정렬(`md:flex-row md:items-center md:justify-between`)하여 상단 여백을 컴팩트하게 압축.
+     - 스텝 증감 버튼(`[-]`/`[+]`): 태블릿 화면 너비(768px)에 맞춰 `w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9`로 최적화하고, 회전 다이얼 SVG(`viewBox="0 0 84 84"`)에 `w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]` 반응형 크기를 부여하여 오버플로우나 텍스트 잘림 현상을 완전 방지.
+  3. **인기 원두명 검색 매핑 사전 확장**:
+     - `REGION_SEARCH_MAP`에 대한민국 커피 시장의 대표 상업/스페셜티 키워드 추가:
+       - 콜롬비아: "수프리모", "supremo"
+       - 에티오피아: "모카", "mocha"
+       - 케냐: "aa", "케냐 aa"
+       - 브라질: "산토스", "santos"
+       - 과테말라: "안티구아 shb"
+  4. **Tailwind CSS 빌드 및 무결점 검증**:
+     - `npm run build:css`를 재실행하여 신규 추가된 반응형 유틸리티 클래스(`md:grid-cols-4`, `md:flex-row`, `lg:grid-cols-1` 등)를 `tailwind.min.css`에 성공적으로 컴파일 완료.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 첫 화면 원두 선택 및 산지/국가명 검색 매칭 오류 전면 해결, 테스트 100% 통과.
+- **상태**: 태블릿 화면 4대 감각 축 가로 배열(`md:grid-cols-4`) 레이아웃 완성 및 빌드/테스트 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.

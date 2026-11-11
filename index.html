@@ -2794,15 +2794,15 @@
       <div id="sensorySlidersBlock" class="w-full lg:w-[220px] xl:w-[235px] shrink-0 bg-white sketch-border rounded-2xl p-3 flex flex-col shadow-sm border border-[#1E3B5C]/40 z-10">
         <div>
           <!-- Header: Title & Roast Mode Toggle -->
-          <div class="flex flex-col gap-1.5 pb-2 mb-2.5 border-b border-[#BDB989]/60">
-            <div class="flex items-center justify-between gap-1">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between lg:flex-col lg:items-stretch gap-1.5 pb-2 mb-2.5 border-b border-[#BDB989]/60">
+            <div class="flex items-center justify-between md:justify-start gap-2">
               <span class="font-bold text-[#1E3B5C] flex items-center gap-1.5 text-sm">
                 <span class="text-sm">🎚️</span>
                 <span>4대 감각 축</span>
               </span>
               <span class="px-2 py-0.5 rounded-full bg-[#1E3B5C]/10 text-[#1E3B5C] dark:bg-[#30679D]/30 dark:text-[#97B6CB] border border-[#BDB989]/50 dark:border-[#30679D]/50 font-mono-code font-semibold text-[11px]" title="각 감각 축별 5단계 체감 강도 스케일 (1=은은함 ~ 5=강렬함)">강도 1~5 Lv</span>
             </div>
-            <div class="flex items-center justify-between gap-1 text-sm">
+            <div class="flex items-center justify-between md:justify-end gap-1 text-sm">
               <label class="flex items-center gap-1.5 cursor-pointer text-[#374836] font-semibold text-xs" title="8단계 배전도 물리화학적 보정 적용">
                 <input type="checkbox" id="checkRoastMode" class="w-3.5 h-3.5 rounded accent-[#516B50]">
                 <span>배전도</span>
@@ -2817,18 +2817,18 @@
           <input type="range" id="sliderNutty" min="1" max="5" value="3" step="1" class="hidden">
 
           <!-- 4 Sensory Rotary Dial Cards (Fidelity matching reference image) -->
-          <div class="flex flex-col gap-2">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-1 gap-2 sm:gap-2.5">
             <!-- 1. 산미 (Acidity) -->
-            <div class="sensory-card-acidity bg-transparent p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
+            <div class="sensory-card-acidity bg-transparent p-2 sm:p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
                 <span class="sensory-title font-black text-[#264A24] text-sm">산미</span>
                 <span id="labelAcidity" class="sensory-label font-mono-code font-bold text-[#3E633C] text-xs">적당히 (6.0)</span>
               </div>
-              <div class="flex items-center justify-between px-1 my-1.5">
-                <button type="button" class="sensory-step-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#264A24] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="acidity" data-step="-1">−</button>
+              <div class="flex items-center justify-between px-0.5 sm:px-1 my-1 sm:my-1.5">
+                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#264A24] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="acidity" data-step="-1">−</button>
                 <div class="flex flex-col items-center">
                   <div class="relative flex items-center justify-center cursor-pointer select-none group" id="dialAcidity" title="클릭 시 단계 변경 (1~5)">
-                    <svg width="78" height="78" viewBox="0 0 84 84">
+                    <svg width="78" height="78" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
                       <defs>
                         <linearGradient id="knobGradAcidity" x1="0%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#E8F4E5"/>
@@ -2857,21 +2857,21 @@
                   </div>
                   <span class="sensory-en-title font-semibold text-[#3E633C] mt-1 font-space text-xs">Acidity</span>
                 </div>
-                <button type="button" class="sensory-step-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#264A24] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="acidity" data-step="1">+</button>
+                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#264A24] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="acidity" data-step="1">+</button>
               </div>
             </div>
 
             <!-- 2. 단맛 (Sweetness) -->
-            <div class="sensory-card-sweetness bg-transparent p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
+            <div class="sensory-card-sweetness bg-transparent p-2 sm:p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
                 <span class="sensory-title font-black text-[#69461E] text-sm">단맛</span>
                 <span id="labelSweetness" class="sensory-label font-mono-code font-bold text-[#7E5C32] text-xs">적당히 (6.0)</span>
               </div>
-              <div class="flex items-center justify-between px-1 my-1.5">
-                <button type="button" class="sensory-step-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#69461E] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="sweetness" data-step="-1">−</button>
+              <div class="flex items-center justify-between px-0.5 sm:px-1 my-1 sm:my-1.5">
+                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#69461E] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="sweetness" data-step="-1">−</button>
                 <div class="flex flex-col items-center">
                   <div class="relative flex items-center justify-center cursor-pointer select-none group" id="dialSweetness" title="클릭 시 단계 변경 (1~5)">
-                    <svg width="78" height="78" viewBox="0 0 84 84">
+                    <svg width="78" height="78" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
                       <defs>
                         <linearGradient id="knobGradSweetness" x1="0%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#FCF3E3"/>
@@ -2894,21 +2894,21 @@
                   </div>
                   <span class="sensory-en-title font-semibold text-[#7E5C32] mt-1 font-space text-xs">Sweet</span>
                 </div>
-                <button type="button" class="sensory-step-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#69461E] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="sweetness" data-step="1">+</button>
+                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#69461E] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="sweetness" data-step="1">+</button>
               </div>
             </div>
 
             <!-- 3. 바디감 (Body) -->
-            <div class="sensory-card-body bg-transparent p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
+            <div class="sensory-card-body bg-transparent p-2 sm:p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
                 <span class="sensory-title font-black text-[#1A4064] text-sm">바디감</span>
                 <span id="labelBody" class="sensory-label font-mono-code font-bold text-[#2F577D] text-xs">적당히 (6.0)</span>
               </div>
-              <div class="flex items-center justify-between px-1 my-1.5">
-                <button type="button" class="sensory-step-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="body" data-step="-1">−</button>
+              <div class="flex items-center justify-between px-0.5 sm:px-1 my-1 sm:my-1.5">
+                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="body" data-step="-1">−</button>
                 <div class="flex flex-col items-center">
                   <div class="relative flex items-center justify-center cursor-pointer select-none group" id="dialBody" title="클릭 시 단계 변경 (1~5)">
-                    <svg width="78" height="78" viewBox="0 0 84 84">
+                    <svg width="78" height="78" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
                       <defs>
                         <linearGradient id="knobGradBody" x1="0%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#E8F2FA"/>
@@ -2931,21 +2931,21 @@
                   </div>
                   <span class="sensory-en-title font-semibold text-[#2F577D] mt-1 font-space text-xs">Body</span>
                 </div>
-                <button type="button" class="sensory-step-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="body" data-step="1">+</button>
+                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="body" data-step="1">+</button>
               </div>
             </div>
 
             <!-- 4. 고소함 (Nutty) -->
-            <div class="sensory-card-nutty bg-transparent p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
+            <div class="sensory-card-nutty bg-transparent p-2 sm:p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
                 <span class="sensory-title font-black text-[#323166] text-sm">고소함</span>
                 <span id="labelNutty" class="sensory-label font-mono-code font-bold text-[#4E4D7B] text-xs">적당히 (6.0)</span>
               </div>
-              <div class="flex items-center justify-between px-1 my-1.5">
-                <button type="button" class="sensory-step-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#323166] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="nutty" data-step="-1">−</button>
+              <div class="flex items-center justify-between px-0.5 sm:px-1 my-1 sm:my-1.5">
+                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#323166] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="nutty" data-step="-1">−</button>
                 <div class="flex flex-col items-center">
                   <div class="relative flex items-center justify-center cursor-pointer select-none group" id="dialNutty" title="클릭 시 단계 변경 (1~5)">
-                    <svg width="78" height="78" viewBox="0 0 84 84">
+                    <svg width="78" height="78" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
                       <defs>
                         <linearGradient id="knobGradNutty" x1="0%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#F0EEFA"/>
@@ -2968,7 +2968,7 @@
                   </div>
                   <span class="sensory-en-title font-semibold text-[#4E4D7B] mt-1 font-space text-xs">Nutty</span>
                 </div>
-                <button type="button" class="sensory-step-btn w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#323166] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="nutty" data-step="1">+</button>
+                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#323166] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="nutty" data-step="1">+</button>
               </div>
             </div>
           </div>
@@ -9993,16 +9993,16 @@
 
     const REGION_SEARCH_MAP = [
       // 14 Specific Specialty Regions
-      { id: "yirgacheffe", keywords: ["예가체프", "이가체프", "yirgacheffe", "yirga", "에티오피아 예가체프"] },
+      { id: "yirgacheffe", keywords: ["예가체프", "이가체프", "yirgacheffe", "yirga", "모카", "mocha", "에티오피아 예가체프", "에티오피아 모카"] },
       { id: "sidamo_guji", keywords: ["시다모", "구지", "sidamo", "guji", "시다모 구지", "시다모구지", "시다모·구지", "에티오피아 시다모"] },
-      { id: "nyeri", keywords: ["니에리", "nyeri", "케냐 니에리"] },
+      { id: "nyeri", keywords: ["니에리", "nyeri", "케냐 aa", "케냐aa", "케냐 니에리"] },
       { id: "kiambu_kirinyaga", keywords: ["키암부", "키리양가", "키리냐가", "kiambu", "kirinyaga", "키암부 키리양가", "케냐 키암부"] },
-      { id: "huila", keywords: ["우일라", "후일라", "huila", "네이바", "neiva", "콜롬비아 우일라"] },
+      { id: "huila", keywords: ["우일라", "후일라", "huila", "네이바", "neiva", "수프리모", "supremo", "콜롬비아 우일라", "콜롬비아 수프리모"] },
       { id: "narino", keywords: ["나리뇨", "파스토", "narino", "pasto", "콜롬비아 나리뇨"] },
-      { id: "antigua", keywords: ["안티구아", "antigua", "과테말라 안티구아"] },
+      { id: "antigua", keywords: ["안티구아", "antigua", "과테말라 안티구아", "안티구아 shb"] },
       { id: "huehuetenango", keywords: ["우에우에테낭고", "웨웨테낭고", "huehuetenango", "huehue", "과테말라 우에우에테낭고"] },
       { id: "sul_de_minas", keywords: ["술 드 미나스", "술드미나스", "sul de minas", "브라질 술드미나스", "브라질 술 드 미나스"] },
-      { id: "cerrado_mineiro", keywords: ["세하두", "세라두", "cerrado", "세하두 미네이루", "세라두 미네이루", "미네이루", "브라질 세하두"] },
+      { id: "cerrado_mineiro", keywords: ["세하두", "세라두", "cerrado", "산토스", "santos", "세하두 미네이루", "세라두 미네이루", "미네이루", "브라질 세하두", "브라질 산토스"] },
       { id: "mandheling", keywords: ["만델링", "mandheling", "수마트라", "sumatra", "메단", "medan", "인도네시아 만델링", "수마트라 만델링"] },
       { id: "toraja", keywords: ["토라자", "toraja", "술라웨시", "sulawesi", "란테파오", "rantepao", "인도네시아 토라자", "술라웨시 토라자"] },
       { id: "tarrazu", keywords: ["타라쥬", "타라주", "tarrazu", "카르타고", "cartago", "코스타리카 타라쥬", "코스타리카 타라주"] },
@@ -10011,9 +10011,9 @@
       // 7 Origin Countries (fallback to flagship region if no specific region matched)
       { id: "yirgacheffe", keywords: ["에티오피아", "ethiopia"] },
       { id: "nyeri", keywords: ["케냐", "kenya"] },
-      { id: "huila", keywords: ["콜롬비아", "colombia"] },
+      { id: "huila", keywords: ["콜롬비아", "colombia", "수프리모", "supremo"] },
       { id: "antigua", keywords: ["과테말라", "guatemala"] },
-      { id: "cerrado_mineiro", keywords: ["브라질", "brazil"] },
+      { id: "cerrado_mineiro", keywords: ["브라질", "brazil", "산토스", "santos"] },
       { id: "mandheling", keywords: ["인도네시아", "indonesia"] },
       { id: "tarrazu", keywords: ["코스타리카", "costarica", "costa rica"] }
     ];
