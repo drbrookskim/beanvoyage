@@ -1196,8 +1196,37 @@
 
 ---
 
+275. 폰(모바일) 화면 사이즈 최적화 — 4대 감각 축 가로 4열 배열 및 첫 화면 검색 허브 비율 축소 완성
+- **일시**: 2026-11-11
+- **사용자 요청**: "폰화면 사이즈가 되면 첨부의 형태를 유지하여 사이즈만 좀 작아지게 해ㅓ"
+- **조치 및 수정 내역**:
+  1. **4대 감각 축 모바일 전용 4열 가로 배열 (`grid-cols-4`) 및 비례 축소**:
+     - 기존 모바일의 단일 세로 스택(`grid-cols-1`)을 제거하고, 폰 화면에서도 태블릿/첨부와 동일하게 **1행 4열 가로 배열(`grid-cols-4 lg:grid-cols-1`)**을 일관되게 유지.
+     - 360px ~ 430px 모바일 뷰포트 너비에 완벽히 정합하도록 내부 컴포넌트 크기를 정밀 비례 축소:
+       - 패딩: `p-1 sm:p-2 sm:p-2.5`
+       - 타이틀 및 강도: `text-[11px] sm:text-sm`, `text-[9.5px] sm:text-xs`
+       - 로터리 노브 SVG: `w-[42px] h-[42px] sm:w-[68px] sm:h-[68px]`
+       - 중앙 점수/레벨: `text-[11px] sm:text-base`, `text-[8px] sm:text-[10.5px]`
+       - 스텝 증감 버튼: `w-5 h-5 min-w-[20px] sm:w-8 sm:h-8`
+       - 헤더: 모바일에서도 가로 정렬(`flex-row items-center justify-between`) 유지 및 텍스트 `text-xs sm:text-sm` 축소.
+  2. **첫 화면 일체형 마스터 허브 (`topBeanTrendBanner`) 모바일 비례 축소**:
+     - 상단 헤더: `px-2 sm:px-3 py-1.5 sm:py-2 gap-1.5 sm:gap-2`
+     - RANK / TASTE 라벨 및 칩: `text-[9px] sm:text-[10px]`, 버튼 `px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-[11px]`, 인기 원두 배지 `text-[9.5px] sm:text-[11px]`로 축소하여 모바일 화면에서도 가로 잘림이나 수평 스크롤 없이 단일 카드 구조를 온전히 유지.
+     - 검색창 및 버튼: `px-2.5 sm:px-3 py-1.5 sm:py-2.5`, 탐색 버튼 `px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-[11px] sm:text-xs`
+     - 하단 테루아 & 컵노트 레일: `text-[10px] sm:text-[11px]`, `TERROIR:`/`CUP NOTES:` `text-[9.5px] sm:text-[10.5px]`
+  3. **Tailwind CSS 빌드 및 테스트 검증**:
+     - `npm run build:css`를 재실행하여 신규 모바일 크기 유틸리티를 컴파일 완료.
+     - Node.js 가상 DOM 통합 테스트 스위트 100% 통과(정상 동작 확인).
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 태블릿 화면 4대 감각 축 가로 배열(`md:grid-cols-4`) 레이아웃 완성 및 빌드/테스트 완료.
+- **상태**: 폰 화면 4대 감각 축 가로 4열 배열 및 첫 화면 검색 허브 비례 축소 반응형 완료, 빌드 및 테스트 통과.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.

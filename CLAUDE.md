@@ -59,3 +59,4 @@
 | 2026-11-11 | 첫 화면 검색창 초기 비움 유지 및 RANK 탭 우측 인기 원두 뱃지 추가 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 초기 로드 시 검색창 원두명 자동 입력 제거(빈 값 유지), Rank 클러스터 우측에 실시간 '주간 인기 원두' / '월간 인기 원두' 인라인 뱃지 연동 |
 | 2026-11-11 | 첫 화면 원두 선택 및 산지/국가명 검색 매칭 오류 전면 수정 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 14개 산지·7개 국가 사전(`findRegionByQuery`) 구축, 폼 제출 및 이벤트 리스너 통합, `selectSpecificRegion` 전용 네비게이션으로 원두 정확 포커싱 완비 (테스트 25/25 통과) |
 | 2026-11-11 | 태블릿 화면 4대 감각 축 가로 배열 반응형 레이아웃 구현 및 검색어 보강 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 태블릿 화면(`md: 768px ~ 1023px`)에서 4대 감각 축 1행 4열 가로 배열(`md:grid-cols-4`) 및 버튼/다이얼 비율 최적화, 수프리모/산토스/모카/AA 키워드 사전 보강 |
+| 2026-11-11 | 폰(모바일) 화면 4대 감각 축 가로 4열 배열 및 첫 화면 검색 허브 비례 축소 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 모바일 화면(360px~430px)에서 4대 감각 축 가로 4열(`grid-cols-4`) 노브/버튼 비례 축소(`42px`, `w-5`) 및 첫 화면 마스터 검색 허브 모바일 비례 축소 완성 |

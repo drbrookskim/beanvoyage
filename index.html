@@ -2076,40 +2076,40 @@
       </div>
 
       <!-- ================= UNIFIED ARCHIVAL MASTER HUB (Screen 1 Main Hub: Rank x Taste Top x Unified Search) ================= -->
-      <div id="topBeanTrendBanner" class="mb-4 w-full max-w-[716px] mx-auto px-4">
+      <div id="topBeanTrendBanner" class="mb-4 w-full max-w-[716px] mx-auto px-2 sm:px-4">
         <div class="rounded-2xl bg-white/95 dark:bg-[#121E2C]/95 border border-[#BDB989] dark:border-[#30679D] shadow-xs backdrop-blur-md overflow-hidden transition-all hover:border-[#30679D] dark:hover:border-[#97B6CB] focus-within:border-[#30679D] focus-within:ring-2 focus-within:ring-[#30679D]/30 group">
           
           <!-- 1. Top Header: RANK: (Left) + TASTE: (Right) (1줄 고정 보장: flex-nowrap justify-between) -->
-          <div class="flex items-center justify-between gap-2 px-3 py-2 bg-[#FAF9ED] dark:bg-[#0D1926] border-b border-[#BDB989]/40 dark:border-[#264363] flex-nowrap overflow-x-auto no-scrollbar select-none text-xs">
+          <div class="flex items-center justify-between gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-[#FAF9ED] dark:bg-[#0D1926] border-b border-[#BDB989]/40 dark:border-[#264363] flex-nowrap overflow-x-auto no-scrollbar select-none text-xs">
             
             <!-- LEFT: RANK Cluster -->
-            <div class="flex items-center gap-1.5 shrink-0">
-              <span class="font-space font-extrabold text-[10px] text-[#30679D] dark:text-[#97B6CB] tracking-wider select-none shrink-0">RANK:</span>
+            <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
+              <span class="font-space font-extrabold text-[9px] sm:text-[10px] text-[#30679D] dark:text-[#97B6CB] tracking-wider select-none shrink-0">RANK:</span>
               <div class="inline-flex p-0.5 rounded-lg bg-white dark:bg-[#1E3B5C]/60 border border-[#BDB989]/50 dark:border-[#30679D]/50 shrink-0" role="tablist" aria-label="트렌드 기간 선택">
-                <button type="button" id="trendTabWeek" class="px-2 py-0.5 rounded-md text-[11px] font-bold transition-all bg-[#30679D] text-white shadow-2xs flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="switchTrendPeriod('week')">
+                <button type="button" id="trendTabWeek" class="px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold transition-all bg-[#30679D] text-white shadow-2xs flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="switchTrendPeriod('week')">
                   <span>🔥 주간</span>
                 </button>
-                <button type="button" id="trendTabMonth" class="px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="switchTrendPeriod('month')">
+                <button type="button" id="trendTabMonth" class="px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="switchTrendPeriod('month')">
                   <span>👑 월간</span>
                 </button>
               </div>
-              <span id="rankPopularBeanText" class="inline-flex items-center px-2 py-0.5 rounded-md bg-[#30679D]/10 dark:bg-[#30679D]/25 text-[#30679D] dark:text-[#97B6CB] text-[11px] font-semibold whitespace-nowrap shrink-0">주간 인기 원두</span>
+              <span id="rankPopularBeanText" class="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-[#30679D]/10 dark:bg-[#30679D]/25 text-[#30679D] dark:text-[#97B6CB] text-[9.5px] sm:text-[11px] font-semibold whitespace-nowrap shrink-0">주간 인기 원두</span>
             </div>
 
             <!-- RIGHT: TASTE Cluster (오른쪽 정렬) -->
-            <div class="flex items-center gap-1.5 shrink-0">
-              <span class="font-space font-extrabold text-[10px] text-[#78482B] dark:text-[#DFB995] tracking-wider select-none shrink-0">TASTE:</span>
+            <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
+              <span class="font-space font-extrabold text-[9px] sm:text-[10px] text-[#78482B] dark:text-[#DFB995] tracking-wider select-none shrink-0">TASTE:</span>
               <div class="inline-flex p-0.5 rounded-lg bg-[#BDB989]/20 dark:bg-[#1E3B5C]/40 border border-[#BDB989]/40 dark:border-[#30679D]/40 shrink-0" role="tablist" aria-label="대표 취향 선택">
-                <button type="button" id="tasteTabFloral" class="taste-matrix-btn px-2 py-0.5 rounded-md text-[11px] font-bold bg-white dark:bg-[#1E3B5C] text-[#1E3B5C] dark:text-[#F0F0D8] shadow-2xs transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('floral')">
+                <button type="button" id="tasteTabFloral" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold bg-white dark:bg-[#1E3B5C] text-[#1E3B5C] dark:text-[#F0F0D8] shadow-2xs transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('floral')">
                   <span>🌸 산미</span>
                 </button>
-                <button type="button" id="tasteTabNutty" class="taste-matrix-btn px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('nutty')">
+                <button type="button" id="tasteTabNutty" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('nutty')">
                   <span>🥜 고소</span>
                 </button>
-                <button type="button" id="tasteTabSweet" class="taste-matrix-btn px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('sweet')">
+                <button type="button" id="tasteTabSweet" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('sweet')">
                   <span>🍫 밸런스</span>
                 </button>
-                <button type="button" id="tasteTabBody" class="taste-matrix-btn px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('body')">
+                <button type="button" id="tasteTabBody" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('body')">
                   <span>🪵 바디</span>
                 </button>
               </div>
@@ -2121,8 +2121,8 @@
           </div>
 
           <!-- 2. Middle Search Row (Single Search Box + Single Action Button) -->
-          <form id="tasteSearchForm" class="px-3 py-2 sm:py-2.5 flex items-center gap-2">
-            <span class="pl-1 text-[#30679D] dark:text-[#97B6CB] shrink-0">
+          <form id="tasteSearchForm" class="px-2.5 sm:px-3 py-1.5 sm:py-2.5 flex items-center gap-1.5 sm:gap-2">
+            <span class="pl-0.5 sm:pl-1 text-[#30679D] dark:text-[#97B6CB] shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 text-[#30679D] dark:text-[#97B6CB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -2138,21 +2138,21 @@
             <button 
               type="submit" 
               id="btnExploreMapUnified"
-              class="px-3.5 py-1.5 sm:py-2 rounded-xl bg-[#30679D] hover:bg-[#1E3B5C] dark:bg-[#F0F0D8] dark:hover:bg-white text-white dark:text-[#0A0F17] text-xs font-bold font-space transition-all active:scale-95 flex items-center gap-1.5 shadow-2xs cursor-pointer shrink-0 select-none"
+              class="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-[#30679D] hover:bg-[#1E3B5C] dark:bg-[#F0F0D8] dark:hover:bg-white text-white dark:text-[#0A0F17] text-[11px] sm:text-xs font-bold font-space transition-all active:scale-95 flex items-center gap-1 sm:gap-1.5 shadow-2xs cursor-pointer shrink-0 select-none"
               title="선택한 원두 또는 입력한 맛 프로필 지도로 즉시 이동"
             >
               <span>지도 바로보기</span>
-              <span class="text-[11px]">➔</span>
+              <span class="text-[10px] sm:text-[11px]">➔</span>
             </button>
           </form>
 
           <!-- 3. Bottom Micro Sub-Rail: Actual Terroir & Cup Notes -->
-          <div id="trendBeanInfoWrap" class="px-3 py-1.5 bg-[#FAF9ED]/60 dark:bg-[#0F1E2E]/60 border-t border-[#BDB989]/30 dark:border-[#264363]/40 flex flex-nowrap items-center justify-between gap-2 text-[11px] text-[#5A758D] dark:text-[#97B6CB] cursor-pointer overflow-x-auto no-scrollbar" onclick="navigateFromTrendBanner()" title="클릭하여 이 원두 산지 지도로 즉시 이동">
-            <div class="flex items-center gap-1.5 min-w-0 truncate">
-              <span class="font-bold text-[#30679D] dark:text-[#97B6CB] shrink-0 font-space text-[10.5px]">TERROIR:</span>
+          <div id="trendBeanInfoWrap" class="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-[#FAF9ED]/60 dark:bg-[#0F1E2E]/60 border-t border-[#BDB989]/30 dark:border-[#264363]/40 flex flex-nowrap items-center justify-between gap-1.5 sm:gap-2 text-[10px] sm:text-[11px] text-[#5A758D] dark:text-[#97B6CB] cursor-pointer overflow-x-auto no-scrollbar" onclick="navigateFromTrendBanner()" title="클릭하여 이 원두 산지 지도로 즉시 이동">
+            <div class="flex items-center gap-1 sm:gap-1.5 min-w-0 truncate">
+              <span class="font-bold text-[#30679D] dark:text-[#97B6CB] shrink-0 font-space text-[9.5px] sm:text-[10.5px]">TERROIR:</span>
               <span id="trendBeanTerroir" class="text-[#1E3B5C] dark:text-[#F0F0D8] font-medium shrink-0">1,950m ASL · 워시드(Washed) · 화산재 고원</span>
               <span class="text-[#BDB989] shrink-0 mx-0.5">·</span>
-              <span class="font-bold text-[#78482B] dark:text-[#DFB995] shrink-0 font-space text-[10.5px]">CUP NOTES:</span>
+              <span class="font-bold text-[#78482B] dark:text-[#DFB995] shrink-0 font-space text-[9.5px] sm:text-[10.5px]">CUP NOTES:</span>
               <span id="trendBeanCupNotes" class="text-[#516B50] dark:text-[#86EFAC] font-semibold truncate">자스민 꽃향기, 백도 복숭아, 화사한 감귤 산미</span>
             </div>
             <!-- Hidden compatibility anchors for legacy scripts -->
@@ -2160,7 +2160,7 @@
             <span id="trendBeanName" class="hidden">에티오피아 예가체프</span>
             <span id="trendBeanMood" class="hidden">화사한 산미</span>
             <span id="trendBeanSubNote" class="hidden">자스민 꽃향기 · 복숭아 · 시트러스 산미</span>
-            <span class="text-[10px] text-[#30679D] dark:text-[#97B6CB] shrink-0 hidden sm:inline font-medium">지도 바로보기 ➔</span>
+            <span class="text-[9.5px] sm:text-[10px] text-[#30679D] dark:text-[#97B6CB] shrink-0 hidden sm:inline font-medium">지도 바로보기 ➔</span>
           </div>
 
         </div>
@@ -2791,20 +2791,20 @@
       </div>
 
       <!-- ================= RIGHT COLUMN: 4대 핵심 감각 축 (체감 표현 선택) Column UI ================= -->
-      <div id="sensorySlidersBlock" class="w-full lg:w-[220px] xl:w-[235px] shrink-0 bg-white sketch-border rounded-2xl p-3 flex flex-col shadow-sm border border-[#1E3B5C]/40 z-10">
+      <div id="sensorySlidersBlock" class="w-full lg:w-[220px] xl:w-[235px] shrink-0 bg-white sketch-border rounded-xl sm:rounded-2xl p-2 sm:p-3 flex flex-col shadow-sm border border-[#1E3B5C]/40 z-10">
         <div>
           <!-- Header: Title & Roast Mode Toggle -->
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between lg:flex-col lg:items-stretch gap-1.5 pb-2 mb-2.5 border-b border-[#BDB989]/60">
-            <div class="flex items-center justify-between md:justify-start gap-2">
-              <span class="font-bold text-[#1E3B5C] flex items-center gap-1.5 text-sm">
-                <span class="text-sm">🎚️</span>
+          <div class="flex flex-row items-center justify-between lg:flex-col lg:items-stretch gap-1 pb-1.5 sm:pb-2 mb-2 sm:mb-2.5 border-b border-[#BDB989]/60">
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <span class="font-bold text-[#1E3B5C] flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm">
+                <span class="text-xs sm:text-sm">🎚️</span>
                 <span>4대 감각 축</span>
               </span>
-              <span class="px-2 py-0.5 rounded-full bg-[#1E3B5C]/10 text-[#1E3B5C] dark:bg-[#30679D]/30 dark:text-[#97B6CB] border border-[#BDB989]/50 dark:border-[#30679D]/50 font-mono-code font-semibold text-[11px]" title="각 감각 축별 5단계 체감 강도 스케일 (1=은은함 ~ 5=강렬함)">강도 1~5 Lv</span>
+              <span class="px-1.5 sm:px-2 py-0.5 rounded-full bg-[#1E3B5C]/10 text-[#1E3B5C] dark:bg-[#30679D]/30 dark:text-[#97B6CB] border border-[#BDB989]/50 dark:border-[#30679D]/50 font-mono-code font-semibold text-[9.5px] sm:text-[11px]" title="각 감각 축별 5단계 체감 강도 스케일 (1=은은함 ~ 5=강렬함)">강도 1~5 Lv</span>
             </div>
-            <div class="flex items-center justify-between md:justify-end gap-1 text-sm">
-              <label class="flex items-center gap-1.5 cursor-pointer text-[#374836] font-semibold text-xs" title="8단계 배전도 물리화학적 보정 적용">
-                <input type="checkbox" id="checkRoastMode" class="w-3.5 h-3.5 rounded accent-[#516B50]">
+            <div class="flex items-center gap-1 text-xs sm:text-sm">
+              <label class="flex items-center gap-1 sm:gap-1.5 cursor-pointer text-[#374836] font-semibold text-[11px] sm:text-xs" title="8단계 배전도 물리화학적 보정 적용">
+                <input type="checkbox" id="checkRoastMode" class="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded accent-[#516B50]">
                 <span>배전도</span>
               </label>
             </div>
@@ -2817,18 +2817,18 @@
           <input type="range" id="sliderNutty" min="1" max="5" value="3" step="1" class="hidden">
 
           <!-- 4 Sensory Rotary Dial Cards (Fidelity matching reference image) -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-1 gap-2 sm:gap-2.5">
+          <div class="grid grid-cols-4 lg:grid-cols-1 gap-1 sm:gap-2 md:gap-2.5">
             <!-- 1. 산미 (Acidity) -->
-            <div class="sensory-card-acidity bg-transparent p-2 sm:p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
+            <div class="sensory-card-acidity bg-transparent p-1 sm:p-2 sm:p-2.5 rounded-xl sm:rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
-                <span class="sensory-title font-black text-[#264A24] text-sm">산미</span>
-                <span id="labelAcidity" class="sensory-label font-mono-code font-bold text-[#3E633C] text-xs">적당히 (6.0)</span>
+                <span class="sensory-title font-black text-[#264A24] text-[11px] sm:text-sm">산미</span>
+                <span id="labelAcidity" class="sensory-label font-mono-code font-bold text-[#3E633C] text-[9.5px] sm:text-xs">적당히 (6.0)</span>
               </div>
-              <div class="flex items-center justify-between px-0.5 sm:px-1 my-1 sm:my-1.5">
-                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#264A24] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="acidity" data-step="-1">−</button>
+              <div class="flex items-center justify-between px-0 sm:px-1 my-0.5 sm:my-1.5">
+                <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#264A24] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="acidity" data-step="-1">−</button>
                 <div class="flex flex-col items-center">
                   <div class="relative flex items-center justify-center cursor-pointer select-none group" id="dialAcidity" title="클릭 시 단계 변경 (1~5)">
-                    <svg width="78" height="78" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
+                    <svg width="78" height="78" class="w-[42px] h-[42px] sm:w-[68px] sm:h-[68px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
                       <defs>
                         <linearGradient id="knobGradAcidity" x1="0%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#E8F4E5"/>
@@ -2851,27 +2851,27 @@
                       <circle class="dial-center-core" cx="42" cy="42" r="25" fill="#FFFFFF" filter="url(#coreShadow)" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                      <span id="dialScoreAcidity" class="dial-score-text font-space font-extrabold text-[#1E293B] leading-none tracking-tight text-base">6.0</span>
-                      <span id="dialLevelAcidity" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[10.5px]">Lv.3</span>
+                      <span id="dialScoreAcidity" class="dial-score-text font-space font-extrabold text-[#1E293B] leading-none tracking-tight text-[11px] sm:text-base">6.0</span>
+                      <span id="dialLevelAcidity" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[8px] sm:text-[10.5px]">Lv.3</span>
                     </div>
                   </div>
-                  <span class="sensory-en-title font-semibold text-[#3E633C] mt-1 font-space text-xs">Acidity</span>
+                  <span class="sensory-en-title font-semibold text-[#3E633C] mt-0.5 sm:mt-1 font-space text-[9px] sm:text-xs">Acidity</span>
                 </div>
-                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#264A24] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="acidity" data-step="1">+</button>
+                <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#264A24] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="acidity" data-step="1">+</button>
               </div>
             </div>
 
             <!-- 2. 단맛 (Sweetness) -->
-            <div class="sensory-card-sweetness bg-transparent p-2 sm:p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
+            <div class="sensory-card-sweetness bg-transparent p-1 sm:p-2 sm:p-2.5 rounded-xl sm:rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
-                <span class="sensory-title font-black text-[#69461E] text-sm">단맛</span>
-                <span id="labelSweetness" class="sensory-label font-mono-code font-bold text-[#7E5C32] text-xs">적당히 (6.0)</span>
+                <span class="sensory-title font-black text-[#69461E] text-[11px] sm:text-sm">단맛</span>
+                <span id="labelSweetness" class="sensory-label font-mono-code font-bold text-[#7E5C32] text-[9.5px] sm:text-xs">적당히 (6.0)</span>
               </div>
-              <div class="flex items-center justify-between px-0.5 sm:px-1 my-1 sm:my-1.5">
-                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#69461E] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="sweetness" data-step="-1">−</button>
+              <div class="flex items-center justify-between px-0 sm:px-1 my-0.5 sm:my-1.5">
+                <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#69461E] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="sweetness" data-step="-1">−</button>
                 <div class="flex flex-col items-center">
                   <div class="relative flex items-center justify-center cursor-pointer select-none group" id="dialSweetness" title="클릭 시 단계 변경 (1~5)">
-                    <svg width="78" height="78" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
+                    <svg width="78" height="78" class="w-[42px] h-[42px] sm:w-[68px] sm:h-[68px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
                       <defs>
                         <linearGradient id="knobGradSweetness" x1="0%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#FCF3E3"/>
@@ -2888,27 +2888,27 @@
                       <circle class="dial-center-core" cx="42" cy="42" r="25" fill="#FFFFFF" filter="url(#coreShadow)" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                      <span id="dialScoreSweetness" class="dial-score-text font-space font-extrabold text-[#1E293B] leading-none tracking-tight text-base">6.0</span>
-                      <span id="dialLevelSweetness" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[10.5px]">Lv.3</span>
+                      <span id="dialScoreSweetness" class="dial-score-text font-space font-extrabold text-[#1E293B] leading-none tracking-tight text-[11px] sm:text-base">6.0</span>
+                      <span id="dialLevelSweetness" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[8px] sm:text-[10.5px]">Lv.3</span>
                     </div>
                   </div>
-                  <span class="sensory-en-title font-semibold text-[#7E5C32] mt-1 font-space text-xs">Sweet</span>
+                  <span class="sensory-en-title font-semibold text-[#7E5C32] mt-0.5 sm:mt-1 font-space text-[9px] sm:text-xs">Sweet</span>
                 </div>
-                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#69461E] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="sweetness" data-step="1">+</button>
+                <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#69461E] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="sweetness" data-step="1">+</button>
               </div>
             </div>
 
             <!-- 3. 바디감 (Body) -->
-            <div class="sensory-card-body bg-transparent p-2 sm:p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
+            <div class="sensory-card-body bg-transparent p-1 sm:p-2 sm:p-2.5 rounded-xl sm:rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
-                <span class="sensory-title font-black text-[#1A4064] text-sm">바디감</span>
-                <span id="labelBody" class="sensory-label font-mono-code font-bold text-[#2F577D] text-xs">적당히 (6.0)</span>
+                <span class="sensory-title font-black text-[#1A4064] text-[11px] sm:text-sm">바디감</span>
+                <span id="labelBody" class="sensory-label font-mono-code font-bold text-[#2F577D] text-[9.5px] sm:text-xs">적당히 (6.0)</span>
               </div>
-              <div class="flex items-center justify-between px-0.5 sm:px-1 my-1 sm:my-1.5">
-                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="body" data-step="-1">−</button>
+              <div class="flex items-center justify-between px-0 sm:px-1 my-0.5 sm:my-1.5">
+                <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="body" data-step="-1">−</button>
                 <div class="flex flex-col items-center">
                   <div class="relative flex items-center justify-center cursor-pointer select-none group" id="dialBody" title="클릭 시 단계 변경 (1~5)">
-                    <svg width="78" height="78" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
+                    <svg width="78" height="78" class="w-[42px] h-[42px] sm:w-[68px] sm:h-[68px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
                       <defs>
                         <linearGradient id="knobGradBody" x1="0%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#E8F2FA"/>
@@ -2925,27 +2925,27 @@
                       <circle class="dial-center-core" cx="42" cy="42" r="25" fill="#FFFFFF" filter="url(#coreShadow)" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                      <span id="dialScoreBody" class="dial-score-text font-space font-extrabold text-[#1E293B] leading-none tracking-tight text-base">6.0</span>
-                      <span id="dialLevelBody" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[10.5px]">Lv.3</span>
+                      <span id="dialScoreBody" class="dial-score-text font-space font-extrabold text-[#1E293B] leading-none tracking-tight text-[11px] sm:text-base">6.0</span>
+                      <span id="dialLevelBody" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[8px] sm:text-[10.5px]">Lv.3</span>
                     </div>
                   </div>
-                  <span class="sensory-en-title font-semibold text-[#2F577D] mt-1 font-space text-xs">Body</span>
+                  <span class="sensory-en-title font-semibold text-[#2F577D] mt-0.5 sm:mt-1 font-space text-[9px] sm:text-xs">Body</span>
                 </div>
-                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="body" data-step="1">+</button>
+                <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="body" data-step="1">+</button>
               </div>
             </div>
 
             <!-- 4. 고소함 (Nutty) -->
-            <div class="sensory-card-nutty bg-transparent p-2 sm:p-2.5 rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
+            <div class="sensory-card-nutty bg-transparent p-1 sm:p-2 sm:p-2.5 rounded-xl sm:rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
-                <span class="sensory-title font-black text-[#323166] text-sm">고소함</span>
-                <span id="labelNutty" class="sensory-label font-mono-code font-bold text-[#4E4D7B] text-xs">적당히 (6.0)</span>
+                <span class="sensory-title font-black text-[#323166] text-[11px] sm:text-sm">고소함</span>
+                <span id="labelNutty" class="sensory-label font-mono-code font-bold text-[#4E4D7B] text-[9.5px] sm:text-xs">적당히 (6.0)</span>
               </div>
-              <div class="flex items-center justify-between px-0.5 sm:px-1 my-1 sm:my-1.5">
-                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#323166] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="nutty" data-step="-1">−</button>
+              <div class="flex items-center justify-between px-0 sm:px-1 my-0.5 sm:my-1.5">
+                <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#323166] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="nutty" data-step="-1">−</button>
                 <div class="flex flex-col items-center">
                   <div class="relative flex items-center justify-center cursor-pointer select-none group" id="dialNutty" title="클릭 시 단계 변경 (1~5)">
-                    <svg width="78" height="78" class="w-[70px] h-[70px] sm:w-[74px] sm:h-[74px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
+                    <svg width="78" height="78" class="w-[42px] h-[42px] sm:w-[68px] sm:h-[68px] md:w-[68px] md:h-[68px] lg:w-[78px] lg:h-[78px]" viewBox="0 0 84 84">
                       <defs>
                         <linearGradient id="knobGradNutty" x1="0%" y1="0%" x2="0%" y2="100%">
                           <stop offset="0%" stop-color="#F0EEFA"/>
@@ -2962,13 +2962,13 @@
                       <circle class="dial-center-core" cx="42" cy="42" r="25" fill="#FFFFFF" filter="url(#coreShadow)" stroke="rgba(0,0,0,0.06)" stroke-width="1"/>
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                      <span id="dialScoreNutty" class="dial-score-text font-space font-extrabold text-[#1E293B] leading-none tracking-tight text-base">6.0</span>
-                      <span id="dialLevelNutty" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[10.5px]">Lv.3</span>
+                      <span id="dialScoreNutty" class="dial-score-text font-space font-extrabold text-[#1E293B] leading-none tracking-tight text-[11px] sm:text-base">6.0</span>
+                      <span id="dialLevelNutty" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[8px] sm:text-[10.5px]">Lv.3</span>
                     </div>
                   </div>
-                  <span class="sensory-en-title font-semibold text-[#4E4D7B] mt-1 font-space text-xs">Nutty</span>
+                  <span class="sensory-en-title font-semibold text-[#4E4D7B] mt-0.5 sm:mt-1 font-space text-[9px] sm:text-xs">Nutty</span>
                 </div>
-                <button type="button" class="sensory-step-btn w-8 h-8 sm:w-9 sm:h-9 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#323166] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-sm" data-axis="nutty" data-step="1">+</button>
+                <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#323166] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="nutty" data-step="1">+</button>
               </div>
             </div>
           </div>
