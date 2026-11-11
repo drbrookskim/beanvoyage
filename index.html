@@ -2121,7 +2121,7 @@
           </div>
 
           <!-- 2. Middle Search Row (Single Search Box + Single Action Button) -->
-          <form id="tasteSearchForm" class="px-3 py-2 sm:py-2.5 flex items-center gap-2" onsubmit="event.preventDefault(); navigateFromTrendBanner();">
+          <form id="tasteSearchForm" class="px-3 py-2 sm:py-2.5 flex items-center gap-2">
             <span class="pl-1 text-[#30679D] dark:text-[#97B6CB] shrink-0">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 text-[#30679D] dark:text-[#97B6CB]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -3775,7 +3775,7 @@
           period: "2026년 11월 1주차",
           topRegionId: "mandheling",
           countryName: "인도네시아",
-          regionName: "수마트라 만델링",
+          regionName: "만델링",
           tasteMood: "묵직한 바디",
           icon: "🪵",
           metric: "",
@@ -3783,7 +3783,7 @@
           terroir: "1,450m ASL · 웻헐링(Giling Basah) · 토바 호수 화산암",
           cupNotes: "다크초콜릿, 허브 흙내음, 중후한 풀바디",
           tagline: "묵직한 흙내음과 다크초콜릿의 긴 여운",
-          tasteQuery: "수마트라 만델링",
+          tasteQuery: "인도네시아 만델링",
           tastePreset: { a: 1, s: 2, b: 5, n: 3 },
           roastTip: "중후한 흙내음과 다크초콜릿 여운을 위해 [프렌치(French) 강배전] 추천",
           recommendedRoastLevel: 5,
@@ -3853,7 +3853,7 @@
           period: "2026년 10월~11월 누적",
           topRegionId: "toraja",
           countryName: "인도네시아",
-          regionName: "술라웨시 토라자",
+          regionName: "토라자",
           tasteMood: "스파이시 바디",
           icon: "🪵",
           metric: "",
@@ -4025,6 +4025,9 @@
       }
     }
 
+    // Immediately synchronize UI with the initial active trend bean on page load
+    updateTrendBannerUI(false);
+
     // ================= SCREEN TRANSITION CONTROLLERS =================
     function showMapScreen(queryDesc = "") {
       const heroSec = document.getElementById("heroSearchSection");
@@ -4062,66 +4065,32 @@
 
     function navigateFromTrendBanner() {
       const data = getActiveTrendBeanData();
-      if (!data) return;
-
       const mainInput = document.getElementById("tasteInput");
-      const userTyped = (mainInput && mainInput.value && mainInput.value.trim() && mainInput.value.trim() !== data.tasteQuery) ? mainInput.value.trim() : "";
+      const rawInput = (mainInput && mainInput.value) ? mainInput.value.trim() : "";
 
-      const queryTitle = userTyped || data.tasteQuery || `${data.countryName} ${data.regionName}`;
-      const badgeDesc = userTyped ? `🔍 검색: ${userTyped}` : `${data.badge}: ${data.countryName} ${data.regionName}`;
+      const expectedName1 = data ? `${data.countryName} ${data.regionName}`.trim().toLowerCase() : "";
+      const expectedName2 = (data && data.tasteQuery) ? data.tasteQuery.trim().toLowerCase() : "";
+      const inputLower = rawInput.toLowerCase();
 
-      // 1. Switch Screen 1 -> Screen 2 (Map Screen)
-      showMapScreen(queryTitle);
+      // If search input is empty or matches the active trend bean name, select the trend bean directly
+      const isTrendBean = !rawInput || inputLower === expectedName1 || inputLower === expectedName2;
 
-      // 2. Sync search inputs & badges
-      if (mainInput) mainInput.value = queryTitle;
-      const headerInput = document.getElementById("headerTasteInput");
-      if (headerInput) headerInput.value = queryTitle;
-
-      const activeBadge = document.getElementById("activeTasteBadge");
-      if (activeBadge) activeBadge.textContent = badgeDesc;
-
-      // 3. Set sensory sliders if preset provided
-      if (data.tastePreset && typeof sA !== "undefined" && typeof sS !== "undefined" && typeof sB !== "undefined" && typeof sN !== "undefined") {
-        sA.value = data.tastePreset.a;
-        sS.value = data.tastePreset.s;
-        sB.value = data.tastePreset.b;
-        sN.value = data.tastePreset.n;
-        if (typeof updateSensoryDials === "function") updateSensoryDials();
-      }
-
-      // 4. Update recommendations and evaluation (AI Blend & comparison bars)
-      if (typeof evaluateRecommendations === "function" && typeof SCALE_MAP !== "undefined") {
-        const targetA = (typeof sA !== "undefined" && SCALE_MAP[sA.value]) ? SCALE_MAP[sA.value] : 6.0;
-        const targetS = (typeof sS !== "undefined" && SCALE_MAP[sS.value]) ? SCALE_MAP[sS.value] : 6.0;
-        const targetB = (typeof sB !== "undefined" && SCALE_MAP[sB.value]) ? SCALE_MAP[sB.value] : 6.0;
-        const targetN = (typeof sN !== "undefined" && SCALE_MAP[sN.value]) ? SCALE_MAP[sN.value] : 6.0;
-        const withRoast = document.getElementById("checkRoastMode") ? document.getElementById("checkRoastMode").checked : false;
-        const evalResult = evaluateRecommendations(targetA, targetS, targetB, targetN, withRoast);
-        if (evalResult && typeof renderEvaluation === "function") {
-          renderEvaluation(evalResult, badgeDesc, false);
-        }
-      }
-
-      // 5. Explicitly select the target region (ensuring the #1 Top bean is active & camera focuses on it)
-      if (userTyped && typeof executeTasteSearch === "function") {
-        executeTasteSearch(userTyped);
-      } else {
+      if (isTrendBean && data) {
         const targetRegion = Array.isArray(REGIONS_DATA) ? REGIONS_DATA.find(r => r.id === data.topRegionId) : null;
-        if (targetRegion && typeof selectRegion === "function") {
-          selectRegion(targetRegion, true);
-          const matchedBadge = document.getElementById("matchedCountryBadge");
-          if (matchedBadge) matchedBadge.textContent = `${targetRegion.countryName} ${targetRegion.name} 매칭`;
-        } else if (!targetRegion && typeof executeTasteSearch === "function") {
-          executeTasteSearch(queryTitle, data.tastePreset || null);
+        if (targetRegion) {
+          const queryTitle = `${data.countryName} ${data.regionName}`;
+          const badgeDesc = `${data.badge || "인기 원두"}: ${data.countryName} ${data.regionName}`;
+          if (typeof selectSpecificRegion === "function") {
+            selectSpecificRegion(targetRegion, queryTitle, badgeDesc, data.tastePreset || null);
+            return;
+          }
         }
       }
 
-      // 6. Request navigation canvas redraw and smooth scroll
-      requestAnimationFrame(() => {
-        if (typeof renderRealTimeNavigationCanvas === "function") renderRealTimeNavigationCanvas();
-      });
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Otherwise, handle as custom typed search query
+      if (typeof executeTasteSearch === "function") {
+        executeTasteSearch(rawInput);
+      }
     }
 
     // 7 Countries Seed Data (cobts-SUMMARY.md Section 4.1)
@@ -8685,25 +8654,28 @@
       updateShoppingLinks();
     }
 
-    function renderEvaluation(evalResult, queryDesc, flyToCadastral = false) {
+    function renderEvaluation(evalResult, queryDesc, flyToCadastral = false, skipRegionSelect = false) {
       const { bestSingle, aiBlend } = evalResult;
 
       document.getElementById("activeTasteBadge").textContent = queryDesc;
-      document.getElementById("matchedCountryBadge").textContent = `${bestSingle.region.countryName} ${bestSingle.region.name} 매칭`;
 
-      // Screen 1 -> Screen 2 Transition: Full map focus matching Attachment 1
-      showMapScreen(queryDesc);
+      if (!skipRegionSelect) {
+        document.getElementById("matchedCountryBadge").textContent = `${bestSingle.region.countryName} ${bestSingle.region.name} 매칭`;
 
-      selectRegion(bestSingle.region, false);
-      requestAnimationFrame(() => renderRealTimeNavigationCanvas());
+        // Screen 1 -> Screen 2 Transition: Full map focus matching Attachment 1
+        showMapScreen(queryDesc);
 
-      if (flyToCadastral) {
-        setTimeout(() => {
-          // Taste search target zoom: world overview ~1.05x matching user attached reference
-          const targetX = bestSingle.region.svgCoords.x * 0.35 + 370 * 0.65;
-          const targetY = bestSingle.region.svgCoords.y * 0.35 + 205 * 0.65;
-          animateCameraTo(targetX, targetY, 1.05, 680, false);
-        }, 120);
+        selectRegion(bestSingle.region, false);
+        requestAnimationFrame(() => renderRealTimeNavigationCanvas());
+
+        if (flyToCadastral) {
+          setTimeout(() => {
+            // Taste search target zoom: world overview ~1.05x matching user attached reference
+            const targetX = bestSingle.region.svgCoords.x * 0.35 + 370 * 0.65;
+            const targetY = bestSingle.region.svgCoords.y * 0.35 + 205 * 0.65;
+            animateCameraTo(targetX, targetY, 1.05, 680, false);
+          }, 120);
+        }
       }
 
       const blendDist = aiBlend.distance || 0;
@@ -10009,36 +9981,177 @@
     }
 
 
-    function executeTasteSearch(queryDesc, preset) {
-      clearForcedBlend();
-      const txt = (queryDesc || "").trim().toLowerCase();
-      let a = 3, s = 3, b = 3, n = 3;
-      if (preset) {
-        ({ a, s, b, n } = preset);
-      } else {
-        const AXES = {
-          a: ["산미", "신맛", "새콤", "시트러스", "베리", "와인", "꽃", "과일", "예가체프", "케냐"],
-          s: ["단맛", "달콤", "캐러멜", "초콜릿", "콜롬비아"],
-          b: ["바디", "묵직", "스모키", "진한", "만델링"],
-          n: ["고소", "아몬드", "견과", "너티", "브라질"]
-        };
-        const NEG = /없|적은|적게|싫|낮|약한|약하|덜|부담|안 ?(신|달|진|고)/;
-        const LIGHT = /가벼|라이트|연한|깔끔/;
-        const v = { a, s, b, n }, set = {};
-        for (const k in AXES) {
-          for (const w of AXES[k]) {
-            const i = txt.indexOf(w);
-            if (i < 0) continue;
-            const win = txt.slice(Math.max(0, i - 4), i + w.length + 8);
-            v[k] = (NEG.test(win) || (k === "b" && LIGHT.test(win))) ? 1 : 5;
-            set[k] = true;
-            break;
+    function scoreToSliderValue(score) {
+      const map = { 1: 2.0, 2: 4.0, 3: 6.0, 4: 7.5, 5: 9.0 };
+      let bestK = 3, minDiff = 999;
+      for (let k = 1; k <= 5; k++) {
+        const diff = Math.abs(map[k] - score);
+        if (diff < minDiff) { minDiff = diff; bestK = k; }
+      }
+      return bestK;
+    }
+
+    const REGION_SEARCH_MAP = [
+      // 14 Specific Specialty Regions
+      { id: "yirgacheffe", keywords: ["예가체프", "이가체프", "yirgacheffe", "yirga", "에티오피아 예가체프"] },
+      { id: "sidamo_guji", keywords: ["시다모", "구지", "sidamo", "guji", "시다모 구지", "시다모구지", "시다모·구지", "에티오피아 시다모"] },
+      { id: "nyeri", keywords: ["니에리", "nyeri", "케냐 니에리"] },
+      { id: "kiambu_kirinyaga", keywords: ["키암부", "키리양가", "키리냐가", "kiambu", "kirinyaga", "키암부 키리양가", "케냐 키암부"] },
+      { id: "huila", keywords: ["우일라", "후일라", "huila", "네이바", "neiva", "콜롬비아 우일라"] },
+      { id: "narino", keywords: ["나리뇨", "파스토", "narino", "pasto", "콜롬비아 나리뇨"] },
+      { id: "antigua", keywords: ["안티구아", "antigua", "과테말라 안티구아"] },
+      { id: "huehuetenango", keywords: ["우에우에테낭고", "웨웨테낭고", "huehuetenango", "huehue", "과테말라 우에우에테낭고"] },
+      { id: "sul_de_minas", keywords: ["술 드 미나스", "술드미나스", "sul de minas", "브라질 술드미나스", "브라질 술 드 미나스"] },
+      { id: "cerrado_mineiro", keywords: ["세하두", "세라두", "cerrado", "세하두 미네이루", "세라두 미네이루", "미네이루", "브라질 세하두"] },
+      { id: "mandheling", keywords: ["만델링", "mandheling", "수마트라", "sumatra", "메단", "medan", "인도네시아 만델링", "수마트라 만델링"] },
+      { id: "toraja", keywords: ["토라자", "toraja", "술라웨시", "sulawesi", "란테파오", "rantepao", "인도네시아 토라자", "술라웨시 토라자"] },
+      { id: "tarrazu", keywords: ["타라쥬", "타라주", "tarrazu", "카르타고", "cartago", "코스타리카 타라쥬", "코스타리카 타라주"] },
+      { id: "central_valley", keywords: ["센트럴 밸리", "센트럴밸리", "central valley", "산호세", "san jose", "코스타리카 센트럴 밸리"] },
+
+      // 7 Origin Countries (fallback to flagship region if no specific region matched)
+      { id: "yirgacheffe", keywords: ["에티오피아", "ethiopia"] },
+      { id: "nyeri", keywords: ["케냐", "kenya"] },
+      { id: "huila", keywords: ["콜롬비아", "colombia"] },
+      { id: "antigua", keywords: ["과테말라", "guatemala"] },
+      { id: "cerrado_mineiro", keywords: ["브라질", "brazil"] },
+      { id: "mandheling", keywords: ["인도네시아", "indonesia"] },
+      { id: "tarrazu", keywords: ["코스타리카", "costarica", "costa rica"] }
+    ];
+
+    function findRegionByQuery(query) {
+      if (!query || typeof query !== "string") return null;
+      const q = query.trim().toLowerCase().replace(/\s+/g, " ");
+      if (!q) return null;
+
+      for (const item of REGION_SEARCH_MAP) {
+        for (const kw of item.keywords) {
+          const cleanKw = kw.toLowerCase().trim();
+          if (q.includes(cleanKw)) {
+            return Array.isArray(REGIONS_DATA) ? REGIONS_DATA.find(r => r.id === item.id) : null;
           }
         }
-        if (set.a && v.a === 5 && !set.b) v.b = 2;
-        if (set.b && v.b === 5 && !set.a) v.a = 1;
-        ({ a, s, b, n } = v);
       }
+      return null;
+    }
+
+    function selectSpecificRegion(targetRegion, queryTitle, badgeDesc, preset) {
+      if (!targetRegion) return;
+
+      // 1. Determine sensory slider values (preset takes precedence, otherwise computed from region biochemistry)
+      let a = 3, s = 3, b = 3, n = 3;
+      if (preset && typeof preset.a !== "undefined") {
+        ({ a, s, b, n } = preset);
+      } else if (typeof computeRegionProfile === "function") {
+        const prof = computeRegionProfile(targetRegion);
+        a = scoreToSliderValue(prof.acidity);
+        s = scoreToSliderValue(prof.sweetness);
+        b = scoreToSliderValue(prof.body);
+        n = scoreToSliderValue(prof.nutty);
+      }
+
+      // 2. Set sensory sliders and update dial gauges
+      if (typeof sA !== "undefined" && typeof sS !== "undefined" && typeof sB !== "undefined" && typeof sN !== "undefined") {
+        sA.value = a;
+        sS.value = s;
+        sB.value = b;
+        sN.value = n;
+        if (typeof updateSensoryDials === "function") updateSensoryDials();
+      }
+
+      // 3. Switch Screen 1 -> Screen 2 (Map Screen)
+      const title = queryTitle || `${targetRegion.countryName} ${targetRegion.name}`;
+      showMapScreen(title);
+
+      // 4. Synchronize input search values & badges
+      const mainInput = document.getElementById("tasteInput");
+      if (mainInput) mainInput.value = title;
+      const headerInput = document.getElementById("headerTasteInput");
+      if (headerInput) headerInput.value = title;
+
+      const activeBadge = document.getElementById("activeTasteBadge");
+      if (activeBadge) activeBadge.textContent = badgeDesc || `🎯 ${targetRegion.countryName} ${targetRegion.name}`;
+
+      const matchedBadge = document.getElementById("matchedCountryBadge");
+      if (matchedBadge) matchedBadge.textContent = `${targetRegion.countryName} ${targetRegion.name} 매칭`;
+
+      // 5. Clear forced blend lock and explicitly select the target region (fly camera & render info)
+      if (typeof clearForcedBlend === "function") clearForcedBlend();
+      if (typeof selectRegion === "function") {
+        selectRegion(targetRegion, true);
+      }
+
+      // 6. Update recommendation metrics and blend cards without overriding target region selection
+      if (typeof evaluateRecommendations === "function" && typeof SCALE_MAP !== "undefined") {
+        const targetA = SCALE_MAP[a] || 6.0;
+        const targetS = SCALE_MAP[s] || 6.0;
+        const targetB = SCALE_MAP[b] || 6.0;
+        const targetN = SCALE_MAP[n] || 6.0;
+        const withRoast = document.getElementById("checkRoastMode") ? document.getElementById("checkRoastMode").checked : false;
+        const evalResult = evaluateRecommendations(targetA, targetS, targetB, targetN, withRoast);
+        if (evalResult && typeof renderEvaluation === "function") {
+          renderEvaluation(evalResult, badgeDesc || title, false, true);
+        }
+      }
+
+      // 7. Request navigation canvas redraw and smooth scroll to top
+      requestAnimationFrame(() => {
+        if (typeof renderRealTimeNavigationCanvas === "function") renderRealTimeNavigationCanvas();
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function executeTasteSearch(queryDesc, preset) {
+      clearForcedBlend();
+      const txt = (queryDesc || "").trim();
+
+      // If preset is explicitly given (e.g. from taste chip buttons)
+      if (preset && typeof preset.a !== "undefined") {
+        const { a, s, b, n } = preset;
+        sA.value = a; sS.value = s; sB.value = b; sN.value = n;
+        const mainInput = document.getElementById("tasteInput");
+        if (mainInput) mainInput.value = queryDesc || "";
+        const headerInput = document.getElementById("headerTasteInput");
+        if (headerInput) headerInput.value = queryDesc || "";
+        updateFromSliders(true);
+        return;
+      }
+
+      // 1. Direct Region / Country Search Match Check
+      if (txt) {
+        const matchedRegion = findRegionByQuery(txt);
+        if (matchedRegion) {
+          selectSpecificRegion(matchedRegion, txt, `🔍 검색: ${matchedRegion.countryName} ${matchedRegion.name}`, null);
+          return;
+        }
+      }
+
+      // 2. Taste Adjective Keyword Search
+      const lowerTxt = txt.toLowerCase();
+      let a = 3, s = 3, b = 3, n = 3;
+
+      const AXES = {
+        a: ["산미", "신맛", "새콤", "시트러스", "베리", "와인", "꽃", "과일", "플로럴", "자스민", "재스민", "자몽", "레몬", "오렌지", "청포도", "사과", "복숭아"],
+        s: ["단맛", "달콤", "캐러멜", "초콜릿", "사탕수수", "꿀", "허니", "메이플", "바닐라", "흑설탕", "달달"],
+        b: ["바디", "묵직", "스모키", "진한", "중후", "풍부", "무거운", "오크", "쌉싸름", "다크", "풀바디"],
+        n: ["고소", "아몬드", "견과", "너티", "헤이즐넛", "호두", "피넛", "땅콩", "마카다미아", "구운"]
+      };
+      const NEG = /없|적은|적게|싫|낮|약한|약하|덜|부담|안 ?(신|달|진|고)/;
+      const LIGHT = /가벼|라이트|연한|깔끔/;
+      const v = { a, s, b, n }, set = {};
+
+      for (const k in AXES) {
+        for (const w of AXES[k]) {
+          const i = lowerTxt.indexOf(w);
+          if (i < 0) continue;
+          const win = lowerTxt.slice(Math.max(0, i - 4), i + w.length + 8);
+          v[k] = (NEG.test(win) || (k === "b" && LIGHT.test(win))) ? 1 : 5;
+          set[k] = true;
+          break;
+        }
+      }
+      if (set.a && v.a === 5 && !set.b) v.b = 2;
+      if (set.b && v.b === 5 && !set.a) v.a = 1;
+      ({ a, s, b, n } = v);
 
       sA.value = a; sS.value = s; sB.value = b; sN.value = n;
       const mainInput = document.getElementById("tasteInput");
@@ -10053,8 +10166,7 @@
     if (tasteSearchForm) {
       tasteSearchForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const txt = document.getElementById("tasteInput")?.value.trim() || "";
-        executeTasteSearch(txt);
+        navigateFromTrendBanner();
       });
     }
 

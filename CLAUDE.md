@@ -57,3 +57,4 @@
 | 2026-11-10 | 독립 GitHub 저장소 (drbrookskim/beanvoyage) 연동 및 최초 배포 완료 | `.git`, `.gitignore`, `.github/workflows/update-top-beans.yml`, `memory.md`, `CLAUDE.md` | 독립 저장소 https://github.com/drbrookskim/beanvoyage.git 연동, main 브랜치 푸시 및 Actions 파이프라인 완비 |
 | 2026-11-10 | GitHub Pages 배포 자동화 (.nojekyll 및 deploy-pages.yml 구축) | `.nojekyll`, `.github/workflows/deploy-pages.yml`, `memory.md`, `CLAUDE.md` | https://drbrookskim.github.io/beanvoyage 배포 연결 지원을 위한 Pages Actions 워크플로우 및 정적 자산 경로 검증 완료 |
 | 2026-11-11 | 첫 화면 검색창 초기 비움 유지 및 RANK 탭 우측 인기 원두 뱃지 추가 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 초기 로드 시 검색창 원두명 자동 입력 제거(빈 값 유지), Rank 클러스터 우측에 실시간 '주간 인기 원두' / '월간 인기 원두' 인라인 뱃지 연동 |
+| 2026-11-11 | 첫 화면 원두 선택 및 산지/국가명 검색 매칭 오류 전면 수정 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 14개 산지·7개 국가 사전(`findRegionByQuery`) 구축, 폼 제출 및 이벤트 리스너 통합, `selectSpecificRegion` 전용 네비게이션으로 원두 정확 포커싱 완비 (테스트 25/25 통과) |

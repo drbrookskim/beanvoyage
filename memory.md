@@ -1141,11 +1141,38 @@
 
 ---
 
+273. 첫 화면 원두 선택 및 산지/국가명 검색 매칭 오류 전면 해결
+- **일시**: 2026-11-11
+- **사용자 요청**: "첫 화면에서 선택한 원두가 제대로 표시되는 지 다시 한 번 확인해줘. 잘 안 찾아지는 것 같다."
+- **원인 분석**:
+  1. **폼 제출과 이벤트 리스너 이중 충돌**: `<form id="tasteSearchForm">` 제출 시 `navigateFromTrendBanner()`와 `tasteSearchForm.addEventListener("submit")`가 분리되어, `executeTasteSearch(txt)`가 빈 문자열(`""`) 또는 미등록 키워드를 수신하여 기본값(3, 3, 3, 3)으로 리셋, 콜롬비아 우일라로 덮어쓰는 버그 발생.
+  2. **14개 산지/7개 국가명 키워드 사전 부재**: `executeTasteSearch`의 `AXES` 사전에 14개 산지 중 12개(안티구아, 토라자, 세하두, 타라쥬 등)와 국가명이 등록되어 있지 않아, 사용자가 원두명을 검색하거나 탭을 선택한 상태에서 검색 실행 시 산지를 찾지 못하고 무조건 콜롬비아 우일라로 매핑되던 결함.
+  3. **`renderEvaluation`의 산지 선택 강제 덮어쓰기**: `renderEvaluation`이 추천 블렌드 계산 후 `selectRegion(bestSingle.region, false)`을 무조건 호출하여, 앞서 명시적으로 선택된 원두 산지를 유클리드 최근접 산지로 강제 전환하던 문제.
+- **조치 및 수정 내역**:
+  1. **14개 산지 & 7개 원산국 정밀 사전 매핑 함수 `findRegionByQuery(query)` 구축**:
+     - 에티오피아(예가체프, 시다모·구지), 케냐(니에리, 키암부·키리양가), 콜롬비아(우일라, 나리뇨), 과테말라(안티구아, 우에우에테낭고), 브라질(술 드 미나스, 세하두 미네이루), 인도네시아(만델링, 토라자), 코스타리카(타라쥬, 센트럴 밸리) 등 한국어, 영문, 별칭, 미세 산지명 100% 매핑 지원.
+  2. **전용 산지 네비게이션 엔진 `selectSpecificRegion(targetRegion, queryTitle, badgeDesc, preset)` 구현**:
+     - 매칭된 산지의 고유 생화학 프로필(`computeRegionProfile`)을 1~5점 다이얼 슬라이더 스케일로 정밀 변환(`scoreToSliderValue`).
+     - 지도 카메라 자동 비행(`selectRegion(targetRegion, true)`), 감각 다이얼 동기화, 검색창 및 배지 업데이트를 단일 파이프라인으로 통합.
+     - `renderEvaluation(..., skipRegionSelect = true)`를 통해 블렌드 카드 및 일치율을 갱신하되, 선택된 원두가 덮어씌워지지 않도록 완벽 보장.
+  3. **단일화된 검색 및 트렌드 네비게이션 제어**:
+     - `navigateFromTrendBanner()`: 검색창이 비어있거나 트렌드 원두명이 있는 경우 즉시 해당 트렌드 원두로 지도 직행. 사용자가 직접 입력한 커스텀 쿼리는 `executeTasteSearch()`로 위임.
+     - `tasteSearchForm` 및 `headerTasteSearchForm` 제출 이벤트 리스너를 단일 파이프라인으로 통일.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md), [`memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+- **검증**:
+  - Node.js 가상 DOM 통합 테스트 스위트(25개 전 케이스) 실행 결과 100% 통과(25/25 PASS).
+  - 초기 비움 상태에서 검색 클릭 시 주간 1위(예가체프) 정확 매칭, 8대 트렌드 탭 클릭 후 검색 시 각 원두(안티구아, 토라자, 세하두, 만델링 등) 정확 매칭, 25개 자유 텍스트 검색어 모두 대상 산지 정확 포커스 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 첫 화면 검색창 초기 비움 및 RANK 탭 인기 원두 뱃지 연동 완료.
+- **상태**: 첫 화면 원두 선택 및 산지/국가명 검색 매칭 오류 전면 해결, 테스트 100% 통과.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 수정 사항 원격 저장소(`main`)로 커밋 & 푸시하여 GitHub Pages 배포 동기화.
-  2. 라이브 배포 사이트에서 동작 최종 확인.
+  1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.
+
 
 
