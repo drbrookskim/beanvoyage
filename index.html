@@ -2093,6 +2093,7 @@
                   <span>👑 월간</span>
                 </button>
               </div>
+              <span id="rankPopularBeanText" class="inline-flex items-center px-2 py-0.5 rounded-md bg-[#30679D]/10 dark:bg-[#30679D]/25 text-[#30679D] dark:text-[#97B6CB] text-[11px] font-semibold whitespace-nowrap shrink-0">주간 인기 원두</span>
             </div>
 
             <!-- RIGHT: TASTE Cluster (오른쪽 정렬) -->
@@ -2129,7 +2130,8 @@
             <input 
               type="text" 
               id="tasteInput" 
-              placeholder="에티오피아 예가체프 (화사한 꽃향기와 높은 산미) 또는 자유 검색..." 
+              value=""
+              placeholder="원하는 커피 맛이나 향을 자유롭게 검색해 보세요..." 
               class="flex-1 py-1 bg-transparent text-[#1E3B5C] dark:text-[#F0F0D8] placeholder:text-stone-400 dark:placeholder:text-[#5A758D] focus:outline-none text-xs sm:text-sm font-medium"
               autocomplete="off"
             />
@@ -3894,7 +3896,7 @@
           if (data && data.week && data.month) {
             TOP_BEANS_DATA.week = Object.assign({}, TOP_BEANS_DATA.week, data.week);
             TOP_BEANS_DATA.month = Object.assign({}, TOP_BEANS_DATA.month, data.month);
-            updateTrendBannerUI();
+            updateTrendBannerUI(false);
           }
         }
       } catch (_) {
@@ -3906,6 +3908,7 @@
       currentTrendPeriod = period;
       const tabWeek = document.getElementById("trendTabWeek");
       const tabMonth = document.getElementById("trendTabMonth");
+      const rankPopEl = document.getElementById("rankPopularBeanText");
 
       if (period === "week") {
         if (tabWeek) {
@@ -3914,6 +3917,7 @@
         if (tabMonth) {
           tabMonth.className = "px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
         }
+        if (rankPopEl) rankPopEl.textContent = "주간 인기 원두";
       } else {
         if (tabWeek) {
           tabWeek.className = "px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
@@ -3921,8 +3925,9 @@
         if (tabMonth) {
           tabMonth.className = "px-2 py-0.5 rounded-md text-[11px] font-bold transition-all bg-[#30679D] text-white shadow-2xs flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
         }
+        if (rankPopEl) rankPopEl.textContent = "월간 인기 원두";
       }
-      updateTrendBannerUI();
+      updateTrendBannerUI(true);
     }
 
     function selectTasteCategory(category) {
@@ -3945,7 +3950,7 @@
         }
       });
 
-      updateTrendBannerUI();
+      updateTrendBannerUI(true);
     }
 
     const REGION_TASTE_MOODS = {
@@ -3965,18 +3970,22 @@
       central_valley: "깔끔한 밸런스"
     };
 
-    function updateTrendBannerUI() {
+    function updateTrendBannerUI(shouldFillInput = false) {
       const data = getActiveTrendBeanData();
       if (!data) return;
 
       // Keep TOP_BEANS_DATA in sync for existing consumers
       TOP_BEANS_DATA[currentTrendPeriod] = data;
 
-      // 1. Put bean name directly in tasteInput.value as requested
+      const rankPopEl = document.getElementById("rankPopularBeanText");
+      if (rankPopEl) {
+        rankPopEl.textContent = currentTrendPeriod === "week" ? "주간 인기 원두" : "월간 인기 원두";
+      }
+
+      // 1. Put bean name in tasteInput.value ONLY when user selects a tab (keep empty on initial page load)
       const inputEl = document.getElementById("tasteInput");
-      if (inputEl) {
+      if (inputEl && shouldFillInput) {
         inputEl.value = `${data.countryName} ${data.regionName}`;
-        inputEl.placeholder = data.placeholder || `${data.countryName} ${data.regionName} 또는 원하는 커피 맛 자유 입력...`;
       }
 
       // 2. Terroir & Cup Notes representation in bottom rail

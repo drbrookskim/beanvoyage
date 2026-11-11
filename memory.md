@@ -1117,16 +1117,35 @@
 
 ---
 
+272. 첫 화면 검색창 초기 비움 유지 및 RANK 탭 우측 인기 원두 뱃지 추가
+- **일시**: 2026-11-11
+- **사용자 요청**:
+  - "첫 페이지에 원두명이 미리 입력되어 있음. 삭제해줘 비워져 있어야함"
+  - "Rank에서 주간,월간 선택하면 바로 우측에 인기원두임으로 나타는 문구 추가해줘"
+- **조치 및 수정 내역**:
+  1. **초기 로드 시 검색창 비움 (Empty Value) 보장**:
+     - `index.html` 내 `<input id="tasteInput">`의 기본 속성에 `value=""`를 명시하고, 플레이스홀더를 `"원하는 커피 맛이나 향을 자유롭게 검색해 보세요..."`로 설정.
+     - 초기 로드 시 실행되는 `updateTrendBannerUI(shouldFillInput)`에 플래그 파라미터를 추가하여, 초기 로드(`shouldFillInput = false`) 시에는 검색창 값을 채우지 않고 비워두도록 제어.
+     - 사용자가 주간/월간 또는 4대 취향 탭을 직접 클릭했을 때만(`shouldFillInput = true`) 해당 원두명을 검색창에 자동 입력하도록 인터랙션 최적화.
+  2. **RANK 클러스터 우측 '인기 원두' 인라인 뱃지 연동**:
+     - 상단 헤더의 RANK 영역 바로 우측에 `#rankPopularBeanText` 배지 추가.
+     - 주간 탭 선택 시: `"주간 인기 원두"`
+     - 월간 탭 선택 시: `"월간 인기 원두"`
+     - 에드워드 호퍼 디자인 시스템과 일체화된 톤다운 블루 틴트(`bg-[#30679D]/10 text-[#30679D]`) 스타일 적용.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md), [`memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+- **검증**:
+  - Headless Chrome 실화면 캡처 검증 완료: 초기 페이지 진입 시 검색창이 완벽히 비어 있으며, RANK 버튼 우측에 `주간 인기 원두` 인라인 배지가 깔끔하게 렌더링됨 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: GitHub Pages (https://drbrookskim.github.io/beanvoyage) 호스팅 파이프라인 구축 및 배포 준비 완료.
-- **구축된 인프라**:
-  - GitHub Pages URL: `https://drbrookskim.github.io/beanvoyage/`
-  - 배포 워크플로우: `.github/workflows/deploy-pages.yml` (main 푸시 시 자동 배포).
-  - 트렌드 크론: `.github/workflows/update-top-beans.yml` (매주 월요일 자동 갱신 및 배포 트리거).
-  - 정적 호스팅 우회: `.nojekyll` 탑재.
-- **다음 가능한 작업**:
-  1. 저장소 Settings > Pages에서 Source를 "GitHub Actions" (또는 Deploy from a branch)로 1회 활성화.
-  2. 실제 배포 URL (`https://drbrookskim.github.io/beanvoyage/`) 브라우저 접속 확인.
-  3. 첫 화면 마스터 허브 또는 지도 화면(Screen 2)의 추가 기능/디자인 고도화.
+- **상태**: 첫 화면 검색창 초기 비움 및 RANK 탭 인기 원두 뱃지 연동 완료.
+- **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
+- **다음 작업**:
+  1. 수정 사항 원격 저장소(`main`)로 커밋 & 푸시하여 GitHub Pages 배포 동기화.
+  2. 라이브 배포 사이트에서 동작 최종 확인.
 
 
