@@ -1256,8 +1256,33 @@
 
 ---
 
+277. AI 블렌드 하단 구매처 카드(1번) 삭제, 지도 핀 팝업(4번) 내 원두/생두/쇼핑/리포트 전체 알약 스타일(Pill Style) 개편 및 싱글/블렌드 전용 텍스트 간결화
+- **일시**: 2026-11-12
+- **사용자 요청**: "첨부에서 1번은 삭제하고, 2번은 블렌드 네이버 국내, 3번은 블렌드 아마존 직구 그리고, 싱글인 경우 싱글 네이버 국내, 싱글 아마존 직구만 표시하도록 변경, 4번 타일 안 하단 원두, 생두 선택, 네이버, 아마존 선택, 리포트 버튼 전부 알약스타일로 변경할 것"
+- **조치 및 수정 내역**:
+  1. **1번 전용 구매처 카드 완전 삭제**:
+     - 화면 2 좌측 AI 블렌드 배합 구성 카드 하단에 삽입되었던 `#blendCommerceActions` 컴포넌트 및 스크립트 로직을 깨끗이 제거하여 화면 복잡도 해소.
+  2. **4번 지도 팝업 타일 내 3대 조작부 전체 알약 스타일(Pill Style, `border-radius: 9999px`) 적용**:
+     - **원두/생두 선택 세그먼트 탭**: 트랙(`.editorial-seg-wrap`), 슬라이더 글라이더(`.editorial-seg-glider`), 탭 버튼(`.editorial-seg-btn`) 모두 완전한 라운드 알약 형태로 변경.
+     - **네이버/아마존 구매 버튼 (2번, 3번)**: 카드 형태에서 슬림한 알약 스타일(`.editorial-action-card`, `border-radius: 9999px`, 원형 브랜드 뱃지 `border-radius: 50%`)로 전면 개편.
+     - **원두 리포트 발급 버튼**: `.editorial-dossier-card`에 알약 스타일(`border-radius: 9999px`) 적용하여 4번 타일 내부 모든 버튼의 시각적 통일감 완성.
+  3. **2번, 3번 버튼 텍스트 싱글/블렌드 전용 간결 표기 적용**:
+     - 줄바꿈을 유발하던 복잡한 서브 텍스트(국가/배합률 상세)를 제거하고 직관적인 전용 라벨만 간결하게 표시:
+       - **블렌드 모드**: 2번 `블렌드 네이버 국내`, 3번 `블렌드 아마존 직구`
+       - **싱글 오리진 모드**: 2번 `싱글 네이버 국내`, 3번 `싱글 아마존 직구`
+       - 생두 탭 전환 시에도 각각 `블렌드 네이버 생두` / `블렌드 생두 도매`, `싱글 네이버 생두` / `싱글 생두 도매`로 동기화.
+  4. **Tailwind CSS 빌드 및 테스트 통과**:
+     - `npm run build:css` 컴파일 완료, 가상 DOM 테스트 100% 정상 통과.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: AI 블렌드 다중 산지 배합비 매칭 스마트 구매처 검색(네이버, 아마존, 생두) 구현 완료, CSS 컴파일 및 테스트 100% 통과.
+- **상태**: 1번 블렌드 구매처 삭제, 4번 팝업 내 원두/생두/네이버/아마존/리포트 버튼 전체 알약스타일 개편 및 싱글/블렌드 전용 간결 라벨 적용 완료, CSS 빌드 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.

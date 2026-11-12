@@ -1434,15 +1434,15 @@
       color: #6A5E52;
       font-weight: 400;
     }
-    /* Sliding Segmented Control Track & Glider */
+    /* Sliding Segmented Control Track & Glider (알약 스타일) */
     .editorial-seg-wrap {
       position: relative;
       background: #F0E8DC;
-      border-radius: 13px;
+      border-radius: 9999px;
       padding: 4px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      margin: 12px 0 11px 0;
+      margin: 11px 0 10px 0;
       overflow: hidden;
     }
     .editorial-seg-glider {
@@ -1452,7 +1452,7 @@
       left: 4px;
       width: calc(50% - 4px);
       background: #FFFFFF;
-      border-radius: 10px;
+      border-radius: 9999px;
       box-shadow: 0 3px 10px rgba(45, 30, 18, 0.09), 0 1px 2px rgba(0,0,0,0.04);
       transition: transform 0.28s cubic-bezier(0.25, 1, 0.3, 1);
       z-index: 1;
@@ -1463,11 +1463,11 @@
       z-index: 2;
       border: none;
       background: transparent;
-      padding: 7.5px 10px;
-      border-radius: 10px;
+      padding: 6.5px 10px;
+      border-radius: 9999px;
       font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 400;
+      font-size: 12px;
+      font-weight: 500;
       color: #8C7E70;
       cursor: pointer;
       display: flex;
@@ -1480,7 +1480,7 @@
     }
     .editorial-seg-btn.active {
       color: #241B14;
-      font-weight: 500;
+      font-weight: 600;
     }
     .editorial-tab-dot {
       width: 7px;
@@ -1495,45 +1495,48 @@
     .editorial-tab-dot.roasted { background: #6A3E23; }
     .editorial-tab-dot.green { background: #3E6D4C; }
 
-    /* Action Cards Grid */
+    /* Action Cards Grid & Pill Style (알약 스타일) */
     .editorial-actions-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8.5px;
+      gap: 8px;
       transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
     .editorial-action-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8.5px 11px;
+      padding: 6.5px 12px;
       background: #FFFFFF;
       border: 1px solid #EBE4DA;
-      border-radius: 13px;
+      border-radius: 9999px;
       text-decoration: none;
       color: #241B14;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
+      box-shadow: 0 1px 3px rgba(45, 30, 18, 0.05);
     }
     .editorial-action-card:hover {
       border-color: #CBBAA5;
       transform: translateY(-1.5px);
-      box-shadow: 0 5px 12px -2px rgba(45,30,18,0.08);
+      box-shadow: 0 4px 10px -2px rgba(45,30,18,0.12);
     }
     .editorial-action-info {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6.5px;
+      min-width: 0;
+      flex: 1;
     }
     .editorial-brand-icon {
-      width: 25px;
-      height: 25px;
-      border-radius: 6.5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
       flex-shrink: 0;
     }
     .editorial-brand-icon.naver {
@@ -1543,28 +1546,31 @@
     .editorial-brand-icon.amazon {
       background: #232F3E;
       color: #FF9900;
-      font-size: 13px;
+      font-size: 12px;
     }
     .editorial-brand-icon.wholesale {
       background: #2E6B47;
       color: #FFFFFF;
-      font-size: 13px;
+      font-size: 12px;
     }
     .editorial-action-title {
-      font-size: 12px;
-      font-weight: 500;
+      font-size: 11.5px;
+      font-weight: 600;
       color: #241B14;
-      line-height: 1.2;
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .editorial-action-sub {
-      font-size: 9.5px;
-      color: #8D7E70;
-      margin-top: 1.5px;
+      display: none !important;
     }
     .editorial-arrow {
       color: #AD9E90;
-      font-size: 12px;
-      font-weight: 400;
+      font-size: 11px;
+      font-weight: 500;
+      margin-left: 2px;
+      flex-shrink: 0;
       transition: transform 0.2s ease, color 0.2s ease;
     }
     .editorial-action-card:hover .editorial-arrow {
@@ -1572,23 +1578,23 @@
       transform: translate(1.5px, -1.5px);
     }
 
-    /* Single-Origin Archival Dossier Action Button (R-13px Unified with Action Cards) */
+    /* Single-Origin Archival Dossier Action Button (알약 스타일) */
     .editorial-dossier-card {
       width: 100%;
-      margin-top: 8.5px;
-      padding: 8.5px 12px;
+      margin-top: 8px;
+      padding: 7px 16px;
       background: #FAF9ED;
       border: 1px solid rgba(48, 103, 157, 0.45);
-      border-radius: 13px;
+      border-radius: 9999px;
       color: #1E3B5C;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 7px;
       cursor: pointer;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       user-select: none;
     }
@@ -1597,7 +1603,7 @@
       color: #FFFFFF;
       border-color: #1E3B5C;
       transform: translateY(-1.5px);
-      box-shadow: 0 5px 12px -2px rgba(48, 103, 157, 0.2);
+      box-shadow: 0 4px 12px -2px rgba(48, 103, 157, 0.25);
     }
     .editorial-dossier-card:hover .dossier-arrow {
       color: #FFFFFF !important;
@@ -2704,26 +2710,22 @@
                 </button>
               </div>
 
-              <!-- 4. 하단 2개 구매 채널 카드 -->
+              <!-- 4. 하단 2개 구매 채널 카드 (알약 스타일) -->
               <div id="editorialActionsWrap" class="editorial-actions-grid">
-                <a id="editorialActionNaver" class="editorial-action-card" href="#" onclick="openHudChannel('naverRoasted'); return false;">
+                <a id="editorialActionNaver" class="editorial-action-card" href="#" onclick="openHudChannel('naverRoasted'); return false;" title="네이버 쇼핑 검색">
                   <div class="editorial-action-info">
                     <div id="editorialBrandIconNaver" class="editorial-brand-icon naver">N</div>
-                    <div>
-                      <div id="editorialTitleNaver" class="editorial-action-title">네이버 원두</div>
-                      <div id="editorialSubNaver" class="editorial-action-sub">국내 로스터리 배송</div>
-                    </div>
+                    <span id="editorialTitleNaver" class="editorial-action-title">싱글 네이버 국내</span>
+                    <span id="editorialSubNaver" class="hidden"></span>
                   </div>
                   <span class="editorial-arrow">↗</span>
                 </a>
 
-                <a id="editorialActionGlobal" class="editorial-action-card" href="#" onclick="openHudChannel('amazonRoasted'); return false;">
+                <a id="editorialActionGlobal" class="editorial-action-card" href="#" onclick="openHudChannel('amazonRoasted'); return false;" title="Amazon 검색">
                   <div class="editorial-action-info">
                     <div id="editorialBrandIconGlobal" class="editorial-brand-icon amazon">a</div>
-                    <div>
-                      <div id="editorialTitleGlobal" class="editorial-action-title">Amazon 직구</div>
-                      <div id="editorialSubGlobal" class="editorial-action-sub">해외 오리지널 패키지</div>
-                    </div>
+                    <span id="editorialTitleGlobal" class="editorial-action-title">싱글 아마존 직구</span>
+                    <span id="editorialSubGlobal" class="hidden"></span>
                   </div>
                   <span class="editorial-arrow">↗</span>
                 </a>
@@ -3105,8 +3107,6 @@
                     <span class="font-mono-code">후블렌딩(Post-Roast)</span>
                   </div>
                   <div id="blendComponentsList" class="space-y-1 font-mono-code text-xs"></div>
-                  <!-- Dedicated Blend Commerce Quick Action Card -->
-                  <div id="blendCommerceActions" class="mt-2 p-2 rounded-lg bg-white dark:bg-[#12161C] border border-[#BDB989]/60 dark:border-[#232D3B] space-y-1.5 shadow-2xs"></div>
                 </div>
               </div>
 
@@ -7943,18 +7943,15 @@
         if (hsBadge) hsBadge.textContent = "HS 0901.21";
 
         setTimeout(() => {
-          if (isBlendModeActive && window._blendRatioSummary) {
-            if (naverTitle) naverTitle.textContent = "AI 블렌드 원두";
-            if (naverSub) naverSub.textContent = `${window._blendRatioSummary} 배합`;
-            if (globalTitle) globalTitle.textContent = "Amazon Blend";
-            const cEn = window._blendCountriesEn && window._blendCountriesEn.length ? window._blendCountriesEn.join("·") : "Blend";
-            if (globalSub) globalSub.textContent = `${cEn} Roasteries`;
+          if (isBlendModeActive) {
+            if (naverTitle) naverTitle.textContent = "블렌드 네이버 국내";
+            if (globalTitle) globalTitle.textContent = "블렌드 아마존 직구";
           } else {
-            if (naverTitle) naverTitle.textContent = "네이버 원두";
-            if (naverSub) naverSub.textContent = "국내 로스터리 배송";
-            if (globalTitle) globalTitle.textContent = "Amazon 직구";
-            if (globalSub) globalSub.textContent = "해외 오리지널 패키지";
+            if (naverTitle) naverTitle.textContent = "싱글 네이버 국내";
+            if (globalTitle) globalTitle.textContent = "싱글 아마존 직구";
           }
+          if (naverSub) naverSub.textContent = "";
+          if (globalSub) globalSub.textContent = "";
           if (globalIcon) {
             globalIcon.textContent = "a";
             globalIcon.className = "editorial-brand-icon amazon";
@@ -7973,18 +7970,15 @@
         if (hsBadge) hsBadge.textContent = "HS 0901.11";
 
         setTimeout(() => {
-          if (isBlendModeActive && window._blendRatioSummary) {
-            if (naverTitle) naverTitle.textContent = "블렌딩 생두 3종";
-            if (naverSub) naverSub.textContent = `${window._blendRatioSummary} 세트`;
-            if (globalTitle) globalTitle.textContent = "생두 수입사·도매";
-            const cKo = window._blendCountries && window._blendCountries.length ? window._blendCountries.join("·") : "";
-            if (globalSub) globalSub.textContent = cKo ? `알마씨엘로 (${cKo})` : "알마씨엘로 / GCS";
+          if (isBlendModeActive) {
+            if (naverTitle) naverTitle.textContent = "블렌드 네이버 생두";
+            if (globalTitle) globalTitle.textContent = "블렌드 생두 도매";
           } else {
-            if (naverTitle) naverTitle.textContent = "네이버 생두";
-            if (naverSub) naverSub.textContent = "소량 홈로스팅 생두";
-            if (globalTitle) globalTitle.textContent = "생두 수입사·도매";
-            if (globalSub) globalSub.textContent = "알마씨엘로 / GCS";
+            if (naverTitle) naverTitle.textContent = "싱글 네이버 생두";
+            if (globalTitle) globalTitle.textContent = "싱글 생두 도매";
           }
+          if (naverSub) naverSub.textContent = "";
+          if (globalSub) globalSub.textContent = "";
           if (globalIcon) {
             globalIcon.textContent = "🏢";
             globalIcon.className = "editorial-brand-icon wholesale";
@@ -8541,58 +8535,20 @@
         const varietalText = document.getElementById("editorialVarietalText");
         const processText = document.getElementById("editorialProcessText");
 
-        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "블렌딩 생두 3종" : "AI 블렌드 원두";
-        if (editorialNaverSub) editorialNaverSub.textContent = currentHudTab === "green" ? `${ratioSummary} 세트` : `${ratioSummary} 배합`;
-        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "생두 수입사·도매" : "Amazon Blend";
-        if (editorialGlobalSub) editorialGlobalSub.textContent = currentHudTab === "green" ? `알마씨엘로 (${countries.join("·")})` : `${countriesEn.join("·")} Roasteries`;
+        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "블렌드 네이버 생두" : "블렌드 네이버 국내";
+        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "블렌드 생두 도매" : "블렌드 아마존 직구";
+        if (editorialNaverSub) editorialNaverSub.textContent = "";
+        if (editorialGlobalSub) editorialGlobalSub.textContent = "";
 
         if (countryTag) countryTag.textContent = "AI HOUSE BLEND";
         if (regionTitle) regionTitle.textContent = `AI 블렌드 (${countries.join(" · ")})`;
         if (altitudePill) altitudePill.textContent = "3산지 맞춤 배합";
         if (varietalText) varietalText.textContent = `${ratioSummary}`;
         if (processText) processText.textContent = "후배전 블렌딩 (Post-Roast)";
-
-        // Sync Dedicated Blend Commerce Quick Actions Card below Component List
-        const blendCommerceEl = document.getElementById("blendCommerceActions");
-        if (blendCommerceEl) {
-          blendCommerceEl.classList.remove("hidden");
-          blendCommerceEl.innerHTML = `
-            <div class="flex items-center justify-between text-[11px] pb-1 border-b border-[#BDB989]/30">
-              <span class="font-bold text-[#1E3B5C] dark:text-[#97B6CB] flex items-center gap-1">
-                <span>🛒</span>
-                <span>이 배합비 블렌드 구매처 찾기</span>
-              </span>
-              <span class="font-mono-code text-[10px] text-[#516B50] dark:text-[#86EFAC] font-bold">${ratioSummary}</span>
-            </div>
-            <div class="grid grid-cols-2 gap-1.5 pt-0.5">
-              <a href="${naverRoasted ? naverRoasted.href : '#'}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-2 rounded-lg bg-[#03C75A]/10 hover:bg-[#03C75A]/20 text-[#008A38] dark:text-[#2BD880] border border-[#03C75A]/30 flex items-center justify-between text-xs font-bold transition shadow-2xs group cursor-pointer" title="네이버 쇼핑에서 '${naverBlendQuery}' 검색 (${ratioSummary})">
-                <span class="flex items-center gap-1 truncate">
-                  <span class="w-3.5 h-3.5 rounded-full bg-[#03C75A] text-white flex items-center justify-center text-[9px] font-black shrink-0">N</span>
-                  <span class="truncate">네이버 블렌드</span>
-                </span>
-                <span class="group-hover:translate-x-0.5 transition-transform shrink-0 text-[10px] ml-0.5">↗</span>
-              </a>
-              <a href="${amazonRoasted ? amazonRoasted.href : '#'}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-2 rounded-lg bg-[#FF9900]/10 hover:bg-[#FF9900]/20 text-[#C47600] dark:text-[#FFAE33] border border-[#FF9900]/30 flex items-center justify-between text-xs font-bold transition shadow-2xs group cursor-pointer" title="Amazon에서 '${amazonBlendQuery}' 검색">
-                <span class="flex items-center gap-1 truncate">
-                  <span class="w-3.5 h-3.5 rounded-full bg-[#FF9900] text-white flex items-center justify-center text-[9px] font-black shrink-0">a</span>
-                  <span class="truncate">Amazon 직구</span>
-                </span>
-                <span class="group-hover:translate-x-0.5 transition-transform shrink-0 text-[10px] ml-0.5">↗</span>
-              </a>
-            </div>
-            <div class="flex items-center justify-between pt-0.5 text-[10px] text-[#5A758D] dark:text-[#97B6CB]/80">
-              <span class="truncate">💡 ${countries.join('·')} 배합비와 일치·유사한 스페셜티 하우스 블렌드</span>
-              <a href="${naverGreen ? naverGreen.href : '#'}" target="_blank" rel="noopener noreferrer" class="text-[#516B50] dark:text-[#86EFAC] hover:underline font-semibold shrink-0 ml-1">생두 3종 세트 ↗</a>
-            </div>
-          `;
-        }
       } else if (activeRegionRef) {
         window._blendRatioSummary = null;
         window._blendCountries = null;
         window._blendCountriesEn = null;
-
-        const blendCommerceEl = document.getElementById("blendCommerceActions");
-        if (blendCommerceEl) blendCommerceEl.classList.add("hidden");
 
         if (naverLabel) naverLabel.textContent = "네이버 원두";
         if (amazonLabel) amazonLabel.textContent = "Amazon 직구";
@@ -8625,10 +8581,10 @@
         const editorialNaverSub = document.getElementById("editorialSubNaver");
         const editorialGlobalTitle = document.getElementById("editorialTitleGlobal");
         const editorialGlobalSub = document.getElementById("editorialSubGlobal");
-        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "네이버 생두" : "네이버 원두";
-        if (editorialNaverSub) editorialNaverSub.textContent = currentHudTab === "green" ? "소량 홈로스팅 생두" : "국내 로스터리 배송";
-        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "생두 수입사·도매" : "Amazon 직구";
-        if (editorialGlobalSub) editorialGlobalSub.textContent = currentHudTab === "green" ? "알마씨엘로 / GCS" : "해외 오리지널 패키지";
+        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "싱글 네이버 생두" : "싱글 네이버 국내";
+        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "싱글 생두 도매" : "싱글 아마존 직구";
+        if (editorialNaverSub) editorialNaverSub.textContent = "";
+        if (editorialGlobalSub) editorialGlobalSub.textContent = "";
       }
     }
 
