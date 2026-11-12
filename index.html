@@ -3105,6 +3105,8 @@
                     <span class="font-mono-code">후블렌딩(Post-Roast)</span>
                   </div>
                   <div id="blendComponentsList" class="space-y-1 font-mono-code text-xs"></div>
+                  <!-- Dedicated Blend Commerce Quick Action Card -->
+                  <div id="blendCommerceActions" class="mt-2 p-2 rounded-lg bg-white dark:bg-[#12161C] border border-[#BDB989]/60 dark:border-[#232D3B] space-y-1.5 shadow-2xs"></div>
                 </div>
               </div>
 
@@ -7941,10 +7943,18 @@
         if (hsBadge) hsBadge.textContent = "HS 0901.21";
 
         setTimeout(() => {
-          if (naverTitle) naverTitle.textContent = "네이버 원두";
-          if (naverSub) naverSub.textContent = "국내 로스터리 배송";
-          if (globalTitle) globalTitle.textContent = "Amazon 직구";
-          if (globalSub) globalSub.textContent = "해외 오리지널 패키지";
+          if (isBlendModeActive && window._blendRatioSummary) {
+            if (naverTitle) naverTitle.textContent = "AI 블렌드 원두";
+            if (naverSub) naverSub.textContent = `${window._blendRatioSummary} 배합`;
+            if (globalTitle) globalTitle.textContent = "Amazon Blend";
+            const cEn = window._blendCountriesEn && window._blendCountriesEn.length ? window._blendCountriesEn.join("·") : "Blend";
+            if (globalSub) globalSub.textContent = `${cEn} Roasteries`;
+          } else {
+            if (naverTitle) naverTitle.textContent = "네이버 원두";
+            if (naverSub) naverSub.textContent = "국내 로스터리 배송";
+            if (globalTitle) globalTitle.textContent = "Amazon 직구";
+            if (globalSub) globalSub.textContent = "해외 오리지널 패키지";
+          }
           if (globalIcon) {
             globalIcon.textContent = "a";
             globalIcon.className = "editorial-brand-icon amazon";
@@ -7963,10 +7973,18 @@
         if (hsBadge) hsBadge.textContent = "HS 0901.11";
 
         setTimeout(() => {
-          if (naverTitle) naverTitle.textContent = "네이버 생두";
-          if (naverSub) naverSub.textContent = "소량 홈로스팅 생두";
-          if (globalTitle) globalTitle.textContent = "생두 수입사·도매";
-          if (globalSub) globalSub.textContent = "알마씨엘로 / GCS";
+          if (isBlendModeActive && window._blendRatioSummary) {
+            if (naverTitle) naverTitle.textContent = "블렌딩 생두 3종";
+            if (naverSub) naverSub.textContent = `${window._blendRatioSummary} 세트`;
+            if (globalTitle) globalTitle.textContent = "생두 수입사·도매";
+            const cKo = window._blendCountries && window._blendCountries.length ? window._blendCountries.join("·") : "";
+            if (globalSub) globalSub.textContent = cKo ? `알마씨엘로 (${cKo})` : "알마씨엘로 / GCS";
+          } else {
+            if (naverTitle) naverTitle.textContent = "네이버 생두";
+            if (naverSub) naverSub.textContent = "소량 홈로스팅 생두";
+            if (globalTitle) globalTitle.textContent = "생두 수입사·도매";
+            if (globalSub) globalSub.textContent = "알마씨엘로 / GCS";
+          }
           if (globalIcon) {
             globalIcon.textContent = "🏢";
             globalIcon.className = "editorial-brand-icon wholesale";
@@ -8451,28 +8469,166 @@
       const naverGreen = document.getElementById("naverGreenSearchLink");
       const almaLink = document.getElementById("almacieloSearchLink");
       const naverLabel = document.getElementById("naverSearchLabel");
+      const amazonLabel = document.getElementById("amazonSearchLabel");
       const naverGreenLabel = document.getElementById("naverGreenSearchLabel");
+      const almaLabel = document.getElementById("almacieloSearchLabel");
 
       if (isBlendModeActive && currentBlendRegions && currentBlendRegions.length >= 2) {
-        const blendNames = currentBlendRegions.map(r => r.name).join("·");
-        if (naverLabel) naverLabel.textContent = "네이버 블렌드";
-        if (naverGreenLabel) naverGreenLabel.textContent = "블렌딩 생두 3종";
-        if (naverRoasted) naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent("스페셜티 하우스 블렌드 원두")}&sort=review`;
-        if (amazonRoasted) amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent("specialty coffee house blend whole bean roasted")}`;
-        if (naverGreen) naverGreen.href = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(blendNames + " 커피 생두")}&sort=review`;
-        if (almaLink) almaLink.href = `https://www.google.com/search?q=${encodeURIComponent("스페셜티 커피 블렌딩 생두 도매 직수입")}`;
+        // Collect blend components, countries, and actual ratio percentages
+        const components = (lastEval && lastEval.aiBlend && lastEval.aiBlend.components)
+          ? lastEval.aiBlend.components
+          : currentBlendRegions.map((r, i) => ({
+              region: r,
+              country: r.countryName,
+              ratio: currentBlendRatios && currentBlendRatios[i] != null ? `${currentBlendRatios[i]}%` : "",
+              name: `${r.countryName} ${r.name}`
+            }));
+
+        const countries = [];
+        const countriesEn = [];
+        const ratioParts = [];
+
+        components.forEach(c => {
+          const cName = c.country || (c.region && c.region.countryName) || "";
+          const cEn = (c.region && c.region.countryEn) || "";
+          const rNum = c.ratio ? String(c.ratio).replace("%", "").trim() : "";
+          if (cName && !countries.includes(cName)) countries.push(cName);
+          if (cEn && !countriesEn.includes(cEn)) countriesEn.push(cEn);
+          if (cName) ratioParts.push(rNum ? `${cName}(${rNum}%)` : cName);
+        });
+
+        const ratioSummary = ratioParts.join(" · ");
+        window._blendRatioSummary = ratioSummary;
+        window._blendCountries = countries;
+        window._blendCountriesEn = countriesEn;
+
+        // Smart Precision Multi-Origin Queries
+        const naverBlendQuery = (countries.length >= 2 ? countries.join(" ") : components.map(c => c.name).join(" ")) + " 블렌드 원두";
+        const amazonBlendQuery = (countriesEn.length >= 2 ? countriesEn.join(" ") : components.map(c => (c.region && c.region.enName) || "").join(" ")) + " blend whole bean coffee";
+        const naverGreenBlendQuery = (countries.length >= 2 ? countries.join(" ") : components.map(c => c.name).join(" ")) + " 블렌딩 생두";
+        const almaBlendQuery = `스페셜티 커피 블렌딩 생두 도매 ${countries.join(" ")}`;
+
+        if (naverLabel) naverLabel.textContent = `네이버 블렌드 (${countries.join("·")})`;
+        if (amazonLabel) amazonLabel.textContent = `Amazon (${countriesEn.join("·")})`;
+        if (naverGreenLabel) naverGreenLabel.textContent = `생두 3종 (${countries.join("·")})`;
+        if (almaLabel) almaLabel.textContent = "블렌딩 생두 도매";
+
+        if (naverRoasted) {
+          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverBlendQuery)}&sort=review`;
+          naverRoasted.title = `네이버 쇼핑에서 '${naverBlendQuery}' 검색 (${ratioSummary} 배합)`;
+        }
+        if (amazonRoasted) {
+          amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonBlendQuery)}`;
+          amazonRoasted.title = `Amazon에서 '${amazonBlendQuery}' 검색`;
+        }
+        if (naverGreen) {
+          naverGreen.href = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverGreenBlendQuery)}&sort=review`;
+          naverGreen.title = `네이버 쇼핑에서 '${naverGreenBlendQuery}' 검색`;
+        }
+        if (almaLink) {
+          almaLink.href = `https://www.google.com/search?q=${encodeURIComponent(almaBlendQuery)}`;
+          almaLink.title = `구글에서 '${almaBlendQuery}' 검색`;
+        }
+
+        // Sync Map Reticle / Editorial Popup Titles if open
+        const editorialNaverTitle = document.getElementById("editorialTitleNaver");
+        const editorialNaverSub = document.getElementById("editorialSubNaver");
+        const editorialGlobalTitle = document.getElementById("editorialTitleGlobal");
+        const editorialGlobalSub = document.getElementById("editorialSubGlobal");
+        const countryTag = document.getElementById("editorialCountryTag");
+        const regionTitle = document.getElementById("editorialRegionTitle");
+        const altitudePill = document.getElementById("editorialAltitudePill");
+        const varietalText = document.getElementById("editorialVarietalText");
+        const processText = document.getElementById("editorialProcessText");
+
+        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "블렌딩 생두 3종" : "AI 블렌드 원두";
+        if (editorialNaverSub) editorialNaverSub.textContent = currentHudTab === "green" ? `${ratioSummary} 세트` : `${ratioSummary} 배합`;
+        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "생두 수입사·도매" : "Amazon Blend";
+        if (editorialGlobalSub) editorialGlobalSub.textContent = currentHudTab === "green" ? `알마씨엘로 (${countries.join("·")})` : `${countriesEn.join("·")} Roasteries`;
+
+        if (countryTag) countryTag.textContent = "AI HOUSE BLEND";
+        if (regionTitle) regionTitle.textContent = `AI 블렌드 (${countries.join(" · ")})`;
+        if (altitudePill) altitudePill.textContent = "3산지 맞춤 배합";
+        if (varietalText) varietalText.textContent = `${ratioSummary}`;
+        if (processText) processText.textContent = "후배전 블렌딩 (Post-Roast)";
+
+        // Sync Dedicated Blend Commerce Quick Actions Card below Component List
+        const blendCommerceEl = document.getElementById("blendCommerceActions");
+        if (blendCommerceEl) {
+          blendCommerceEl.classList.remove("hidden");
+          blendCommerceEl.innerHTML = `
+            <div class="flex items-center justify-between text-[11px] pb-1 border-b border-[#BDB989]/30">
+              <span class="font-bold text-[#1E3B5C] dark:text-[#97B6CB] flex items-center gap-1">
+                <span>🛒</span>
+                <span>이 배합비 블렌드 구매처 찾기</span>
+              </span>
+              <span class="font-mono-code text-[10px] text-[#516B50] dark:text-[#86EFAC] font-bold">${ratioSummary}</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5 pt-0.5">
+              <a href="${naverRoasted ? naverRoasted.href : '#'}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-2 rounded-lg bg-[#03C75A]/10 hover:bg-[#03C75A]/20 text-[#008A38] dark:text-[#2BD880] border border-[#03C75A]/30 flex items-center justify-between text-xs font-bold transition shadow-2xs group cursor-pointer" title="네이버 쇼핑에서 '${naverBlendQuery}' 검색 (${ratioSummary})">
+                <span class="flex items-center gap-1 truncate">
+                  <span class="w-3.5 h-3.5 rounded-full bg-[#03C75A] text-white flex items-center justify-center text-[9px] font-black shrink-0">N</span>
+                  <span class="truncate">네이버 블렌드</span>
+                </span>
+                <span class="group-hover:translate-x-0.5 transition-transform shrink-0 text-[10px] ml-0.5">↗</span>
+              </a>
+              <a href="${amazonRoasted ? amazonRoasted.href : '#'}" target="_blank" rel="noopener noreferrer" class="py-1.5 px-2 rounded-lg bg-[#FF9900]/10 hover:bg-[#FF9900]/20 text-[#C47600] dark:text-[#FFAE33] border border-[#FF9900]/30 flex items-center justify-between text-xs font-bold transition shadow-2xs group cursor-pointer" title="Amazon에서 '${amazonBlendQuery}' 검색">
+                <span class="flex items-center gap-1 truncate">
+                  <span class="w-3.5 h-3.5 rounded-full bg-[#FF9900] text-white flex items-center justify-center text-[9px] font-black shrink-0">a</span>
+                  <span class="truncate">Amazon 직구</span>
+                </span>
+                <span class="group-hover:translate-x-0.5 transition-transform shrink-0 text-[10px] ml-0.5">↗</span>
+              </a>
+            </div>
+            <div class="flex items-center justify-between pt-0.5 text-[10px] text-[#5A758D] dark:text-[#97B6CB]/80">
+              <span class="truncate">💡 ${countries.join('·')} 배합비와 일치·유사한 스페셜티 하우스 블렌드</span>
+              <a href="${naverGreen ? naverGreen.href : '#'}" target="_blank" rel="noopener noreferrer" class="text-[#516B50] dark:text-[#86EFAC] hover:underline font-semibold shrink-0 ml-1">생두 3종 세트 ↗</a>
+            </div>
+          `;
+        }
       } else if (activeRegionRef) {
+        window._blendRatioSummary = null;
+        window._blendCountries = null;
+        window._blendCountriesEn = null;
+
+        const blendCommerceEl = document.getElementById("blendCommerceActions");
+        if (blendCommerceEl) blendCommerceEl.classList.add("hidden");
+
         if (naverLabel) naverLabel.textContent = "네이버 원두";
+        if (amazonLabel) amazonLabel.textContent = "Amazon 직구";
         if (naverGreenLabel) naverGreenLabel.textContent = "네이버 생두";
+        if (almaLabel) almaLabel.textContent = "수입·도매 업체";
+
         const qRoasted = encodeURIComponent(`${activeRegionRef.countryName} ${activeRegionRef.name} 원두`);
         const qGreen = encodeURIComponent(`${activeRegionRef.countryName} ${activeRegionRef.name} 생두`);
         const cleanEnName = activeRegionRef.enName ? activeRegionRef.enName.replace(/[·,]/g, " ").replace(/\s+/g, " ").trim() : "";
         const amazonRoastedQuery = `${activeRegionRef.countryEn || ""} ${cleanEnName} whole bean roasted coffee`.replace(/\s+/g, " ").trim();
 
-        if (naverRoasted) naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}&sort=review`;
-        if (amazonRoasted) amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonRoastedQuery)}`;
-        if (naverGreen) naverGreen.href = `https://search.shopping.naver.com/search/all?query=${qGreen}&sort=review`;
-        if (almaLink) almaLink.href = `https://www.google.com/search?q=${encodeURIComponent(activeRegionRef.countryName + ' 생두 수입 도매 업체')}`;
+        if (naverRoasted) {
+          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}&sort=review`;
+          naverRoasted.title = `네이버 쇼핑에서 '${activeRegionRef.countryName} ${activeRegionRef.name} 원두' 검색`;
+        }
+        if (amazonRoasted) {
+          amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonRoastedQuery)}`;
+          amazonRoasted.title = `Amazon에서 '${amazonRoastedQuery}' 검색`;
+        }
+        if (naverGreen) {
+          naverGreen.href = `https://search.shopping.naver.com/search/all?query=${qGreen}&sort=review`;
+          naverGreen.title = `네이버 쇼핑에서 '${activeRegionRef.countryName} ${activeRegionRef.name} 생두' 검색`;
+        }
+        if (almaLink) {
+          almaLink.href = `https://www.google.com/search?q=${encodeURIComponent(activeRegionRef.countryName + ' 생두 수입 도매 업체')}`;
+          almaLink.title = `구글에서 '${activeRegionRef.countryName} 생두 수입 도매 업체' 검색`;
+        }
+
+        const editorialNaverTitle = document.getElementById("editorialTitleNaver");
+        const editorialNaverSub = document.getElementById("editorialSubNaver");
+        const editorialGlobalTitle = document.getElementById("editorialTitleGlobal");
+        const editorialGlobalSub = document.getElementById("editorialSubGlobal");
+        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "네이버 생두" : "네이버 원두";
+        if (editorialNaverSub) editorialNaverSub.textContent = currentHudTab === "green" ? "소량 홈로스팅 생두" : "국내 로스터리 배송";
+        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "생두 수입사·도매" : "Amazon 직구";
+        if (editorialGlobalSub) editorialGlobalSub.textContent = currentHudTab === "green" ? "알마씨엘로 / GCS" : "해외 오리지널 패키지";
       }
     }
 
@@ -8759,6 +8915,7 @@
       }
 
       updateRoastUI();
+      updateShoppingLinks();
     }
 
     const toggleSingleBtn = document.getElementById("toggleSingleBtn");
@@ -8994,6 +9151,7 @@
     });
     checkRoastMode.addEventListener("change", () => {
       updateRoastUI();
+      updateShoppingLinks();
       updateFromSliders(false);
     });
 
@@ -9831,6 +9989,7 @@
 
       init3DBeanViewer();
       updateRoastUI();
+      updateShoppingLinks();
     }
 
     // Initialize Roast Simulator immediately so chips & listeners are fully active on initial page load
@@ -9850,6 +10009,7 @@
       }
 
       updateRoastUI();
+      updateShoppingLinks();
 
       if (triggerRecalc) {
         updateFromSliders(false);

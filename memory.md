@@ -1225,8 +1225,39 @@
 
 ---
 
+276. AI 블렌드 배합 구성 기반 스마트 복합 구매처(쇼핑/직구/생두) 검색 및 원터치 연동 (A안 적용)
+- **일시**: 2026-11-12
+- **사용자 요청**: "AI 블렌드인 경우, 몇 개의 원산지가 각각 섞여서 블렌드 원두로 구성된다. 첨부와 같이 배합 비율을 구매처를 클릭했을 때 이 배합비율과 일치하는 구매처를 보여주어야 한다. 아니면 그와 유사하게라도 말이다. 가능할까? -> a안"
+- **조치 및 수정 내역**:
+  1. **AI 블렌드 다중 산지 스마트 검색 쿼리 지능화**:
+     - 기존의 정적 고정 검색어("스페셜티 하우스 블렌드 원두")를 전면 교체.
+     - `computeAIBlend()`에서 도출된 실제 배합 산지(예: 브라질, 과테말라, 콜롬비아) 및 배합 비율(예: 60%, 20%, 20%)을 실시간 집계하여 쇼핑몰 및 검색 엔진에 최적화된 복합 검색어로 동적 생성:
+       - **네이버 쇼핑 원두**: `브라질 과테말라 콜롬비아 블렌드 원두` (리뷰순 정렬 연동)
+       - **아마존 직구**: `Brazil Guatemala Colombia blend whole bean coffee`
+       - **네이버 생두 3종**: `브라질 과테말라 콜롬비아 블렌딩 생두`
+       - **생두 수입·도매**: `스페셜티 커피 블렌딩 생두 도매 브라질 과테말라 콜롬비아`
+  2. **우측 통관·구매처 카드(`customsChannelsCard`) 동적 라벨링 및 배합비 연동**:
+     - 네이버 원두 버튼: `네이버 블렌드 (브라질·과테말라·콜롬비아)`
+     - 아마존 버튼: `Amazon (Brazil·Guatemala·Colombia)`
+     - 네이버 생두 버튼: `생두 3종 (브라질·과테말라·콜롬비아)`
+     - 도매 수입사 버튼: `블렌딩 생두 도매`
+     - 마우스 호버 툴팁(`title`): 배합 비율 요약(`브라질(60%) · 과테말라(20%) · 콜롬비아(20%) 배합`)과 검색 쿼리 상세 표시.
+  3. **AI 블렌드 배합 구성 카드 하단 전용 구매처 퀵액션(`blendCommerceActions`) 신설**:
+     - 화면 2 좌측 블렌드 배합 구성 카드(`#blendComponentsList`) 바로 아래에 직관적인 원터치 구매처 카드 추가.
+     - 배합비 뱃지(`브라질(60%) · 과테말라(20%) · 콜롬비아(20%)`)와 함께 [N 네이버 블렌드 ↗], [a Amazon 직구 ↗], [생두 3종 세트 ↗] 바로가기 제공.
+     - 싱글 오리진 모드 전환 시에는 자동으로 숨김 처리되고, 싱글 오리진 검색 쿼리로 완벽 복원.
+  4. **지도 산지 핀 팝업(`editorialOriginPopup`) 블렌드 타이틀/배합비 동기화**:
+     - 블렌드 모드 활성 시 지도 팝업 타이틀과 서브타이틀도 `AI 블렌드 원두: 브라질(60%)·과테말라(20%)·콜롬비아(20%) 배합` 및 `Amazon Blend: Brazil·Guatemala·Colombia Roasteries`로 일관성 있게 동기화.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 폰 화면 4대 감각 축 가로 4열 배열 및 첫 화면 검색 허브 비례 축소 반응형 완료, 빌드 및 테스트 통과.
+- **상태**: AI 블렌드 다중 산지 배합비 매칭 스마트 구매처 검색(네이버, 아마존, 생두) 구현 완료, CSS 컴파일 및 테스트 100% 통과.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.
