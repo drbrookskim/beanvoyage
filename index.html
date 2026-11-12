@@ -8545,6 +8545,8 @@
         if (altitudePill) altitudePill.textContent = "3산지 맞춤 배합";
         if (varietalText) varietalText.textContent = `${ratioSummary}`;
         if (processText) processText.textContent = "후배전 블렌딩 (Post-Roast)";
+        const dossierBtnText = document.querySelector("#editorialDossierBtn span.tracking-tight");
+        if (dossierBtnText) dossierBtnText.textContent = "AI 블렌드 원두 리포트(Dossier) 발급";
       } else if (activeRegionRef) {
         window._blendRatioSummary = null;
         window._blendCountries = null;
@@ -8581,10 +8583,25 @@
         const editorialNaverSub = document.getElementById("editorialSubNaver");
         const editorialGlobalTitle = document.getElementById("editorialTitleGlobal");
         const editorialGlobalSub = document.getElementById("editorialSubGlobal");
+        const countryTag = document.getElementById("editorialCountryTag");
+        const regionTitle = document.getElementById("editorialRegionTitle");
+        const altitudePill = document.getElementById("editorialAltitudePill");
+        const varietalText = document.getElementById("editorialVarietalText");
+        const processText = document.getElementById("editorialProcessText");
+        const dossierBtnText = document.querySelector("#editorialDossierBtn span.tracking-tight");
+
         if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "싱글 네이버 생두" : "싱글 네이버 국내";
         if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "싱글 생두 도매" : "싱글 아마존 직구";
         if (editorialNaverSub) editorialNaverSub.textContent = "";
         if (editorialGlobalSub) editorialGlobalSub.textContent = "";
+
+        const countryEn = (activeRegionRef.countryEn || "ETHIOPIA").toUpperCase();
+        if (countryTag) countryTag.textContent = `${countryEn} ORIGIN`;
+        if (regionTitle) regionTitle.textContent = `${activeRegionRef.countryName} ${activeRegionRef.name}`;
+        if (altitudePill) altitudePill.textContent = `${Number(activeRegionRef.altitude).toLocaleString()}m 고산지`;
+        if (varietalText) varietalText.textContent = `${activeRegionRef.varietal || "Heirloom"} 품종`;
+        if (processText) processText.textContent = activeRegionRef.process || "Washed / Natural";
+        if (dossierBtnText) dossierBtnText.textContent = "이 산지 원두 리포트(Dossier) 발급";
       }
     }
 
@@ -8950,7 +8967,6 @@
     function updateModeTabUI(isBlend) {
       isBlendModeActive = isBlend;
       if (typeof renderMapPins === "function") renderMapPins();
-      updateShoppingLinks();
       
       const wrap = document.getElementById("singleBlendToggleWrap");
       if (wrap) {
@@ -8967,16 +8983,50 @@
         document.querySelectorAll(".blend-preset-chip").forEach(btn => {
           btn.classList.remove("active-preset");
         });
+
+        // Focus single origin: bestSingle or activeRegionRef
+        const targetRegion = (lastEval && lastEval.bestSingle && lastEval.bestSingle.region)
+          ? lastEval.bestSingle.region
+          : (activeRegionRef || REGIONS_DATA[0]);
+        activeRegionRef = targetRegion;
+
+        updateShoppingLinks();
+
+        // Update Reticle to Single Origin
+        const reticleEl = document.getElementById("originReticle");
+        if (reticleEl) {
+          reticleEl.setAttribute("transform", `translate(${targetRegion.svgCoords.x}, ${targetRegion.svgCoords.y})`);
+        }
+        updateReticleBadge(targetRegion.countryName, targetRegion.name, targetRegion.altitude, "");
+        updateReticleBadgeLayout(targetRegion.svgCoords.x, targetRegion.svgCoords.y);
       } else {
         singleOriginView.classList.add("hidden");
         blendOriginView.classList.remove("hidden");
         cardMainTitle.textContent = "AI BLEND (3원두 블렌딩)";
         cardModeBadge.textContent = "3원두 배합";
+
+        updateShoppingLinks();
+
+        // In blend mode, dock reticle to first blend region
+        if (currentBlendRegions && currentBlendRegions.length) {
+          const leadRegion = currentBlendRegions[0];
+          const reticleEl = document.getElementById("originReticle");
+          if (reticleEl) {
+            reticleEl.setAttribute("transform", `translate(${leadRegion.svgCoords.x}, ${leadRegion.svgCoords.y})`);
+          }
+          updateReticleBadgeLayout(leadRegion.svgCoords.x, leadRegion.svgCoords.y);
+        }
       }
     }
 
     toggleSingleBtn.addEventListener("click", () => {
       updateModeTabUI(false);
+      const targetRegion = (lastEval && lastEval.bestSingle && lastEval.bestSingle.region)
+        ? lastEval.bestSingle.region
+        : (activeRegionRef || REGIONS_DATA[0]);
+      if (targetRegion) {
+        selectRegion(targetRegion, true);
+      }
       renderRealTimeNavigationCanvas();
     });
 

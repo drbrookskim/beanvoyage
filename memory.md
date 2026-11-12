@@ -1281,8 +1281,35 @@
 
 ---
 
+278. 싱글/블렌드 교차 전환 시 지도 핀 HUD 팝업(4번 타일) 실시간 양방향 동기화 및 핀 포커싱 버그 수정
+- **일시**: 2026-11-12
+- **사용자 요청**: "지도 뷰에서 좌측 상단 싱글, 블렌드 교차 선택해도 첨부의 화면이 바뀌지 않음"
+- **원인 분석**:
+  - `updateShoppingLinks()` 내에서 블렌드 모드일 때만 `editorialCountryTag`, `editorialRegionTitle`, `editorialAltitudePill`, `editorialVarietalText`, `editorialProcessText`, `editorialDossierBtn`을 갱신하고, 싱글 오리진 모드로 복귀(`else if (activeRegionRef)`) 시에는 해당 6개 요소가 누락되어 블렌드 텍스트가 그대로 남아있었음.
+  - 또한 `toggleSingleBtn` 클릭 시 `selectRegion(targetRegion, true)`이 실행되지 않아 싱글 오리진의 산지 핀과 카메라, 레티클 레이아웃이 갱신되지 않았음.
+- **조치 및 수정 내역**:
+  1. **`updateShoppingLinks()` 내 싱글 오리진 복원 로직 완비**:
+     - `editorialCountryTag`: `${activeRegionRef.countryEn.toUpperCase()} ORIGIN`
+     - `editorialRegionTitle`: `${activeRegionRef.countryName} ${activeRegionRef.name}`
+     - `editorialAltitudePill`: `${activeRegionRef.altitude}m 고산지`
+     - `editorialVarietalText`: `${activeRegionRef.varietal} 품종`
+     - `editorialProcessText`: `${activeRegionRef.process}`
+     - `editorialTitleNaver`: `싱글 네이버 국내` (생두 시 `싱글 네이버 생두`)
+     - `editorialTitleGlobal`: `싱글 아마존 직구` (생두 시 `싱글 생두 도매`)
+     - `editorialDossierBtn`: `이 산지 원두 리포트(Dossier) 발급`
+  2. **`updateModeTabUI(isBlend)` 양방향 전환 시 레티클 및 카메라 정밀 동기화**:
+     - **싱글 선택 시**: `lastEval.bestSingle.region` (또는 `activeRegionRef`)를 타겟으로 지정하고, 레티클을 해당 단일 산지 핀으로 이동(`updateReticleBadge`, `updateReticleBadgeLayout`, `selectRegion`)하여 지도 화면과 팝업 4번 타일이 즉시 싱글 산지 정보로 전환되도록 조치.
+     - **블렌드 선택 시**: `currentBlendRegions` 3개 산지 배합 정보와 퍼센트 배지로 지도 핀을 갱신하고, 4번 팝업을 블렌드 텍스트로 즉각 변경.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 1번 블렌드 구매처 삭제, 4번 팝업 내 원두/생두/네이버/아마존/리포트 버튼 전체 알약스타일 개편 및 싱글/블렌드 전용 간결 라벨 적용 완료, CSS 빌드 완료.
+- **상태**: 싱글/블렌드 탭 교차 전환 시 4번 지도 팝업 타일 및 레티클/카메라 완벽 동기화 완료, CSS 빌드 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.
