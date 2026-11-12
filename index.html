@@ -8341,25 +8341,50 @@
         const items = forcedBlend.regions.map(id => profOf.get(id)).filter(Boolean);
         chosen = { items, ratios: forcedBlend.ratios.slice(0, items.length), preset: forcedBlend };
       } else {
-        // 서로 다른 3개국 × 비율 후보 전수 탐색: 블렌드 예측값이 목표에 가장 가까운 조합 선택
-        const RATIO_SETS = [[50, 30, 20], [40, 40, 20], [40, 30, 30], [60, 20, 20], [34, 33, 33]];
+        // 서로 다른 3개국 × 비율 후보 탐색:
+        // 블렌드 모드에서 사용자가 산지를 선택한 경우(activeRegionRef) 해당 산지를 앵커(선두 배합)로 고정하고 최적 파트너 2개국을 탐색
+        const RATIO_SETS = [[60, 20, 20], [50, 30, 20], [50, 20, 30], [40, 40, 20], [40, 30, 30], [34, 33, 33]];
+        const anchor = (isBlendModeActive && activeRegionRef) ? profOf.get(activeRegionRef.id) : null;
         let best = null;
-        for (const a of scoredRegions) for (const b of scoredRegions) {
-          if (b.region.countryKey === a.region.countryKey) continue;
-          for (const c of scoredRegions) {
-            if (c.region.countryKey === a.region.countryKey || c.region.countryKey === b.region.countryKey) continue;
-            for (const rs of RATIO_SETS) {
-              const d = distOf(mix([a, b, c], rs));
-              if (!best || d < best.d) best = { d, items: [a, b, c], ratios: rs };
+
+        if (anchor) {
+          const a = anchor;
+          for (const b of scoredRegions) {
+            if (b.region.countryKey === a.region.countryKey) continue;
+            for (const c of scoredRegions) {
+              if (c.region.countryKey === a.region.countryKey || c.region.countryKey === b.region.countryKey) continue;
+              for (const rs of RATIO_SETS) {
+                const d = distOf(mix([a, b, c], rs));
+                if (!best || d < best.d) best = { d, items: [a, b, c], ratios: rs, anchored: true };
+              }
             }
           }
         }
-        chosen = { items: best.items, ratios: best.ratios };
+
+        if (!best) {
+          for (const a of scoredRegions) for (const b of scoredRegions) {
+            if (b.region.countryKey === a.region.countryKey) continue;
+            for (const c of scoredRegions) {
+              if (c.region.countryKey === a.region.countryKey || c.region.countryKey === b.region.countryKey) continue;
+              for (const rs of RATIO_SETS) {
+                const d = distOf(mix([a, b, c], rs));
+                if (!best || d < best.d) best = { d, items: [a, b, c], ratios: rs };
+              }
+            }
+          }
+        }
+        chosen = { items: best.items, ratios: best.ratios, anchored: best.anchored };
       }
 
-      // 비율 큰 순서로 정렬 (프리셋은 정의 순서 유지)
+      // 비율 큰 순서로 정렬 (프리셋은 정의 순서 유지, 동률 시 앵커 선두 유지)
       let order = chosen.items.map((_, i) => i);
-      if (!chosen.preset) order.sort((x, y) => chosen.ratios[y] - chosen.ratios[x]);
+      if (!chosen.preset) {
+        order.sort((x, y) => {
+          const diff = chosen.ratios[y] - chosen.ratios[x];
+          if (diff !== 0) return diff;
+          return x - y;
+        });
+      }
       const items = order.map(i => chosen.items[i]);
       const ratios = order.map(i => chosen.ratios[i]);
       const presetRoles = chosen.preset ? order.map(i => chosen.preset.roles[i]) : null;
@@ -8605,10 +8630,28 @@
       }
     }
 
-    function selectRegion(region, autoNavigate = true) {
+    function selectRegion(region, autoNavigate = true, skipBlendRecalc = false) {
       if (typeof closeHudBuyPop === "function") closeHudBuyPop();
       const prevRegionId = activeRegionRef ? activeRegionRef.id : null;
       activeRegionRef = region;
+
+      // 블렌드 모드에서 산지를 선택한 경우: 선택된 산지를 앵커로 블렌드 재계산 및 카드·배지 동기화
+      if (isBlendModeActive && !skipBlendRecalc) {
+        if (typeof clearForcedBlend === "function") clearForcedBlend();
+        if (typeof evaluateRecommendations === "function" && typeof SCALE_MAP !== "undefined" && typeof sA !== "undefined") {
+          const targetA = SCALE_MAP[sA.value] || 6.0;
+          const targetS = SCALE_MAP[sS.value] || 6.0;
+          const targetB = SCALE_MAP[sB.value] || 6.0;
+          const targetN = SCALE_MAP[sN.value] || 6.0;
+          const withRoast = document.getElementById("checkRoastMode") ? document.getElementById("checkRoastMode").checked : false;
+          const evalResult = evaluateRecommendations(targetA, targetS, targetB, targetN, withRoast);
+          const desc = `산미 ${SCALE_LABEL[sA.value]} · 단맛 ${SCALE_LABEL[sS.value]} · 바디 ${SCALE_LABEL[sB.value]} · 고소 ${SCALE_LABEL[sN.value]}`;
+          if (evalResult && typeof renderEvaluation === "function") {
+            renderEvaluation(evalResult, desc, false, true);
+          }
+        }
+      }
+
       const withRoast = document.getElementById("checkRoastMode").checked;
       const prof = computeRegionProfile(region, withRoast);
 
@@ -8858,7 +8901,7 @@
             const rid = el.getAttribute("data-blend-region-id");
             const r = REGIONS_DATA.find(x => x.id === rid);
             if (r) {
-              selectRegion(r, true);
+              selectRegion(r, true, true);
               updateShoppingLinks();
             }
           });
@@ -8993,7 +9036,7 @@
         updateShoppingLinks();
 
         // Update Reticle to Single Origin
-        const reticleEl = document.getElementById("originReticle");
+        const reticleEl = document.getElementById("cameraFocusReticle");
         if (reticleEl) {
           reticleEl.setAttribute("transform", `translate(${targetRegion.svgCoords.x}, ${targetRegion.svgCoords.y})`);
         }
@@ -9005,18 +9048,33 @@
         cardMainTitle.textContent = "AI BLEND (3원두 블렌딩)";
         cardModeBadge.textContent = "3원두 배합";
 
+        // 블렌드 모드 진입 시 활성 산지(activeRegionRef)가 있으면 해당 산지를 앵커로 블렌드 즉시 산출
+        if (activeRegionRef && !forcedBlend && typeof evaluateRecommendations === "function" && typeof SCALE_MAP !== "undefined" && typeof sA !== "undefined") {
+          const targetA = SCALE_MAP[sA.value] || 6.0;
+          const targetS = SCALE_MAP[sS.value] || 6.0;
+          const targetB = SCALE_MAP[sB.value] || 6.0;
+          const targetN = SCALE_MAP[sN.value] || 6.0;
+          const withRoast = document.getElementById("checkRoastMode") ? document.getElementById("checkRoastMode").checked : false;
+          const evalResult = evaluateRecommendations(targetA, targetS, targetB, targetN, withRoast);
+          const desc = `산미 ${SCALE_LABEL[sA.value]} · 단맛 ${SCALE_LABEL[sS.value]} · 바디 ${SCALE_LABEL[sB.value]} · 고소 ${SCALE_LABEL[sN.value]}`;
+          if (evalResult && typeof renderEvaluation === "function") {
+            renderEvaluation(evalResult, desc, false, true);
+          }
+        }
+
         updateShoppingLinks();
 
         // In blend mode, dock reticle to first blend region
         if (currentBlendRegions && currentBlendRegions.length) {
           const leadRegion = currentBlendRegions[0];
-          const reticleEl = document.getElementById("originReticle");
+          const reticleEl = document.getElementById("cameraFocusReticle");
           if (reticleEl) {
             reticleEl.setAttribute("transform", `translate(${leadRegion.svgCoords.x}, ${leadRegion.svgCoords.y})`);
           }
           updateReticleBadgeLayout(leadRegion.svgCoords.x, leadRegion.svgCoords.y);
         }
       }
+      renderMapPins();
     }
 
     toggleSingleBtn.addEventListener("click", () => {

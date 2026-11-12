@@ -1324,8 +1324,34 @@
 
 ---
 
+280. 블렌드 모드에서 산지 선택 시 선택 산지 기반 동적 블렌드 재계산(Anchor Blend) 구현
+- **일시**: 2026-11-13
+- **사용자 요청**: "블렌드 선택하고 아무지역을 선택해도 블렌드 조합이 같은 걸로 나옴"
+- **원인 분석**:
+  - 기존 `evaluateRecommendations()`는 `forcedBlend`가 없을 때 14개 산지 전역에서 센서리 타겟 거리(`distOf`)가 최소인 전역 최적 조합(`best`)을 고정 탐색하므로, 사용자가 지도나 리스트에서 어떤 산지를 클릭하든 항상 동일한 3개국(인도네시아·브라질·과테말라)만 선택되는 구조였음.
+  - 또한 `selectRegion()` 호출 시 `isBlendModeActive` 상태에서도 블렌드 재평가(`evaluateRecommendations`)를 호출하지 않았음.
+- **조치 및 수정 내역**:
+  1. **선택 산지 앵커링(Lead Origin Anchor) 블렌드 알고리즘 적용 (`evaluateRecommendations`)**:
+     - `isBlendModeActive && activeRegionRef && !forcedBlend`일 경우, 사용자가 선택한 산지(`activeRegionRef`)를 선두 배합(`a`)으로 고정.
+     - 서로 다른 국가 출신의 보완 파트너 2개국(`b`, `c`)을 비율 후보 세트(`[[60, 20, 20], [50, 30, 20], [50, 20, 30], [40, 40, 20], [40, 30, 30], [34, 33, 33]]`)와 함께 탐색하여 현재 감각 목표 점수와 가장 조화로운 최적 배합비를 동적 도출.
+  2. **`selectRegion(region, autoNavigate, skipBlendRecalc)` 동적 트리거 연동**:
+     - 블렌드 모드에서 지도 핀 클릭, 깃대 드래그 스냅, 랭크 필 클릭 등 산지를 선택할 때마다 `clearForcedBlend()` 후 선택 산지를 앵커로 블렌드를 즉시 재계산하고 `renderEvaluation(..., false, true)` 호출.
+     - 좌측 패널 배합 구성(`#blendComponentsList`)의 3개 산지 카드, 일치율 배지, 산지별 역할 및 후배전 프로필이 즉각 갱신됨.
+     - 배합 구성 리스트 내 개별 항목 클릭 시에는 `skipBlendRecalc = true`를 전달하여 기 구성된 블렌드를 재계산하지 않고 카메라만 부드럽게 해당 산지 핀으로 포커스하도록 최적화.
+  3. **지도 핀 및 레티클 동기화 완비**:
+     - `updateModeTabUI(isBlend)`에서 블렌드 진입 시 `activeRegionRef` 기준 즉각 블렌드 평가 트리거 및 레티클 element id(`originReticle` -> `cameraFocusReticle`) 정정.
+     - `renderMapPins()`를 호출하여 재계산된 3개 산지 핀 상단에 배합 비율 배지(`60%`, `40%`, `34%`, `20%` 등)를 즉시 실시간 렌더링.
+     - 지도 팝업(Card 4) 타이틀이 선택 산지가 포함된 3대 국가명(`${countries.join(" · ")}`)과 배합비 요약(`window._blendRatioSummary`), 네이버/아마존 블렌드 링크로 완벽 동기화.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 블렌드 모드 시 팝업 타이틀 'AI 블렌드' 제거 및 순수 3개 국가명(`인도네시아 · 브라질 · 과테말라`) 표기 적용 완료.
+- **상태**: 블렌드 모드에서 산지 선택 시 해당 산지를 선두로 3원두 블렌드를 동적 재계산하는 앵커 블렌드 알고리즘 및 UI/지도 동기화 완비.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.
