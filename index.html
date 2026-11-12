@@ -8540,13 +8540,13 @@
         if (editorialNaverSub) editorialNaverSub.textContent = "";
         if (editorialGlobalSub) editorialGlobalSub.textContent = "";
 
-        if (countryTag) countryTag.textContent = "AI HOUSE BLEND";
-        if (regionTitle) regionTitle.textContent = `AI 블렌드 (${countries.join(" · ")})`;
+        if (countryTag) countryTag.textContent = "3-ORIGIN BLEND";
+        if (regionTitle) regionTitle.textContent = countries.join(" · ");
         if (altitudePill) altitudePill.textContent = "3산지 맞춤 배합";
         if (varietalText) varietalText.textContent = `${ratioSummary}`;
         if (processText) processText.textContent = "후배전 블렌딩 (Post-Roast)";
         const dossierBtnText = document.querySelector("#editorialDossierBtn span.tracking-tight");
-        if (dossierBtnText) dossierBtnText.textContent = "AI 블렌드 원두 리포트(Dossier) 발급";
+        if (dossierBtnText) dossierBtnText.textContent = "블렌드 원두 리포트(Dossier) 발급";
       } else if (activeRegionRef) {
         window._blendRatioSummary = null;
         window._blendCountries = null;

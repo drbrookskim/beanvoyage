@@ -1308,8 +1308,24 @@
 
 ---
 
+279. 블렌드 모드 시 지도 팝업 타이틀 간결화 — 'AI 블렌드' 접두사 제거 및 순수 3대 국가명 표기
+- **일시**: 2026-11-12
+- **사용자 요청**: "블렌드일때는 AI 블렌드는 빼고 3개의 국가명만 표시하도록 해줘"
+- **조치 및 수정 내역**:
+  1. **지도 팝업 타이틀(`editorialRegionTitle`) 표기 정제**:
+     - 기존 `AI 블렌드 (인도네시아 · 브라질 · 과테말라)` 형태에서 줄바꿈과 장황함을 유발하던 `AI 블렌드 (...)` 텍스트를 제거하고, 순수 배합 국가명 목록인 `${countries.join(" · ")}`(예: `인도네시아 · 브라질 · 과테말라`)만 깔끔하게 단일 라인으로 표시되도록 변경.
+  2. **팝업 상단 태그 및 리포트 버튼 텍스트 정제**:
+     - `editorialCountryTag`: `AI HOUSE BLEND` -> `3-ORIGIN BLEND`로 간결화.
+     - `editorialDossierBtn`: `AI 블렌드 원두 리포트(Dossier) 발급` -> `블렌드 원두 리포트(Dossier) 발급`으로 통일.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 싱글/블렌드 탭 교차 전환 시 4번 지도 팝업 타일 및 레티클/카메라 완벽 동기화 완료, CSS 빌드 완료.
+- **상태**: 블렌드 모드 시 팝업 타이틀 'AI 블렌드' 제거 및 순수 3개 국가명(`인도네시아 · 브라질 · 과테말라`) 표기 적용 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.
