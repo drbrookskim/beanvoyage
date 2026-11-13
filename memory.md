@@ -1388,8 +1388,26 @@
 
 ---
 
+283. 모모스커피 원두 Pool(블렌드 프리셋·로스터리 풀) 편입 및 네이버 리뷰 베스트순 검색 복원
+- **일시**: 2026-11-13
+- **사용자 요청**: "모모스 커피 원두도 pool에 넣고, 네이버 검색 후 가장 리뷰의 평이 좋은 리스트를 보여주도록 변경해줘"
+- **조치 및 수정 내역**:
+  1. **모모스커피 원두를 추천 Pool 및 대표 로스터리 Pool에 편입**:
+     - **AI 블렌드 프리셋 Pool(`PRESET_BLENDS`, `#blendPresetChips`)**: 모모스커피 시그니처 스타일인 `모모스 에스쇼콜라`(브라질·콜롬비아·과테말라 다크·견과) 및 `모모스 프루티봉봉`(에티오피아·코스타리카·콜롬비아 과즙·달콤) 2종을 추가.
+     - **대표 스페셜티 로스터리 Pool**: 좌측 구매 채널 하단에 `모모스커피`(산지/블렌드 연동 직링크) · `테라로사` · `프릳츠` · `빈브라더스` 로스터리 풀을 배치하고, 원두 감정서(Dossier) 모달에도 모모스커피 바로가기 버튼을 병행 제공.
+  2. **네이버 쇼핑 리뷰·평점 베스트순 검색 복원 및 고도화**:
+     - 지도 팝업(Card 4), 좌측 산지 매칭 패널, Dossier 모달의 네이버 버튼을 다시 `https://search.shopping.naver.com/search/all?query=...&sort=review` (스페셜티 원두 키워드 + 리뷰 베스트순)로 연결하고, 라벨을 `싱글 네이버 리뷰순` / `블렌드 네이버 리뷰순` / `네이버 리뷰 베스트`로 직관화.
+     - 생두 채널은 기존대로 국내 대표 생두 전문몰 `알마씨엘로(almacielo.com)` 및 `GSC(gsc.coffee)` 직링크를 유지.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/assets/css/tailwind.min.css`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/assets/css/tailwind.min.css)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 첫 페이지 RANK · TASTE 초기 미선택 상태 적용 및 복귀 시 자동 초기화 완비.
+- **상태**: 모모스커피 원두 Pool(블렌드 프리셋 + 로스터리 풀) 편입 및 네이버 쇼핑 리뷰 베스트순(`sort=review`) 검색 연동 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.
