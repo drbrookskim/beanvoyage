@@ -8565,6 +8565,11 @@
       }
     }
 
+    function buildSingleOriginNaverUrl(countryName, name) {
+      const query = `${countryName || ""} ${name || ""} 싱글오리진 원두 -블렌드 -블랜드`.replace(/\s+/g, " ").trim();
+      return `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(query)}`;
+    }
+
     function updateShoppingLinks() {
       updateShippingBlock();
       const naverRoasted = document.getElementById("naverSearchLink");
@@ -8669,13 +8674,13 @@
         if (naverGreenLabel) naverGreenLabel.textContent = "알마씨엘로 생두";
         if (almaLabel) almaLabel.textContent = "GSC 생두 도매";
 
-        const qRoasted = encodeURIComponent(`${activeRegionRef.countryName} ${activeRegionRef.name} 스페셜티 원두`);
+        const qRoastedText = `${activeRegionRef.countryName} ${activeRegionRef.name} 싱글오리진 원두 -블렌드 -블랜드`;
         const cleanEnName = activeRegionRef.enName ? activeRegionRef.enName.replace(/[·,]/g, " ").replace(/\s+/g, " ").trim() : "";
         const amazonRoastedQuery = `${activeRegionRef.countryEn || ""} ${cleanEnName} whole bean roasted coffee`.replace(/\s+/g, " ").trim();
 
         if (naverRoasted) {
-          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}`;
-          naverRoasted.title = `네이버 쇼핑에서 '${activeRegionRef.countryName} ${activeRegionRef.name} 스페셜티 원두' 검색 결과 보기`;
+          naverRoasted.href = buildSingleOriginNaverUrl(activeRegionRef.countryName, activeRegionRef.name);
+          naverRoasted.title = `네이버 쇼핑에서 '${qRoastedText}' 검색 결과 보기`;
         }
         const momosLink = document.getElementById("roasterMomosLink");
         if (momosLink) {
@@ -8904,12 +8909,11 @@
         renderRealTimeNavigationCanvas();
       }
 
-      const qRoasted = encodeURIComponent(`${region.countryName} ${region.name} 스페셜티 원두`);
       const cleanEnName = region.enName ? region.enName.replace(/[·,]/g, " ").replace(/\s+/g, " ").trim() : "";
       const amazonRoastedQuery = `${region.countryEn || ""} ${cleanEnName} whole bean roasted coffee`.replace(/\s+/g, " ").trim();
       
       const naverRoasted = document.getElementById("naverSearchLink");
-      if (naverRoasted) naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}`;
+      if (naverRoasted) naverRoasted.href = buildSingleOriginNaverUrl(region.countryName, region.name);
       const amazonRoasted = document.getElementById("amazonSearchLink");
       if (amazonRoasted) amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonRoastedQuery)}`;
 
@@ -8979,8 +8983,8 @@
           const pctNum = parseInt(String(c.ratio).replace("%", ""), 10) || 0;
           const grams = Math.round((totalG * pctNum) / 100);
           const singleUrl = c.region
-            ? `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(c.region.countryName + " " + c.region.name + " 스페셜티 원두")}`
-            : `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(c.name + " 원두")}`;
+            ? buildSingleOriginNaverUrl(c.region.countryName, c.region.name)
+            : buildSingleOriginNaverUrl("", c.name);
 
           return `
           <div class="p-1.5 rounded bg-white border border-[#BDB989]/50 flex flex-col gap-1 hover:border-[#30679D] transition group cursor-pointer" data-blend-region-id="${c.region ? c.region.id : ''}">
@@ -9763,8 +9767,7 @@
 
       const naverLink = document.getElementById("dossierNaverLink");
       if (naverLink) {
-        const q = encodeURIComponent(`${region.countryName} ${region.name} 스페셜티 원두`);
-        naverLink.href = `https://search.shopping.naver.com/search/all?query=${q}`;
+        naverLink.href = buildSingleOriginNaverUrl(region.countryName, region.name);
       }
       const momosDossierLink = document.getElementById("dossierMomosLink");
       if (momosDossierLink) {

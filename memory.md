@@ -1423,8 +1423,17 @@
 
 ---
 
+### 285. 싱글오리진 네이버 쇼핑 검색어 개선 (`싱글오리진 원두 -블렌드 -블랜드`)
+- **요청 배경**: 싱글 원두 검색(`콜롬비아 나리뇨 스페셜티 원두`) 시 상품명에 여러 국가명을 나열하고 `프리미엄블랜드`/`스페셜티블랜드`를 표기한 오픈마켓 옵션 묶음 블렌드 상품이 노출되는 문제 발생.
+- **작업 내용**:
+  - `CoBTS/index.html`에 공통 헬퍼 `buildSingleOriginNaverUrl(countryName, name)` 추가.
+  - 기존 4개 지점(`updateShoppingLinks()`, `selectRegion()`, `renderEvaluation()` 개별구매 링크, `openCoffeeDossierModal()`)을 모두 `${countryName} ${name} 싱글오리진 원두 -블렌드 -블랜드` 쿼리로 통일.
+- **검증**: `grep -n "스페셜티 원두" CoBTS/index.html` 0건, 인라인 `<script>` 문법 검사 통과, Node.js에서 `buildSingleOriginNaverUrl("콜롬비아", "나리뇨")` 호출 시 `콜롬비아 나리뇨 싱글오리진 원두 -블렌드 -블랜드` URL 생성 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: AI 블렌드 구매 불일치 해소(A안 개별 원두 g 계산·개별구매·배합표 복사 + B안 검증된 시판 블렌드 7종 비교) 및 미검증 `sort=review`·추측 프리셋 정리 완료.
+- **상태**: 싱글오리진 네이버 쇼핑 검색어(`싱글오리진 원두 -블렌드 -블랜드`) 공통 헬퍼 적용 및 배포 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 필요 시 브라우저에서 3D 로스팅 뷰 및 클립보드 복사 동작 확인.
