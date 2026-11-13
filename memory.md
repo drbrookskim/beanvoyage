@@ -1370,8 +1370,26 @@
 
 ---
 
+282. 첫 페이지 RANK · TASTE 초기 미선택 상태 유지 적용
+- **일시**: 2026-11-13
+- **사용자 요청**: "첫 페이지 rank와 taste 는 아무것도 선택되지 않아야함."
+- **조치 및 수정 내역**:
+  1. **초기 상태 및 HTML 비선택 처리**:
+     - `currentTrendPeriod = null`, `currentTasteCategory = null`로 초기값 변경.
+     - 첫 화면의 RANK 버튼(`trendTabWeek`, `trendTabMonth`) 및 TASTE 버튼(`tasteTabFloral`, `tasteTabNutty`, `tasteTabSweet`, `tasteTabBody`) 모두 초기 로드 시 활성 강조 스타일(`bg-[#30679D]`, `bg-white` 등)을 제거하여 미선택 상태로 표시.
+     - `#rankPopularBeanText`('주간 인기 원두' 등) 배지도 RANK 선택 전까지 숨김(`hidden`) 처리.
+  2. **안내 문구 및 인터랙션 분리**:
+     - 아무것도 선택되지 않은 상태에서 하단 서브레일(`#trendBeanTerroir`, `#trendBeanCupNotes`)은 특정 원두 정보 대신 `"상단 RANK · TASTE에서 선택하거나 검색창에 원하는 커피 맛·산지를 입력해 보세요"` 중립 안내를 표시.
+     - 사용자가 RANK 또는 TASTE를 클릭할 때만 해당 항목이 활성화되고 추천 원두·검색창·테루아 정보가 연동되며, 첫 화면 복귀(`navigateToFirstPage()`) 시 `resetRankAndTasteSelection()`으로 다시 미선택 상태로 초기화.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 네이버 가격비교 검색 제거 및 국내 대표 원두(모모스커피)·생두(알마씨엘로/GSC) 공식 판매처 직링크 연동 완료.
+- **상태**: 첫 페이지 RANK · TASTE 초기 미선택 상태 적용 및 복귀 시 자동 초기화 완비.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.

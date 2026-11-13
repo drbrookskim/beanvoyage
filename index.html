@@ -2102,21 +2102,21 @@
             <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
               <span class="font-space font-extrabold text-[9px] sm:text-[10px] text-[#30679D] dark:text-[#97B6CB] tracking-wider select-none shrink-0">RANK:</span>
               <div class="inline-flex p-0.5 rounded-lg bg-white dark:bg-[#1E3B5C]/60 border border-[#BDB989]/50 dark:border-[#30679D]/50 shrink-0" role="tablist" aria-label="트렌드 기간 선택">
-                <button type="button" id="trendTabWeek" class="px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold transition-all bg-[#30679D] text-white shadow-2xs flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="switchTrendPeriod('week')">
+                <button type="button" id="trendTabWeek" class="px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="switchTrendPeriod('week')">
                   <span>🔥 주간</span>
                 </button>
                 <button type="button" id="trendTabMonth" class="px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="switchTrendPeriod('month')">
                   <span>👑 월간</span>
                 </button>
               </div>
-              <span id="rankPopularBeanText" class="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-[#30679D]/10 dark:bg-[#30679D]/25 text-[#30679D] dark:text-[#97B6CB] text-[9.5px] sm:text-[11px] font-semibold whitespace-nowrap shrink-0">주간 인기 원두</span>
+              <span id="rankPopularBeanText" class="hidden items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-[#30679D]/10 dark:bg-[#30679D]/25 text-[#30679D] dark:text-[#97B6CB] text-[9.5px] sm:text-[11px] font-semibold whitespace-nowrap shrink-0">주간 인기 원두</span>
             </div>
 
             <!-- RIGHT: TASTE Cluster (오른쪽 정렬) -->
             <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
               <span class="font-space font-extrabold text-[9px] sm:text-[10px] text-[#78482B] dark:text-[#DFB995] tracking-wider select-none shrink-0">TASTE:</span>
               <div class="inline-flex p-0.5 rounded-lg bg-[#BDB989]/20 dark:bg-[#1E3B5C]/40 border border-[#BDB989]/40 dark:border-[#30679D]/40 shrink-0" role="tablist" aria-label="대표 취향 선택">
-                <button type="button" id="tasteTabFloral" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold bg-white dark:bg-[#1E3B5C] text-[#1E3B5C] dark:text-[#F0F0D8] shadow-2xs transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('floral')">
+                <button type="button" id="tasteTabFloral" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('floral')">
                   <span>🌸 산미</span>
                 </button>
                 <button type="button" id="tasteTabNutty" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('nutty')">
@@ -3889,14 +3889,16 @@
       month: Object.assign({}, TREND_TASTE_MATRIX.month.floral)
     };
 
-    let currentTrendPeriod = "week";
-    let currentTasteCategory = "floral";
+    let currentTrendPeriod = null;
+    let currentTasteCategory = null;
 
     function getActiveTrendBeanData() {
-      if (TREND_TASTE_MATRIX && TREND_TASTE_MATRIX[currentTrendPeriod] && TREND_TASTE_MATRIX[currentTrendPeriod][currentTasteCategory]) {
-        return TREND_TASTE_MATRIX[currentTrendPeriod][currentTasteCategory];
+      if (!currentTrendPeriod && !currentTasteCategory) return null;
+      const periodKey = currentTrendPeriod || "week";
+      if (currentTasteCategory && TREND_TASTE_MATRIX && TREND_TASTE_MATRIX[periodKey] && TREND_TASTE_MATRIX[periodKey][currentTasteCategory]) {
+        return TREND_TASTE_MATRIX[periodKey][currentTasteCategory];
       }
-      return TOP_BEANS_DATA[currentTrendPeriod] || TREND_TASTE_MATRIX.week.floral;
+      return TOP_BEANS_DATA[periodKey] || (TREND_TASTE_MATRIX[periodKey] && TREND_TASTE_MATRIX[periodKey].floral) || null;
     }
 
     // Asynchronously load external assets/data/top-beans.json if available
@@ -3908,7 +3910,9 @@
           if (data && data.week && data.month) {
             TOP_BEANS_DATA.week = Object.assign({}, TOP_BEANS_DATA.week, data.week);
             TOP_BEANS_DATA.month = Object.assign({}, TOP_BEANS_DATA.month, data.month);
-            updateTrendBannerUI(false);
+            if (currentTrendPeriod || currentTasteCategory) {
+              updateTrendBannerUI(false);
+            }
           }
         }
       } catch (_) {
@@ -3916,29 +3920,18 @@
       }
     })();
 
+    const RANK_UNSELECTED_CLS = "px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
+    const RANK_SELECTED_CLS = "px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold transition-all bg-[#30679D] text-white shadow-2xs flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
+    const TASTE_UNSELECTED_CLS = "taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
+    const TASTE_SELECTED_CLS = "taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold bg-white dark:bg-[#1E3B5C] text-[#1E3B5C] dark:text-[#F0F0D8] shadow-2xs transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
+
     function switchTrendPeriod(period) {
       currentTrendPeriod = period;
       const tabWeek = document.getElementById("trendTabWeek");
       const tabMonth = document.getElementById("trendTabMonth");
-      const rankPopEl = document.getElementById("rankPopularBeanText");
 
-      if (period === "week") {
-        if (tabWeek) {
-          tabWeek.className = "px-2 py-0.5 rounded-md text-[11px] font-bold transition-all bg-[#30679D] text-white shadow-2xs flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
-        }
-        if (tabMonth) {
-          tabMonth.className = "px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
-        }
-        if (rankPopEl) rankPopEl.textContent = "주간 인기 원두";
-      } else {
-        if (tabWeek) {
-          tabWeek.className = "px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
-        }
-        if (tabMonth) {
-          tabMonth.className = "px-2 py-0.5 rounded-md text-[11px] font-bold transition-all bg-[#30679D] text-white shadow-2xs flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
-        }
-        if (rankPopEl) rankPopEl.textContent = "월간 인기 원두";
-      }
+      if (tabWeek) tabWeek.className = (period === "week") ? RANK_SELECTED_CLS : RANK_UNSELECTED_CLS;
+      if (tabMonth) tabMonth.className = (period === "month") ? RANK_SELECTED_CLS : RANK_UNSELECTED_CLS;
       updateTrendBannerUI(true);
     }
 
@@ -3955,14 +3948,26 @@
       categories.forEach(cat => {
         const btn = document.getElementById(ids[cat]);
         if (!btn) return;
-        if (cat === category) {
-          btn.className = "taste-matrix-btn px-2 py-0.5 rounded-md text-[11px] font-bold bg-white dark:bg-[#1E3B5C] text-[#1E3B5C] dark:text-[#F0F0D8] shadow-2xs transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
-        } else {
-          btn.className = "taste-matrix-btn px-2 py-0.5 rounded-md text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap";
-        }
+        btn.className = (cat === category) ? TASTE_SELECTED_CLS : TASTE_UNSELECTED_CLS;
       });
 
       updateTrendBannerUI(true);
+    }
+
+    function resetRankAndTasteSelection() {
+      currentTrendPeriod = null;
+      currentTasteCategory = null;
+      const tabWeek = document.getElementById("trendTabWeek");
+      const tabMonth = document.getElementById("trendTabMonth");
+      if (tabWeek) tabWeek.className = RANK_UNSELECTED_CLS;
+      if (tabMonth) tabMonth.className = RANK_UNSELECTED_CLS;
+      ["tasteTabFloral", "tasteTabNutty", "tasteTabSweet", "tasteTabBody"].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.className = TASTE_UNSELECTED_CLS;
+      });
+      const inputEl = document.getElementById("tasteInput");
+      if (inputEl) inputEl.value = "";
+      updateTrendBannerUI(false);
     }
 
     const REGION_TASTE_MOODS = {
@@ -3984,14 +3989,36 @@
 
     function updateTrendBannerUI(shouldFillInput = false) {
       const data = getActiveTrendBeanData();
-      if (!data) return;
+      const rankPopEl = document.getElementById("rankPopularBeanText");
+      const terroirEl = document.getElementById("trendBeanTerroir");
+      const cupNotesEl = document.getElementById("trendBeanCupNotes");
+      const infoWrap = document.getElementById("trendBeanInfoWrap");
+
+      if (!data) {
+        if (rankPopEl) {
+          rankPopEl.classList.add("hidden");
+          rankPopEl.classList.remove("inline-flex");
+        }
+        if (terroirEl) terroirEl.textContent = "상단 RANK · TASTE에서 선택하거나";
+        if (cupNotesEl) cupNotesEl.textContent = "검색창에 원하는 커피 맛·산지를 입력해 보세요";
+        if (infoWrap) infoWrap.title = "원하는 기간 또는 취향을 선택하거나 지도로 이동";
+        return;
+      }
 
       // Keep TOP_BEANS_DATA in sync for existing consumers
-      TOP_BEANS_DATA[currentTrendPeriod] = data;
+      if (currentTrendPeriod) {
+        TOP_BEANS_DATA[currentTrendPeriod] = data;
+      }
 
-      const rankPopEl = document.getElementById("rankPopularBeanText");
       if (rankPopEl) {
-        rankPopEl.textContent = currentTrendPeriod === "week" ? "주간 인기 원두" : "월간 인기 원두";
+        if (currentTrendPeriod) {
+          rankPopEl.textContent = currentTrendPeriod === "week" ? "주간 인기 원두" : "월간 인기 원두";
+          rankPopEl.classList.remove("hidden");
+          rankPopEl.classList.add("inline-flex");
+        } else {
+          rankPopEl.classList.add("hidden");
+          rankPopEl.classList.remove("inline-flex");
+        }
       }
 
       // 1. Put bean name in tasteInput.value ONLY when user selects a tab (keep empty on initial page load)
@@ -4001,12 +4028,10 @@
       }
 
       // 2. Terroir & Cup Notes representation in bottom rail
-      const terroirEl = document.getElementById("trendBeanTerroir");
       if (terroirEl) {
         terroirEl.textContent = data.terroir || "스페셜티 고원 테루아";
       }
 
-      const cupNotesEl = document.getElementById("trendBeanCupNotes");
       if (cupNotesEl) {
         cupNotesEl.textContent = data.cupNotes || data.subNote || data.tagline;
       }
@@ -4031,7 +4056,6 @@
         subNoteEl.textContent = data.subNote || `${data.badge} - ${data.tasteMood}`;
       }
 
-      const infoWrap = document.getElementById("trendBeanInfoWrap");
       if (infoWrap) {
         infoWrap.title = `클릭하여 ${data.countryName} ${data.regionName} 산지 지도로 바로 이동`;
       }
@@ -10503,6 +10527,8 @@
       }
       document.getElementById("heroIntroText")?.classList.remove("hidden");
       document.getElementById("presetChipsContainer")?.classList.remove("hidden");
+
+      if (typeof resetRankAndTasteSelection === "function") resetRankAndTasteSelection();
 
       const mainInput = document.getElementById("tasteInput");
       if (mainInput) {
