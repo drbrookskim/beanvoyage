@@ -2722,10 +2722,10 @@
 
               <!-- 4. 하단 2개 구매 채널 카드 (알약 스타일) -->
               <div id="editorialActionsWrap" class="editorial-actions-grid">
-                <a id="editorialActionNaver" class="editorial-action-card" href="#" onclick="openHudChannel('naverRoasted'); return false;" title="네이버 쇼핑 리뷰 평점·인기순 검색">
+                <a id="editorialActionNaver" class="editorial-action-card" href="#" onclick="openHudChannel('naverRoasted'); return false;" title="네이버 쇼핑에서 검색 결과 보기">
                   <div class="editorial-action-info">
                     <div id="editorialBrandIconNaver" class="editorial-brand-icon naver">N</div>
-                    <span id="editorialTitleNaver" class="editorial-action-title">싱글 네이버 리뷰순</span>
+                    <span id="editorialTitleNaver" class="editorial-action-title">싱글 네이버 쇼핑</span>
                     <span id="editorialSubNaver" class="hidden"></span>
                   </div>
                   <span class="editorial-arrow">↗</span>
@@ -3106,25 +3106,45 @@
                       <span class="font-bold flex items-center gap-1"><span>🌸</span><span>노르딕 플로럴</span></span>
                       <span class="text-[9.5px] text-[#30679D] dark:text-[#67E8F9]">화사한 과일향</span>
                     </button>
-                    <button type="button" data-blend-preset="momos_eschocolat" class="blend-preset-chip px-2.5 py-1 rounded-full text-[10.5px] font-mono-code transition border border-[#E2E8F0] dark:border-[#232D3B] bg-white dark:bg-[#12161C] text-[#1E3B5C] dark:text-[#97B6CB] hover:border-[#30679D] hover:bg-[#F8F9FA] dark:hover:bg-[#1A2432] flex items-center justify-between group active:scale-95 cursor-pointer shadow-2xs">
-                      <span class="font-bold flex items-center gap-1"><span>☕</span><span>모모스 에스쇼콜라</span></span>
-                      <span class="text-[9.5px] text-[#78482B] dark:text-[#DFB995]">다크·견과</span>
+                    <button type="button" data-blend-preset="blacksuit" class="blend-preset-chip px-2.5 py-1 rounded-full text-[10.5px] font-mono-code transition border border-[#E2E8F0] dark:border-[#232D3B] bg-white dark:bg-[#12161C] text-[#1E3B5C] dark:text-[#97B6CB] hover:border-[#30679D] hover:bg-[#F8F9FA] dark:hover:bg-[#1A2432] flex items-center justify-between group active:scale-95 cursor-pointer shadow-2xs">
+                      <span class="font-bold flex items-center gap-1"><span>☕</span><span>블랙수트 (공개배합)</span></span>
+                      <span class="text-[9.5px] text-[#78482B] dark:text-[#DFB995]">60·25·15</span>
                     </button>
-                    <button type="button" data-blend-preset="momos_fruitybonbon" class="blend-preset-chip px-2.5 py-1 rounded-full text-[10.5px] font-mono-code transition border border-[#E2E8F0] dark:border-[#232D3B] bg-white dark:bg-[#12161C] text-[#1E3B5C] dark:text-[#97B6CB] hover:border-[#30679D] hover:bg-[#F8F9FA] dark:hover:bg-[#1A2432] flex items-center justify-between group active:scale-95 cursor-pointer shadow-2xs">
-                      <span class="font-bold flex items-center gap-1"><span>🍑</span><span>모모스 프루티봉봉</span></span>
+                    <button type="button" data-blend-preset="fruitybright" class="blend-preset-chip px-2.5 py-1 rounded-full text-[10.5px] font-mono-code transition border border-[#E2E8F0] dark:border-[#232D3B] bg-white dark:bg-[#12161C] text-[#1E3B5C] dark:text-[#97B6CB] hover:border-[#30679D] hover:bg-[#F8F9FA] dark:hover:bg-[#1A2432] flex items-center justify-between group active:scale-95 cursor-pointer shadow-2xs">
+                      <span class="font-bold flex items-center gap-1"><span>🍑</span><span>프루티 브라이트</span></span>
                       <span class="text-[9.5px] text-[#516B50] dark:text-[#86EFAC]">과즙·달콤</span>
                     </button>
                   </div>
                   <div id="blendPresetNote" class="hidden mt-1 text-[10px] text-[#5A758D] leading-snug"></div>
                 </div>
 
-                <!-- Components list with role and post-roast recommendation -->
+                <!-- A안: 구성 원두 3종 개별 구매 + 그램(g) 배합 계산기 -->
                 <div>
-                  <div class="flex items-center justify-between text-[10.5px] text-[#5A758D] mb-1">
-                    <span>배합 구성 (클릭 시 산지 포커스):</span>
-                    <span class="font-mono-code">후블렌딩(Post-Roast)</span>
+                  <div class="flex flex-wrap items-center justify-between gap-1 text-[10.5px] text-[#5A758D] mb-1.5">
+                    <span>구성 원두 3종 (개별 구매 후 후블렌딩):</span>
+                    <div class="inline-flex items-center gap-1 font-mono-code">
+                      <span class="text-[10px] text-[#5A758D]">총량:</span>
+                      <button type="button" class="blend-gram-btn px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#30679D] text-white cursor-pointer" data-grams="200">200g</button>
+                      <button type="button" class="blend-gram-btn px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-white border border-[#BDB989]/60 text-[#1E3B5C] cursor-pointer" data-grams="500">500g</button>
+                      <button type="button" class="blend-gram-btn px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-white border border-[#BDB989]/60 text-[#1E3B5C] cursor-pointer" data-grams="1000">1kg</button>
+                    </div>
                   </div>
-                  <div id="blendComponentsList" class="space-y-1 font-mono-code text-xs"></div>
+                  <div id="blendComponentsList" class="space-y-1.5 font-mono-code text-xs"></div>
+                  <div class="mt-1.5 flex items-center justify-between gap-1.5">
+                    <button type="button" id="copyBlendRecipeBtn" class="px-2.5 py-1 rounded-full bg-white hover:bg-[#1E3B5C] hover:text-white border border-[#BDB989]/70 text-[#1E3B5C] font-mono-code text-[10.5px] font-semibold transition cursor-pointer flex items-center gap-1 shadow-2xs">
+                      <span>📋</span>
+                      <span id="copyBlendRecipeText">배합표 복사 (로스터리 의뢰·직접 배합용)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- B안: 실제 배합이 확인된 시판 블렌드 비교 -->
+                <div id="verifiedBlendMatchSection" class="pt-2 border-t border-[#BDB989]/40">
+                  <div class="flex items-center justify-between text-[10.5px] text-[#5A758D] mb-1">
+                    <span class="font-bold text-[#1E3B5C]">🏪 비슷한 실제 시판 블렌드</span>
+                    <span class="font-mono-code text-[9.5px] text-[#8C4B2E]">배합·비율 다를 수 있음</span>
+                  </div>
+                  <div id="verifiedBlendMatchBox" class="space-y-1.5 text-xs"></div>
                 </div>
               </div>
 
@@ -3364,10 +3384,10 @@
                   <span class="font-semibold px-1 rounded bg-[#30679D]/10 dark:bg-[#30679D]/30 text-[#1E3B5C] dark:text-[#97B6CB]">HS 0901.21</span>
                 </div>
                 <div class="grid grid-cols-2 gap-1.5 pt-0.5">
-                  <a id="naverSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#03c75a]/10 hover:border-[#03c75a] border border-[#BDB989]/60 rounded-lg transition group" title="네이버 쇼핑 리뷰 평점·인기순 검색 결과">
+                  <a id="naverSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#03c75a]/10 hover:border-[#03c75a] border border-[#BDB989]/60 rounded-lg transition group" title="네이버 쇼핑 검색 결과 보기">
                     <span class="font-bold text-[#1E3B5C] group-hover:text-[#03c75a] flex items-center gap-1 truncate text-xs">
                       <span class="font-bold text-[#03c75a] text-xs">N</span>
-                      <span id="naverSearchLabel" class="truncate">네이버 리뷰 베스트</span>
+                      <span id="naverSearchLabel" class="truncate">네이버 쇼핑 보기</span>
                     </span>
                     <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
                   </a>
@@ -3642,7 +3662,7 @@
           <div class="pt-2 flex flex-col gap-1.5 no-print">
             <a id="dossierNaverLink" href="#" target="_blank" class="w-full py-2 px-3 rounded-lg bg-[#30679D] hover:bg-[#1E3B5C] text-white text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 shadow-2xs">
               <span>🟢</span>
-              <span>네이버 쇼핑 리뷰 베스트 보기</span>
+              <span>네이버 쇼핑에서 검색 보기</span>
               <span class="text-[10px]">↗</span>
             </a>
             <a id="dossierMomosLink" href="https://momos.co.kr/shop" target="_blank" class="w-full py-1.5 px-3 rounded-lg border border-[#1E3B5C]/40 bg-[#1E3B5C]/5 dark:bg-[#15273C] hover:bg-[#1E3B5C] hover:text-white text-[#1E3B5C] dark:text-[#F0F0D8] text-xs font-semibold transition-all text-center flex items-center justify-center gap-1.5">
@@ -8000,10 +8020,10 @@
 
         setTimeout(() => {
           if (isBlendModeActive) {
-            if (naverTitle) naverTitle.textContent = "블렌드 네이버 리뷰순";
+            if (naverTitle) naverTitle.textContent = "비슷한 시판 블렌드";
             if (globalTitle) globalTitle.textContent = "블렌드 아마존 직구";
           } else {
-            if (naverTitle) naverTitle.textContent = "싱글 네이버 리뷰순";
+            if (naverTitle) naverTitle.textContent = "싱글 네이버 쇼핑";
             if (globalTitle) globalTitle.textContent = "싱글 아마존 직구";
           }
           if (naverSub) naverSub.textContent = "";
@@ -8589,19 +8609,19 @@
         const naverBlendQuery = (countries.length >= 2 ? countries.join(" ") : components.map(c => c.name).join(" ")) + " 스페셜티 블렌드 원두";
         const amazonBlendQuery = (countriesEn.length >= 2 ? countriesEn.join(" ") : components.map(c => (c.region && c.region.enName) || "").join(" ")) + " blend whole bean coffee";
 
-        if (naverLabel) naverLabel.textContent = `네이버 리뷰순 (${countries.join("·")})`;
+        if (naverLabel) naverLabel.textContent = `유사 블렌드 검색 (${countries.join("·")})`;
         if (amazonLabel) amazonLabel.textContent = `Amazon (${countriesEn.join("·")})`;
         if (naverGreenLabel) naverGreenLabel.textContent = `알마씨엘로 생두`;
         if (almaLabel) almaLabel.textContent = "GSC 생두 도매";
 
         if (naverRoasted) {
-          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverBlendQuery)}&sort=review`;
-          naverRoasted.title = `네이버 쇼핑에서 '${naverBlendQuery}' 리뷰·평점 베스트 순으로 보기 (${ratioSummary} 배합)`;
+          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverBlendQuery)}`;
+          naverRoasted.title = `네이버 쇼핑에서 '${naverBlendQuery}' 검색 (시판 상품의 실제 배합·비율은 다를 수 있습니다)`;
         }
         const momosLink = document.getElementById("roasterMomosLink");
         if (momosLink) {
-          momosLink.href = `https://momos.co.kr/shop?keyword=${encodeURIComponent("블렌드")}`;
-          momosLink.title = `모모스커피 블렌드 원두 바로가기`;
+          momosLink.href = `https://momos.co.kr/shop`;
+          momosLink.title = `모모스커피 공식몰 바로가기`;
         }
         if (amazonRoasted) {
           amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonBlendQuery)}`;
@@ -8627,7 +8647,7 @@
         const varietalText = document.getElementById("editorialVarietalText");
         const processText = document.getElementById("editorialProcessText");
 
-        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "알마씨엘로 생두" : "블렌드 네이버 리뷰순";
+        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "알마씨엘로 생두" : "비슷한 시판 블렌드";
         if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "GSC 생두 도매" : "블렌드 아마존 직구";
         if (editorialNaverSub) editorialNaverSub.textContent = "";
         if (editorialGlobalSub) editorialGlobalSub.textContent = "";
@@ -8644,7 +8664,7 @@
         window._blendCountries = null;
         window._blendCountriesEn = null;
 
-        if (naverLabel) naverLabel.textContent = `네이버 리뷰 베스트`;
+        if (naverLabel) naverLabel.textContent = `네이버 쇼핑 보기`;
         if (amazonLabel) amazonLabel.textContent = "Amazon 직구";
         if (naverGreenLabel) naverGreenLabel.textContent = "알마씨엘로 생두";
         if (almaLabel) almaLabel.textContent = "GSC 생두 도매";
@@ -8654,13 +8674,13 @@
         const amazonRoastedQuery = `${activeRegionRef.countryEn || ""} ${cleanEnName} whole bean roasted coffee`.replace(/\s+/g, " ").trim();
 
         if (naverRoasted) {
-          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}&sort=review`;
-          naverRoasted.title = `네이버 쇼핑에서 '${activeRegionRef.countryName} ${activeRegionRef.name} 스페셜티 원두' 리뷰 평점·인기순 보기`;
+          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}`;
+          naverRoasted.title = `네이버 쇼핑에서 '${activeRegionRef.countryName} ${activeRegionRef.name} 스페셜티 원두' 검색 결과 보기`;
         }
         const momosLink = document.getElementById("roasterMomosLink");
         if (momosLink) {
-          momosLink.href = `https://momos.co.kr/shop?keyword=${encodeURIComponent(activeRegionRef.countryName)}`;
-          momosLink.title = `모모스커피에서 '${activeRegionRef.countryName}' 원두 바로보기`;
+          momosLink.href = `https://momos.co.kr/shop`;
+          momosLink.title = `모모스커피 공식몰 바로가기`;
         }
         if (amazonRoasted) {
           amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonRoastedQuery)}`;
@@ -8686,7 +8706,7 @@
         const processText = document.getElementById("editorialProcessText");
         const dossierBtnText = document.querySelector("#editorialDossierBtn span.tracking-tight");
 
-        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "알마씨엘로 생두" : "싱글 네이버 리뷰순";
+        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "알마씨엘로 생두" : "싱글 네이버 쇼핑";
         if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "GSC 생두 도매" : "싱글 아마존 직구";
         if (editorialNaverSub) editorialNaverSub.textContent = "";
         if (editorialGlobalSub) editorialGlobalSub.textContent = "";
@@ -8889,7 +8909,7 @@
       const amazonRoastedQuery = `${region.countryEn || ""} ${cleanEnName} whole bean roasted coffee`.replace(/\s+/g, " ").trim();
       
       const naverRoasted = document.getElementById("naverSearchLink");
-      if (naverRoasted) naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}&sort=review`;
+      if (naverRoasted) naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}`;
       const amazonRoasted = document.getElementById("amazonSearchLink");
       if (amazonRoasted) amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonRoastedQuery)}`;
 
@@ -8948,23 +8968,38 @@
         presetNote.classList.toggle("hidden", !aiBlend.preset);
       }
 
-      const blendList = document.getElementById("blendComponentsList");
-      if (blendList) {
-        blendList.innerHTML = aiBlend.components.map(c => `
-          <div class="p-1.5 rounded bg-white border border-[#BDB989]/50 flex flex-col gap-0.5 hover:border-[#30679D] transition group cursor-pointer" data-blend-region-id="${c.region ? c.region.id : ''}">
-            <div class="flex justify-between items-center">
-              <span class="text-[#1E3B5C] font-bold group-hover:text-[#30679D] flex items-center gap-1 text-[11px]">
+      window._blendTotalGrams = window._blendTotalGrams || 200;
+
+      function renderBlendComponentsList(aiBlendData) {
+        const blendList = document.getElementById("blendComponentsList");
+        if (!blendList || !aiBlendData) return;
+        const totalG = window._blendTotalGrams || 200;
+
+        blendList.innerHTML = aiBlendData.components.map(c => {
+          const pctNum = parseInt(String(c.ratio).replace("%", ""), 10) || 0;
+          const grams = Math.round((totalG * pctNum) / 100);
+          const singleUrl = c.region
+            ? `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(c.region.countryName + " " + c.region.name + " 스페셜티 원두")}`
+            : `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(c.name + " 원두")}`;
+
+          return `
+          <div class="p-1.5 rounded bg-white border border-[#BDB989]/50 flex flex-col gap-1 hover:border-[#30679D] transition group cursor-pointer" data-blend-region-id="${c.region ? c.region.id : ''}">
+            <div class="flex justify-between items-center gap-1">
+              <span class="text-[#1E3B5C] font-bold group-hover:text-[#30679D] flex items-center gap-1 text-[11px] truncate">
                 <span>☕</span>
-                <span>${c.name}</span>
+                <span class="truncate">${c.name}</span>
               </span>
-              <span class="px-1.5 py-0.2 rounded bg-[#516B50] text-white font-bold text-[10.5px]">${c.ratio}</span>
+              <span class="px-1.5 py-0.2 rounded bg-[#516B50] text-white font-bold text-[10.5px] shrink-0">${c.ratio} · ${grams}g</span>
             </div>
-            <div class="flex justify-between items-center text-[10px] text-[#5A758D] pl-4">
-              <span class="text-[#8C4B2E] font-semibold">${c.role}</span>
-              <span class="font-mono-code text-[#1E3B5C] bg-[#F1F3F5] px-1 rounded border border-[#BDB989]/30" title="${c.roast && c.roast.note ? c.roast.note : ''}">후배전: ${c.roast ? c.roast.label : '시티'}</span>
+            <div class="flex justify-between items-center text-[10px] text-[#5A758D] pl-4 gap-1">
+              <span class="text-[#8C4B2E] font-semibold truncate">${c.role}</span>
+              <div class="flex items-center gap-1 shrink-0">
+                <span class="font-mono-code text-[#1E3B5C] bg-[#F1F3F5] px-1 rounded border border-[#BDB989]/30" title="${c.roast && c.roast.note ? c.roast.note : ''}">후배전: ${c.roast ? c.roast.label : '시티'}</span>
+                <a href="${singleUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="px-1.5 py-0.5 rounded-full bg-[#03c75a]/10 hover:bg-[#03c75a] text-[#039644] hover:text-white font-bold text-[9.5px] transition" title="${c.name} 개별 싱글 원두 구매하기">개별구매 ↗</a>
+              </div>
             </div>
-          </div>
-        `).join("");
+          </div>`;
+        }).join("");
 
         blendList.querySelectorAll("[data-blend-region-id]").forEach(el => {
           el.addEventListener("click", () => {
@@ -8976,6 +9011,11 @@
             }
           });
         });
+      }
+
+      renderBlendComponentsList(aiBlend);
+      if (typeof renderVerifiedBlendMatches === "function") {
+        renderVerifiedBlendMatches(aiBlend);
       }
 
       const blendScoresEl = document.getElementById("blendPredictedScores");
@@ -9044,23 +9084,205 @@
         roles: ["재스민·시트러스 꽃향", "블랙커런트·농밀한 산미", "클린컵·사과 단맛"],
         roasts: ["시나몬 (196°C)", "뉴잉글랜드 (205°C)", "아메리칸 (210°C)"]
       },
-      momos_eschocolat: {
-        id: "momos_eschocolat", name: "모모스 에스쇼콜라",
-        note: "모모스커피의 시그니처 다크·너티 스타일을 본뜬 브라질·콜롬비아·과테말라 배합입니다.",
-        sliderValues: { a: 2, s: 4, b: 4, n: 5 },
-        regions: ["cerrado_mineiro", "huila", "antigua"], ratios: [50, 30, 20],
-        roles: ["구운 견과·밀크초콜릿 베이스", "캐러멜 단맛·밸런스", "다크코코아·여운"],
-        roasts: ["시티 (219°C)", "시티 (219°C)", "풀 시티 (225°C)"]
+      blacksuit: {
+        id: "blacksuit", name: "블랙수트 (공개배합)",
+        note: "빈브라더스 공개 배합(브라질 60 · 콜롬비아 25 · 에티오피아 15) 기준의 초콜릿·견과 밸런스입니다.",
+        sliderValues: { a: 3, s: 4, b: 4, n: 4 },
+        regions: ["cerrado_mineiro", "huila", "yirgacheffe"], ratios: [60, 25, 15],
+        roles: ["구운 견과·초콜릿 베이스", "단맛·밸런스 브릿지", "은은한 꽃향·여운"],
+        roasts: ["시티 (219°C)", "시티 (219°C)", "아메리칸 (210°C)"]
       },
-      momos_fruitybonbon: {
-        id: "momos_fruitybonbon", name: "모모스 프루티봉봉",
-        note: "모모스커피의 대표 산미·과일향 블렌드 스타일을 본뜬 에티오피아·코스타리카·콜롬비아 배합입니다.",
+      fruitybright: {
+        id: "fruitybright", name: "프루티 브라이트",
+        note: "산미와 과일 사탕 같은 단맛이 돋보이는 화사한 블렌드 스타일입니다.",
         sliderValues: { a: 4, s: 5, b: 3, n: 2 },
         regions: ["yirgacheffe", "tarrazu", "narino"], ratios: [45, 35, 20],
         roles: ["복숭아·베리류 화사한 향", "사탕수수·꿀 단맛", "부드러운 실키 바디"],
         roasts: ["뉴잉글랜드 (205°C)", "아메리칸 (210°C)", "아메리칸 (210°C)"]
       }
     };
+
+    // B안: 실제 배합·원산지 구성이 확인된 국내 대표 로스터리 시판 블렌드 풀
+    const VERIFIED_BLENDS = [
+      {
+        id: "bb_blacksuit",
+        roaster: "빈브라더스",
+        name: "블랙수트 (Black Suit)",
+        origins: ["브라질 60%", "콜롬비아 25%", "에티오피아 15%"],
+        countryKeys: ["brazil", "colombia", "ethiopia"],
+        countryNames: ["브라질", "콜롬비아", "에티오피아"],
+        ratiosDisclosed: true,
+        profile: { acidity: 4.5, sweetness: 7.0, body: 7.0, nutty: 7.5 },
+        notes: "다크초콜릿 · 구운 견과류 · 안정적인 단맛",
+        url: "https://www.beanbrothers.co.kr"
+      },
+      {
+        id: "bb_velvetwhite",
+        roaster: "빈브라더스",
+        name: "벨벳화이트 (Velvet White)",
+        origins: ["에티오피아 100% (2종 블렌드)"],
+        countryKeys: ["ethiopia"],
+        countryNames: ["에티오피아"],
+        ratiosDisclosed: true,
+        profile: { acidity: 8.0, sweetness: 7.0, body: 4.5, nutty: 3.5 },
+        notes: "오렌지 · 자몽 · 재스민 꽃향 · 브라운슈거",
+        url: "https://www.beanbrothers.co.kr"
+      },
+      {
+        id: "fritz_olddog",
+        roaster: "프릳츠",
+        name: "올드독 (Old Dog)",
+        origins: ["인도 40%", "코스타리카 40%", "콜롬비아 20%"],
+        countryKeys: ["india", "costarica", "colombia"],
+        countryNames: ["인도", "코스타리카", "콜롬비아"],
+        ratiosDisclosed: true,
+        profile: { acidity: 3.0, sweetness: 6.5, body: 8.5, nutty: 6.5 },
+        notes: "다크초콜릿 · 흑당 · 묵직한 풀바디",
+        url: "https://fritz.co.kr"
+      },
+      {
+        id: "fritz_jaldoeo",
+        roaster: "프릳츠",
+        name: "잘되어가시나",
+        origins: ["에티오피아 30%", "코스타리카 30%", "인도 20%", "콜롬비아 20%"],
+        countryKeys: ["ethiopia", "costarica", "india", "colombia"],
+        countryNames: ["에티오피아", "코스타리카", "인도", "콜롬비아"],
+        ratiosDisclosed: true,
+        profile: { acidity: 5.5, sweetness: 7.0, body: 6.5, nutty: 6.0 },
+        notes: "은은한 단맛 · 고소함 · 부드러운 데일리 밸런스",
+        url: "https://fritz.co.kr"
+      },
+      {
+        id: "momos_eschocolat",
+        roaster: "모모스커피",
+        name: "에스쇼콜라 (Es Chocolat)",
+        origins: ["콜롬비아", "코스타리카", "과테말라 중심"],
+        countryKeys: ["colombia", "costarica", "guatemala"],
+        countryNames: ["콜롬비아", "코스타리카", "과테말라"],
+        ratiosDisclosed: false,
+        profile: { acidity: 3.0, sweetness: 7.0, body: 7.5, nutty: 7.5 },
+        notes: "다크·밀크초콜릿 · 마카다미아 너트 · 크리미 질감",
+        url: "https://momos.co.kr/shop"
+      },
+      {
+        id: "momos_fruity",
+        roaster: "모모스커피",
+        name: "프루티봉봉 (Fruity Bonbon)",
+        origins: ["콜롬비아", "에티오피아 중심"],
+        countryKeys: ["colombia", "ethiopia"],
+        countryNames: ["콜롬비아", "에티오피아"],
+        ratiosDisclosed: false,
+        profile: { acidity: 7.5, sweetness: 7.5, body: 5.0, nutty: 4.0 },
+        notes: "과일사탕 · 시트러스 · 복숭아/살구 · 꿀",
+        url: "https://momos.co.kr/shop"
+      },
+      {
+        id: "terarosa_allday",
+        roaster: "테라로사",
+        name: "올데이 블렌드 (All Day)",
+        origins: ["과테말라", "브라질", "온두라스", "르완다", "에티오피아"],
+        countryKeys: ["guatemala", "brazil", "ethiopia"],
+        countryNames: ["과테말라", "브라질", "온두라스", "르완다", "에티오피아"],
+        ratiosDisclosed: false,
+        profile: { acidity: 5.5, sweetness: 7.0, body: 6.5, nutty: 6.5 },
+        notes: "진한 초콜릿 · 오렌지 밝은 산미 · 부드러운 목넘김",
+        url: "https://terarosa.com"
+      }
+    ];
+
+    function renderVerifiedBlendMatches(aiBlendData) {
+      const box = document.getElementById("verifiedBlendMatchBox");
+      if (!box || !aiBlendData || !aiBlendData.scores) return;
+
+      const aiKeys = [...new Set(aiBlendData.components.map(c => c.region && c.region.countryKey).filter(Boolean))];
+      const aiNames = [...new Set(aiBlendData.components.map(c => c.region && c.region.countryName).filter(Boolean))];
+
+      const scored = VERIFIED_BLENDS.map(vb => {
+        const d = Math.sqrt(
+          Math.pow(vb.profile.acidity - aiBlendData.scores.acidity, 2) +
+          Math.pow(vb.profile.sweetness - aiBlendData.scores.sweetness, 2) +
+          Math.pow(vb.profile.body - aiBlendData.scores.body, 2) +
+          Math.pow(vb.profile.nutty - aiBlendData.scores.nutty, 2)
+        );
+        const overlapCount = aiKeys.filter(k => vb.countryKeys.includes(k)).length;
+        const sensorySim = Math.max(0, 100 * (1 - d / 12));
+        const originBonus = overlapCount * 6;
+        const simPct = Math.min(96, Math.max(45, Math.round(sensorySim + originBonus)));
+
+        const missing = aiNames.filter(n => !vb.countryNames.includes(n));
+        const extra = vb.countryNames.filter(n => !aiNames.includes(n));
+        const diffParts = [];
+        if (missing.length && extra.length) {
+          diffParts.push(`${missing.join("·")} 대신 ${extra.slice(0, 2).join("·")} 포함`);
+        } else if (missing.length) {
+          diffParts.push(`${missing.join("·")} 미포함`);
+        } else if (extra.length) {
+          diffParts.push(`${extra.slice(0, 2).join("·")} 추가됨`);
+        }
+        if (!vb.ratiosDisclosed) {
+          diffParts.push("세부 비율 비공개");
+        }
+        const diffText = diffParts.length ? `차이: ${diffParts.join(" / ")}` : "원산지 구성 일치 (세부 로스팅/비율 차이 가능)";
+
+        return { vb, simPct, diffText };
+      }).sort((a, b) => b.simPct - a.simPct).slice(0, 2);
+
+      box.innerHTML = scored.map(({ vb, simPct, diffText }) => `
+        <div class="p-1.5 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex flex-col gap-0.5">
+          <div class="flex items-center justify-between gap-1">
+            <span class="font-bold text-[#1E3B5C] text-[11px] truncate">[${vb.roaster}] ${vb.name}</span>
+            <div class="flex items-center gap-1 shrink-0">
+              <span class="px-1.5 py-0.2 rounded-full bg-[#30679D]/15 text-[#30679D] font-mono-code font-bold text-[10px]">유사도 ${simPct}%</span>
+              <a href="${vb.url}" target="_blank" rel="noopener noreferrer" class="px-1.5 py-0.5 rounded-full bg-[#1E3B5C] hover:bg-[#30679D] text-white font-mono-code text-[9.5px] font-semibold transition">공식몰 ↗</a>
+            </div>
+          </div>
+          <div class="text-[10px] text-[#516B50] font-mono-code">${vb.origins.join(" · ")}</div>
+          <div class="text-[10px] text-[#8C4B2E] font-medium">${diffText}</div>
+        </div>
+      `).join("");
+    }
+
+    document.querySelectorAll(".blend-gram-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const g = parseInt(btn.getAttribute("data-grams"), 10) || 200;
+        window._blendTotalGrams = g;
+        document.querySelectorAll(".blend-gram-btn").forEach(b => {
+          const isSel = b === btn;
+          b.className = isSel
+            ? "blend-gram-btn px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#30679D] text-white cursor-pointer"
+            : "blend-gram-btn px-1.5 py-0.5 rounded-full text-[10px] font-medium bg-white border border-[#BDB989]/60 text-[#1E3B5C] cursor-pointer";
+        });
+        if (lastEval && lastEval.aiBlend && typeof renderEvaluation === "function") {
+          const desc = document.getElementById("activeTasteBadge")?.textContent || "";
+          renderEvaluation(lastEval, desc, false, true);
+        }
+      });
+    });
+
+    const copyRecipeBtn = document.getElementById("copyBlendRecipeBtn");
+    if (copyRecipeBtn) {
+      copyRecipeBtn.addEventListener("click", async () => {
+        if (!lastEval || !lastEval.aiBlend) return;
+        const totalG = window._blendTotalGrams || 200;
+        const lines = lastEval.aiBlend.components.map((c, idx) => {
+          const pctNum = parseInt(String(c.ratio).replace("%", ""), 10) || 0;
+          const grams = Math.round((totalG * pctNum) / 100);
+          return `${idx + 1}. ${c.name} ${c.ratio} (${grams}g) - 후배전: ${c.roast ? c.roast.label : "시티"}`;
+        });
+        const text = `[CoBTS AI 3원두 배합표 - 총 ${totalG}g 기준]\n` + lines.join("\n");
+        try {
+          await navigator.clipboard.writeText(text);
+          const lbl = document.getElementById("copyBlendRecipeText");
+          if (lbl) {
+            const orig = lbl.textContent;
+            lbl.textContent = "배합표 복사 완료!";
+            setTimeout(() => { lbl.textContent = orig; }, 1800);
+          }
+        } catch (_) {
+          window.prompt("아래 배합표를 복사하세요:", text);
+        }
+      });
+    }
 
     function clearForcedBlend() {
       forcedBlend = null;
@@ -9542,7 +9764,7 @@
       const naverLink = document.getElementById("dossierNaverLink");
       if (naverLink) {
         const q = encodeURIComponent(`${region.countryName} ${region.name} 스페셜티 원두`);
-        naverLink.href = `https://search.shopping.naver.com/search/all?query=${q}&sort=review`;
+        naverLink.href = `https://search.shopping.naver.com/search/all?query=${q}`;
       }
       const momosDossierLink = document.getElementById("dossierMomosLink");
       if (momosDossierLink) {
