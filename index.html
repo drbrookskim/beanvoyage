@@ -1543,6 +1543,16 @@
       background: #03C75A;
       color: #FFFFFF;
     }
+    .editorial-brand-icon.roaster {
+      background: #1E3B5C;
+      color: #F0F0D8;
+      font-size: 10.5px;
+    }
+    .editorial-brand-icon.almacielo {
+      background: #516B50;
+      color: #F0F0D8;
+      font-size: 10.5px;
+    }
     .editorial-brand-icon.amazon {
       background: #232F3E;
       color: #FF9900;
@@ -2712,10 +2722,10 @@
 
               <!-- 4. 하단 2개 구매 채널 카드 (알약 스타일) -->
               <div id="editorialActionsWrap" class="editorial-actions-grid">
-                <a id="editorialActionNaver" class="editorial-action-card" href="#" onclick="openHudChannel('naverRoasted'); return false;" title="네이버 쇼핑 검색">
+                <a id="editorialActionNaver" class="editorial-action-card" href="#" onclick="openHudChannel('naverRoasted'); return false;" title="모모스커피 공식몰 바로가기">
                   <div class="editorial-action-info">
-                    <div id="editorialBrandIconNaver" class="editorial-brand-icon naver">N</div>
-                    <span id="editorialTitleNaver" class="editorial-action-title">싱글 네이버 국내</span>
+                    <div id="editorialBrandIconNaver" class="editorial-brand-icon roaster">M</div>
+                    <span id="editorialTitleNaver" class="editorial-action-title">모모스커피 원두</span>
                     <span id="editorialSubNaver" class="hidden"></span>
                   </div>
                   <span class="editorial-arrow">↗</span>
@@ -3346,10 +3356,10 @@
                   <span class="font-semibold px-1 rounded bg-[#30679D]/10 dark:bg-[#30679D]/30 text-[#1E3B5C] dark:text-[#97B6CB]">HS 0901.21</span>
                 </div>
                 <div class="grid grid-cols-2 gap-1.5 pt-0.5">
-                  <a id="naverSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#03c75a]/10 hover:border-[#03c75a] border border-[#BDB989]/60 rounded-lg transition group">
-                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#03c75a] flex items-center gap-1 truncate text-xs">
-                      <span class="font-bold text-[#03c75a] text-xs">N</span>
-                      <span id="naverSearchLabel" class="truncate">네이버 원두</span>
+                  <a id="naverSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#1E3B5C]/10 hover:border-[#1E3B5C] border border-[#BDB989]/60 rounded-lg transition group" title="국내 대표 스페셜티 로스터리 모모스커피 공식몰">
+                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#30679D] flex items-center gap-1 truncate text-xs">
+                      <span class="font-bold text-[#1E3B5C] text-xs">☕</span>
+                      <span id="naverSearchLabel" class="truncate">모모스커피 원두</span>
                     </span>
                     <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
                   </a>
@@ -3376,17 +3386,17 @@
                   <span class="font-semibold px-1 rounded bg-[#516B50]/10 dark:bg-[#516B50]/30 text-[#1E3B5C] dark:text-[#86EFAC]">HS 0901.11</span>
                 </div>
                 <div class="grid grid-cols-2 gap-1.5 pt-0.5">
-                  <a id="naverGreenSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group">
+                  <a id="naverGreenSearchLink" href="https://www.almacielo.com" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group" title="국내 대표 스페셜티 생두 판매처 알마씨엘로">
                     <span class="font-bold text-[#1E3B5C] group-hover:text-[#516B50] flex items-center gap-1 truncate text-xs">
                       <span class="font-bold text-[#516B50] text-xs">🌱</span>
-                      <span id="naverGreenSearchLabel" class="truncate">네이버 생두</span>
+                      <span id="naverGreenSearchLabel" class="truncate">알마씨엘로 생두</span>
                     </span>
                     <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
                   </a>
-                  <a id="almacieloSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group" title="구글에서 해당 국가 생두 수입·도매 업체 검색">
+                  <a id="almacieloSearchLink" href="https://gsc.coffee" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group" title="국내 최대 생두 수입·유통사 GSC 인터내셔날">
                     <span class="font-bold text-[#1E3B5C] group-hover:text-[#516B50] flex items-center gap-1 truncate text-xs">
                       <span class="text-xs">🏢</span>
-                      <span id="almacieloSearchLabel" class="truncate">수입·도매 업체</span>
+                      <span id="almacieloSearchLabel" class="truncate">GSC 생두 도매</span>
                     </span>
                     <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
                   </a>
@@ -3615,8 +3625,8 @@
 
           <div class="pt-2 flex flex-col gap-1.5 no-print">
             <a id="dossierNaverLink" href="#" target="_blank" class="w-full py-2 px-3 rounded-lg bg-[#30679D] hover:bg-[#1E3B5C] text-white text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 shadow-2xs">
-              <span>🟢</span>
-              <span>네이버 쇼핑 원두 가격 비교</span>
+              <span>☕</span>
+              <span>모모스커피 공식몰 바로가기</span>
               <span class="text-[10px]">↗</span>
             </a>
             <a id="dossierAmazonLink" href="#" target="_blank" class="w-full py-1.5 px-3 rounded-lg border border-[#BDB989]/60 bg-white dark:bg-[#15273C] hover:bg-[#FAF9ED] text-xs font-semibold transition-all text-center flex items-center justify-center gap-1.5">
@@ -7925,6 +7935,7 @@
       const actionsWrap = document.getElementById("editorialActionsWrap");
       const naverTitle = document.getElementById("editorialTitleNaver");
       const naverSub = document.getElementById("editorialSubNaver");
+      const naverIcon = document.getElementById("editorialBrandIconNaver");
       const globalTitle = document.getElementById("editorialTitleGlobal");
       const globalSub = document.getElementById("editorialSubGlobal");
       const globalIcon = document.getElementById("editorialBrandIconGlobal");
@@ -7944,14 +7955,18 @@
 
         setTimeout(() => {
           if (isBlendModeActive) {
-            if (naverTitle) naverTitle.textContent = "블렌드 네이버 국내";
+            if (naverTitle) naverTitle.textContent = "모모스커피 블렌드";
             if (globalTitle) globalTitle.textContent = "블렌드 아마존 직구";
           } else {
-            if (naverTitle) naverTitle.textContent = "싱글 네이버 국내";
+            if (naverTitle) naverTitle.textContent = "모모스커피 원두";
             if (globalTitle) globalTitle.textContent = "싱글 아마존 직구";
           }
           if (naverSub) naverSub.textContent = "";
           if (globalSub) globalSub.textContent = "";
+          if (naverIcon) {
+            naverIcon.textContent = "M";
+            naverIcon.className = "editorial-brand-icon roaster";
+          }
           if (globalIcon) {
             globalIcon.textContent = "a";
             globalIcon.className = "editorial-brand-icon amazon";
@@ -7971,16 +7986,20 @@
 
         setTimeout(() => {
           if (isBlendModeActive) {
-            if (naverTitle) naverTitle.textContent = "블렌드 네이버 생두";
-            if (globalTitle) globalTitle.textContent = "블렌드 생두 도매";
+            if (naverTitle) naverTitle.textContent = "알마씨엘로 생두";
+            if (globalTitle) globalTitle.textContent = "GSC 생두 도매";
           } else {
-            if (naverTitle) naverTitle.textContent = "싱글 네이버 생두";
-            if (globalTitle) globalTitle.textContent = "싱글 생두 도매";
+            if (naverTitle) naverTitle.textContent = "알마씨엘로 생두";
+            if (globalTitle) globalTitle.textContent = "GSC 생두 도매";
           }
           if (naverSub) naverSub.textContent = "";
           if (globalSub) globalSub.textContent = "";
+          if (naverIcon) {
+            naverIcon.textContent = "A";
+            naverIcon.className = "editorial-brand-icon almacielo";
+          }
           if (globalIcon) {
-            globalIcon.textContent = "🏢";
+            globalIcon.textContent = "G";
             globalIcon.className = "editorial-brand-icon wholesale";
           }
           if (actionsWrap) {
@@ -8521,32 +8540,29 @@
         window._blendCountries = countries;
         window._blendCountriesEn = countriesEn;
 
-        // Smart Precision Multi-Origin Queries
-        const naverBlendQuery = (countries.length >= 2 ? countries.join(" ") : components.map(c => c.name).join(" ")) + " 블렌드 원두";
+        // Smart Precision Multi-Origin Queries & Direct Representative Roasters/Green Bean Sellers
         const amazonBlendQuery = (countriesEn.length >= 2 ? countriesEn.join(" ") : components.map(c => (c.region && c.region.enName) || "").join(" ")) + " blend whole bean coffee";
-        const naverGreenBlendQuery = (countries.length >= 2 ? countries.join(" ") : components.map(c => c.name).join(" ")) + " 블렌딩 생두";
-        const almaBlendQuery = `스페셜티 커피 블렌딩 생두 도매 ${countries.join(" ")}`;
 
-        if (naverLabel) naverLabel.textContent = `네이버 블렌드 (${countries.join("·")})`;
+        if (naverLabel) naverLabel.textContent = `모모스커피 블렌드`;
         if (amazonLabel) amazonLabel.textContent = `Amazon (${countriesEn.join("·")})`;
-        if (naverGreenLabel) naverGreenLabel.textContent = `생두 3종 (${countries.join("·")})`;
-        if (almaLabel) almaLabel.textContent = "블렌딩 생두 도매";
+        if (naverGreenLabel) naverGreenLabel.textContent = `알마씨엘로 생두`;
+        if (almaLabel) almaLabel.textContent = "GSC 생두 도매";
 
         if (naverRoasted) {
-          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverBlendQuery)}&sort=review`;
-          naverRoasted.title = `네이버 쇼핑에서 '${naverBlendQuery}' 검색 (${ratioSummary} 배합)`;
+          naverRoasted.href = `https://momos.co.kr/shop?keyword=${encodeURIComponent("블렌드")}`;
+          naverRoasted.title = `국내 대표 스페셜티 로스터리 모모스커피 블렌드 원두 바로가기 (${ratioSummary} 배합)`;
         }
         if (amazonRoasted) {
           amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonBlendQuery)}`;
           amazonRoasted.title = `Amazon에서 '${amazonBlendQuery}' 검색`;
         }
         if (naverGreen) {
-          naverGreen.href = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverGreenBlendQuery)}&sort=review`;
-          naverGreen.title = `네이버 쇼핑에서 '${naverGreenBlendQuery}' 검색`;
+          naverGreen.href = `https://www.almacielo.com`;
+          naverGreen.title = `국내 대표 스페셜티 생두 판매처 알마씨엘로 바로가기`;
         }
         if (almaLink) {
-          almaLink.href = `https://www.google.com/search?q=${encodeURIComponent(almaBlendQuery)}`;
-          almaLink.title = `구글에서 '${almaBlendQuery}' 검색`;
+          almaLink.href = `https://gsc.coffee`;
+          almaLink.title = `국내 최대 생두 수입·유통사 GSC 인터내셔날 바로가기`;
         }
 
         // Sync Map Reticle / Editorial Popup Titles if open
@@ -8560,8 +8576,8 @@
         const varietalText = document.getElementById("editorialVarietalText");
         const processText = document.getElementById("editorialProcessText");
 
-        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "블렌드 네이버 생두" : "블렌드 네이버 국내";
-        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "블렌드 생두 도매" : "블렌드 아마존 직구";
+        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "알마씨엘로 생두" : "모모스커피 블렌드";
+        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "GSC 생두 도매" : "블렌드 아마존 직구";
         if (editorialNaverSub) editorialNaverSub.textContent = "";
         if (editorialGlobalSub) editorialGlobalSub.textContent = "";
 
@@ -8577,31 +8593,29 @@
         window._blendCountries = null;
         window._blendCountriesEn = null;
 
-        if (naverLabel) naverLabel.textContent = "네이버 원두";
+        if (naverLabel) naverLabel.textContent = `모모스커피 (${activeRegionRef.countryName})`;
         if (amazonLabel) amazonLabel.textContent = "Amazon 직구";
-        if (naverGreenLabel) naverGreenLabel.textContent = "네이버 생두";
-        if (almaLabel) almaLabel.textContent = "수입·도매 업체";
+        if (naverGreenLabel) naverGreenLabel.textContent = "알마씨엘로 생두";
+        if (almaLabel) almaLabel.textContent = "GSC 생두 도매";
 
-        const qRoasted = encodeURIComponent(`${activeRegionRef.countryName} ${activeRegionRef.name} 원두`);
-        const qGreen = encodeURIComponent(`${activeRegionRef.countryName} ${activeRegionRef.name} 생두`);
         const cleanEnName = activeRegionRef.enName ? activeRegionRef.enName.replace(/[·,]/g, " ").replace(/\s+/g, " ").trim() : "";
         const amazonRoastedQuery = `${activeRegionRef.countryEn || ""} ${cleanEnName} whole bean roasted coffee`.replace(/\s+/g, " ").trim();
 
         if (naverRoasted) {
-          naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}&sort=review`;
-          naverRoasted.title = `네이버 쇼핑에서 '${activeRegionRef.countryName} ${activeRegionRef.name} 원두' 검색`;
+          naverRoasted.href = `https://momos.co.kr/shop?keyword=${encodeURIComponent(activeRegionRef.countryName)}`;
+          naverRoasted.title = `국내 대표 스페셜티 로스터리 모모스커피에서 '${activeRegionRef.countryName}' 원두 바로보기`;
         }
         if (amazonRoasted) {
           amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonRoastedQuery)}`;
           amazonRoasted.title = `Amazon에서 '${amazonRoastedQuery}' 검색`;
         }
         if (naverGreen) {
-          naverGreen.href = `https://search.shopping.naver.com/search/all?query=${qGreen}&sort=review`;
-          naverGreen.title = `네이버 쇼핑에서 '${activeRegionRef.countryName} ${activeRegionRef.name} 생두' 검색`;
+          naverGreen.href = `https://www.almacielo.com`;
+          naverGreen.title = `국내 대표 스페셜티 생두 판매처 알마씨엘로 바로가기`;
         }
         if (almaLink) {
-          almaLink.href = `https://www.google.com/search?q=${encodeURIComponent(activeRegionRef.countryName + ' 생두 수입 도매 업체')}`;
-          almaLink.title = `구글에서 '${activeRegionRef.countryName} 생두 수입 도매 업체' 검색`;
+          almaLink.href = `https://gsc.coffee`;
+          almaLink.title = `국내 최대 생두 수입·유통사 GSC 인터내셔날 바로가기`;
         }
 
         const editorialNaverTitle = document.getElementById("editorialTitleNaver");
@@ -8615,8 +8629,8 @@
         const processText = document.getElementById("editorialProcessText");
         const dossierBtnText = document.querySelector("#editorialDossierBtn span.tracking-tight");
 
-        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "싱글 네이버 생두" : "싱글 네이버 국내";
-        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "싱글 생두 도매" : "싱글 아마존 직구";
+        if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "알마씨엘로 생두" : "모모스커피 원두";
+        if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "GSC 생두 도매" : "싱글 아마존 직구";
         if (editorialNaverSub) editorialNaverSub.textContent = "";
         if (editorialGlobalSub) editorialGlobalSub.textContent = "";
 
@@ -8813,13 +8827,11 @@
         renderRealTimeNavigationCanvas();
       }
 
-      const qRoasted = encodeURIComponent(`${region.countryName} ${region.name} 원두`);
-      const qGreen = encodeURIComponent(`${region.countryName} ${region.name} 생두`);
       const cleanEnName = region.enName ? region.enName.replace(/[·,]/g, " ").replace(/\s+/g, " ").trim() : "";
       const amazonRoastedQuery = `${region.countryEn || ""} ${cleanEnName} whole bean roasted coffee`.replace(/\s+/g, " ").trim();
       
       const naverRoasted = document.getElementById("naverSearchLink");
-      if (naverRoasted) naverRoasted.href = `https://search.shopping.naver.com/search/all?query=${qRoasted}&sort=review`;
+      if (naverRoasted) naverRoasted.href = `https://momos.co.kr/shop?keyword=${encodeURIComponent(region.countryName)}`;
       const amazonRoasted = document.getElementById("amazonSearchLink");
       if (amazonRoasted) amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonRoastedQuery)}`;
 
@@ -9455,8 +9467,8 @@
 
       const naverLink = document.getElementById("dossierNaverLink");
       if (naverLink) {
-        const q = encodeURIComponent(`${region.countryName} ${region.name} 스페셜티 원두`);
-        naverLink.href = `https://search.shopping.naver.com/search/all?query=${q}&sort=review`;
+        const kw = isBlendModeActive ? "블렌드" : region.countryName;
+        naverLink.href = `https://momos.co.kr/shop?keyword=${encodeURIComponent(kw)}`;
       }
       const amazonLink = document.getElementById("dossierAmazonLink");
       if (amazonLink) {

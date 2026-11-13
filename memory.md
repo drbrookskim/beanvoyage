@@ -1350,8 +1350,28 @@
 
 ---
 
+281. 네이버 가격비교 검색 제거 및 국내 대표 원두·생두 공식 판매처 직링크 연동
+- **일시**: 2026-11-13
+- **사용자 요청**: "네이버 가격비교 검색으로 가지 말고 가장 대표적인 원두 판매처를 바로 갈 수는 없을까."
+- **조치 및 수정 내역**:
+  1. **네이버 가격비교(`search.shopping.naver.com/search/all`) 전면 제거**:
+     - 지도 팝업(Card 4), 좌측 산지 매칭 카드, 원두 감정서(Dossier) 모달에 남아있던 네이버 가격비교 검색 URL을 모두 제거하고 국내 대표 스페셜티 공식 판매처로 직접 연결되도록 개편.
+  2. **원두 (Roasted Beans) 대표 판매처 — 모모스커피(MOMOS COFFEE) 직링크**:
+     - 싱글 모드: `https://momos.co.kr/shop?keyword=${encodeURIComponent(activeRegionRef.countryName)}` (선택 산지 국가명 기반 모모스커피 공식몰 상품 검색 바로가기).
+     - 블렌드 모드: `https://momos.co.kr/shop?keyword=${encodeURIComponent("블렌드")}` (모모스커피 블렌드 원두 바로가기).
+     - 브랜드 아이콘을 `.editorial-brand-icon.roaster` (`M`, Deep Maritime Navy `#1E3B5C`)로, 라벨을 `모모스커피 원두` / `모모스커피 블렌드`로 정제.
+  3. **생두 (Green Beans) 대표 판매처 — 알마씨엘로(Almacielo) & GSC 직링크**:
+     - 생두 탭 및 좌측 패널 생두 채널을 네이버/구글 검색 대신 국내 대표 생두 전문몰 **알마씨엘로**(`https://www.almacielo.com`)와 국내 최대 생두 수입·유통사 **GSC 인터내셔날**(`https://gsc.coffee`) 공식 홈페이지로 바로 연결되도록 변경.
+     - 아이콘을 `.editorial-brand-icon.almacielo` (`A`, Deep Olive `#516B50`) 및 `.wholesale` (`G`)로 통일.
+- **주요 수정 파일**:
+  - [`CoBTS/index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html)
+  - [`CoBTS/memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md)
+  - [`CoBTS/CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 블렌드 모드에서 산지 선택 시 해당 산지를 선두로 3원두 블렌드를 동적 재계산하는 앵커 블렌드 알고리즘 및 UI/지도 동기화 완비.
+- **상태**: 네이버 가격비교 검색 제거 및 국내 대표 원두(모모스커피)·생두(알마씨엘로/GSC) 공식 판매처 직링크 연동 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 원격 저장소(`origin/main`) 푸시 및 GitHub Pages 배포 완료.
