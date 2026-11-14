@@ -3075,17 +3075,17 @@
               </div>
 
               <!-- Direction 1: Verified Roastery Single-Origin Channels (No Blend Spam) -->
-              <div id="verifiedSingleMatchSection" class="p-2.5 bg-white border border-[#516B50]/60 rounded-lg space-y-1.5 mt-1.5 shadow-xs text-xs">
-                <div class="flex items-center justify-between gap-1 border-b border-[#BDB989]/40 pb-1">
-                  <span class="font-bold text-[#1E3B5C] flex items-center gap-1 text-[11.5px]">
+              <div id="verifiedSingleMatchSection" class="p-2.5 bg-white border border-[#516B50]/60 rounded-lg space-y-2 mt-1.5 shadow-xs text-xs">
+                <div class="flex items-center justify-between gap-1 border-b border-[#BDB989]/40 pb-1.5">
+                  <span class="font-bold text-[#1E3B5C] flex items-center gap-1 text-[13px]">
                     <span>🏛️</span> 검증 로스터리 싱글오리진 직영몰
                   </span>
-                  <span class="font-mono-code px-1.5 py-0.2 rounded bg-[#516B50]/15 text-[#516B50] font-semibold text-[10px]">광고·블렌드 노이즈 차단</span>
+                  <span class="font-mono-code px-2 py-0.5 rounded bg-[#516B50]/15 text-[#516B50] font-semibold text-[11px]">광고·블렌드 노이즈 차단</span>
                 </div>
-                <p class="text-[10px] text-[#5A758D] leading-snug">
+                <p class="text-xs text-[#5A758D] leading-relaxed">
                   오픈마켓 검색에는 광고·다산지 묶음 블렌드가 섞일 수 있어, 직거래 로스터리의 <strong class="text-[#1E3B5C]">공식 싱글오리진 라인업</strong>을 1순위로 추천합니다. (시즌별 입고 변동)
                 </p>
-                <div id="verifiedSingleMatchBox" class="space-y-1.5"></div>
+                <div id="verifiedSingleMatchBox" class="space-y-2"></div>
               </div>
             </div>
 
@@ -9250,16 +9250,16 @@
       }).sort((a, b) => b.simPct - a.simPct).slice(0, 2);
 
       box.innerHTML = scored.map(({ vb, simPct, diffText }) => `
-        <div class="p-1.5 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex flex-col gap-0.5">
+        <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex flex-col gap-1">
           <div class="flex items-center justify-between gap-1">
-            <span class="font-bold text-[#1E3B5C] text-[11px] truncate">[${vb.roaster}] ${vb.name}</span>
+            <span class="font-bold text-[#1E3B5C] text-[12.5px] truncate">[${vb.roaster}] ${vb.name}</span>
             <div class="flex items-center gap-1 shrink-0">
-              <span class="px-1.5 py-0.2 rounded-full bg-[#30679D]/15 text-[#30679D] font-mono-code font-bold text-[10px]">유사도 ${simPct}%</span>
-              <a href="${vb.url}" target="_blank" rel="noopener noreferrer" class="px-1.5 py-0.5 rounded-full bg-[#1E3B5C] hover:bg-[#30679D] text-white font-mono-code text-[9.5px] font-semibold transition">공식몰 ↗</a>
+              <span class="px-2 py-0.5 rounded-full bg-[#30679D]/15 text-[#30679D] font-mono-code font-bold text-[11px]">유사도 ${simPct}%</span>
+              <a href="${vb.url}" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded-full bg-[#1E3B5C] hover:bg-[#30679D] text-white font-mono-code text-[11px] font-semibold transition">공식몰 ↗</a>
             </div>
           </div>
-          <div class="text-[10px] text-[#516B50] font-mono-code">${vb.origins.join(" · ")}</div>
-          <div class="text-[10px] text-[#8C4B2E] font-medium">${diffText}</div>
+          <div class="text-xs text-[#516B50] font-mono-code">${vb.origins.join(" · ")}</div>
+          <div class="text-xs text-[#8C4B2E] font-medium">${diffText}</div>
         </div>
       `).join("");
     }
@@ -9328,28 +9328,28 @@
           ? `${cName} 검색 직결`
           : (isOriginStrong ? `${cName} 주력` : "싱글오리진");
         return `
-          <div class="p-1.5 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex flex-col gap-0.5">
+          <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex flex-col gap-1">
             <div class="flex items-center justify-between gap-1">
               <div class="flex items-center gap-1 min-w-0">
-                <span class="font-bold text-[#1E3B5C] text-[11px] shrink-0">${r.roaster}</span>
-                <span class="text-[10px] text-[#516B50] font-medium truncate">· ${r.tagline}</span>
+                <span class="font-bold text-[#1E3B5C] text-[12.5px] shrink-0">${r.roaster}</span>
+                <span class="text-xs text-[#516B50] font-medium truncate">· ${r.tagline}</span>
               </div>
               <div class="flex items-center gap-1 shrink-0">
-                <span class="px-1.5 py-0.2 rounded-full bg-[#516B50]/15 text-[#516B50] font-mono-code font-bold text-[9.5px]">${badgeText}</span>
-                <a href="${r.getUrl(region)}" target="_blank" rel="noopener noreferrer" class="px-1.5 py-0.5 rounded-full bg-[#1E3B5C] hover:bg-[#30679D] text-white font-mono-code text-[9.5px] font-semibold transition">공식몰 ↗</a>
+                <span class="px-2 py-0.5 rounded-full bg-[#516B50]/15 text-[#516B50] font-mono-code font-bold text-[11px]">${badgeText}</span>
+                <a href="${r.getUrl(region)}" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded-full bg-[#1E3B5C] hover:bg-[#30679D] text-white font-mono-code text-[11px] font-semibold transition">공식몰 ↗</a>
               </div>
             </div>
-            <div class="text-[10px] text-[#5A758D] leading-snug">${r.note}</div>
+            <div class="text-xs text-[#5A758D] leading-relaxed">${r.note}</div>
           </div>
         `;
       }).join("");
 
       const greenBeanBar = `
-        <div class="pt-1 border-t border-[#BDB989]/40 flex items-center justify-between gap-1 text-[10px] font-mono-code">
+        <div class="pt-1.5 border-t border-[#BDB989]/40 flex items-center justify-between gap-1 text-[11.5px] font-mono-code">
           <span class="text-[#5A758D] truncate">🌿 <strong>${cName} ${rName}</strong> 생두(홈로스팅):</span>
           <div class="flex items-center gap-1 shrink-0">
-            <a href="https://www.almacielo.com" target="_blank" rel="noopener noreferrer" class="px-1.5 py-0.5 rounded-full bg-[#516B50]/15 hover:bg-[#516B50] hover:text-white text-[#516B50] font-semibold transition">알마씨엘로 ↗</a>
-            <a href="https://gsc.coffee" target="_blank" rel="noopener noreferrer" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/30 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] font-semibold transition">GSC ↗</a>
+            <a href="https://www.almacielo.com" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded-full bg-[#516B50]/15 hover:bg-[#516B50] hover:text-white text-[#516B50] font-semibold transition">알마씨엘로 ↗</a>
+            <a href="https://gsc.coffee" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded-full bg-[#BDB989]/30 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] font-semibold transition">GSC ↗</a>
           </div>
         </div>
       `;
