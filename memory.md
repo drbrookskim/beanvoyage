@@ -1550,11 +1550,21 @@
 
 ---
 
+### 297. 맵뷰 상단 컨트롤 바 1·2·3번 알약(Pill) 높이 통일(`42px`) 및 검색바 가로 확장
+- **요청 내용**: 첨부 이미지 기준 1번 검색바·2번 싱글/블렌드 토글·3번 활성 맛 배지의 스타일과 높이를 통일하고, 1번 검색바의 가로 길이를 확장.
+- **작업 내용 (`CoBTS/index.html`)**:
+  - **1번 (`#headerSearchGroup` / `#headerTasteInput`)**: `rounded-full` 알약형 입력창(`h-[42px] pl-4 pr-20`)으로 변경하고 가로 폭을 `sm:w-[360px] md:w-[420px] lg:w-[450px]`로 확장.
+  - **2번 (`.pill-toggle-switch`)**: `height: 42px; box-sizing: border-box;` 및 `.pill-toggle-option` 여백(`padding: 2px 8px; gap: 0.5px; line-height: 1.1;`)으로 조정해 1번과 세로 높이(`42px`)를 정확히 일치시킴.
+  - **3번 (`#activeTasteBadge`)**: `h-[42px] inline-flex items-center px-4 rounded-full`로 변경해 1번·2번과 동일한 알약 스타일 및 높이(`42px`)로 통일.
+- **검증**: `cd CoBTS && npm run build:css` 재빌드 완료, 인라인 `<script>` 문법 검사 통과 및 `42px`·`rounded-full`·`lg:w-[450px]` 적용 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 관세청 2컬럼, 원두 구매처 타일 UI 통일, 검색바/싱글·블렌드 위치 재배치 완료.
+- **상태**: 맵뷰 상단 컨트롤 바 1·2·3번 알약 스타일·높이 통일 및 검색바 확장 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 맵뷰 상단 검색바 및 통관·유통 카드 확인.
+  1. 필요 시 브라우저에서 맵뷰 상단 컨트롤 바 정렬 및 가독성 확인.
 
 
 

@@ -436,10 +436,12 @@
       display: inline-grid;
       grid-template-columns: 136px 136px;
       align-items: center;
+      height: 42px;
+      box-sizing: border-box;
       background-color: #EDE4D8;
       border: 1.5px solid #DCD0C1;
       border-radius: 9999px;
-      padding: 3.5px;
+      padding: 3px;
       box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
       transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
       user-select: none;
@@ -491,8 +493,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1.5px;
-      padding: 5px 8px;
+      gap: 0.5px;
+      padding: 2px 8px;
+      line-height: 1.1;
       border-radius: 9999px;
       white-space: nowrap;
       transition: opacity 0.2s ease, transform 0.2s ease;
@@ -2293,19 +2296,19 @@
       <div class="flex flex-wrap items-center justify-between gap-3 pb-2.5 pt-1 border-b border-[#BDB989]/60">
         <!-- LEFT: Re-Search Bar + Single/Blend Pill Toggle + 상태 배지 -->
         <div class="flex items-center gap-2.5 flex-wrap min-w-0 flex-1">
-          <!-- Map View Re-Search Form (moved to Single/Blend left slot) -->
-          <div id="headerSearchGroup" class="hidden w-full sm:w-[290px] md:w-[340px] shrink-0">
+          <!-- Map View Re-Search Form (moved to Single/Blend left slot, Pill Style + Wider) -->
+          <div id="headerSearchGroup" class="hidden w-full sm:w-[360px] md:w-[420px] lg:w-[450px] shrink-0">
             <form id="headerTasteSearchForm" class="relative flex items-center">
               <input 
                 type="text" 
                 id="headerTasteInput" 
                 placeholder="원하는 커피 맛 검색 (예: 화사한 꽃향기, 구운 견과류)" 
-                class="w-full py-1.5 pl-3 pr-20 bg-white/95 text-[#1E3B5C] placeholder:text-stone-400 rounded-lg border border-[#BDB989] focus:outline-none focus:ring-1 focus:ring-[#30679D] text-sm shadow-2xs"
+                class="w-full h-[42px] pl-4 pr-20 bg-white/95 text-[#1E3B5C] placeholder:text-stone-400 rounded-full border border-[#BDB989] focus:outline-none focus:ring-1 focus:ring-[#30679D] text-sm shadow-2xs"
                 autocomplete="off"
               />
               <button 
                 type="submit" 
-                class="absolute right-1 px-3.5 py-1 bg-[#30679D] hover:bg-[#1E3B5C] dark:bg-[#FFFFFF] dark:hover:bg-[#E2E8F0] dark:text-[#0A0F17] text-[#F0F0D8] font-bold rounded-full transition-all duration-200 active:scale-95 text-xs font-space tracking-wider cursor-pointer shadow-xs select-none"
+                class="absolute right-1.5 px-4 py-1.5 bg-[#30679D] hover:bg-[#1E3B5C] dark:bg-[#FFFFFF] dark:hover:bg-[#E2E8F0] dark:text-[#0A0F17] text-[#F0F0D8] font-bold rounded-full transition-all duration-200 active:scale-95 text-xs font-space tracking-wider cursor-pointer shadow-xs select-none"
                 title="Bean Voyage 맛 추적"
               >
                 BV
@@ -2334,7 +2337,7 @@
 
           <div class="flex items-center gap-1.5 flex-wrap">
             <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#516B50] animate-pulse"></span>
-            <span id="activeTasteBadge" class="font-semibold text-[#1E3B5C] bg-white border border-[#BDB989] px-2.5 py-1 rounded font-mono-code text-xs shadow-2xs">
+            <span id="activeTasteBadge" class="h-[42px] inline-flex items-center font-semibold text-[#1E3B5C] bg-white/95 border border-[#BDB989] px-4 rounded-full font-mono-code text-xs shadow-2xs">
               산미 적당히 · 단맛 적당히 · 바디 적당히
             </span>
             <span class="text-[#5A758D] text-sm">→</span>
