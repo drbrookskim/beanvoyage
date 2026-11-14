@@ -2157,26 +2157,6 @@
       </div>
     </a>
 
-    <!-- Screen 2 Header Re-Search Form (Compact, preserves screen height for map) -->
-    <div id="headerSearchGroup" class="hidden flex-1 max-w-lg mx-2">
-      <form id="headerTasteSearchForm" class="relative flex items-center">
-        <input 
-          type="text" 
-          id="headerTasteInput" 
-          placeholder="원하는 커피 맛 검색 (예: 화사한 꽃향기, 구운 견과류)" 
-          class="w-full py-1.5 pl-3 pr-20 bg-white/95 text-[#1E3B5C] placeholder:text-stone-400 rounded-lg border border-[#BDB989] focus:outline-none focus:ring-1 focus:ring-[#30679D] text-sm shadow-2xs"
-          autocomplete="off"
-        />
-        <button 
-          type="submit" 
-          class="absolute right-1 px-3.5 py-1 bg-[#30679D] hover:bg-[#1E3B5C] dark:bg-[#FFFFFF] dark:hover:bg-[#E2E8F0] dark:text-[#0A0F17] text-[#F0F0D8] font-bold rounded-full transition-all duration-200 active:scale-95 text-xs font-space tracking-wider cursor-pointer shadow-xs select-none"
-          title="Bean Voyage 맛 추적"
-        >
-          BV
-        </button>
-      </form>
-    </div>
-
     <div class="flex items-center gap-2.5 font-mono-code text-[#1E3B5C] dark:text-[#F0F0D8] shrink-0 text-[11px]">
       <button id="tileEditModeBtn" type="button" class="w-8 h-8 rounded-full border border-[#CBD5E1] dark:border-[#232D3B] bg-white/90 hover:bg-[#F8F9FA] dark:bg-[#12161C] dark:hover:bg-[#FFFFFF] dark:hover:text-[#0A0F17] text-[#1E3B5C] dark:text-[#F0F0D8] flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer shadow-2xs hidden shrink-0" title="타일 배치 편집 모드" aria-label="타일 배치 편집 모드 전환" aria-pressed="false">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -2311,9 +2291,29 @@
 
       <!-- Status & Navigation Control Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 pb-2.5 pt-1 border-b border-[#BDB989]/60">
-        <!-- LEFT: Primary Feature Controller (현대적 세그먼트 컨트롤) + 상태 배지 -->
-        <div class="flex items-center gap-3 flex-wrap">
-          <div id="singleBlendToggleWrap" class="pill-toggle-switch cursor-pointer" role="tablist" aria-label="커피 추출 모드 선택" title="클릭하여 Single Origin ↔ Blend 모드 즉시 전환">
+        <!-- LEFT: Re-Search Bar + Single/Blend Pill Toggle + 상태 배지 -->
+        <div class="flex items-center gap-2.5 flex-wrap min-w-0 flex-1">
+          <!-- Map View Re-Search Form (moved to Single/Blend left slot) -->
+          <div id="headerSearchGroup" class="hidden w-full sm:w-[290px] md:w-[340px] shrink-0">
+            <form id="headerTasteSearchForm" class="relative flex items-center">
+              <input 
+                type="text" 
+                id="headerTasteInput" 
+                placeholder="원하는 커피 맛 검색 (예: 화사한 꽃향기, 구운 견과류)" 
+                class="w-full py-1.5 pl-3 pr-20 bg-white/95 text-[#1E3B5C] placeholder:text-stone-400 rounded-lg border border-[#BDB989] focus:outline-none focus:ring-1 focus:ring-[#30679D] text-sm shadow-2xs"
+                autocomplete="off"
+              />
+              <button 
+                type="submit" 
+                class="absolute right-1 px-3.5 py-1 bg-[#30679D] hover:bg-[#1E3B5C] dark:bg-[#FFFFFF] dark:hover:bg-[#E2E8F0] dark:text-[#0A0F17] text-[#F0F0D8] font-bold rounded-full transition-all duration-200 active:scale-95 text-xs font-space tracking-wider cursor-pointer shadow-xs select-none"
+                title="Bean Voyage 맛 추적"
+              >
+                BV
+              </button>
+            </form>
+          </div>
+
+          <div id="singleBlendToggleWrap" class="pill-toggle-switch cursor-pointer shrink-0" role="tablist" aria-label="커피 추출 모드 선택" title="클릭하여 Single Origin ↔ Blend 모드 즉시 전환">
             <!-- Sliding Capsule Glider Thumb (첨부 1,2 마이크로 인터랙션 규격) -->
             <div id="modeGliderThumb" class="pill-glider-thumb" aria-hidden="true"></div>
 
@@ -3123,76 +3123,78 @@
 
       </div>
           <!-- 4. CUSTOMS & CHANNELS -->
-          <div id="customsChannelsCard" class="w-full bg-white sketch-border rounded-2xl p-3 shadow-sm flex flex-col justify-between border border-[#1E3B5C]/40 dynamic-tile" data-tile-id="customsChannelsCard" data-tile-label="4. 통관·유통">
+          <div id="customsChannelsCard" class="w-full bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="customsChannelsCard" data-tile-label="4. 통관·유통">
           <div>
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-[#BDB989]/60">
+            <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#BDB989]/60">
               <div class="flex items-center gap-1.5 shrink-0">
                 <span class="text-sm">📋</span>
-                <h3 class="font-bold font-space tracking-wide text-[#1E3B5C] text-xs whitespace-nowrap">통관 & 유통</h3>
+                <h3 class="font-bold font-space tracking-wider text-[#1E3B5C] text-sm whitespace-nowrap">CUSTOMS & CHANNELS (통관 & 유통)</h3>
               </div>
-              <span class="font-mono-code px-1.5 py-0.5 bg-[#516B50]/15 text-[#516B50] dark:bg-[#516B50]/30 dark:text-[#86EFAC] border border-[#516B50]/40 rounded font-semibold text-[10.5px] whitespace-nowrap" title="Coffee Logistics & Import Protocol (관세청·식약처·식물검역 연동 규격)">
+              <span class="font-mono-code px-2 py-0.5 bg-[#F1F3F5] text-[#516B50] rounded font-semibold text-[11px] whitespace-nowrap" title="Coffee Logistics & Import Protocol (관세청·식약처·식물검역 연동 규격)">
                 CLIP 연동
               </span>
             </div>
 
-            <!-- Customs HS Code Section -->
+            <!-- Customs HS Code Section (2-Column Roasted & Green Beans) -->
             <div class="space-y-1.5 text-sm">
               <div class="font-bold text-[#1E3B5C] flex items-center gap-1 text-xs">
                 <span>🏛️</span><span>관세청 수입 요건</span>
               </div>
-              <div class="p-2 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-xs">
-                <div class="flex justify-between items-center">
-                  <span class="text-[#5A758D] font-bold">생두 0901.11</span>
-                  <span class="font-bold text-[#1E3B5C]">관세 2%</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div class="p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-xs">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[#5A758D] font-bold">생두 0901.11</span>
+                    <span class="font-bold text-[#1E3B5C]">관세 2%</span>
+                  </div>
+                  <span class="text-[#516B50] font-semibold block mt-0.5 truncate text-[11px]">식물검역증명서 필수</span>
                 </div>
-                <span class="text-[#516B50] font-semibold block mt-0.5 truncate text-[11px]">식물검역증명서 필수</span>
-              </div>
-              <div class="p-2 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-xs">
-                <div class="flex justify-between items-center">
-                  <span class="text-[#5A758D] font-bold">원두 0901.21</span>
-                  <span class="font-bold text-[#1E3B5C]">관세 8%</span>
+                <div class="p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-xs">
+                  <div class="flex justify-between items-center">
+                    <span class="text-[#5A758D] font-bold">원두 0901.21</span>
+                    <span class="font-bold text-[#1E3B5C]">관세 8%</span>
+                  </div>
+                  <span class="text-[#30679D] font-semibold block mt-0.5 truncate text-[11px]">식약처 정밀검사</span>
                 </div>
-                <span class="text-[#30679D] font-semibold block mt-0.5 truncate text-[11px]">식약처 정밀검사</span>
               </div>
             </div>
 
             <!-- Estimated Shipping Route -->
-            <div id="shippingRouteBlock" class="mt-2 p-2 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-[11px] space-y-1">
+            <div id="shippingRouteBlock" class="mt-2.5 p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-[11px] space-y-1">
               <div class="font-bold text-[#1E3B5C] text-xs flex items-center gap-1"><span>🚢</span><span>예상 운송 경로</span></div>
               <div id="shippingRouteBody" class="space-y-1 text-[#374836]"></div>
               <div class="text-[10px] text-[#5A758D]/80 leading-snug">직선거리 기반 추정치이며 실제 선박 스케줄과 다를 수 있습니다.</div>
             </div>
 
-            <!-- Channels Section (Differentiated: Roasted Beans vs. Green Beans - 2-Line Expressed) -->
-            <div class="space-y-2 pt-2 mt-2 border-t border-[#BDB989]/40 text-sm">
+            <!-- Channels Section (Differentiated: Roasted Beans vs. Green Beans - Unified Card Tile UI) -->
+            <div class="space-y-2.5 pt-3 mt-3 border-t border-[#BDB989]/40 text-sm">
               <div class="font-bold text-[#1E3B5C] flex items-center justify-between text-xs">
                 <span class="flex items-center gap-1">
-                  <span>🛒</span><span>구매 채널 (원두 / 생두 구분)</span>
+                  <span>🛒</span><span>원두 구매처 (원두 / 생두 구분)</span>
                 </span>
                 <span class="text-[#5A758D] font-mono-code text-[10px]">HS 연동</span>
               </div>
               
-              <!-- 1. Roasted Coffee Beans (원두) - 2-Line Title & HS -->
-              <div class="space-y-1">
-                <!-- Line 1: Title (제목) -->
-                <div class="flex items-center gap-1.5 font-bold text-[#30679D] dark:text-[#97B6CB] text-xs">
-                  <span>☕</span>
-                  <span>원두 (Roasted Beans)</span>
-                </div>
-                <!-- Line 2: Purpose & HS Code (hs 부분) -->
-                <div class="flex items-center justify-between text-[11px] font-mono-code text-[#5A758D] dark:text-[#97B6CB]/80 pl-5">
-                  <span>홈카페용</span>
-                  <span class="font-semibold px-1 rounded bg-[#30679D]/10 dark:bg-[#30679D]/30 text-[#1E3B5C] dark:text-[#97B6CB]">HS 0901.21</span>
+              <!-- 1. Roasted Coffee Beans (원두) - Unified Card UI -->
+              <div class="p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1.5 font-bold text-[#30679D] dark:text-[#97B6CB] text-xs">
+                    <span>☕</span>
+                    <span>원두 (Roasted Beans)</span>
+                  </div>
+                  <div class="flex items-center gap-1.5 text-[11px] font-mono-code text-[#5A758D] dark:text-[#97B6CB]/80">
+                    <span>홈카페용</span>
+                    <span class="font-semibold px-1.5 py-0.5 rounded bg-[#30679D]/10 dark:bg-[#30679D]/30 text-[#1E3B5C] dark:text-[#97B6CB]">HS 0901.21</span>
+                  </div>
                 </div>
                 <div class="grid grid-cols-2 gap-1.5 pt-0.5">
-                  <a id="naverSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#03c75a]/10 hover:border-[#03c75a] border border-[#BDB989]/60 rounded-lg transition group" title="네이버 쇼핑 검색 결과 보기">
+                  <a id="naverSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2.5 py-1.5 bg-white hover:bg-[#03c75a]/10 hover:border-[#03c75a] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="네이버 쇼핑 검색 결과 보기">
                     <span class="font-bold text-[#1E3B5C] group-hover:text-[#03c75a] flex items-center gap-1 truncate text-xs">
                       <span class="font-bold text-[#03c75a] text-xs">N</span>
                       <span id="naverSearchLabel" class="truncate">네이버 쇼핑 보기</span>
                     </span>
                     <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
                   </a>
-                  <a id="amazonSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#30679D]/15 hover:border-[#30679D] border border-[#BDB989]/60 rounded-lg transition group">
+                  <a id="amazonSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2.5 py-1.5 bg-white hover:bg-[#30679D]/15 hover:border-[#30679D] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs">
                     <span class="font-bold text-[#1E3B5C] group-hover:text-[#30679D] flex items-center gap-1 truncate text-xs">
                       <span class="text-xs">📦</span>
                       <span id="amazonSearchLabel" class="truncate">Amazon 직구</span>
@@ -3203,35 +3205,35 @@
                 <!-- 대표 스페셜티 로스터리 Pool (모모스커피 · 커피리브레 · 빈브라더스 · 테라로사 · 프릳츠) -->
                 <div class="pt-1 flex flex-wrap items-center gap-1 text-[10px] font-mono-code">
                   <span class="text-[#5A758D] shrink-0 mr-0.5">로스터리 Pool:</span>
-                  <a id="roasterMomosLink" href="https://momos.co.kr/shop" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#1E3B5C]/10 hover:bg-[#1E3B5C] hover:text-white text-[#1E3B5C] font-semibold transition" title="모모스커피 공식몰 바로가기">모모스커피 ↗</a>
-                  <a href="https://coffeelibre.kr" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="커피리브레 공식몰 (싱글오리진·골드문트)">커피리브레 ↗</a>
-                  <a href="https://www.beanbrothers.co.kr" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="빈브라더스 공식몰">빈브라더스 ↗</a>
-                  <a href="https://terarosa.com" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="테라로사 공식몰">테라로사 ↗</a>
-                  <a href="https://fritz.co.kr" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="프릳츠 공식몰">프릳츠 ↗</a>
+                  <a id="roasterMomosLink" href="https://momos.co.kr/shop" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#1E3B5C] hover:text-white text-[#1E3B5C] font-semibold transition" title="모모스커피 공식몰 바로가기">모모스커피 ↗</a>
+                  <a href="https://coffeelibre.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="커피리브레 공식몰 (싱글오리진·골드문트)">커피리브레 ↗</a>
+                  <a href="https://www.beanbrothers.co.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="빈브라더스 공식몰">빈브라더스 ↗</a>
+                  <a href="https://terarosa.com" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="테라로사 공식몰">테라로사 ↗</a>
+                  <a href="https://fritz.co.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="프릳츠 공식몰">프릳츠 ↗</a>
                 </div>
               </div>
 
-              <!-- 2. Green Coffee Beans (생두) - 2-Line Title & HS -->
-              <div class="space-y-1 pt-1.5 border-t border-[#BDB989]/30">
-                <!-- Line 1: Title (제목) -->
-                <div class="flex items-center gap-1.5 font-bold text-[#516B50] dark:text-[#86EFAC] text-xs">
-                  <span>🌿</span>
-                  <span>생두 (Green Beans)</span>
-                </div>
-                <!-- Line 2: Purpose & HS Code (hs 부분) -->
-                <div class="flex items-center justify-between text-[11px] font-mono-code text-[#5A758D] dark:text-[#86EFAC]/80 pl-5">
-                  <span>홈로스팅 · 사업자</span>
-                  <span class="font-semibold px-1 rounded bg-[#516B50]/10 dark:bg-[#516B50]/30 text-[#1E3B5C] dark:text-[#86EFAC]">HS 0901.11</span>
+              <!-- 2. Green Coffee Beans (생두) - Unified Card UI -->
+              <div class="p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1.5 font-bold text-[#516B50] dark:text-[#86EFAC] text-xs">
+                    <span>🌿</span>
+                    <span>생두 (Green Beans)</span>
+                  </div>
+                  <div class="flex items-center gap-1.5 text-[11px] font-mono-code text-[#5A758D] dark:text-[#86EFAC]/80">
+                    <span>홈로스팅 · 사업자</span>
+                    <span class="font-semibold px-1.5 py-0.5 rounded bg-[#516B50]/10 dark:bg-[#516B50]/30 text-[#1E3B5C] dark:text-[#86EFAC]">HS 0901.11</span>
+                  </div>
                 </div>
                 <div class="grid grid-cols-2 gap-1.5 pt-0.5">
-                  <a id="naverGreenSearchLink" href="https://www.almacielo.com" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group" title="국내 대표 스페셜티 생두 판매처 알마씨엘로">
+                  <a id="naverGreenSearchLink" href="https://www.almacielo.com" target="_blank" class="flex items-center justify-between px-2.5 py-1.5 bg-white hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="국내 대표 스페셜티 생두 판매처 알마씨엘로">
                     <span class="font-bold text-[#1E3B5C] group-hover:text-[#516B50] flex items-center gap-1 truncate text-xs">
                       <span class="font-bold text-[#516B50] text-xs">🌱</span>
                       <span id="naverGreenSearchLabel" class="truncate">알마씨엘로 생두</span>
                     </span>
                     <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
                   </a>
-                  <a id="almacieloSearchLink" href="https://gsc.coffee" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-[#F8F9FA] hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group" title="국내 최대 생두 수입·유통사 GSC 인터내셔날">
+                  <a id="almacieloSearchLink" href="https://gsc.coffee" target="_blank" class="flex items-center justify-between px-2.5 py-1.5 bg-white hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="국내 최대 생두 수입·유통사 GSC 인터내셔날">
                     <span class="font-bold text-[#1E3B5C] group-hover:text-[#516B50] flex items-center gap-1 truncate text-xs">
                       <span class="text-xs">🏢</span>
                       <span id="almacieloSearchLabel" class="truncate">GSC 생두 도매</span>

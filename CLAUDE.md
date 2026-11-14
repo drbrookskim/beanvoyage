@@ -86,3 +86,4 @@
 | 2026-11-14 | 지도 크게보기(3/4) `position: fixed` 상위 `transform` 컨테이닝 블록 탈출 수정 | `index.html`, `memory.md`, `CLAUDE.md` | `#mapExplorerSection`의 `will-change: transform` / `translateY(0)` 제거 및 확장 시 `document.body` 포탈 이동·복원 처리로 뷰포트 중앙 정렬 보장 |
 | 2026-11-14 | 지도 세로 길이 확장(`lg:h-[395px]`) 및 타일 편집 모드 세로 크기 조절 기능 추가 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 산지매칭 '가공 메커니즘' 타이틀 수준으로 지도 높이 확장 및 타일 편집 모드 내 `−/+`·하단 드래그 크기 조절·`localStorage` 저장 구현 |
 | 2026-11-14 | `항로·핀 표시` 알약 버튼 지도 크게보기 화면 전용 이동 | `index.html`, `memory.md`, `CLAUDE.md` | 우측 상단 컨트롤 바의 `항로·핀 표시` 버튼을 `#svgMapContainer` 내부로 이동하고 크게보기(3/4 확장) 시에만 노출되도록 개선 |
+| 2026-11-15 | 관세청 수입요건 2컬럼·원두 구매처 타일 UI 통일·재검색바/싱글·블렌드 위치 재배치 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 상단 중앙 `#headerSearchGroup`을 맵뷰 컨트롤 바 좌측으로 이동하고 우측에 `#singleBlendToggleWrap` 배치, 관세청 생두/원두 2컬럼 및 통관·유통 카드 타일 UI 통일 |

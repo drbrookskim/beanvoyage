@@ -1537,11 +1537,24 @@
 
 ---
 
+### 296. 관세청 수입요건 2컬럼·원두 구매처 타일 UI 통일·재검색바/싱글·블렌드 위치 재배치
+- **요청 내용**:
+  1. 관세청 수입 요건에서 생두(`0901.11`)와 원두(`0901.21`) 타일을 2컬럼으로 배치.
+  2. 원두 구매처(`#customsChannelsCard`) 타일 UI를 다른 타일(`#recommendationCard`, `#roastTileCard`)과 동일하게 통일.
+  3. 상단 헤더 중앙의 재검색바(`#headerSearchGroup`)를 기존 싱글오리진/블렌드 알약 버튼 위치(맵뷰 컨트롤 바 좌측)로 이동하고, 싱글오리진/블렌드 버튼(`#singleBlendToggleWrap`)을 검색바 우측에 배치.
+- **작업 내용 (`CoBTS/index.html`)**:
+  - **상단 검색바 & 싱글/블렌드 재배치**: `#topHeader` 중앙에서 `#headerSearchGroup`을 제거하고, `#mapExplorerSection` 컨트롤 바 좌측 첫 위치에 배치한 뒤 바로 우측에 `#singleBlendToggleWrap`을 배치.
+  - **관세청 수입 요건 2컬럼**: `생두 0901.11` / `원두 0901.21` 카드를 `grid-cols-1 sm:grid-cols-2 gap-2` 2컬럼으로 배치.
+  - **타일 UI 통일**: `#customsChannelsCard`의 외곽·패딩·헤더(`rounded-xl p-4`, `font-space tracking-wider text-sm`) 및 원두/생두 구매처 서브 카드(`p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60`)를 다른 타일들과 동일한 디자인 시스템으로 정렬.
+- **검증**: `cd CoBTS && npm run build:css` 재빌드, 인라인 `<script>` 문법 검사 통과, `#headerSearchGroup` 단일 존재 및 `#singleBlendToggleWrap` 좌측 배치 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: `항로·핀 표시` 알약 버튼 지도 크게보기 화면 전용 이동 완료.
+- **상태**: 관세청 2컬럼, 원두 구매처 타일 UI 통일, 검색바/싱글·블렌드 위치 재배치 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 지도 크게보기 내 `항로·핀 표시` 토글 동작 확인.
+  1. 필요 시 브라우저에서 맵뷰 상단 검색바 및 통관·유통 카드 확인.
 
 
 
