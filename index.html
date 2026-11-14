@@ -39,8 +39,89 @@
       justify-content: space-between;
     }
     #headerSearchGroup.hidden,
-    #resetSearchBtn.hidden {
+    #resetSearchBtn.hidden,
+    #tileEditModeBtn.hidden {
       display: none !important;
+    }
+
+    /* Map 3/4 Screen Expand Overlay */
+    #mapExpandBackdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(10, 15, 23, 0.72);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+    #mapExpandBackdrop.hidden {
+      display: none !important;
+    }
+    #svgMapContainer.map-expanded-3q {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 75vw !important;
+      height: 75vh !important;
+      max-width: 1400px;
+      z-index: 95 !important;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55) !important;
+    }
+
+    /* Dynamic Tile Edit Mode */
+    .tile-edit-active .dynamic-tile {
+      outline: 2px dashed rgba(48, 103, 157, 0.65);
+      outline-offset: 2px;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, outline-color 0.16s ease;
+    }
+    html.dark .tile-edit-active .dynamic-tile {
+      outline-color: rgba(151, 182, 203, 0.55);
+    }
+    .tile-edit-active .dynamic-tile.tile-dragging {
+      opacity: 0.45;
+      transform: scale(0.985);
+    }
+    .tile-edit-active .map-edit-col.tile-drop-target {
+      background: rgba(48, 103, 157, 0.07);
+      border-radius: 14px;
+      outline: 2px dashed rgba(48, 103, 157, 0.45);
+      outline-offset: 4px;
+    }
+    .tile-edit-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 4px 8px;
+      margin-bottom: 6px;
+      border-radius: 8px;
+      background: rgba(48, 103, 157, 0.1);
+      border: 1px solid rgba(48, 103, 157, 0.25);
+      font-size: 11px;
+      user-select: none;
+    }
+    html.dark .tile-edit-bar {
+      background: rgba(151, 182, 203, 0.1);
+      border-color: rgba(151, 182, 203, 0.25);
+    }
+    .tile-edit-bar-btn {
+      padding: 2px 6px;
+      border-radius: 5px;
+      border: 1px solid rgba(48, 103, 157, 0.28);
+      background: rgba(255, 255, 255, 0.85);
+      color: #1E3B5C;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1.2;
+    }
+    html.dark .tile-edit-bar-btn {
+      background: rgba(18, 22, 28, 0.9);
+      color: #F0F0D8;
+      border-color: rgba(151, 182, 203, 0.3);
+    }
+    .tile-edit-bar-btn:hover {
+      background: #30679D;
+      color: #F0F0D8;
     }
 
     /* Coffee Dossier Print & Modal Enhancements */
@@ -2062,6 +2143,11 @@
     </div>
 
     <div class="flex items-center gap-2.5 font-mono-code text-[#1E3B5C] dark:text-[#F0F0D8] shrink-0 text-[11px]">
+      <button id="tileEditModeBtn" type="button" class="w-8 h-8 rounded-full border border-[#CBD5E1] dark:border-[#232D3B] bg-white/90 hover:bg-[#F8F9FA] dark:bg-[#12161C] dark:hover:bg-[#FFFFFF] dark:hover:text-[#0A0F17] text-[#1E3B5C] dark:text-[#F0F0D8] flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer shadow-2xs hidden shrink-0" title="타일 배치 편집 모드" aria-label="타일 배치 편집 모드 전환" aria-pressed="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 15a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zm10 0a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+        </svg>
+      </button>
       <button id="resetSearchBtn" class="w-8 h-8 rounded-full border border-[#CBD5E1] dark:border-[#232D3B] bg-white/90 hover:bg-[#F8F9FA] dark:bg-[#12161C] dark:hover:bg-[#FFFFFF] dark:hover:text-[#0A0F17] text-[#1E3B5C] dark:text-[#F0F0D8] flex items-center justify-center transition-all duration-200 active:scale-90 cursor-pointer shadow-2xs hidden shrink-0" title="초기 화면으로" aria-label="초기 화면으로 이동">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3m10-11l-2-2m2 2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -2244,12 +2330,25 @@
         </div>
       </div>
 
-      <!-- ================= 2-COLUMN WORKSPACE: LEFT (1:Map, 2:Origin Tile, 3:4 Sensory Axes, 4:Customs & Channels) | RIGHT (5:Origin Match, 6:Roasting) ================= -->
-      <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+      <!-- ================= MAP 3/4 EXPAND BACKDROP & TILE EDIT BANNER ================= -->
+      <div id="mapExpandBackdrop" class="hidden" onclick="setMapExpanded(false)"></div>
+      <div id="tileEditBanner" class="hidden mb-3 rounded-xl border border-[#30679D]/35 dark:border-[#97B6CB]/35 bg-[#F0F0D8]/80 dark:bg-[#141A23] px-3.5 py-2 flex flex-wrap items-center justify-between gap-2 text-xs text-[#1E3B5C] dark:text-[#F0F0D8]">
+        <div class="flex items-center gap-2 font-medium">
+          <span class="inline-flex items-center justify-center w-5 h-5 rounded-md bg-[#30679D] text-[#F0F0D8] text-[11px] font-bold">✎</span>
+          <span><strong>타일 배치 편집 모드</strong> — 타일을 드래그하거나 각 타일 상단의 <code class="font-mono-code">▲ ▼ ⇄</code> 버튼으로 위치·컬럼을 변경하세요. (자동 저장)</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="resetTileLayout()" class="px-2.5 py-1 rounded-lg border border-[#30679D]/40 bg-white dark:bg-[#0A0F17] hover:bg-[#30679D] hover:text-[#F0F0D8] font-semibold transition-colors cursor-pointer">기본 배치 복원 ↺</button>
+          <button type="button" onclick="setTileEditMode(false)" class="px-2.5 py-1 rounded-lg bg-[#30679D] text-[#F0F0D8] hover:bg-[#1E3B5C] font-semibold transition-colors cursor-pointer">편집 완료 ✓</button>
+        </div>
+      </div>
+
+      <!-- ================= 2-COLUMN WORKSPACE: EQUAL 50:50 | LEFT (1:Map, 2:Origin Tile, 3:4 Sensory Axes, 4:Customs & Channels) | RIGHT (5:Origin Match, 6:Roasting) ================= -->
+      <div id="mapWorkspaceGrid" class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 items-start">
         <!-- LEFT COLUMN (1, 2, 3, 4) -->
-        <div class="lg:col-span-5 space-y-3 min-w-0 flex flex-col">
+        <div id="mapColLeft" class="space-y-3 min-w-0 flex flex-col map-edit-col">
           <!-- 1. MAP -->
-          <div class="relative w-full h-[250px] sm:h-[280px] overflow-hidden select-none rounded-xl border border-[#BDB989] shadow-lg map-interactive-stage cursor-grab" id="svgMapContainer">
+          <div class="relative w-full h-[250px] sm:h-[280px] overflow-hidden select-none rounded-xl border border-[#BDB989] shadow-lg map-interactive-stage cursor-grab dynamic-tile" id="svgMapContainer" data-tile-id="svgMapContainer" data-tile-label="1. 세계 지도">
             
             <!-- 3D Navigation Plane (Supports Real-Time Pan, Zoom 1x~18x, Pitch & Bearing) -->
             <div id="nav3DStage" class="nav-3d-plane">
@@ -2725,9 +2824,19 @@
               </svg>
             </button>
           </div>
+          <!-- Bottom-Right Expand / Restore Map Button (3/4 screen overlay) -->
+          <button type="button" id="mapExpandToggleBtn" onpointerdown="event.stopPropagation()" onclick="event.stopPropagation(); toggleMapExpand();" class="absolute bottom-3 right-3 z-20 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/95 dark:bg-[#0D131D]/95 backdrop-blur-md border border-[#BDB989]/80 dark:border-[#30679D]/70 text-[#1E3B5C] dark:text-[#F0F0D8] hover:bg-[#30679D] hover:text-[#F0F0D8] dark:hover:bg-[#30679D] text-[11px] font-bold shadow-md transition-all cursor-pointer active:scale-95" title="지도 크게보기 (화면 3/4)">
+            <svg id="mapExpandIconExpand" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+            <svg id="mapExpandIconClose" class="w-3.5 h-3.5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span id="mapExpandBtnLabel">크게보기</span>
+          </button>
         </div>
           <!-- 2. DOCKED ORIGIN SEARCH RESULT TILE -->
-          <div id="editorialOriginPopup" class="w-full select-none">
+          <div id="editorialOriginPopup" class="w-full select-none dynamic-tile" data-tile-id="editorialOriginPopup" data-tile-label="2. 원산지 결과 타일">
             <div class="editorial-popup-card" onpointerdown="event.stopPropagation()" onclick="event.stopPropagation()">
               <!-- 1. 상단 메타 바 (Origin & HS 코드) -->
               <div class="editorial-top-meta">
@@ -2793,7 +2902,7 @@
             </div>
           </div>
           <!-- 3. 4 SENSORY AXES -->
-          <div id="sensorySlidersBlock" class="w-full bg-white sketch-border rounded-xl sm:rounded-2xl p-2 sm:p-3 flex flex-col shadow-sm border border-[#1E3B5C]/40 z-10">
+          <div id="sensorySlidersBlock" class="w-full bg-white sketch-border rounded-xl sm:rounded-2xl p-2 sm:p-3 flex flex-col shadow-sm border border-[#1E3B5C]/40 z-10 dynamic-tile" data-tile-id="sensorySlidersBlock" data-tile-label="3. 4대 감각축">
         <div>
           <!-- Header: Title & Roast Mode Toggle -->
           <div class="flex flex-row items-center justify-between lg:flex-col lg:items-stretch gap-1 pb-1.5 sm:pb-2 mb-2 sm:mb-2.5 border-b border-[#BDB989]/60">
@@ -2979,7 +3088,7 @@
 
       </div>
           <!-- 4. CUSTOMS & CHANNELS -->
-          <div id="customsChannelsCard" class="w-full bg-white sketch-border rounded-2xl p-3 shadow-sm flex flex-col justify-between border border-[#1E3B5C]/40">
+          <div id="customsChannelsCard" class="w-full bg-white sketch-border rounded-2xl p-3 shadow-sm flex flex-col justify-between border border-[#1E3B5C]/40 dynamic-tile" data-tile-id="customsChannelsCard" data-tile-label="4. 통관·유통">
           <div>
             <div class="flex items-center justify-between pb-2 mb-2 border-b border-[#BDB989]/60">
               <div class="flex items-center gap-1.5 shrink-0">
@@ -3112,9 +3221,9 @@
         </div>
         </div>
         <!-- RIGHT COLUMN (5, 6) -->
-        <div class="lg:col-span-7 space-y-4 min-w-0 flex flex-col">
+        <div id="mapColRight" class="space-y-4 min-w-0 flex flex-col map-edit-col">
           <!-- 5. ORIGIN MATCHING / AI BLEND -->
-          <div id="recommendationCard" class="bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between">
+          <div id="recommendationCard" class="bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="recommendationCard" data-tile-label="5. 산지 매칭 분석">
           <div>
             <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#BDB989]/60">
               <div class="flex items-center gap-1.5">
@@ -3315,7 +3424,7 @@
             기준 1400m 고도 보정 적용 (±1.0 제한)</div>
         </div>
           <!-- 6. ROASTING -->
-          <div id="roastTileCard" class="bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between">
+          <div id="roastTileCard" class="bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="roastTileCard" data-tile-label="6. 로스팅">
           <div class="space-y-2.5">
             <div class="flex items-center justify-between pb-2 border-b border-[#BDB989]/60">
               <div class="flex items-center gap-1.5">
@@ -4117,6 +4226,8 @@
 
       const resetBtn = document.getElementById("resetSearchBtn");
       if (resetBtn) resetBtn.classList.remove("hidden");
+      const tileEditBtn = document.getElementById("tileEditModeBtn");
+      if (tileEditBtn) tileEditBtn.classList.remove("hidden");
 
       const mapSec = document.getElementById("mapExplorerSection");
       if (mapSec) {
@@ -8855,12 +8966,10 @@
       // Keep Pins & Quick Flag Strip in sync with current active origin
       renderMapPins();
 
-      if (autoNavigate && (prevRegionId !== region.id || mapState.zoom > 1.25)) {
-        // Keep at global framing scale (~1.05x) matching user reference image
-        const navZoom = Math.min(Math.max(mapState.zoom, 1.05), 1.15);
-        const targetX = navZoom <= 1.25 ? (region.svgCoords.x * 0.35 + 370 * 0.65) : region.svgCoords.x;
-        const targetY = navZoom <= 1.25 ? (region.svgCoords.y * 0.35 + 205 * 0.65) : region.svgCoords.y;
-        animateCameraTo(targetX, targetY, navZoom, 680, prevRegionId !== region.id);
+      if (autoNavigate && (prevRegionId !== region.id || mapState.zoom < 3.0)) {
+        // Zoom in on the selected origin
+        const navZoom = Math.max(mapState.zoom, 4.5);
+        animateCameraTo(region.svgCoords.x, region.svgCoords.y, navZoom, 680, prevRegionId !== region.id);
       } else {
         renderRealTimeNavigationCanvas();
       }
@@ -8892,10 +9001,8 @@
 
         if (flyToCadastral) {
           setTimeout(() => {
-            // Taste search target zoom: world overview ~1.05x matching user attached reference
-            const targetX = bestSingle.region.svgCoords.x * 0.35 + 370 * 0.65;
-            const targetY = bestSingle.region.svgCoords.y * 0.35 + 205 * 0.65;
-            animateCameraTo(targetX, targetY, 1.05, 680, false);
+            // Zoom in on the best matched origin
+            animateCameraTo(bestSingle.region.svgCoords.x, bestSingle.region.svgCoords.y, 4.5, 680, true);
           }, 120);
         }
       }
@@ -10845,6 +10952,10 @@
       if (headerSearch) headerSearch.classList.add("hidden");
       const resetBtn = document.getElementById("resetSearchBtn");
       if (resetBtn) resetBtn.classList.add("hidden");
+      const tileEditBtn = document.getElementById("tileEditModeBtn");
+      if (tileEditBtn) tileEditBtn.classList.add("hidden");
+      if (typeof setTileEditMode === "function") setTileEditMode(false);
+      if (typeof setMapExpanded === "function") setMapExpanded(false);
 
       // Restore Screen 1 Initial Hero Search
       const heroSec = document.getElementById("heroSearchSection");
@@ -10885,6 +10996,274 @@
         navigateToFirstPage();
       });
     }
+
+    // ================= MAP 3/4 EXPAND OVERLAY =================
+    let isMapExpanded = false;
+    function setMapExpanded(expanded) {
+      const mapBox = document.getElementById("svgMapContainer");
+      const backdrop = document.getElementById("mapExpandBackdrop");
+      const label = document.getElementById("mapExpandBtnLabel");
+      const iconExpand = document.getElementById("mapExpandIconExpand");
+      const iconClose = document.getElementById("mapExpandIconClose");
+      if (!mapBox) return;
+
+      isMapExpanded = Boolean(expanded);
+      mapBox.classList.toggle("map-expanded-3q", isMapExpanded);
+      if (backdrop) backdrop.classList.toggle("hidden", !isMapExpanded);
+      if (label) label.textContent = isMapExpanded ? "축소" : "크게보기";
+      if (iconExpand) iconExpand.classList.toggle("hidden", isMapExpanded);
+      if (iconClose) iconClose.classList.toggle("hidden", !isMapExpanded);
+      document.body.style.overflow = isMapExpanded ? "hidden" : "";
+
+      requestAnimationFrame(() => {
+        if (typeof renderRealTimeNavigationCanvas === "function") {
+          renderRealTimeNavigationCanvas();
+        }
+      });
+    }
+
+    function toggleMapExpand() {
+      setMapExpanded(!isMapExpanded);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isMapExpanded) {
+        setMapExpanded(false);
+      }
+    });
+
+    // ================= DYNAMIC TILE EDIT MODE =================
+    const TILE_LAYOUT_STORAGE_KEY = "cobts_map_tile_layout_v1";
+    const DEFAULT_TILE_LAYOUT = {
+      left: ["svgMapContainer", "editorialOriginPopup", "sensorySlidersBlock", "customsChannelsCard"],
+      right: ["recommendationCard", "roastTileCard"],
+    };
+    let isTileEditMode = false;
+    let draggedTileId = null;
+
+    function getCurrentTileLayout() {
+      const colLeft = document.getElementById("mapColLeft");
+      const colRight = document.getElementById("mapColRight");
+      const getIds = (col) =>
+        col
+          ? Array.from(col.children)
+              .map((el) => el.getAttribute("data-tile-id"))
+              .filter(Boolean)
+          : [];
+      return {
+        left: getIds(colLeft),
+        right: getIds(colRight),
+      };
+    }
+
+    function saveTileLayout() {
+      try {
+        localStorage.setItem(TILE_LAYOUT_STORAGE_KEY, JSON.stringify(getCurrentTileLayout()));
+      } catch (_) {}
+    }
+
+    function applyTileLayout(layout) {
+      const colLeft = document.getElementById("mapColLeft");
+      const colRight = document.getElementById("mapColRight");
+      if (!colLeft || !colRight || !layout) return;
+
+      const tileById = {};
+      document.querySelectorAll(".dynamic-tile[data-tile-id]").forEach((el) => {
+        tileById[el.getAttribute("data-tile-id")] = el;
+      });
+
+      const placed = new Set();
+      (layout.left || []).forEach((id) => {
+        if (tileById[id]) {
+          colLeft.appendChild(tileById[id]);
+          placed.add(id);
+        }
+      });
+      (layout.right || []).forEach((id) => {
+        if (tileById[id]) {
+          colRight.appendChild(tileById[id]);
+          placed.add(id);
+        }
+      });
+      Object.keys(tileById).forEach((id) => {
+        if (!placed.has(id)) colRight.appendChild(tileById[id]);
+      });
+
+      requestAnimationFrame(() => {
+        if (typeof renderRealTimeNavigationCanvas === "function") {
+          renderRealTimeNavigationCanvas();
+        }
+      });
+    }
+
+    function resetTileLayout() {
+      try {
+        localStorage.removeItem(TILE_LAYOUT_STORAGE_KEY);
+      } catch (_) {}
+      applyTileLayout(DEFAULT_TILE_LAYOUT);
+      if (isTileEditMode) injectTileEditBars();
+    }
+
+    function moveTile(tileId, direction) {
+      const tile = document.querySelector(`.dynamic-tile[data-tile-id="${tileId}"]`);
+      if (!tile || !tile.parentElement) return;
+      const colLeft = document.getElementById("mapColLeft");
+      const colRight = document.getElementById("mapColRight");
+      const parent = tile.parentElement;
+
+      if (direction === "up") {
+        const prev = tile.previousElementSibling;
+        if (prev) parent.insertBefore(tile, prev);
+      } else if (direction === "down") {
+        const next = tile.nextElementSibling;
+        if (next) parent.insertBefore(next, tile);
+      } else if (direction === "swap") {
+        const targetCol = parent === colLeft ? colRight : colLeft;
+        if (targetCol) targetCol.appendChild(tile);
+      }
+
+      saveTileLayout();
+      injectTileEditBars();
+      requestAnimationFrame(() => {
+        if (typeof renderRealTimeNavigationCanvas === "function") {
+          renderRealTimeNavigationCanvas();
+        }
+      });
+    }
+
+    function injectTileEditBars() {
+      document.querySelectorAll(".tile-edit-bar").forEach((bar) => bar.remove());
+      const tiles = document.querySelectorAll(".dynamic-tile[data-tile-id]");
+      tiles.forEach((tile) => {
+        tile.draggable = isTileEditMode;
+        if (!isTileEditMode) return;
+
+        const tileId = tile.getAttribute("data-tile-id");
+        const tileLabel = tile.getAttribute("data-tile-label") || tileId;
+        const bar = document.createElement("div");
+        bar.className = "tile-edit-bar";
+        bar.setAttribute("onpointerdown", "event.stopPropagation()");
+        bar.innerHTML = `
+          <span class="font-bold text-[#1E3B5C] dark:text-[#F0F0D8] truncate cursor-grab">⠿ ${tileLabel}</span>
+          <div class="flex items-center gap-1 shrink-0">
+            <button type="button" class="tile-edit-bar-btn" title="위로 이동" onclick="event.stopPropagation(); moveTile('${tileId}', 'up')">▲</button>
+            <button type="button" class="tile-edit-bar-btn" title="아래로 이동" onclick="event.stopPropagation(); moveTile('${tileId}', 'down')">▼</button>
+            <button type="button" class="tile-edit-bar-btn" title="반대 컬럼으로 이동" onclick="event.stopPropagation(); moveTile('${tileId}', 'swap')">⇄</button>
+          </div>
+        `;
+        tile.insertBefore(bar, tile.firstChild);
+      });
+    }
+
+    function setTileEditMode(active) {
+      isTileEditMode = Boolean(active);
+      if (isTileEditMode && isMapExpanded) setMapExpanded(false);
+
+      const grid = document.getElementById("mapWorkspaceGrid");
+      const banner = document.getElementById("tileEditBanner");
+      const btn = document.getElementById("tileEditModeBtn");
+
+      if (grid) grid.classList.toggle("tile-edit-active", isTileEditMode);
+      if (banner) banner.classList.toggle("hidden", !isTileEditMode);
+      if (btn) {
+        btn.setAttribute("aria-pressed", String(isTileEditMode));
+        btn.classList.toggle("ring-2", isTileEditMode);
+        btn.classList.toggle("ring-[#30679D]", isTileEditMode);
+        btn.classList.toggle("bg-[#30679D]", isTileEditMode);
+        btn.classList.toggle("text-[#F0F0D8]", isTileEditMode);
+      }
+      injectTileEditBars();
+    }
+
+    function toggleTileEditMode() {
+      setTileEditMode(!isTileEditMode);
+    }
+
+    (function initTileEditSystem() {
+      const btn = document.getElementById("tileEditModeBtn");
+      if (btn) btn.addEventListener("click", toggleTileEditMode);
+
+      document.querySelectorAll(".dynamic-tile[data-tile-id]").forEach((tile) => {
+        tile.addEventListener("dragstart", (e) => {
+          if (!isTileEditMode) {
+            e.preventDefault();
+            return;
+          }
+          draggedTileId = tile.getAttribute("data-tile-id");
+          tile.classList.add("tile-dragging");
+          if (e.dataTransfer) {
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text/plain", draggedTileId);
+          }
+        });
+        tile.addEventListener("dragend", () => {
+          tile.classList.remove("tile-dragging");
+          draggedTileId = null;
+          document.querySelectorAll(".map-edit-col").forEach((c) => c.classList.remove("tile-drop-target"));
+        });
+        tile.addEventListener("dragover", (e) => {
+          if (!isTileEditMode || !draggedTileId) return;
+          e.preventDefault();
+        });
+        tile.addEventListener("drop", (e) => {
+          if (!isTileEditMode || !draggedTileId) return;
+          e.preventDefault();
+          e.stopPropagation();
+          const targetId = tile.getAttribute("data-tile-id");
+          if (!targetId || targetId === draggedTileId) return;
+          const draggedEl = document.querySelector(`.dynamic-tile[data-tile-id="${draggedTileId}"]`);
+          const targetCol = tile.parentElement;
+          if (!draggedEl || !targetCol) return;
+          const rect = tile.getBoundingClientRect();
+          const insertAfter = e.clientY > rect.top + rect.height / 2;
+          targetCol.insertBefore(draggedEl, insertAfter ? tile.nextSibling : tile);
+          saveTileLayout();
+          injectTileEditBars();
+          requestAnimationFrame(() => {
+            if (typeof renderRealTimeNavigationCanvas === "function") {
+              renderRealTimeNavigationCanvas();
+            }
+          });
+        });
+      });
+
+      document.querySelectorAll(".map-edit-col").forEach((col) => {
+        col.addEventListener("dragover", (e) => {
+          if (!isTileEditMode || !draggedTileId) return;
+          e.preventDefault();
+          col.classList.add("tile-drop-target");
+        });
+        col.addEventListener("dragleave", () => {
+          col.classList.remove("tile-drop-target");
+        });
+        col.addEventListener("drop", (e) => {
+          if (!isTileEditMode || !draggedTileId) return;
+          e.preventDefault();
+          col.classList.remove("tile-drop-target");
+          const draggedEl = document.querySelector(`.dynamic-tile[data-tile-id="${draggedTileId}"]`);
+          if (draggedEl) {
+            col.appendChild(draggedEl);
+            saveTileLayout();
+            injectTileEditBars();
+            requestAnimationFrame(() => {
+              if (typeof renderRealTimeNavigationCanvas === "function") {
+                renderRealTimeNavigationCanvas();
+              }
+            });
+          }
+        });
+      });
+
+      try {
+        const raw = localStorage.getItem(TILE_LAYOUT_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && Array.isArray(parsed.left) && Array.isArray(parsed.right)) {
+            applyTileLayout(parsed);
+          }
+        }
+      } catch (_) {}
+    })();
 
     // ================= MINTLIFY-INSPIRED 3D TWISTED RIBBON WAVE & TRAVELING COFFEE BEANS ENGINE =================
     (function initMintlifyBeanBackground() {

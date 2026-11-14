@@ -1489,11 +1489,26 @@
 
 ---
 
+### 292. 맵뷰 50:50 균등 컬럼 · 원산지 자동 줌인 · 3/4 크게보기 · 다이나믹 타일 배치 편집 모드 구현
+- **요청 내용**:
+  1. 두 컬럼 가로 길이를 50:50으로 동일하게 맞춤.
+  2. 지도 표시 시 사용자가 선택한 원산지를 줌인하여 포커싱.
+  3. 지도 우측 하단에 `크게보기` 버튼 추가 및 클릭 시 화면 3/4 크기(`75vw` × `75vh`)로 확장.
+  4. 우측 상단 홈 버튼(`#resetSearchBtn`) 좌측에 다이나믹 타일 편집 모드 아이콘(`#tileEditModeBtn`) 추가.
+- **작업 내용 (`CoBTS/index.html`)**:
+  - **균등 2컬럼**: `#mapWorkspaceGrid`를 `lg:grid-cols-12` (`5:7`)에서 `lg:grid-cols-2` (`50%:50%`)로 변경하고 `#mapColLeft` / `#mapColRight` 컨테이너에 `map-edit-col` 적용.
+  - **선택 원산지 자동 줌인**: `selectRegion()`과 `renderEvaluation()`에서 선택된 산지 좌표(`region.svgCoords.x, region.svgCoords.y`)를 중심으로 `4.5x` 배율로 부드럽게 줌인하도록 수정.
+  - **지도 3/4 크게보기**: `#svgMapContainer` 우측 하단에 `#mapExpandToggleBtn`(`크게보기` / `축소`) 및 백드롭 `#mapExpandBackdrop` 추가. 클릭 시 `.map-expanded-3q` (`75vw × 75vh` 고정 오버레이)로 확장되며 `Escape`·백드롭·버튼 클릭으로 복원, 리사이즈 직후 `renderRealTimeNavigationCanvas()` 재렌더링.
+  - **다이나믹 타일 배치 편집 모드**: `#resetSearchBtn` 바로 좌측에 `#tileEditModeBtn` 추가(맵뷰 진입 시 노출, 검색뷰 복귀 시 숨김). 활성화 시 `#tileEditBanner`와 각 타일(`.dynamic-tile`) 상단에 드래그 핸들 + `▲` / `▼` / `⇄` 이동 바(`.tile-edit-bar`)를 주입하고, 컬럼 간 드래그 앤 드롭·`기본 배치 복원 ↺`·`localStorage`(`cobts_map_tile_layout_v1`) 자동 저장/복원을 지원.
+- **검증**: `cd CoBTS && npm run build:css` 재빌드 완료; 인라인 `<script>` 문법 검사(2개 스크립트 통과), `lg:grid-cols-2`, `#mapExpandToggleBtn`, `#tileEditModeBtn`, `4.5` 줌인 적용 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 맵뷰 2컬럼(1~6번) 레이아웃 개편 및 우측 상단 `도착항` 제거 완료.
+- **상태**: 맵뷰 50:50 균등 컬럼, 선택 원산지 4.5x 줌인, 지도 3/4 크게보기, 다이나믹 타일 배치 편집 모드 구현 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 3D 로스팅 뷰 및 클립보드 복사 동작 확인.
+  1. 필요 시 브라우저에서 지도 3/4 확대 및 타일 드래그 편집 동작 확인.
 
 
 
