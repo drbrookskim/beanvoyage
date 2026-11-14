@@ -1569,11 +1569,19 @@
 
 ---
 
+### 299. 원산지 결과 타일(`.editorial-popup-card`) 동일 그림자·외곽선 적용
+- **요청 내용**: 2번 원산지 결과 타일(`#editorialOriginPopup > .editorial-popup-card`)에도 다른 타일들과 동일한 그림자 효과 적용.
+- **작업 내용 (`CoBTS/index.html`)**:
+  - `.editorial-popup-card`의 `border`를 `1px solid var(--ink-dark, #1E3B5C)`로, `box-shadow`를 `2px 2px 0px rgba(31, 37, 35, 0.85), 0 12px 28px -8px rgba(45, 30, 18, 0.12)`로 변경해 다른 타일(`.sketch-border`)과 통일된 입체감 구현.
+- **검증**: 인라인 `<script>` 문법 검사 통과 및 `.editorial-popup-card` 그림자·외곽선 적용 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 맵뷰 상단 1·2·3번 알약 컨트롤 바 `.sketch-border` 그림자 통일 완료.
+- **상태**: 원산지 결과 타일(`.editorial-popup-card`) `.sketch-border` 동일 그림자 적용 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 전체 타일·상단 컨트롤 바 입체감 확인.
+  1. 필요 시 브라우저에서 전체 타일 일체감 확인.
 
 
 
