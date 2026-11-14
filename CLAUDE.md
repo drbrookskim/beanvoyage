@@ -10,6 +10,9 @@
 - **검색뷰 (Search View)**: 첫 페이지 검색바가 있는 화면 (`heroSearchSection` / Screen 1)
 - **맵뷰 (Map View)**: 지도와 산지·배전·로스터리 상세내용이 있는 화면 (`mapSection` / Screen 2)
 
+**응답·제안 원칙 (Sample-First Rule):**
+- **개선안·추천안을 제안할 때는 별도 요청이 없어도 항상 시각적으로 비교·확인할 수 있는 샘플(HTML 프리뷰 파일 등)을 먼저 만들어서 함께 제시한다.**
+
 **현재 진행 상태 & 다음 작업 재개 안내 (NEXT RESUME POINT):**
 - **현재 완료 상태**: Top Bean of the Week / Month 기능 1단계(UI·인터랙션·리포트 씰 연동) 및 2단계(네이버 API 기반 CTS 가중합 수집 엔진 `scripts/fetch-top-beans.js` 및 `npm run update:trends`) 완료.
 - **다음 작업 시작 지점**: **3단계 (자동 주기 갱신 파이프라인 구축)** 부터 진행.
