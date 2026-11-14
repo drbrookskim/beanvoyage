@@ -1432,8 +1432,19 @@
 
 ---
 
+### 286. 싱글오리진 검증 로스터리 직영몰 우선 추천(방향 1) 및 오픈마켓 라벨 정직화
+- **요청 배경**: 네이버 쇼핑(`search.shopping.naver.com`) 특성상 `-블렌드 -블랜드`를 붙여도 광고 및 다산지 키워드 스팸 상품(`테라로사 올데이 블렌드` 등)이 완전히 차단되지 않는 구조적 한계 존재.
+- **작업 내용**:
+  - `CoBTS/index.html` 싱글 뷰(`#singleOriginView`)에 `#verifiedSingleMatchSection` 및 `VERIFIED_SINGLES_ROASTERIES` 데이터(`모모스커피`, `커피리브레`, `빈브라더스`, `테라로사`, `프릳츠`) + `renderVerifiedSingleMatches(region)` 추가.
+  - 선택한 산지(`countryKey`) 주력 로스터리 상위 3곳(모모스커피는 `?keyword=국가명` 직결)과 생두(알마씨엘로·GSC) 링크를 싱글 카드 내 1순위로 표시.
+  - 좌측 `로스터리 Pool`에 `커피리브레 ↗` 추가 및 `roasterMomosLink` 산지 키워드 연동.
+  - 오픈마켓 검색 버튼 라벨을 `오픈마켓 검색 (싱글 필터)` / `네이버 오픈마켓`으로 변경하고 광고·블렌드 혼입 주의 툴팁 추가.
+- **검증**: `npm run build:css` 빌드 완료, 인라인 `<script>` 문법 검사 통과, Node.js 통합 테스트(`콜롬비아 나리뇨`)에서 `verifiedSingleMatchBox` 및 링크 정상 생성 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 싱글오리진 네이버 쇼핑 검색어(`싱글오리진 원두 -블렌드 -블랜드`) 공통 헬퍼 적용 및 배포 완료.
+- **상태**: 싱글오리진 검증 로스터리 직영몰 우선 추천(`VERIFIED_SINGLES_ROASTERIES`) 및 오픈마켓 보조화(방향 1) 구현·배포 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 필요 시 브라우저에서 3D 로스팅 뷰 및 클립보드 복사 동작 확인.

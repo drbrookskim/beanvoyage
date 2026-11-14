@@ -2725,7 +2725,7 @@
                 <a id="editorialActionNaver" class="editorial-action-card" href="#" onclick="openHudChannel('naverRoasted'); return false;" title="네이버 쇼핑에서 검색 결과 보기">
                   <div class="editorial-action-info">
                     <div id="editorialBrandIconNaver" class="editorial-brand-icon naver">N</div>
-                    <span id="editorialTitleNaver" class="editorial-action-title">싱글 네이버 쇼핑</span>
+                    <span id="editorialTitleNaver" class="editorial-action-title">네이버 오픈마켓</span>
                     <span id="editorialSubNaver" class="hidden"></span>
                   </div>
                   <span class="editorial-arrow">↗</span>
@@ -3073,6 +3073,20 @@
                   <div id="ontologyFlavorTags" class="flex flex-wrap gap-1"></div>
                 </div>
               </div>
+
+              <!-- Direction 1: Verified Roastery Single-Origin Channels (No Blend Spam) -->
+              <div id="verifiedSingleMatchSection" class="p-2.5 bg-white border border-[#516B50]/60 rounded-lg space-y-1.5 mt-1.5 shadow-xs text-xs">
+                <div class="flex items-center justify-between gap-1 border-b border-[#BDB989]/40 pb-1">
+                  <span class="font-bold text-[#1E3B5C] flex items-center gap-1 text-[11.5px]">
+                    <span>🏛️</span> 검증 로스터리 싱글오리진 직영몰
+                  </span>
+                  <span class="font-mono-code px-1.5 py-0.2 rounded bg-[#516B50]/15 text-[#516B50] font-semibold text-[10px]">광고·블렌드 노이즈 차단</span>
+                </div>
+                <p class="text-[10px] text-[#5A758D] leading-snug">
+                  오픈마켓 검색에는 광고·다산지 묶음 블렌드가 섞일 수 있어, 직거래 로스터리의 <strong class="text-[#1E3B5C]">공식 싱글오리진 라인업</strong>을 1순위로 추천합니다. (시즌별 입고 변동)
+                </p>
+                <div id="verifiedSingleMatchBox" class="space-y-1.5"></div>
+              </div>
             </div>
 
             <!-- AI Blend View -->
@@ -3399,13 +3413,14 @@
                     <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
                   </a>
                 </div>
-                <!-- 대표 스페셜티 로스터리 Pool (모모스커피 · 테라로사 · 프릳츠 · 빈브라더스) -->
+                <!-- 대표 스페셜티 로스터리 Pool (모모스커피 · 커피리브레 · 빈브라더스 · 테라로사 · 프릳츠) -->
                 <div class="pt-1 flex flex-wrap items-center gap-1 text-[10px] font-mono-code">
                   <span class="text-[#5A758D] shrink-0 mr-0.5">로스터리 Pool:</span>
                   <a id="roasterMomosLink" href="https://momos.co.kr/shop" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#1E3B5C]/10 hover:bg-[#1E3B5C] hover:text-white text-[#1E3B5C] font-semibold transition" title="모모스커피 공식몰 바로가기">모모스커피 ↗</a>
+                  <a href="https://coffeelibre.kr" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="커피리브레 공식몰 (싱글오리진·골드문트)">커피리브레 ↗</a>
+                  <a href="https://www.beanbrothers.co.kr" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="빈브라더스 공식몰">빈브라더스 ↗</a>
                   <a href="https://terarosa.com" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="테라로사 공식몰">테라로사 ↗</a>
                   <a href="https://fritz.co.kr" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="프릳츠 공식몰">프릳츠 ↗</a>
-                  <a href="https://www.beanbrothers.co.kr" target="_blank" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/25 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="빈브라더스 공식몰">빈브라더스 ↗</a>
                 </div>
               </div>
 
@@ -8023,7 +8038,7 @@
             if (naverTitle) naverTitle.textContent = "비슷한 시판 블렌드";
             if (globalTitle) globalTitle.textContent = "블렌드 아마존 직구";
           } else {
-            if (naverTitle) naverTitle.textContent = "싱글 네이버 쇼핑";
+            if (naverTitle) naverTitle.textContent = "네이버 오픈마켓";
             if (globalTitle) globalTitle.textContent = "싱글 아마존 직구";
           }
           if (naverSub) naverSub.textContent = "";
@@ -8669,7 +8684,7 @@
         window._blendCountries = null;
         window._blendCountriesEn = null;
 
-        if (naverLabel) naverLabel.textContent = `네이버 쇼핑 보기`;
+        if (naverLabel) naverLabel.textContent = `오픈마켓 검색 (싱글 필터)`;
         if (amazonLabel) amazonLabel.textContent = "Amazon 직구";
         if (naverGreenLabel) naverGreenLabel.textContent = "알마씨엘로 생두";
         if (almaLabel) almaLabel.textContent = "GSC 생두 도매";
@@ -8680,12 +8695,15 @@
 
         if (naverRoasted) {
           naverRoasted.href = buildSingleOriginNaverUrl(activeRegionRef.countryName, activeRegionRef.name);
-          naverRoasted.title = `네이버 쇼핑에서 '${qRoastedText}' 검색 결과 보기`;
+          naverRoasted.title = `네이버 오픈마켓 검색('${qRoastedText}') — 광고 및 묶음 블렌드가 함께 노출될 수 있으니 '싱글오리진' 표기를 확인하세요`;
         }
         const momosLink = document.getElementById("roasterMomosLink");
         if (momosLink) {
-          momosLink.href = `https://momos.co.kr/shop`;
-          momosLink.title = `모모스커피 공식몰 바로가기`;
+          momosLink.href = `https://momos.co.kr/shop?keyword=${encodeURIComponent(activeRegionRef.countryName)}`;
+          momosLink.title = `모모스커피 공식몰에서 '${activeRegionRef.countryName}' 검색`;
+        }
+        if (typeof renderVerifiedSingleMatches === "function") {
+          renderVerifiedSingleMatches(activeRegionRef);
         }
         if (amazonRoasted) {
           amazonRoasted.href = `https://www.amazon.com/s?k=${encodeURIComponent(amazonRoastedQuery)}`;
@@ -9244,6 +9262,99 @@
           <div class="text-[10px] text-[#8C4B2E] font-medium">${diffText}</div>
         </div>
       `).join("");
+    }
+
+    // 방향 1: 국내 스페셜티 로스터리 싱글오리진 직영 채널 Pool (시즌별 입고 변동, 산지 키워드·공식몰 연결)
+    const VERIFIED_SINGLES_ROASTERIES = [
+      {
+        id: "momos",
+        roaster: "모모스커피",
+        tagline: "산지 직거래 싱글 에스테이트",
+        strongOrigins: ["ethiopia", "colombia", "costarica", "guatemala"],
+        note: "공식몰 산지 키워드 직접 검색 지원 · 시즌별 싱글오리진/정기배송 운영",
+        getUrl: (region) => `https://momos.co.kr/shop?keyword=${encodeURIComponent(region.countryName || "")}`
+      },
+      {
+        id: "libre",
+        roaster: "커피리브레",
+        tagline: "다이렉트 트레이드 · 골드문트",
+        strongOrigins: ["ethiopia", "kenya", "costarica", "colombia", "guatemala"],
+        note: "Single Origin 카테고리 운영 · 마이크로랏·COE·생두 소분까지 제공",
+        getUrl: () => "https://coffeelibre.kr"
+      },
+      {
+        id: "beanbrothers",
+        roaster: "빈브라더스",
+        tagline: "제철 시즈널 · 이달의 싱글오리진",
+        strongOrigins: ["ethiopia", "colombia", "brazil"],
+        note: "매월 엄선되는 싱글 오리진 200g 단품 및 샘플 세트 운영",
+        getUrl: () => "https://www.beanbrothers.co.kr"
+      },
+      {
+        id: "terarosa",
+        roaster: "테라로사",
+        tagline: "농장별 스페셜티 싱글오리진",
+        strongOrigins: ["ethiopia", "guatemala", "colombia", "brazil"],
+        note: "직거래 농장(예가체프·우에우에테낭고 등) 싱글오리진 홀빈·드립백 판매",
+        getUrl: () => "https://terarosa.com"
+      },
+      {
+        id: "fritz",
+        roaster: "프릳츠",
+        tagline: "다이렉트 트레이드 싱글오리진",
+        strongOrigins: ["costarica", "colombia", "ethiopia", "indonesia"],
+        note: "중남미·아프리카 싱글오리진(핑크버번·게샤 등) 시즌별 로스팅",
+        getUrl: () => "https://fritz.co.kr"
+      }
+    ];
+
+    function renderVerifiedSingleMatches(region) {
+      const box = document.getElementById("verifiedSingleMatchBox");
+      if (!box || !region) return;
+
+      const cKey = region.countryKey || "";
+      const cName = region.countryName || "";
+      const rName = region.name || "";
+
+      const prioritized = [...VERIFIED_SINGLES_ROASTERIES].sort((a, b) => {
+        const aHit = a.strongOrigins.includes(cKey) ? 1 : 0;
+        const bHit = b.strongOrigins.includes(cKey) ? 1 : 0;
+        return bHit - aHit;
+      }).slice(0, 3);
+
+      const cardsHtml = prioritized.map((r, idx) => {
+        const isOriginStrong = r.strongOrigins.includes(cKey);
+        const badgeText = idx === 0 && r.id === "momos"
+          ? `${cName} 검색 직결`
+          : (isOriginStrong ? `${cName} 주력` : "싱글오리진");
+        return `
+          <div class="p-1.5 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex flex-col gap-0.5">
+            <div class="flex items-center justify-between gap-1">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="font-bold text-[#1E3B5C] text-[11px] shrink-0">${r.roaster}</span>
+                <span class="text-[10px] text-[#516B50] font-medium truncate">· ${r.tagline}</span>
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <span class="px-1.5 py-0.2 rounded-full bg-[#516B50]/15 text-[#516B50] font-mono-code font-bold text-[9.5px]">${badgeText}</span>
+                <a href="${r.getUrl(region)}" target="_blank" rel="noopener noreferrer" class="px-1.5 py-0.5 rounded-full bg-[#1E3B5C] hover:bg-[#30679D] text-white font-mono-code text-[9.5px] font-semibold transition">공식몰 ↗</a>
+              </div>
+            </div>
+            <div class="text-[10px] text-[#5A758D] leading-snug">${r.note}</div>
+          </div>
+        `;
+      }).join("");
+
+      const greenBeanBar = `
+        <div class="pt-1 border-t border-[#BDB989]/40 flex items-center justify-between gap-1 text-[10px] font-mono-code">
+          <span class="text-[#5A758D] truncate">🌿 <strong>${cName} ${rName}</strong> 생두(홈로스팅):</span>
+          <div class="flex items-center gap-1 shrink-0">
+            <a href="https://www.almacielo.com" target="_blank" rel="noopener noreferrer" class="px-1.5 py-0.5 rounded-full bg-[#516B50]/15 hover:bg-[#516B50] hover:text-white text-[#516B50] font-semibold transition">알마씨엘로 ↗</a>
+            <a href="https://gsc.coffee" target="_blank" rel="noopener noreferrer" class="px-1.5 py-0.5 rounded-full bg-[#BDB989]/30 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] font-semibold transition">GSC ↗</a>
+          </div>
+        </div>
+      `;
+
+      box.innerHTML = cardsHtml + greenBeanBar;
     }
 
     document.querySelectorAll(".blend-gram-btn").forEach(btn => {
