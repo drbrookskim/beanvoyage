@@ -85,3 +85,4 @@
 | 2026-11-14 | 맵뷰 50:50 균등 컬럼 · 원산지 4.5x 줌인 · 3/4 크게보기 · 다이나믹 타일 배치 편집 모드 구현 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 2컬럼 균등 분할(`lg:grid-cols-2`), 선택 산지 자동 줌인(`4.5x`), 지도 우측 하단 3/4 크게보기 오버레이, 홈 버튼 좌측 타일 편집 모드(드래그·이동·저장) 추가 |
 | 2026-11-14 | 지도 크게보기(3/4) `position: fixed` 상위 `transform` 컨테이닝 블록 탈출 수정 | `index.html`, `memory.md`, `CLAUDE.md` | `#mapExplorerSection`의 `will-change: transform` / `translateY(0)` 제거 및 확장 시 `document.body` 포탈 이동·복원 처리로 뷰포트 중앙 정렬 보장 |
 | 2026-11-14 | 지도 세로 길이 확장(`lg:h-[395px]`) 및 타일 편집 모드 세로 크기 조절 기능 추가 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 산지매칭 '가공 메커니즘' 타이틀 수준으로 지도 높이 확장 및 타일 편집 모드 내 `−/+`·하단 드래그 크기 조절·`localStorage` 저장 구현 |
+| 2026-11-14 | `항로·핀 표시` 알약 버튼 지도 크게보기 화면 전용 이동 | `index.html`, `memory.md`, `CLAUDE.md` | 우측 상단 컨트롤 바의 `항로·핀 표시` 버튼을 `#svgMapContainer` 내부로 이동하고 크게보기(3/4 확장) 시에만 노출되도록 개선 |

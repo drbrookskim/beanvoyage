@@ -1527,11 +1527,21 @@
 
 ---
 
+### 295. `항로·핀 표시` 알약 버튼 지도 크게보기 화면 전용 이동
+- **요청 내용**: 우측 상단 컨트롤 바에 있던 `항로·핀 표시` 알약 버튼을 지도 크게보기(3/4 확장) 화면 내부에서만 표시하도록 변경.
+- **작업 내용 (`CoBTS/index.html`)**:
+  - `#mapExplorerSection` 우측 상단 컨트롤 바에서 `항로·핀 표시`(`<label>`) 제거.
+  - `#svgMapContainer` 내부 좌측 상단(`top-3 left-3 z-30`)에 `#toggleBeltOverlayPill`(`#toggleBeltOverlay` 체크박스 포함)을 배치하고 기본 `hidden` 처리(`#toggleBeltOverlayPill.hidden { display: none !important; }`).
+  - `setMapExpanded(expanded)`에서 확대 상태(`isMapExpanded`)에 맞춰 `#toggleBeltOverlayPill`을 표시/숨김 전환.
+- **검증**: 인라인 `<script>` 문법 검사 통과 및 `#toggleBeltOverlayPill`·`#toggleBeltOverlay` 단일 배치 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 지도 세로 확장(`lg:h-[395px]`) 및 타일 편집 모드 크기 조절 기능 구현 완료.
+- **상태**: `항로·핀 표시` 알약 버튼 지도 크게보기 화면 전용 이동 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 지도 확장 높이 및 타일 크기 조절 동작 확인.
+  1. 필요 시 브라우저에서 지도 크게보기 내 `항로·핀 표시` 토글 동작 확인.
 
 
 

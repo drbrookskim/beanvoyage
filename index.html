@@ -40,7 +40,8 @@
     }
     #headerSearchGroup.hidden,
     #resetSearchBtn.hidden,
-    #tileEditModeBtn.hidden {
+    #tileEditModeBtn.hidden,
+    #toggleBeltOverlayPill.hidden {
       display: none !important;
     }
 
@@ -2351,15 +2352,11 @@
           </div>
         </div>
 
-        <!-- RIGHT: Secondary Map Navigation Controls (도착항, 줌, 항로 표시 등) -->
+        <!-- RIGHT: Secondary Map Navigation Controls (줌, 좌표 등) -->
         <div class="flex items-center gap-2 flex-wrap">
           <span id="zoomLevelBadge" class="px-2 py-1 rounded bg-[#1E3B5C] text-[#F0F0D8] font-mono-code font-semibold hidden sm:inline text-[11px]">
             ZOOM 1.0x · Global Nav
           </span>
-          <label class="flex items-center gap-1.5 font-mono-code text-[#374836] dark:text-[#97B6CB] text-[11px] bg-white dark:bg-[#12161C] border border-[#E2E8F0] dark:border-[#232D3B] px-3 py-1 rounded-full shadow-2xs cursor-pointer select-none transition-all duration-200 active:scale-95">
-            <input type="checkbox" id="toggleBeltOverlay" checked class="accent-[#516B50] cursor-pointer">
-            <span>항로·핀 표시</span>
-          </label>
           <span id="mapCoordsLabel" class="font-mono-code text-[#1E3B5C] font-semibold hidden md:inline text-[11px]">Lat: 6.16°N / Lng: 38.20°E</span>
         </div>
       </div>
@@ -2810,6 +2807,10 @@
           
 
           <!-- Hopper 4-Color Map Style Switcher (Top-Right Floating Pill Widget with Smooth Sliding Glider) -->
+          <label id="toggleBeltOverlayPill" onpointerdown="event.stopPropagation()" ondblclick="event.stopPropagation()" class="hidden absolute top-3 left-3 z-30 flex items-center gap-1.5 font-mono-code text-[#374836] dark:text-[#97B6CB] text-[11px] bg-white/95 dark:bg-[#12161C]/95 backdrop-blur-md border border-[#BDB989]/70 dark:border-[#30679D]/60 px-3 py-1.5 rounded-full shadow-md cursor-pointer select-none transition-all duration-200 active:scale-95">
+            <input type="checkbox" id="toggleBeltOverlay" checked class="accent-[#516B50] cursor-pointer">
+            <span>항로·핀 표시</span>
+          </label>
           <div id="mapThemePillWidget" onpointerdown="event.stopPropagation()" ondblclick="event.stopPropagation()" class="map-theme-pill-widget absolute top-3 right-3 z-30 select-none" role="tablist" aria-label="지도 테마 선택">
             <div id="mapThemeGliderThumb" class="map-theme-glider-thumb" style="transform: translateX(100%); background-color: #966138;" aria-hidden="true"></div>
             <button type="button" class="map-style-btn" data-style="1" role="tab" aria-selected="false" title="Rooms by the Sea">ROOMS</button>
@@ -11040,6 +11041,7 @@
       const label = document.getElementById("mapExpandBtnLabel");
       const iconExpand = document.getElementById("mapExpandIconExpand");
       const iconClose = document.getElementById("mapExpandIconClose");
+      const beltPill = document.getElementById("toggleBeltOverlayPill");
       if (!mapBox) return;
 
       const nextExpanded = Boolean(expanded);
@@ -11068,6 +11070,7 @@
 
       mapBox.classList.toggle("map-expanded-3q", isMapExpanded);
       if (backdrop) backdrop.classList.toggle("hidden", !isMapExpanded);
+      if (beltPill) beltPill.classList.toggle("hidden", !isMapExpanded);
       if (label) label.textContent = isMapExpanded ? "축소" : "크게보기";
       if (iconExpand) iconExpand.classList.toggle("hidden", isMapExpanded);
       if (iconClose) iconClose.classList.toggle("hidden", !isMapExpanded);
