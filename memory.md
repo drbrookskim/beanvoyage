@@ -1577,11 +1577,26 @@
 
 ---
 
+### 300. 다크모드 4대 감각축 다이얼(베젤·눈금) 및 블렌드 구성 원두 가독성 최적화
+- **요청 내용**:
+  1. 다크모드 시 4대 감각축 타일의 원형 베젤과 눈금(삼각 인디케이터)이 너무 밝아 식별이 어려운 문제 개선.
+  2. 다크모드 시 블렌드 구성 원두 영역(`#blendComponentsList` 내 `후배전` 배지 등)에서 흰색 텍스트가 밝은 배경(`bg-[#F1F3F5]`) 위에 겹쳐 안 보이는 문제 수정.
+- **작업 내용 (`CoBTS/index.html`)**:
+  - **4대 감각축 다크모드 다이얼 대비 강화**:
+    - `#knobBezelAcidity`, `#knobBezelSweetness`, `#knobBezelBody`, `#knobBezelNutty`의 외곽 원형을 딥 톤(`#17382B`, `#3A2A14`, `#142C47`, `#272042`)과 각 축의 발광 테두리로 어둡게 전환하고, 눈금 삼각형(`polygon`)을 고대비 네온 파스텔(`#4ADE80`, `#FACC15`, `#60A5FA`, `#A78BFA`)로 강조.
+    - `.dial-center-core`를 `#0B1420` + `#4778A8` 테두리로 조정해 중심 점수와 외곽 링의 대비 확보.
+  - **구성 원두 다크모드 가독성 수정**:
+    - `#recommendationCard`, `#roastTileCard`, `#customsChannelsCard` 내부 `.bg-[#F1F3F5]` 요소를 다크모드 서피스(`#0F1E2E` + `#264363` 보더 + `#F0F0D8` 텍스트) 매핑에 추가해 `후배전:` 배지·모드 배지의 흰 글자 실종 해소.
+    - `#blendComponentsList` 내 역할 텍스트(`.text-[#8C4B2E]`)를 `#FBBF24`로, `개별구매 ↗` 버튼을 고대비 에메랄드 다크 필(`#6EE7B7`)로 보정.
+- **검증**: 인라인 `<script>` 문법 검사 통과 및 `#knobBezelAcidity polygon`, `.bg-\[\#F1F3F5\]`, `#blendComponentsList` 다크모드 규칙 적용 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 원산지 결과 타일(`.editorial-popup-card`) `.sketch-border` 동일 그림자 적용 완료.
+- **상태**: 다크모드 4대 감각축 다이얼 및 구성 원두 가독성 최적화 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 전체 타일 일체감 확인.
+  1. 필요 시 브라우저에서 다크모드 전환 후 4대 감각축 다이얼 및 블렌드 구성 원두 영역 확인.
 
 
 

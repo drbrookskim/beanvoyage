@@ -90,3 +90,4 @@
 | 2026-11-15 | 맵뷰 상단 컨트롤 바 1·2·3번 알약(Pill) 높이 통일(`42px`) 및 검색바 가로 확장 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | `#headerTasteInput`·`.pill-toggle-switch`·`#activeTasteBadge`를 동일 `42px` 알약 스타일로 통일하고 검색바 폭을 `lg:w-[450px]`로 확장 |
 | 2026-11-15 | 맵뷰 상단 컨트롤 바 1·2·3번 타일 동일 그림자(`.sketch-border`) 적용 | `index.html`, `memory.md`, `CLAUDE.md` | `#headerTasteInput`·`.pill-toggle-switch`·`#activeTasteBadge`에 하단 타일과 동일한 `.sketch-border`(`2px 2px 0px`) 그림자·보더 적용 |
 | 2026-11-15 | 원산지 결과 타일(`.editorial-popup-card`) 동일 그림자·외곽선 적용 | `index.html`, `memory.md`, `CLAUDE.md` | 2번 원산지 결과 타일에 다른 타일과 동일한 `2px 2px 0px` 스케치 보더·그림자 통일 |
+| 2026-11-15 | 다크모드 4대 감각축 다이얼·눈금 및 블렌드 구성 원두 가독성 최적화 | `index.html`, `memory.md`, `CLAUDE.md` | 4대 감각축 외곽 링 딥톤·눈금 고대비 발광색 전환 및 `.bg-[#F1F3F5]` 다크모드 매핑 누락으로 인한 구성원두 흰 글자 실종 수정 |
