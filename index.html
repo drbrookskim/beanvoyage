@@ -123,6 +123,41 @@
       background: #30679D;
       color: #F0F0D8;
     }
+    .tile-edit-active .dynamic-tile {
+      position: relative;
+    }
+    .tile-resize-handle {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 136px;
+      height: 15px;
+      border-radius: 8px 8px 0 0;
+      background: rgba(48, 103, 157, 0.16);
+      border: 1px solid rgba(48, 103, 157, 0.38);
+      border-bottom: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: ns-resize;
+      user-select: none;
+      touch-action: none;
+      z-index: 30;
+      color: #1E3B5C;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(4px);
+    }
+    html.dark .tile-resize-handle {
+      background: rgba(151, 182, 203, 0.12);
+      border-top-color: rgba(151, 182, 203, 0.35);
+      color: #97B6CB;
+    }
+    .tile-resize-handle:hover {
+      background: rgba(48, 103, 157, 0.24);
+    }
 
     /* Coffee Dossier Print & Modal Enhancements */
     @media print {
@@ -2347,7 +2382,7 @@
         <!-- LEFT COLUMN (1, 2, 3, 4) -->
         <div id="mapColLeft" class="space-y-3 min-w-0 flex flex-col map-edit-col">
           <!-- 1. MAP -->
-          <div class="relative w-full h-[250px] sm:h-[280px] overflow-hidden select-none rounded-xl border border-[#BDB989] shadow-lg map-interactive-stage cursor-grab dynamic-tile" id="svgMapContainer" data-tile-id="svgMapContainer" data-tile-label="1. 세계 지도">
+          <div class="relative w-full h-[280px] sm:h-[360px] lg:h-[395px] overflow-hidden select-none rounded-xl border border-[#BDB989] shadow-lg map-interactive-stage cursor-grab dynamic-tile" id="svgMapContainer" data-tile-id="svgMapContainer" data-tile-label="1. 세계 지도">
             
             <!-- 3D Navigation Plane (Supports Real-Time Pan, Zoom 1x~18x, Pitch & Bearing) -->
             <div id="nav3DStage" class="nav-3d-plane">
@@ -11060,12 +11095,66 @@
 
     // ================= DYNAMIC TILE EDIT MODE =================
     const TILE_LAYOUT_STORAGE_KEY = "cobts_map_tile_layout_v1";
+    const TILE_SIZES_STORAGE_KEY = "cobts_map_tile_sizes_v1";
     const DEFAULT_TILE_LAYOUT = {
       left: ["svgMapContainer", "editorialOriginPopup", "sensorySlidersBlock", "customsChannelsCard"],
       right: ["recommendationCard", "roastTileCard"],
     };
     let isTileEditMode = false;
     let draggedTileId = null;
+    let tileSizes = {};
+
+    function saveTileSizes() {
+      try {
+        localStorage.setItem(TILE_SIZES_STORAGE_KEY, JSON.stringify(tileSizes));
+      } catch (_) {}
+    }
+
+    function applyTileSizes() {
+      document.querySelectorAll(".dynamic-tile[data-tile-id]").forEach((tile) => {
+        const tileId = tile.getAttribute("data-tile-id");
+        const h = tileSizes[tileId];
+        if (typeof h === "number" && h >= 120) {
+          tile.style.height = `${h}px`;
+          if (tileId !== "svgMapContainer") {
+            tile.style.overflowY = "auto";
+          }
+        } else {
+          tile.style.height = "";
+          if (tileId !== "svgMapContainer") {
+            tile.style.overflowY = "";
+          }
+        }
+      });
+      requestAnimationFrame(() => {
+        if (typeof renderRealTimeNavigationCanvas === "function") {
+          renderRealTimeNavigationCanvas();
+        }
+      });
+    }
+
+    function setTileHeight(tileId, heightPx) {
+      const clamped = Math.max(140, Math.min(960, Math.round(heightPx)));
+      tileSizes[tileId] = clamped;
+      saveTileSizes();
+      applyTileSizes();
+      const badge = document.querySelector(`.tile-size-badge[data-size-for="${tileId}"]`);
+      if (badge) badge.textContent = `${clamped}px`;
+    }
+
+    function adjustTileHeight(tileId, deltaPx) {
+      const tile = document.querySelector(`.dynamic-tile[data-tile-id="${tileId}"]`);
+      if (!tile) return;
+      const current = tileSizes[tileId] || Math.round(tile.getBoundingClientRect().height);
+      setTileHeight(tileId, current + deltaPx);
+    }
+
+    function resetTileSize(tileId) {
+      delete tileSizes[tileId];
+      saveTileSizes();
+      applyTileSizes();
+      if (isTileEditMode) injectTileEditBars();
+    }
 
     function getCurrentTileLayout() {
       const colLeft = document.getElementById("mapColLeft");
@@ -11125,7 +11214,10 @@
     function resetTileLayout() {
       try {
         localStorage.removeItem(TILE_LAYOUT_STORAGE_KEY);
+        localStorage.removeItem(TILE_SIZES_STORAGE_KEY);
       } catch (_) {}
+      tileSizes = {};
+      applyTileSizes();
       applyTileLayout(DEFAULT_TILE_LAYOUT);
       if (isTileEditMode) injectTileEditBars();
     }
@@ -11158,7 +11250,7 @@
     }
 
     function injectTileEditBars() {
-      document.querySelectorAll(".tile-edit-bar").forEach((bar) => bar.remove());
+      document.querySelectorAll(".tile-edit-bar, .tile-resize-handle").forEach((el) => el.remove());
       const tiles = document.querySelectorAll(".dynamic-tile[data-tile-id]");
       tiles.forEach((tile) => {
         tile.draggable = isTileEditMode;
@@ -11166,18 +11258,52 @@
 
         const tileId = tile.getAttribute("data-tile-id");
         const tileLabel = tile.getAttribute("data-tile-label") || tileId;
+        const sizeLabel = tileSizes[tileId] ? `${tileSizes[tileId]}px` : "기본";
         const bar = document.createElement("div");
         bar.className = "tile-edit-bar";
         bar.setAttribute("onpointerdown", "event.stopPropagation()");
         bar.innerHTML = `
           <span class="font-bold text-[#1E3B5C] dark:text-[#F0F0D8] truncate cursor-grab">⠿ ${tileLabel}</span>
           <div class="flex items-center gap-1 shrink-0">
+            <button type="button" class="tile-edit-bar-btn" title="높이 축소 (-40px)" onclick="event.stopPropagation(); adjustTileHeight('${tileId}', -40)">−</button>
+            <span class="tile-size-badge font-mono-code text-[10px] px-1 text-[#30679D] dark:text-[#97B6CB]" data-size-for="${tileId}">${sizeLabel}</span>
+            <button type="button" class="tile-edit-bar-btn" title="높이 확대 (+40px)" onclick="event.stopPropagation(); adjustTileHeight('${tileId}', 40)">+</button>
+            <button type="button" class="tile-edit-bar-btn" title="기본 크기로 복원" onclick="event.stopPropagation(); resetTileSize('${tileId}')">↺</button>
+            <span class="mx-0.5 opacity-30">|</span>
             <button type="button" class="tile-edit-bar-btn" title="위로 이동" onclick="event.stopPropagation(); moveTile('${tileId}', 'up')">▲</button>
             <button type="button" class="tile-edit-bar-btn" title="아래로 이동" onclick="event.stopPropagation(); moveTile('${tileId}', 'down')">▼</button>
             <button type="button" class="tile-edit-bar-btn" title="반대 컬럼으로 이동" onclick="event.stopPropagation(); moveTile('${tileId}', 'swap')">⇄</button>
           </div>
         `;
         tile.insertBefore(bar, tile.firstChild);
+
+        const resizeHandle = document.createElement("div");
+        resizeHandle.className = "tile-resize-handle";
+        resizeHandle.title = "드래그하여 타일 세로 크기 조절";
+        resizeHandle.textContent = "⇕ 크기 조절";
+        resizeHandle.addEventListener("pointerdown", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          tile.draggable = false;
+          const startY = e.clientY;
+          const startH = tile.getBoundingClientRect().height;
+          resizeHandle.setPointerCapture(e.pointerId);
+
+          const onMove = (ev) => {
+            setTileHeight(tileId, startH + (ev.clientY - startY));
+          };
+          const onUp = (ev) => {
+            try { resizeHandle.releasePointerCapture(ev.pointerId); } catch (_) {}
+            resizeHandle.removeEventListener("pointermove", onMove);
+            resizeHandle.removeEventListener("pointerup", onUp);
+            resizeHandle.removeEventListener("pointercancel", onUp);
+            tile.draggable = isTileEditMode;
+          };
+          resizeHandle.addEventListener("pointermove", onMove);
+          resizeHandle.addEventListener("pointerup", onUp);
+          resizeHandle.addEventListener("pointercancel", onUp);
+        });
+        tile.appendChild(resizeHandle);
       });
     }
 
@@ -11286,6 +11412,14 @@
           const parsed = JSON.parse(raw);
           if (parsed && Array.isArray(parsed.left) && Array.isArray(parsed.right)) {
             applyTileLayout(parsed);
+          }
+        }
+        const rawSizes = localStorage.getItem(TILE_SIZES_STORAGE_KEY);
+        if (rawSizes) {
+          const parsedSizes = JSON.parse(rawSizes);
+          if (parsedSizes && typeof parsedSizes === "object") {
+            tileSizes = parsedSizes;
+            applyTileSizes();
           }
         }
       } catch (_) {}
