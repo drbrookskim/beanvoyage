@@ -81,3 +81,4 @@
 | 2026-11-14 | 검증 로스터리 싱글·블렌드 상세 안내 카드 폰트 크기 확대 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | `#verifiedSingleMatchSection`, `renderVerifiedSingleMatches()`, `renderVerifiedBlendMatches()`의 본문·원산지·설명(`9.5~10px`)을 `11px~13px`(`text-xs` 중심)으로 확대해 가독성 개선 |
 | 2026-11-14 | 화면 지칭 명명 규칙 확정 (`검색뷰` / `맵뷰`) | `CLAUDE.md`, `memory.md` | 첫 페이지 검색바 화면을 `검색뷰`, 지도·상세내용 화면을 `맵뷰`로 공식 명명·기록 |
 | 2026-11-14 | Sample-First Rule 등록 및 맵뷰+원산지 메시지 타일 UX 3종 샘플 제작 | `CLAUDE.md`, `memory.md`, `map-view-ux-samples.html` | 개선·추천안 제안 시 항상 샘플 우선 제작 원칙 등록, 도착항 제거·지도 축소·원산지 메시지 타일 배치 3종 비교 샘플 제작 |
+| 2026-11-14 | 맵뷰 2컬럼(1~6번) 레이아웃 전면 개편 및 우측 상단 도착항 제거 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 우측 상단 `도착항` 제거; 좌측 컬럼(1.지도→2.원산지 타일→3.4대 감각축→4.통관·유통)과 우측 컬럼(5.산지매칭→6.로스팅) 2컬럼 워크스페이스 적용 |

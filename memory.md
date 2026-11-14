@@ -1477,8 +1477,20 @@
 
 ---
 
+### 291. 맵뷰 2컬럼(1~6번) 레이아웃 전면 개편 & 우측 상단 도착항 제거
+- **요청 배경**: 맵뷰 우측 상단 `도착항` 제거 및 첨부 와이어프레임 기준 2컬럼 배치 적용 요청.
+- **작업 내용 (`CoBTS/index.html`)**:
+  - 맵뷰 우측 상단 컨트롤 바에서 `⚓ 도착항` (`#arrivalPortSelect`) UI 제거 (내부 계산은 기본 부산항 기준 유지).
+  - 맵뷰(`#mapExplorerSection`) 본문을 `lg:grid-cols-12` 2컬럼 워크스페이스로 재구성:
+    - **좌측 컬럼 (`lg:col-span-5`)**: 1. 지도(`#svgMapContainer`, `250px`/`280px` 컴팩트 높이) → 2. 검색결과 원산지 타일(`#editorialOriginPopup`, 지도 외부 하단 도킹) → 3. 4대 감각 축(`#sensorySlidersBlock`, `sm:grid-cols-4` 횡배치) → 4. 통관·유통(`#customsChannelsCard`).
+    - **우측 컬럼 (`lg:col-span-7`)**: 5. 산지매칭(`#recommendationCard`) → 6. 로스팅(`#roastTileCard`).
+  - `updateReticleBadgeLayout()`에서 도킹된 `#editorialOriginPopup`의 플로팅 `transform` 및 SVG 지시선(`reticleLeaderLine`)을 비활성화해 지도와 분리 유지.
+- **검증**: `svgMapContainer → editorialOriginPopup → sensorySlidersBlock → customsChannelsCard → recommendationCard → roastTileCard` 순서 및 `arrivalPortSelect` 제거 확인, 인라인 `<script>` 문법 검사 통과, `npm run build:css` 빌드.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 맵뷰 + 원산지 메시지 타일 통합 UX 3종 샘플(`map-view-ux-samples.html`) 보완 및 푸시 완료 (사용자 선택 대기 중).
+- **상태**: 맵뷰 2컬럼(1~6번) 레이아웃 개편 및 우측 상단 `도착항` 제거 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
   1. 필요 시 브라우저에서 3D 로스팅 뷰 및 클립보드 복사 동작 확인.
