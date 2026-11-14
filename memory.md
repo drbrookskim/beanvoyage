@@ -1504,11 +1504,20 @@
 
 ---
 
+### 293. 지도 크게보기(`3/4` 확장) `position: fixed` 상위 `transform` 컨테이닝 블록 탈출 수정
+- **원인**: `#mapExplorerSection`의 `.map-container`(`will-change: transform, opacity`)와 `@keyframes mapSlideUp`(`forwards`, `transform: translateY(0)`)가 새로운 `fixed` 컨테이닝 블록을 생성해, `#svgMapContainer.map-expanded-3q` 및 `#mapExpandBackdrop`가 뷰포트가 아닌 `#mapExplorerSection` 기준으로 배치되어 화면이 어긋나고 잘리는 현상 발생.
+- **수정 (`CoBTS/index.html`)**:
+  - `.map-container`에서 `will-change: transform` 제거 및 `@keyframes mapSlideUp` 종료 상태를 `transform: none`으로 변경.
+  - `setMapExpanded(true)` 실행 시 `#svgMapContainer`와 `#mapExpandBackdrop`를 `document.body` 직속으로 임시 이동시키고 `#mapExpandPlaceholder` 마커를 남겨 `setMapExpanded(false)` 시 원래 컬럼 위치로 정확히 복귀하도록 개선.
+- **검증**: 인라인 `<script>` 문법 검사 통과 및 `mapExpandPlaceholder`·`transform: none;` 적용 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 맵뷰 50:50 균등 컬럼, 선택 원산지 4.5x 줌인, 지도 3/4 크게보기, 다이나믹 타일 배치 편집 모드 구현 완료.
+- **상태**: 지도 3/4 크게보기 오버레이 뷰포트 고정 수정 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 지도 3/4 확대 및 타일 드래그 편집 동작 확인.
+  1. 필요 시 브라우저에서 지도 3/4 크게보기 및 타일 드래그 편집 동작 확인.
 
 
 

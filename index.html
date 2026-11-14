@@ -1258,8 +1258,7 @@
     .sketch-border-subtle { border: 1px solid var(--ink-faint); }
 
     .map-container {
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
-      will-change: transform, opacity;
+      transition: opacity 0.5s ease;
     }
 
     .map-hidden {
@@ -1279,7 +1278,7 @@
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: none;
       }
     }
 
@@ -10999,6 +10998,7 @@
 
     // ================= MAP 3/4 EXPAND OVERLAY =================
     let isMapExpanded = false;
+    let mapExpandPlaceholder = null;
     function setMapExpanded(expanded) {
       const mapBox = document.getElementById("svgMapContainer");
       const backdrop = document.getElementById("mapExpandBackdrop");
@@ -11007,7 +11007,30 @@
       const iconClose = document.getElementById("mapExpandIconClose");
       if (!mapBox) return;
 
-      isMapExpanded = Boolean(expanded);
+      const nextExpanded = Boolean(expanded);
+      if (nextExpanded === isMapExpanded) return;
+      isMapExpanded = nextExpanded;
+
+      if (isMapExpanded) {
+        if (!mapExpandPlaceholder) {
+          mapExpandPlaceholder = document.createElement("div");
+          mapExpandPlaceholder.id = "mapExpandPlaceholder";
+          mapExpandPlaceholder.style.display = "none";
+        }
+        if (mapBox.parentNode && mapBox.parentNode !== document.body) {
+          mapBox.parentNode.insertBefore(mapExpandPlaceholder, mapBox);
+          document.body.appendChild(mapBox);
+        }
+        if (backdrop && backdrop.parentNode !== document.body) {
+          document.body.appendChild(backdrop);
+        }
+      } else {
+        if (mapExpandPlaceholder && mapExpandPlaceholder.parentNode) {
+          mapExpandPlaceholder.parentNode.insertBefore(mapBox, mapExpandPlaceholder);
+          mapExpandPlaceholder.remove();
+        }
+      }
+
       mapBox.classList.toggle("map-expanded-3q", isMapExpanded);
       if (backdrop) backdrop.classList.toggle("hidden", !isMapExpanded);
       if (label) label.textContent = isMapExpanded ? "축소" : "크게보기";
@@ -11018,6 +11041,9 @@
       requestAnimationFrame(() => {
         if (typeof renderRealTimeNavigationCanvas === "function") {
           renderRealTimeNavigationCanvas();
+        }
+        if (typeof updateReticleBadgeLayout === "function") {
+          updateReticleBadgeLayout();
         }
       });
     }

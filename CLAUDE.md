@@ -83,3 +83,4 @@
 | 2026-11-14 | Sample-First Rule 등록 및 맵뷰+원산지 메시지 타일 UX 3종 샘플 제작 | `CLAUDE.md`, `memory.md`, `map-view-ux-samples.html` | 개선·추천안 제안 시 항상 샘플 우선 제작 원칙 등록, 도착항 제거·지도 축소·원산지 메시지 타일 배치 3종 비교 샘플 제작 |
 | 2026-11-14 | 맵뷰 2컬럼(1~6번) 레이아웃 전면 개편 및 우측 상단 도착항 제거 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 우측 상단 `도착항` 제거; 좌측 컬럼(1.지도→2.원산지 타일→3.4대 감각축→4.통관·유통)과 우측 컬럼(5.산지매칭→6.로스팅) 2컬럼 워크스페이스 적용 |
 | 2026-11-14 | 맵뷰 50:50 균등 컬럼 · 원산지 4.5x 줌인 · 3/4 크게보기 · 다이나믹 타일 배치 편집 모드 구현 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 2컬럼 균등 분할(`lg:grid-cols-2`), 선택 산지 자동 줌인(`4.5x`), 지도 우측 하단 3/4 크게보기 오버레이, 홈 버튼 좌측 타일 편집 모드(드래그·이동·저장) 추가 |
+| 2026-11-14 | 지도 크게보기(3/4) `position: fixed` 상위 `transform` 컨테이닝 블록 탈출 수정 | `index.html`, `memory.md`, `CLAUDE.md` | `#mapExplorerSection`의 `will-change: transform` / `translateY(0)` 제거 및 확장 시 `document.body` 포탈 이동·복원 처리로 뷰포트 중앙 정렬 보장 |
