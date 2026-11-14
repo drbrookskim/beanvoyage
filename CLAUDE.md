@@ -6,6 +6,10 @@
 
 **표현 원칙:** *"표준적인 이론 값을 기준으로 계산한 추천입니다. 맛은 사람의 입맛에 따라 다르게 느껴질 수 있습니다."* (식품 표시·광고 가이드 준수)
 
+**화면 명명 규칙 (View Naming Convention):**
+- **검색뷰 (Search View)**: 첫 페이지 검색바가 있는 화면 (`heroSearchSection` / Screen 1)
+- **맵뷰 (Map View)**: 지도와 산지·배전·로스터리 상세내용이 있는 화면 (`mapSection` / Screen 2)
+
 **현재 진행 상태 & 다음 작업 재개 안내 (NEXT RESUME POINT):**
 - **현재 완료 상태**: Top Bean of the Week / Month 기능 1단계(UI·인터랙션·리포트 씰 연동) 및 2단계(네이버 API 기반 CTS 가중합 수집 엔진 `scripts/fetch-top-beans.js` 및 `npm run update:trends`) 완료.
 - **다음 작업 시작 지점**: **3단계 (자동 주기 갱신 파이프라인 구축)** 부터 진행.
@@ -72,3 +76,4 @@
 | 2026-11-14 | 싱글오리진 네이버 쇼핑 검색어 개선 (`싱글오리진 원두 -블렌드 -블랜드`) | `index.html`, `memory.md`, `CLAUDE.md` | `buildSingleOriginNaverUrl()` 헬퍼를 추가해 싱글오리진 네이버 쇼핑 검색 4곳을 `싱글오리진 원두 -블렌드 -블랜드`로 통일하여 블렌드/블랜드 혼입 노이즈 완화 |
 | 2026-11-14 | 싱글오리진 검증 로스터리 직영몰 우선 추천(방향 1) 및 오픈마켓 보조화 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | `VERIFIED_SINGLES_ROASTERIES`(모모스·커피리브레·빈브라더스·테라로사·프릳츠) 및 `#verifiedSingleMatchSection` 추가, 좌측 로스터리 Pool에 커피리브레 추가 및 모모스 산지 키워드 직결, 네이버 버튼을 오픈마켓 보조 채널로 정직화 |
 | 2026-11-14 | 검증 로스터리 싱글·블렌드 상세 안내 카드 폰트 크기 확대 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | `#verifiedSingleMatchSection`, `renderVerifiedSingleMatches()`, `renderVerifiedBlendMatches()`의 본문·원산지·설명(`9.5~10px`)을 `11px~13px`(`text-xs` 중심)으로 확대해 가독성 개선 |
+| 2026-11-14 | 화면 지칭 명명 규칙 확정 (`검색뷰` / `맵뷰`) | `CLAUDE.md`, `memory.md` | 첫 페이지 검색바 화면을 `검색뷰`, 지도·상세내용 화면을 `맵뷰`로 공식 명명·기록 |
