@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CoBTS 맵뷰 UX 개선안 3종 샘플 비교</title>
+  <title>CoBTS 맵뷰 + 원산지 메시지 타일 UX 3종 샘플</title>
   <link rel="stylesheet" href="./assets/css/tailwind.min.css" />
   <style>
     body {
@@ -33,13 +33,13 @@
     <!-- Header -->
     <div class="bg-white/90 border border-[#BDB989] rounded-xl p-4 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
       <div>
-        <div class="text-xs font-mono text-[#516B50] font-bold">CoBTS · 맵뷰(Map View) 레이아웃 개선 샘플</div>
-        <h1 class="text-lg font-bold text-[#1E3B5C]">우측 상단 ‘도착항’ 제거 + 지도 점유 축소 · 상세내용 강화 UX 3종</h1>
+        <div class="text-xs font-mono text-[#516B50] font-bold">CoBTS · 맵뷰(Map View) + 원산지 메시지 타일 배치 샘플</div>
+        <h1 class="text-lg font-bold text-[#1E3B5C]">도착항 제거 + 지도 축소 + 검색된 원산지 메시지 타일 통합 UX 3종</h1>
       </div>
       <div class="flex flex-wrap gap-2">
-        <button type="button" onclick="showOption(1)" id="btn-1" class="tab-btn active px-3 py-1.5 rounded-full text-xs font-bold border border-[#BDB989] cursor-pointer transition">안 1. 컴팩트 맵 + 분리 스트립</button>
-        <button type="button" onclick="showOption(2)" id="btn-2" class="tab-btn px-3 py-1.5 rounded-full text-xs font-bold border border-[#BDB989] bg-white cursor-pointer transition">안 2. 2컬럼 워크스페이스</button>
-        <button type="button" onclick="showOption(3)" id="btn-3" class="tab-btn px-3 py-1.5 rounded-full text-xs font-bold border border-[#BDB989] bg-white cursor-pointer transition">안 3. 크기 전환 토글 맵</button>
+        <button type="button" onclick="showOption(1)" id="btn-1" class="tab-btn active px-3 py-1.5 rounded-full text-xs font-bold border border-[#BDB989] cursor-pointer transition">안 1. 하단 도킹 타일형</button>
+        <button type="button" onclick="showOption(2)" id="btn-2" class="tab-btn px-3 py-1.5 rounded-full text-xs font-bold border border-[#BDB989] bg-white cursor-pointer transition">안 2. 우측 히어로 타일형</button>
+        <button type="button" onclick="showOption(3)" id="btn-3" class="tab-btn px-3 py-1.5 rounded-full text-xs font-bold border border-[#BDB989] bg-white cursor-pointer transition">안 3. 상단 고정 통합 타일형</button>
       </div>
     </div>
 
@@ -54,53 +54,69 @@
       <div class="flex items-center gap-2">
         <span class="px-2 py-1 rounded bg-[#1E3B5C] text-[#F0F0D8] font-mono text-[11px]">ZOOM 1.0x</span>
         <span class="px-2.5 py-1 rounded-full bg-white border border-[#BDB989] text-[11px]">☑ 항로·핀 표시</span>
-        <span class="px-2 py-1 rounded bg-[#A33B26]/10 text-[#A33B26] font-mono text-[11px] font-semibold line-through">⚓ 도착항 (삭제됨)</span>
         <span class="font-mono text-[11px] text-[#1E3B5C] font-semibold">Lat: 1.21°N / Lng: 77.28°W</span>
       </div>
     </div>
 
-    <!-- OPTION 1 -->
+    <!-- OPTION 1: 하단 도킹 타일형 -->
     <section id="opt-1" class="space-y-3">
       <div class="p-3 bg-white/80 border border-[#516B50]/50 rounded-lg text-xs text-[#1E3B5C]">
-        <strong>안 1 요약 (추천 · 기존 구조 유지):</strong> 지도 높이를 <code>~500px → 260px</code>로 슬림화하고, 지도를 가리던 플로팅 팝업을 지도 아래 <strong>요약 스트립</strong>으로 분리해 첫 화면에서 바로 상세내용이 보입니다.
+        <strong>안 1 (추천 · 하단 도킹 타일형):</strong> 지도를 <code>230px</code>로 슬림화해 핀·항로만 깨끗이 비우고, 기존 플로팅 팝업을 지도 바로 아래 <strong>가로 2단 원산지 메시지 타일</strong>로 도킹해 지도를 가리지 않으면서 모든 액션을 한눈에 제공합니다.
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
-        <!-- Left 8 cols: Slim Map + Separated Summary Strip -->
-        <div class="lg:col-span-8 space-y-2">
-          <div class="map-mock h-[250px] rounded-xl border border-[#BDB989] relative p-3 flex flex-col justify-between shadow-sm">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+        <!-- Left 8 cols: Clean Slim Map + Docked Origin Message Tile -->
+        <div class="lg:col-span-8 space-y-2.5">
+          <div class="map-mock h-[220px] rounded-xl border border-[#BDB989] relative p-3 flex flex-col justify-between shadow-sm">
             <div class="flex justify-between items-start">
-              <span class="px-2.5 py-1 rounded-full bg-white/90 border border-[#BDB989] text-[11px] font-bold">📍 콜롬비아 · 나리뇨 (1,900m)</span>
+              <span class="px-2.5 py-1 rounded-full bg-white/95 border border-[#BDB989] text-[11px] font-bold shadow-2xs">📍 콜롬비아 · 나리뇨 (1,900m)</span>
               <button class="px-2.5 py-1 rounded-full bg-[#1E3B5C] text-white text-[11px] font-semibold">지도 크게 보기 ⤢</button>
             </div>
-            <svg viewBox="0 0 600 130" class="w-full h-28 opacity-85">
-              <path d="M 80 75 Q 150 40 210 68 T 360 55 T 510 42" fill="none" stroke="#30679D" stroke-width="2" stroke-dasharray="5 4" />
-              <circle cx="170" cy="66" r="7" fill="#A33B26" />
-              <text x="182" y="70" font-size="11" fill="#1E3B5C" font-weight="bold">나리뇨 핀</text>
-              <circle cx="510" cy="42" r="5" fill="#1E3B5C" />
-              <text x="520" y="46" font-size="10" fill="#516B50">KOR</text>
+            <svg viewBox="0 0 600 120" class="w-full h-24 opacity-90">
+              <path d="M 80 70 Q 150 35 210 64 T 360 50 T 510 38" fill="none" stroke="#30679D" stroke-width="2" stroke-dasharray="5 4" />
+              <circle cx="170" cy="62" r="7" fill="#A33B26" />
+              <text x="182" y="66" font-size="11" fill="#1E3B5C" font-weight="bold">나리뇨</text>
+              <circle cx="510" cy="38" r="5" fill="#1E3B5C" />
+              <text x="520" y="42" font-size="10" fill="#516B50">KOR</text>
             </svg>
             <div class="text-[11px] text-[#5A758D] flex justify-between">
-              <span>풍미 노트: 청사과 · 감귤 산미 · 캐러멜</span>
-              <span>품종: Castillo · Washed</span>
+              <span>지도 위 플로팅 박스 제거 → 지형·항로 100% 개방</span>
+              <span>Castillo · Washed</span>
             </div>
           </div>
-          <!-- Separated Compact Action Strip (팝업이 지도 안을 가리지 않음) -->
-          <div class="bg-white border border-[#BDB989] rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2 text-xs shadow-xs">
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-[#1E3B5C]">콜롬비아 나리뇨</span>
-              <span class="px-2 py-0.5 rounded-full bg-[#516B50]/15 text-[#516B50] font-semibold text-[11px]">원두 (홈카페)</span>
+
+          <!-- Docked Origin Message Tile -->
+          <div class="bg-white border-2 border-[#1E3B5C]/20 rounded-2xl p-3.5 shadow-sm space-y-2.5">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-2">
+                  <span class="text-[10.5px] font-mono font-bold text-[#516B50]">● SINGLE ORIGIN</span>
+                  <span class="text-[10.5px] font-mono text-[#5A758D]">HS 0901.21</span>
+                </div>
+                <div class="text-base font-bold text-[#1E3B5C]">콜롬비아 · 나리뇨 <span class="text-xs font-normal text-[#5A758D]">(1,900m · Washed · Castillo)</span></div>
+                <div class="text-xs text-[#374836]">청사과 · 감귤의 화사한 산미와 캐러멜·흑설탕 단맛의 균형</div>
+              </div>
+              <!-- Pill Toggle: 원두 / 생두 -->
+              <div class="inline-flex rounded-full bg-[#F0F0D8] p-0.5 border border-[#BDB989]/60 text-[11px]">
+                <span class="px-3 py-1 rounded-full bg-white text-[#1E3B5C] font-bold shadow-2xs">● 원두 (홈카페)</span>
+                <span class="px-3 py-1 rounded-full text-[#5A758D] font-medium">● 생두 (로스팅)</span>
+              </div>
             </div>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="px-2.5 py-1 rounded-full bg-[#1E3B5C] text-white font-semibold text-[11px]">모모스커피 직영 검색 ↗</span>
-              <span class="px-2.5 py-1 rounded-full bg-[#FAF9ED] border border-[#BDB989] text-[#1E3B5C] font-semibold text-[11px]">네이버 오픈마켓 ↗</span>
-              <span class="px-2.5 py-1 rounded-full bg-[#FAF9ED] border border-[#BDB989] text-[#1E3B5C] font-semibold text-[11px]">원두 리포트 →</span>
+            <!-- Action Pills Row -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-[#BDB989]/40 text-xs">
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-3 py-1.5 rounded-full bg-[#1E3B5C] text-white font-semibold">모모스 직영 검색 ↗</span>
+                <span class="px-3 py-1.5 rounded-full bg-[#FAF9ED] border border-[#BDB989] text-[#1E3B5C] font-semibold">N 네이버 오픈마켓 ↗</span>
+                <span class="px-3 py-1.5 rounded-full bg-[#FAF9ED] border border-[#BDB989] text-[#1E3B5C] font-semibold">a 아마존 직구 ↗</span>
+              </div>
+              <span class="px-3 py-1.5 rounded-full bg-[#516B50]/15 text-[#516B50] font-bold">📜 원두 리포트(Dossier) →</span>
             </div>
           </div>
         </div>
+
         <!-- Right 4 cols: 4 Sensory Axes -->
-        <div class="lg:col-span-4 bg-white border border-[#BDB989] rounded-xl p-3 space-y-2.5 text-xs shadow-sm">
-          <div class="font-bold text-[#1E3B5C] border-b border-[#BDB989]/40 pb-1">🎛️ 4대 핵심 감각 축</div>
-          <div class="space-y-1.5">
+        <div class="lg:col-span-4 bg-white border border-[#BDB989] rounded-xl p-3.5 space-y-3 text-xs shadow-sm">
+          <div class="font-bold text-[#1E3B5C] border-b border-[#BDB989]/40 pb-1.5">🎛️ 4대 핵심 감각 축</div>
+          <div class="space-y-2">
             <div class="flex justify-between"><span>산미 (Acidity)</span><span class="font-mono font-bold">7.8</span></div>
             <div class="h-2 bg-[#F0F0D8] rounded-full"><div class="h-2 bg-[#30679D] rounded-full w-3/4"></div></div>
             <div class="flex justify-between"><span>단맛 (Sweetness)</span><span class="font-mono font-bold">7.2</span></div>
@@ -112,52 +128,29 @@
           </div>
         </div>
       </div>
-      <!-- Immediately Visible Details Below (스크롤 없이 첫 화면에 노출) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div class="bg-white border border-[#516B50]/60 rounded-xl p-3 space-y-1.5 text-xs">
-          <div class="font-bold text-[#1E3B5C] text-[13px]">🏛️ 검증 로스터리 싱글오리진 직영몰 (첫 화면 즉시 노출)</div>
-          <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex justify-between items-center">
-            <span><strong>모모스커피</strong> · 산지 직거래 싱글 에스테이트</span>
-            <span class="px-2 py-0.5 rounded-full bg-[#1E3B5C] text-white text-[11px]">공식몰 ↗</span>
-          </div>
-          <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex justify-between items-center">
-            <span><strong>커피리브레</strong> · 다이렉트 트레이드 · 골드문트</span>
-            <span class="px-2 py-0.5 rounded-full bg-[#1E3B5C] text-white text-[11px]">공식몰 ↗</span>
-          </div>
-        </div>
-        <div class="bg-white border border-[#BDB989] rounded-xl p-3 space-y-1.5 text-xs">
-          <div class="font-bold text-[#1E3B5C] text-[13px]">🔥 로스팅 프로파일 & 품종 계보</div>
-          <p class="text-[#374836]">시티 (219°C · Medium) 추천 — 감귤류 산미와 캐러멜 단맛의 균형이 가장 뛰어난 구간입니다.</p>
-          <div class="flex gap-1.5 pt-1">
-            <span class="px-2 py-0.5 rounded bg-[#F0F0D8] font-mono text-[11px]">Castillo</span>
-            <span class="px-2 py-0.5 rounded bg-[#F0F0D8] font-mono text-[11px]">Washed</span>
-            <span class="px-2 py-0.5 rounded bg-[#F0F0D8] font-mono text-[11px]">1,900m</span>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- OPTION 2 -->
+    <!-- OPTION 2: 우측 히어로 타일형 -->
     <section id="opt-2" class="hidden space-y-3">
       <div class="p-3 bg-white/80 border border-[#30679D]/50 rounded-lg text-xs text-[#1E3B5C]">
-        <strong>안 2 요약 (워크스페이스형):</strong> 좌측 38%에 <strong>미니 지도 + 4대 감각 축</strong>을 묶고, 우측 62% 전체를 <strong>상세내용(로스터리·배합·로스팅)</strong>에 배정해 스크롤 없이 한 화면에서 조작·확인합니다.
+        <strong>안 2 (우측 히어로 타일형):</strong> 좌측 38%에 <strong>미니 지도 + 감각 축</strong>을 두고, 우측 62% 최상단에 <strong>검색된 원산지 메시지 타일을 메인 히어로 카드</strong>로 크게 배치해 그 아래 로스터리·로스팅 상세내용과 자연스럽게 이어집니다.
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-        <!-- Left Sidebar (38%): Mini Map + Sliders -->
+        <!-- Left Sidebar: Mini Map + Sliders -->
         <div class="lg:col-span-5 space-y-3">
-          <div class="map-mock h-[210px] rounded-xl border border-[#BDB989] p-3 flex flex-col justify-between shadow-sm">
+          <div class="map-mock h-[200px] rounded-xl border border-[#BDB989] p-3 flex flex-col justify-between shadow-sm">
             <div class="flex justify-between items-center">
-              <span class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989] text-[11px] font-bold">📍 콜롬비아 나리뇨 · 1,900m</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-white border border-[#BDB989] text-[11px] font-bold">📍 콜롬비아 · 나리뇨</span>
               <button class="px-2 py-0.5 rounded-full bg-[#1E3B5C] text-white text-[11px]">확대 ⤢</button>
             </div>
-            <div class="text-center text-xs text-[#30679D] font-mono py-6">[컴팩트 인터랙티브 맵 영역]</div>
+            <div class="text-center text-xs text-[#30679D] font-mono">[컴팩트 핀·항로 맵 (지도를 가리는 박스 없음)]</div>
             <div class="text-[11px] text-[#5A758D] flex justify-between">
-              <span>Lat 1.21°N / Lng 77.28°W</span>
+              <span>1,900m · Lat 1.21°N</span>
               <span>Washed</span>
             </div>
           </div>
           <div class="bg-white border border-[#BDB989] rounded-xl p-3 space-y-2 text-xs shadow-sm">
-            <div class="font-bold text-[#1E3B5C]">🎛️ 4대 핵심 감각 축 (실시간 연동)</div>
+            <div class="font-bold text-[#1E3B5C]">🎛️ 4대 핵심 감각 축</div>
             <div class="grid grid-cols-2 gap-2">
               <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/50">산미 <strong>7.8</strong></div>
               <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/50">단맛 <strong>7.2</strong></div>
@@ -166,54 +159,73 @@
             </div>
           </div>
         </div>
-        <!-- Right Main Area (62%): Rich Details -->
+
+        <!-- Right Main Area: Hero Origin Message Tile + Details -->
         <div class="lg:col-span-7 space-y-3">
-          <div class="bg-white border border-[#516B50]/60 rounded-xl p-3.5 space-y-2 text-xs shadow-sm">
-            <div class="flex justify-between items-center border-b border-[#BDB989]/40 pb-1.5">
-              <span class="font-bold text-[#1E3B5C] text-sm">🏛️ 검증 로스터리 싱글오리진 직영몰</span>
-              <span class="px-2 py-0.5 rounded bg-[#516B50]/15 text-[#516B50] font-bold text-[11px]">1순위 추천</span>
+          <!-- Hero Origin Message Tile -->
+          <div class="bg-white border-2 border-[#30679D]/30 rounded-2xl p-4 shadow-sm space-y-3">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <div class="text-[11px] font-mono font-bold text-[#516B50]">● SINGLE ORIGIN · HS 0901.21</div>
+                <h2 class="text-lg font-bold text-[#1E3B5C]">콜롬비아 · 나리뇨</h2>
+                <p class="text-xs text-[#374836] mt-0.5">해발 1,900m · Washed · Castillo — 청사과·감귤 산미와 깔끔한 캐러멜 단맛</p>
+              </div>
+              <div class="inline-flex rounded-full bg-[#F0F0D8] p-0.5 border border-[#BDB989]/60 text-[11px]">
+                <span class="px-2.5 py-1 rounded-full bg-white text-[#1E3B5C] font-bold">● 원두</span>
+                <span class="px-2.5 py-1 rounded-full text-[#5A758D]">● 생두</span>
+              </div>
             </div>
-            <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex justify-between items-center">
-              <div><strong>모모스커피</strong> · 산지 직거래 싱글 에스테이트<div class="text-[#5A758D]">공식몰 산지 키워드 직접 검색 지원</div></div>
-              <span class="px-2.5 py-1 rounded-full bg-[#1E3B5C] text-white font-semibold">공식몰 ↗</span>
-            </div>
-            <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex justify-between items-center">
-              <div><strong>커피리브레</strong> · 다이렉트 트레이드 · 골드문트<div class="text-[#5A758D]">Single Origin 카테고리 · 생두 소분</div></div>
-              <span class="px-2.5 py-1 rounded-full bg-[#1E3B5C] text-white font-semibold">공식몰 ↗</span>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+              <span class="px-3 py-2 rounded-full bg-[#1E3B5C] text-white font-semibold text-center">모모스 직영 ↗</span>
+              <span class="px-3 py-2 rounded-full bg-[#FAF9ED] border border-[#BDB989] text-[#1E3B5C] font-semibold text-center">네이버 오픈마켓 ↗</span>
+              <span class="px-3 py-2 rounded-full bg-[#516B50]/15 text-[#516B50] font-bold text-center">📜 원두 리포트 →</span>
             </div>
           </div>
-          <div class="bg-white border border-[#BDB989] rounded-xl p-3.5 space-y-2 text-xs shadow-sm">
-            <div class="font-bold text-[#1E3B5C] text-sm">🧬 품종 계보 · 가공 원리 & 🔥 로스팅 시뮬레이터</div>
-            <p class="text-[#374836]">우측 메인 영역 최상단에 상세 분석과 3D 로스팅 시뮬레이터가 바로 배치되어 스크롤 없이 탐색할 수 있습니다.</p>
+
+          <div class="bg-white border border-[#516B50]/60 rounded-xl p-3.5 space-y-2 text-xs shadow-sm">
+            <div class="font-bold text-[#1E3B5C] text-[13px]">🏛️ 검증 로스터리 싱글오리진 직영몰 (바로 아래 이어짐)</div>
+            <div class="p-2 rounded bg-[#FAF9ED] border border-[#BDB989]/60 flex justify-between items-center">
+              <span><strong>모모스커피</strong> · 산지 직거래 싱글 에스테이트</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-[#1E3B5C] text-white font-semibold">공식몰 ↗</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- OPTION 3 -->
+    <!-- OPTION 3: 상단 고정 통합 타일형 -->
     <section id="opt-3" class="hidden space-y-3">
       <div class="p-3 bg-white/80 border border-[#8C4B2E]/50 rounded-lg text-xs text-[#1E3B5C]">
-        <strong>안 3 요약 (토글/접이식 맵):</strong> 상단에 <strong>지도 크기 전환 버튼(기본 200px ↔ 크게 460px ↔ 접기)</strong>을 두어, 지형을 볼 때만 펼치고 평소엔 상세내용에 집중할 수 있습니다.
+        <strong>안 3 (상단 고정 통합 타일형):</strong> <strong>원산지 메시지 타일을 맵 카드의 상단 고정 헤더</strong>로 결합해, 지도를 <code>접기</code> 해도 검색된 원산지 정보·원두/생두 전환·구매·리포트 버튼은 항상 화면 맨 위에 남습니다.
       </div>
-      <div class="bg-white border border-[#BDB989] rounded-xl p-3 space-y-2 shadow-sm">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="flex items-center gap-2 text-xs">
-            <span class="font-bold text-[#1E3B5C]">🗺️ 커피벨트 산지 지도</span>
-            <span class="px-2 py-0.5 rounded bg-[#FAF9ED] border border-[#BDB989] font-mono text-[11px]">콜롬비아 나리뇨 · 1,900m · Lat 1.21°N</span>
+      <div class="bg-white border border-[#BDB989] rounded-2xl p-3.5 space-y-3 shadow-sm">
+        <!-- Always-Visible Origin Message Tile Header -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-[#BDB989]/40">
+          <div class="space-y-0.5">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="px-2 py-0.5 rounded-full bg-[#516B50]/15 text-[#516B50] font-mono text-[11px] font-bold">SINGLE ORIGIN</span>
+              <span class="text-base font-bold text-[#1E3B5C]">콜롬비아 · 나리뇨</span>
+              <span class="text-xs text-[#5A758D]">(1,900m · Washed · 청사과/캐러멜)</span>
+            </div>
           </div>
-          <div class="flex items-center gap-1.5 text-[11px]">
-            <button type="button" onclick="setMapHeight('200px')" class="px-2.5 py-1 rounded-full bg-[#1E3B5C] text-white font-semibold cursor-pointer">기본(슬림)</button>
-            <button type="button" onclick="setMapHeight('420px')" class="px-2.5 py-1 rounded-full bg-[#FAF9ED] border border-[#BDB989] font-semibold cursor-pointer">크게 보기</button>
-            <button type="button" onclick="setMapHeight('0px')" class="px-2.5 py-1 rounded-full bg-[#FAF9ED] border border-[#BDB989] font-semibold cursor-pointer">접기</button>
+          <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
+            <span class="px-2.5 py-1 rounded-full bg-[#F0F0D8] font-bold text-[#1E3B5C]">● 원두 / ○ 생두</span>
+            <span class="px-2.5 py-1 rounded-full bg-[#1E3B5C] text-white font-semibold">모모스 직영 ↗</span>
+            <span class="px-2.5 py-1 rounded-full bg-[#FAF9ED] border border-[#BDB989] font-semibold">📜 리포트</span>
+            <span class="text-[#BDB989]">|</span>
+            <button type="button" onclick="setMapHeight('200px')" class="px-2.5 py-1 rounded-full bg-[#30679D] text-white font-semibold cursor-pointer">슬림</button>
+            <button type="button" onclick="setMapHeight('380px')" class="px-2.5 py-1 rounded-full bg-[#FAF9ED] border border-[#BDB989] font-semibold cursor-pointer">크게</button>
+            <button type="button" onclick="setMapHeight('0px')" class="px-2.5 py-1 rounded-full bg-[#FAF9ED] border border-[#BDB989] font-semibold cursor-pointer">지도 접기</button>
           </div>
         </div>
-        <div id="toggle-map-box" class="map-mock rounded-lg border border-[#BDB989]/70 overflow-hidden transition-all duration-300 flex items-center justify-center text-xs text-[#30679D] font-mono" style="height: 200px;">
-          [버튼을 눌러 슬림(200px) / 크게(420px) / 접기(0px) 전환 테스트]
+        <!-- Collapsible Map Canvas -->
+        <div id="toggle-map-box" class="map-mock rounded-xl border border-[#BDB989]/70 overflow-hidden transition-all duration-300 flex items-center justify-center text-xs text-[#30679D] font-mono" style="height: 200px;">
+          [지도를 접어도 상단 원산지 메시지 타일은 유지됨 — 슬림(200px) / 크게(380px) / 접기(0px)]
         </div>
       </div>
       <div class="bg-white border border-[#516B50]/60 rounded-xl p-3.5 text-xs">
-        <div class="font-bold text-[#1E3B5C] text-sm mb-1">🏛️ 아래 상세내용 (로스터리 · 품종 · 로스팅)</div>
-        <p class="text-[#5A758D]">지도를 슬림 또는 접기 상태로 두면 상세내용이 화면 최상단 가까이로 올라옵니다.</p>
+        <div class="font-bold text-[#1E3B5C] text-[13px] mb-1">🏛️ 검증 로스터리 싱글오리진 직영몰 & 로스팅 시뮬레이터</div>
+        <p class="text-[#5A758D]">지도를 접거나 슬림 상태로 두면 상세내용이 상단 타일 바로 아래에 붙어 한눈에 보입니다.</p>
       </div>
     </section>
   </div>

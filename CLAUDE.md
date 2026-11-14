@@ -80,3 +80,4 @@
 | 2026-11-14 | 싱글오리진 검증 로스터리 직영몰 우선 추천(방향 1) 및 오픈마켓 보조화 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | `VERIFIED_SINGLES_ROASTERIES`(모모스·커피리브레·빈브라더스·테라로사·프릳츠) 및 `#verifiedSingleMatchSection` 추가, 좌측 로스터리 Pool에 커피리브레 추가 및 모모스 산지 키워드 직결, 네이버 버튼을 오픈마켓 보조 채널로 정직화 |
 | 2026-11-14 | 검증 로스터리 싱글·블렌드 상세 안내 카드 폰트 크기 확대 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | `#verifiedSingleMatchSection`, `renderVerifiedSingleMatches()`, `renderVerifiedBlendMatches()`의 본문·원산지·설명(`9.5~10px`)을 `11px~13px`(`text-xs` 중심)으로 확대해 가독성 개선 |
 | 2026-11-14 | 화면 지칭 명명 규칙 확정 (`검색뷰` / `맵뷰`) | `CLAUDE.md`, `memory.md` | 첫 페이지 검색바 화면을 `검색뷰`, 지도·상세내용 화면을 `맵뷰`로 공식 명명·기록 |
+| 2026-11-14 | Sample-First Rule 등록 및 맵뷰+원산지 메시지 타일 UX 3종 샘플 제작 | `CLAUDE.md`, `memory.md`, `map-view-ux-samples.html` | 개선·추천안 제안 시 항상 샘플 우선 제작 원칙 등록, 도착항 제거·지도 축소·원산지 메시지 타일 배치 3종 비교 샘플 제작 |
