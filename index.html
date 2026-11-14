@@ -439,10 +439,10 @@
       height: 42px;
       box-sizing: border-box;
       background-color: #EDE4D8;
-      border: 1.5px solid #DCD0C1;
+      border: 1px solid var(--ink-dark, #1E3B5C);
       border-radius: 9999px;
       padding: 3px;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+      box-shadow: 2px 2px 0px rgba(31, 37, 35, 0.85), inset 0 1px 3px rgba(0, 0, 0, 0.06);
       transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
       user-select: none;
       -webkit-user-select: none;
@@ -2303,7 +2303,7 @@
                 type="text" 
                 id="headerTasteInput" 
                 placeholder="원하는 커피 맛 검색 (예: 화사한 꽃향기, 구운 견과류)" 
-                class="w-full h-[42px] pl-4 pr-20 bg-white/95 text-[#1E3B5C] placeholder:text-stone-400 rounded-full border border-[#BDB989] focus:outline-none focus:ring-1 focus:ring-[#30679D] text-sm shadow-2xs"
+                class="w-full h-[42px] pl-4 pr-20 bg-white/95 text-[#1E3B5C] placeholder:text-stone-400 rounded-full sketch-border focus:outline-none focus:ring-1 focus:ring-[#30679D] text-sm"
                 autocomplete="off"
               />
               <button 
@@ -2337,7 +2337,7 @@
 
           <div class="flex items-center gap-1.5 flex-wrap">
             <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#516B50] animate-pulse"></span>
-            <span id="activeTasteBadge" class="h-[42px] inline-flex items-center font-semibold text-[#1E3B5C] bg-white/95 border border-[#BDB989] px-4 rounded-full font-mono-code text-xs shadow-2xs">
+            <span id="activeTasteBadge" class="h-[42px] inline-flex items-center font-semibold text-[#1E3B5C] bg-white/95 sketch-border px-4 rounded-full font-mono-code text-xs">
               산미 적당히 · 단맛 적당히 · 바디 적당히
             </span>
             <span class="text-[#5A758D] text-sm">→</span>

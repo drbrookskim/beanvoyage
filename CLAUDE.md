@@ -88,3 +88,4 @@
 | 2026-11-14 | `항로·핀 표시` 알약 버튼 지도 크게보기 화면 전용 이동 | `index.html`, `memory.md`, `CLAUDE.md` | 우측 상단 컨트롤 바의 `항로·핀 표시` 버튼을 `#svgMapContainer` 내부로 이동하고 크게보기(3/4 확장) 시에만 노출되도록 개선 |
 | 2026-11-15 | 관세청 수입요건 2컬럼·원두 구매처 타일 UI 통일·재검색바/싱글·블렌드 위치 재배치 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | 상단 중앙 `#headerSearchGroup`을 맵뷰 컨트롤 바 좌측으로 이동하고 우측에 `#singleBlendToggleWrap` 배치, 관세청 생두/원두 2컬럼 및 통관·유통 카드 타일 UI 통일 |
 | 2026-11-15 | 맵뷰 상단 컨트롤 바 1·2·3번 알약(Pill) 높이 통일(`42px`) 및 검색바 가로 확장 | `index.html`, `assets/css/tailwind.min.css`, `memory.md`, `CLAUDE.md` | `#headerTasteInput`·`.pill-toggle-switch`·`#activeTasteBadge`를 동일 `42px` 알약 스타일로 통일하고 검색바 폭을 `lg:w-[450px]`로 확장 |
+| 2026-11-15 | 맵뷰 상단 컨트롤 바 1·2·3번 타일 동일 그림자(`.sketch-border`) 적용 | `index.html`, `memory.md`, `CLAUDE.md` | `#headerTasteInput`·`.pill-toggle-switch`·`#activeTasteBadge`에 하단 타일과 동일한 `.sketch-border`(`2px 2px 0px`) 그림자·보더 적용 |

@@ -1560,11 +1560,20 @@
 
 ---
 
+### 298. 맵뷰 상단 컨트롤 바 1·2·3번 타일 동일 그림자(`.sketch-border`) 적용
+- **요청 내용**: 상단 1번(검색바)·2번(싱글/블렌드 토글)·3번(활성 맛 배지)에도 하단 타일들과 동일한 그림자 효과 적용.
+- **작업 내용 (`CoBTS/index.html`)**:
+  - `#headerTasteInput`(1번)과 `#activeTasteBadge`(3번)에 `.sketch-border`(`border: 1px solid var(--ink-dark); box-shadow: 2px 2px 0px rgba(31, 37, 35, 0.85);`) 클래스 적용.
+  - `.pill-toggle-switch`(2번)에 동일한 `1px solid var(--ink-dark)` 외곽선 및 `2px 2px 0px rgba(31, 37, 35, 0.85)` 그림자 적용.
+- **검증**: 인라인 `<script>` 문법 검사 통과 및 `.sketch-border` 적용 확인.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 맵뷰 상단 컨트롤 바 1·2·3번 알약 스타일·높이 통일 및 검색바 확장 완료.
+- **상태**: 맵뷰 상단 1·2·3번 알약 컨트롤 바 `.sketch-border` 그림자 통일 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 맵뷰 상단 컨트롤 바 정렬 및 가독성 확인.
+  1. 필요 시 브라우저에서 전체 타일·상단 컨트롤 바 입체감 확인.
 
 
 
