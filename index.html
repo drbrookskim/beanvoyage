@@ -2274,21 +2274,21 @@
               <span id="rankPopularBeanText" class="hidden items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-[#30679D]/10 dark:bg-[#30679D]/25 text-[#30679D] dark:text-[#97B6CB] text-[9.5px] sm:text-[11px] font-semibold whitespace-nowrap shrink-0">주간 인기 원두</span>
             </div>
 
-            <!-- RIGHT: TASTE Cluster (오른쪽 정렬) -->
+            <!-- RIGHT: TASTE Cluster (오른쪽 정렬 - 핵심 3대 맛 산미·고소·쓴 맛 + 밸런스) -->
             <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
               <span class="font-space font-extrabold text-[9px] sm:text-[10px] text-[#78482B] dark:text-[#DFB995] tracking-wider select-none shrink-0">TASTE:</span>
               <div class="inline-flex p-0.5 rounded-lg bg-[#BDB989]/20 dark:bg-[#1E3B5C]/40 border border-[#BDB989]/40 dark:border-[#30679D]/40 shrink-0" role="tablist" aria-label="대표 취향 선택">
-                <button type="button" id="tasteTabFloral" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('floral')">
+                <button type="button" id="tasteTabFloral" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('floral')" title="화사한 꽃향기와 과일 산미 중심 원두 제안">
                   <span>🌸 산미</span>
                 </button>
-                <button type="button" id="tasteTabNutty" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('nutty')">
+                <button type="button" id="tasteTabNutty" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('nutty')" title="구운 견과류와 아몬드의 고소한 원두 제안">
                   <span>🥜 고소</span>
                 </button>
-                <button type="button" id="tasteTabSweet" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('sweet')">
-                  <span>🍫 밸런스</span>
+                <button type="button" id="tasteTabBody" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('body')" title="묵직한 바디와 다크초콜릿 쓴 맛(강배전 연동) 원두 제안">
+                  <span>🍫 쓴 맛</span>
                 </button>
-                <button type="button" id="tasteTabBody" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('body')">
-                  <span>🪵 바디</span>
+                <button type="button" id="tasteTabSweet" class="taste-matrix-btn px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-medium text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] dark:hover:text-[#F0F0D8] transition-all flex items-center gap-0.5 cursor-pointer whitespace-nowrap" onclick="selectTasteCategory('sweet')" title="사탕수수와 밀크초콜릿 단맛의 데일리 밸런스 원두 제안">
+                  <span>🍯 밸런스</span>
                 </button>
               </div>
             </div>
@@ -2309,7 +2309,7 @@
               type="text" 
               id="tasteInput" 
               value=""
-              placeholder="원하는 커피 맛이나 향을 자유롭게 검색해 보세요..." 
+              placeholder="원두의 맛(산미, 고소, 쓴 맛)이나 원산지를 자유롭게 입력해 보세요..." 
               class="flex-1 py-1 bg-transparent text-[#1E3B5C] dark:text-[#F0F0D8] placeholder:text-stone-400 dark:placeholder:text-[#5A758D] focus:outline-none text-xs sm:text-sm font-medium"
               autocomplete="off"
             />
@@ -2360,7 +2360,7 @@
               <input 
                 type="text" 
                 id="headerTasteInput" 
-                placeholder="원하는 커피 맛 검색 (예: 화사한 꽃향기, 구운 견과류)" 
+                placeholder="원두 맛(산미, 고소, 쓴 맛) 또는 산지 검색..." 
                 class="w-full h-[42px] pl-4 pr-20 bg-white/95 text-[#1E3B5C] placeholder:text-stone-400 rounded-full sketch-border focus:outline-none focus:ring-1 focus:ring-[#30679D] text-sm"
                 autocomplete="off"
               />
@@ -2931,23 +2931,26 @@
             <span id="mapExpandBtnLabel">크게보기</span>
           </button>
         </div>
-          <!-- 2. DOCKED ORIGIN SEARCH RESULT TILE -->
-          <div id="editorialOriginPopup" class="w-full select-none dynamic-tile" data-tile-id="editorialOriginPopup" data-tile-label="2. 원산지 결과 타일">
+          <!-- 2. DOCKED ORIGIN SEARCH RESULT TILE (목적 1: 제안 원두 & 원산지 핵심 브리프) -->
+          <div id="editorialOriginPopup" class="w-full select-none dynamic-tile" data-tile-id="editorialOriginPopup" data-tile-label="2. 제안 원두·원산지 브리프">
             <div class="editorial-popup-card" onpointerdown="event.stopPropagation()" onclick="event.stopPropagation()">
-              <!-- 1. 상단 메타 바 (Origin & HS 코드) -->
+              <!-- 1. 상단 메타 바 (Origin & 목적 1 배지) -->
               <div class="editorial-top-meta">
                 <div class="editorial-country-tag">
                   <span class="editorial-country-dot"></span>
                   <span id="editorialCountryTag">ETHIOPIA ORIGIN</span>
                 </div>
-                <span id="editorialHsBadge" class="editorial-hs-badge">HS 0901.21</span>
+                <div class="flex items-center gap-1.5">
+                  <span class="px-2 py-0.5 rounded-full bg-[#30679D]/12 text-[#30679D] dark:bg-[#30679D]/30 dark:text-[#97B6CB] font-mono-code font-bold text-[10px]">STEP 1 · 제안 원두 &amp; 원산지</span>
+                  <span id="editorialHsBadge" class="editorial-hs-badge">HS 0901.21</span>
+                </div>
               </div>
 
               <!-- 2. 산지 타이틀 및 테루아 스펙 -->
               <div class="editorial-title-row">
-                <h3 id="editorialRegionTitle" class="editorial-region-title">에티오피아 시다모 · 구지</h3>
+                <h3 id="editorialRegionTitle" class="editorial-region-title">에티오피아 예가체프</h3>
                 <div class="editorial-specs-row">
-                  <span id="editorialAltitudePill" class="editorial-alt-pill">2,000m 고산지</span>
+                  <span id="editorialAltitudePill" class="editorial-alt-pill">1,950m 고산지</span>
                   <span class="editorial-bullet">•</span>
                   <span id="editorialVarietalText" class="editorial-spec-text">Heirloom 품종</span>
                   <span class="editorial-bullet">•</span>
@@ -2955,66 +2958,85 @@
                 </div>
               </div>
 
-              <!-- 3. 슬라이딩 세그먼트 컨트롤 탭 (원두 / 생두) -->
-              <div class="editorial-seg-wrap" role="tablist" aria-label="원두 및 생두 구분">
-                <div id="editorialSegGlider" class="editorial-seg-glider"></div>
-                <button type="button" id="editorialTabRoasted" class="editorial-seg-btn active" role="tab" aria-selected="true" onclick="setEditorialHudTab('roasted')">
-                  <span class="editorial-tab-dot roasted"></span>
-                  <span>원두 (홈카페용)</span>
-                </button>
-                <button type="button" id="editorialTabGreen" class="editorial-seg-btn" role="tab" aria-selected="false" onclick="setEditorialHudTab('green')">
-                  <span class="editorial-tab-dot green"></span>
-                  <span>생두 (로스팅·도매)</span>
-                </button>
+              <!-- 3. 원산지 테루아 & 대표 향미 브리프 (중복 구매 버튼 대신 원산지 정체성 집중) -->
+              <div class="mt-2 p-2.5 rounded-xl bg-[#FAF9ED] dark:bg-[#121E2C] border border-[#BDB989]/60 dark:border-[#264363] space-y-1.5 text-xs">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="font-bold text-[#1E3B5C] dark:text-[#F0F0D8] flex items-center gap-1 text-[11.5px]">
+                    <span>☕</span>
+                    <span id="editorialTasteMoodLabel">화사한 산미 · 자스민 플로럴</span>
+                  </span>
+                  <span id="editorialRoastRecommendBadge" class="font-mono-code text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-[#516B50]/15 text-[#516B50] dark:text-[#86EFAC]">권장: 중약배전 (205~219°C)</span>
+                </div>
+                <p id="editorialTerroirSummaryText" class="text-[11.5px] text-[#374836] dark:text-[#97B6CB] leading-relaxed">
+                  해발 1,950m 고산 화산재 토양에서 재배되어 유기산과 당분이 고밀도로 응축된 대표적인 스페셜티 원산지입니다.
+                </p>
+                <!-- 우측 스토리라인(생두→원두 학습 & 3대 정렬 구매처) 바로가기 앵커 -->
+                <div class="pt-1.5 border-t border-[#BDB989]/40 dark:border-[#264363] grid grid-cols-2 gap-1.5">
+                  <button type="button" onclick="focusStorylineSection('recommendationCard')" class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#162231] hover:bg-[#516B50] hover:text-white text-[#1E3B5C] dark:text-[#F0F0D8] border border-[#BDB989]/60 dark:border-[#30679D]/50 font-bold text-[11px] transition flex items-center justify-between cursor-pointer">
+                    <span>🌱→☕ 생두·원두 과정</span>
+                    <span class="font-mono-code text-[10px]">➔</span>
+                  </button>
+                  <button type="button" onclick="focusStorylineSection('customsChannelsCard')" class="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#162231] hover:bg-[#30679D] hover:text-white text-[#1E3B5C] dark:text-[#F0F0D8] border border-[#BDB989]/60 dark:border-[#30679D]/50 font-bold text-[11px] transition flex items-center justify-between cursor-pointer">
+                    <span>🛒 리뷰·최저가 구매처</span>
+                    <span class="font-mono-code text-[10px]">➔</span>
+                  </button>
+                </div>
               </div>
 
-              <!-- 4. 하단 2개 구매 채널 카드 (알약 스타일) -->
-              <div id="editorialActionsWrap" class="editorial-actions-grid">
-                <a id="editorialActionNaver" class="editorial-action-card" href="#" onclick="openHudChannel('naverRoasted'); return false;" title="네이버 쇼핑에서 검색 결과 보기">
-                  <div class="editorial-action-info">
-                    <div id="editorialBrandIconNaver" class="editorial-brand-icon naver">N</div>
-                    <span id="editorialTitleNaver" class="editorial-action-title">네이버 오픈마켓</span>
-                    <span id="editorialSubNaver" class="hidden"></span>
-                  </div>
-                  <span class="editorial-arrow">↗</span>
-                </a>
-
-                <a id="editorialActionGlobal" class="editorial-action-card" href="#" onclick="openHudChannel('amazonRoasted'); return false;" title="Amazon 검색">
-                  <div class="editorial-action-info">
-                    <div id="editorialBrandIconGlobal" class="editorial-brand-icon amazon">a</div>
-                    <span id="editorialTitleGlobal" class="editorial-action-title">싱글 아마존 직구</span>
-                    <span id="editorialSubGlobal" class="hidden"></span>
-                  </div>
-                  <span class="editorial-arrow">↗</span>
-                </a>
+              <!-- Legacy compatibility anchors kept hidden so existing HUD scripts never throw null errors -->
+              <div class="hidden" aria-hidden="true">
+                <div id="editorialSegGlider"></div>
+                <button type="button" id="editorialTabRoasted" onclick="setEditorialHudTab('roasted')"></button>
+                <button type="button" id="editorialTabGreen" onclick="setEditorialHudTab('green')"></button>
+                <div id="editorialActionsWrap">
+                  <a id="editorialActionNaver" href="#"><span id="editorialBrandIconNaver"></span><span id="editorialTitleNaver"></span><span id="editorialSubNaver"></span></a>
+                  <a id="editorialActionGlobal" href="#"><span id="editorialBrandIconGlobal"></span><span id="editorialTitleGlobal"></span><span id="editorialSubGlobal"></span></a>
+                </div>
               </div>
 
-              <!-- B안: 지도 산지 핀 팝업 내 원두 리포트 발급 버튼 (상단 액션 카드와 R=13px 통일) -->
-              <button type="button" id="editorialDossierBtn" class="editorial-dossier-card" onclick="openCoffeeDossierModal(); return false;" title="현재 산지의 상세 아카이벌 리포트 열기">
+              <!-- 원두 리포트(Dossier) 발급 버튼 -->
+              <button type="button" id="editorialDossierBtn" class="editorial-dossier-card mt-2" onclick="openCoffeeDossierModal(); return false;" title="현재 산지의 상세 아카이벌 리포트 열기">
                 <span class="text-xs transition-transform">📜</span>
                 <span class="tracking-tight">이 산지 원두 리포트(Dossier) 발급</span>
                 <span class="dossier-arrow font-mono-code text-[11px] text-[#30679D] dark:text-[#97B6CB] transition-transform">➔</span>
               </button>
             </div>
           </div>
-          <!-- 3. 4 SENSORY AXES -->
-          <div id="sensorySlidersBlock" class="w-full bg-white sketch-border rounded-xl sm:rounded-2xl p-2 sm:p-3 flex flex-col shadow-sm border border-[#1E3B5C]/40 z-10 dynamic-tile" data-tile-id="sensorySlidersBlock" data-tile-label="3. 4대 감각축">
+
+          <!-- 3. 4 SENSORY AXES (목적 1: 산미 · 고소 · 쓴 맛 퀵 프리셋 & 4대 감각 다이얼) -->
+          <div id="sensorySlidersBlock" class="w-full bg-white sketch-border rounded-xl sm:rounded-2xl p-2 sm:p-3 flex flex-col shadow-sm border border-[#1E3B5C]/40 z-10 dynamic-tile" data-tile-id="sensorySlidersBlock" data-tile-label="3. 미각 밸런스 다이얼">
         <div>
           <!-- Header: Title & Roast Mode Toggle -->
-          <div class="flex flex-row items-center justify-between lg:flex-col lg:items-stretch gap-1 pb-1.5 sm:pb-2 mb-2 sm:mb-2.5 border-b border-[#BDB989]/60">
+          <div class="flex flex-row items-center justify-between gap-1 pb-1.5 sm:pb-2 mb-2 border-b border-[#BDB989]/60">
             <div class="flex items-center gap-1.5 sm:gap-2">
               <span class="font-bold text-[#1E3B5C] flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm">
                 <span class="text-xs sm:text-sm">🎚️</span>
-                <span>4대 감각 축</span>
+                <span>원두 맛 밸런스 조절</span>
               </span>
-              <span class="px-1.5 sm:px-2 py-0.5 rounded-full bg-[#1E3B5C]/10 text-[#1E3B5C] dark:bg-[#30679D]/30 dark:text-[#97B6CB] border border-[#BDB989]/50 dark:border-[#30679D]/50 font-mono-code font-semibold text-[9.5px] sm:text-[11px]" title="각 감각 축별 5단계 체감 강도 스케일 (1=은은함 ~ 5=강렬함)">강도 1~5 Lv</span>
+              <span class="px-1.5 sm:px-2 py-0.5 rounded-full bg-[#1E3B5C]/10 text-[#1E3B5C] dark:bg-[#30679D]/30 dark:text-[#97B6CB] border border-[#BDB989]/50 dark:border-[#30679D]/50 font-mono-code font-semibold text-[9.5px] sm:text-[11px]" title="각 감각 축별 5단계 체감 강도 스케일 (1=은은함 ~ 5=강렬함)">1~5 Lv</span>
             </div>
             <div class="flex items-center gap-1 text-xs sm:text-sm">
-              <label class="flex items-center gap-1 sm:gap-1.5 cursor-pointer text-[#374836] font-semibold text-[11px] sm:text-xs" title="8단계 배전도 물리화학적 보정 적용">
+              <label class="flex items-center gap-1 sm:gap-1.5 cursor-pointer text-[#374836] font-semibold text-[11px] sm:text-xs" title="8단계 배전도 물리화학적 보정 적용 (쓴맛 선택 시 강배전 자동 연동)">
                 <input type="checkbox" id="checkRoastMode" class="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded accent-[#516B50]">
-                <span>배전도</span>
+                <span>배전도 연동</span>
               </label>
             </div>
+          </div>
+
+          <!-- 3대 핵심 맛(산미 · 고소 · 쓴 맛) + 단맛 원클릭 프리셋 바 -->
+          <div class="grid grid-cols-4 gap-1 sm:gap-1.5 mb-2">
+            <button type="button" onclick="applyQuickTastePreset('acidity')" class="quick-taste-preset-btn px-1.5 py-1 rounded-lg border border-[#BDB989]/60 bg-[#FAF9ED] hover:bg-[#30679D] hover:text-white text-[#1E3B5C] font-bold text-[10.5px] sm:text-[11px] transition flex items-center justify-center gap-1 cursor-pointer shadow-2xs" data-preset-taste="acidity" title="화사한 과일·꽃 산미 중심 원두 매칭 (약중배전 연동)">
+              <span>🍊</span><span>산미</span>
+            </button>
+            <button type="button" onclick="applyQuickTastePreset('nutty')" class="quick-taste-preset-btn px-1.5 py-1 rounded-lg border border-[#BDB989]/60 bg-[#FAF9ED] hover:bg-[#30679D] hover:text-white text-[#1E3B5C] font-bold text-[10.5px] sm:text-[11px] transition flex items-center justify-center gap-1 cursor-pointer shadow-2xs" data-preset-taste="nutty" title="구운 아몬드·견과류 고소한 원두 매칭 (중배전 연동)">
+              <span>🥜</span><span>고소</span>
+            </button>
+            <button type="button" onclick="applyQuickTastePreset('bitter')" class="quick-taste-preset-btn px-1.5 py-1 rounded-lg border border-[#BDB989]/60 bg-[#FAF9ED] hover:bg-[#1E3B5C] hover:text-white text-[#1E3B5C] font-bold text-[10.5px] sm:text-[11px] transition flex items-center justify-center gap-1 cursor-pointer shadow-2xs" data-preset-taste="bitter" title="묵직한 다크초콜릿 쓴 맛 원두 매칭 (강배전 230°C 자동 연동)">
+              <span>🍫</span><span>쓴 맛</span>
+            </button>
+            <button type="button" onclick="applyQuickTastePreset('balance')" class="quick-taste-preset-btn px-1.5 py-1 rounded-lg border border-[#BDB989]/60 bg-[#FAF9ED] hover:bg-[#516B50] hover:text-white text-[#1E3B5C] font-bold text-[10.5px] sm:text-[11px] transition flex items-center justify-center gap-1 cursor-pointer shadow-2xs" data-preset-taste="balance" title="달콤하고 부드러운 데일리 밸런스 원두 매칭">
+              <span>🍯</span><span>단맛·균형</span>
+            </button>
           </div>
 
           <!-- Hidden Native Range Sliders for Seamless Logic Synchronization -->
@@ -3105,10 +3127,10 @@
               </div>
             </div>
 
-            <!-- 3. 바디감 (Body) -->
+            <!-- 3. 바디 · 쓴맛 (Body & Bitter) -->
             <div class="sensory-card-body bg-transparent p-1 sm:p-2 sm:p-2.5 rounded-xl sm:rounded-2xl border border-[#BDB989]/40 dark:border-[#264363] flex flex-col justify-between shadow-2xs">
               <div class="flex items-center justify-between w-full px-0.5">
-                <span class="sensory-title font-black text-[#1A4064] text-[11px] sm:text-sm">바디감</span>
+                <span class="sensory-title font-black text-[#1A4064] text-[11px] sm:text-sm">바디·쓴맛</span>
                 <span id="labelBody" class="sensory-label font-mono-code font-bold text-[#2F577D] text-[9.5px] sm:text-xs">적당히 (6.0)</span>
               </div>
               <div class="flex items-center justify-between px-0 sm:px-1 my-0.5 sm:my-1.5">
@@ -3136,7 +3158,7 @@
                       <span id="dialLevelBody" class="dial-level-text font-mono-code font-semibold text-[#64748B] leading-none mt-0.5 text-[8px] sm:text-[10.5px]">Lv.3</span>
                     </div>
                   </div>
-                  <span class="sensory-en-title font-semibold text-[#2F577D] mt-0.5 sm:mt-1 font-space text-[9px] sm:text-xs">Body</span>
+                  <span class="sensory-en-title font-semibold text-[#2F577D] mt-0.5 sm:mt-1 font-space text-[9px] sm:text-xs">Body·Bitter</span>
                 </div>
                 <button type="button" class="sensory-step-btn w-5 h-5 min-w-[20px] sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-9 lg:h-9 rounded-full bg-white hover:bg-[#F1F3F5] active:scale-95 text-[#1A4064] font-bold flex items-center justify-center cursor-pointer shadow-sm border border-black/5 transition-all select-none text-[11px] sm:text-sm" data-axis="body" data-step="1">+</button>
               </div>
@@ -3180,158 +3202,54 @@
             </div>
           </div>
         </div>
-
-
       </div>
-          <!-- 4. CUSTOMS & CHANNELS -->
-          <div id="customsChannelsCard" class="w-full bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="customsChannelsCard" data-tile-label="4. 통관·유통">
-          <div>
-            <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#BDB989]/60">
-              <div class="flex items-center gap-1.5 shrink-0">
-                <span class="text-sm">📋</span>
-                <h3 class="font-bold font-space tracking-wider text-[#1E3B5C] text-sm whitespace-nowrap">CUSTOMS & CHANNELS (통관 & 유통)</h3>
-              </div>
-              <span class="font-mono-code px-2 py-0.5 bg-[#F1F3F5] text-[#516B50] rounded font-semibold text-[11px] whitespace-nowrap" title="Coffee Logistics & Import Protocol (관세청·식약처·식물검역 연동 규격)">
-                CLIP 연동
-              </span>
-            </div>
-
-            <!-- Customs HS Code Section (2-Column Roasted & Green Beans) -->
-            <div class="space-y-1.5 text-sm">
-              <div class="font-bold text-[#1E3B5C] flex items-center gap-1 text-xs">
-                <span>🏛️</span><span>관세청 수입 요건</span>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div class="p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-xs">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[#5A758D] font-bold">생두 0901.11</span>
-                    <span class="font-bold text-[#1E3B5C]">관세 2%</span>
-                  </div>
-                  <span class="text-[#516B50] font-semibold block mt-0.5 truncate text-[11px]">식물검역증명서 필수</span>
-                </div>
-                <div class="p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-xs">
-                  <div class="flex justify-between items-center">
-                    <span class="text-[#5A758D] font-bold">원두 0901.21</span>
-                    <span class="font-bold text-[#1E3B5C]">관세 8%</span>
-                  </div>
-                  <span class="text-[#30679D] font-semibold block mt-0.5 truncate text-[11px]">식약처 정밀검사</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Estimated Shipping Route -->
-            <div id="shippingRouteBlock" class="mt-2.5 p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 font-mono-code text-[11px] space-y-1">
-              <div class="font-bold text-[#1E3B5C] text-xs flex items-center gap-1"><span>🚢</span><span>예상 운송 경로</span></div>
-              <div id="shippingRouteBody" class="space-y-1 text-[#374836]"></div>
-              <div class="text-[10px] text-[#5A758D]/80 leading-snug">직선거리 기반 추정치이며 실제 선박 스케줄과 다를 수 있습니다.</div>
-            </div>
-
-            <!-- Channels Section (Differentiated: Roasted Beans vs. Green Beans - Unified Card Tile UI) -->
-            <div class="space-y-2.5 pt-3 mt-3 border-t border-[#BDB989]/40 text-sm">
-              <div class="font-bold text-[#1E3B5C] flex items-center justify-between text-xs">
-                <span class="flex items-center gap-1">
-                  <span>🛒</span><span>원두 구매처 (원두 / 생두 구분)</span>
-                </span>
-                <span class="text-[#5A758D] font-mono-code text-[10px]">HS 연동</span>
-              </div>
-              
-              <!-- 1. Roasted Coffee Beans (원두) - Unified Card UI -->
-              <div class="p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 space-y-1.5">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-1.5 font-bold text-[#30679D] dark:text-[#97B6CB] text-xs">
-                    <span>☕</span>
-                    <span>원두 (Roasted Beans)</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 text-[11px] font-mono-code text-[#5A758D] dark:text-[#97B6CB]/80">
-                    <span>홈카페용</span>
-                    <span class="font-semibold px-1.5 py-0.5 rounded bg-[#30679D]/10 dark:bg-[#30679D]/30 text-[#1E3B5C] dark:text-[#97B6CB]">HS 0901.21</span>
-                  </div>
-                </div>
-                <div class="grid grid-cols-2 gap-1.5 pt-0.5">
-                  <a id="naverSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2.5 py-1.5 bg-white hover:bg-[#03c75a]/10 hover:border-[#03c75a] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="네이버 쇼핑 검색 결과 보기">
-                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#03c75a] flex items-center gap-1 truncate text-xs">
-                      <span class="font-bold text-[#03c75a] text-xs">N</span>
-                      <span id="naverSearchLabel" class="truncate">네이버 쇼핑 보기</span>
-                    </span>
-                    <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
-                  </a>
-                  <a id="amazonSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2.5 py-1.5 bg-white hover:bg-[#30679D]/15 hover:border-[#30679D] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs">
-                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#30679D] flex items-center gap-1 truncate text-xs">
-                      <span class="text-xs">📦</span>
-                      <span id="amazonSearchLabel" class="truncate">Amazon 직구</span>
-                    </span>
-                    <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
-                  </a>
-                </div>
-                <!-- 대표 스페셜티 로스터리 Pool (모모스커피 · 커피리브레 · 빈브라더스 · 테라로사 · 프릳츠) -->
-                <div class="pt-1 flex flex-wrap items-center gap-1 text-[10px] font-mono-code">
-                  <span class="text-[#5A758D] shrink-0 mr-0.5">로스터리 Pool:</span>
-                  <a id="roasterMomosLink" href="https://momos.co.kr/shop" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#1E3B5C] hover:text-white text-[#1E3B5C] font-semibold transition" title="모모스커피 공식몰 바로가기">모모스커피 ↗</a>
-                  <a href="https://coffeelibre.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="커피리브레 공식몰 (싱글오리진·골드문트)">커피리브레 ↗</a>
-                  <a href="https://www.beanbrothers.co.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="빈브라더스 공식몰">빈브라더스 ↗</a>
-                  <a href="https://terarosa.com" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="테라로사 공식몰">테라로사 ↗</a>
-                  <a href="https://fritz.co.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="프릳츠 공식몰">프릳츠 ↗</a>
-                </div>
-              </div>
-
-              <!-- 2. Green Coffee Beans (생두) - Unified Card UI -->
-              <div class="p-2.5 bg-[#F8F9FA] rounded-lg border border-[#BDB989]/60 space-y-1.5">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-1.5 font-bold text-[#516B50] dark:text-[#86EFAC] text-xs">
-                    <span>🌿</span>
-                    <span>생두 (Green Beans)</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 text-[11px] font-mono-code text-[#5A758D] dark:text-[#86EFAC]/80">
-                    <span>홈로스팅 · 사업자</span>
-                    <span class="font-semibold px-1.5 py-0.5 rounded bg-[#516B50]/10 dark:bg-[#516B50]/30 text-[#1E3B5C] dark:text-[#86EFAC]">HS 0901.11</span>
-                  </div>
-                </div>
-                <div class="grid grid-cols-2 gap-1.5 pt-0.5">
-                  <a id="naverGreenSearchLink" href="https://www.almacielo.com" target="_blank" class="flex items-center justify-between px-2.5 py-1.5 bg-white hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="국내 대표 스페셜티 생두 판매처 알마씨엘로">
-                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#516B50] flex items-center gap-1 truncate text-xs">
-                      <span class="font-bold text-[#516B50] text-xs">🌱</span>
-                      <span id="naverGreenSearchLabel" class="truncate">알마씨엘로 생두</span>
-                    </span>
-                    <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
-                  </a>
-                  <a id="almacieloSearchLink" href="https://gsc.coffee" target="_blank" class="flex items-center justify-between px-2.5 py-1.5 bg-white hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="국내 최대 생두 수입·유통사 GSC 인터내셔날">
-                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#516B50] flex items-center gap-1 truncate text-xs">
-                      <span class="text-xs">🏢</span>
-                      <span id="almacieloSearchLabel" class="truncate">GSC 생두 도매</span>
-                    </span>
-                    <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Footer -->
-          <div class="mt-2.5 pt-2 border-t border-[#BDB989]/40 space-y-1 text-[#5A758D] font-mono-code leading-tight">
-            <div class="flex justify-between items-center text-[11px]">
-              <span class="font-bold text-[#1E3B5C] dark:text-[#97B6CB]">CLIP 2027.01</span>
-              <span class="text-[10px]">공정위 준수</span>
-            </div>
-            <div class="text-[9.5px] sm:text-[10px] text-[#5A758D] dark:text-[#97B6CB]/85 leading-snug break-words" title="Coffee Logistics &amp; Import Protocol">
-              CLIP (Coffee Logistics &amp; Import Protocol)
-            </div>
-          </div>
         </div>
-        </div>
-        <!-- RIGHT COLUMN (5, 6) -->
+
+        <!-- RIGHT COLUMN (4: 원산지 매칭 & 생두 생산과정 ➔ 5: 생두→원두 8단계 로스팅 ➔ 6: 리뷰·최저가 3대 정렬 구매처) -->
         <div id="mapColRight" class="space-y-4 min-w-0 flex flex-col map-edit-col">
-          <!-- 5. ORIGIN MATCHING / AI BLEND -->
-          <div id="recommendationCard" class="bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="recommendationCard" data-tile-label="5. 산지 매칭 분석">
+          <!-- 4. ORIGIN MATCHING & GREEN BEAN PRODUCTION PROCESS (목적 2-A: 산지 재배·가공·생두 지식) -->
+          <div id="recommendationCard" class="bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="recommendationCard" data-tile-label="4. 원산지 생두 생산과정">
           <div>
-            <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#BDB989]/60">
+            <div class="flex items-center justify-between pb-2 mb-2.5 border-b border-[#BDB989]/60">
               <div class="flex items-center gap-1.5">
+                <span class="text-sm">🌱</span>
                 <h3 id="cardMainTitle" class="font-bold font-space tracking-wider text-[#1E3B5C] text-sm">
-                  ORIGIN MATCHING (산지 매칭)
+                  GREEN BEAN PROCESS (원산지 매칭 &amp; 생두 생산 과정)
                 </h3>
               </div>
-              <span id="cardModeBadge" class="font-mono-code px-2 py-0.5 rounded bg-[#F1F3F5] text-[#516B50] font-semibold text-[11px]">
-                Single 1순위
+              <span id="cardModeBadge" class="font-mono-code px-2 py-0.5 rounded bg-[#516B50]/15 text-[#516B50] font-bold text-[11px]">
+                STEP 2 · 생두(Green) 지식
               </span>
+            </div>
+
+            <!-- 4단계 생두→원두 스토리라인 파이프라인 스텝 바 -->
+            <div class="mb-3 p-2 rounded-xl bg-[#FAF9ED] dark:bg-[#121E2C] border border-[#BDB989]/70 dark:border-[#264363]">
+              <div class="flex items-center justify-between text-[10px] font-mono-code text-[#5A758D] dark:text-[#97B6CB] mb-1.5 px-0.5">
+                <span class="font-bold text-[#1E3B5C] dark:text-[#F0F0D8]">🌱 커피 한 잔의 탄생 과정 (클릭하여 단계별 원리 확인)</span>
+                <span id="pipelineActiveStageBadge" class="text-[#516B50] dark:text-[#86EFAC] font-bold">STEP 1~4 연동</span>
+              </div>
+              <div class="grid grid-cols-4 gap-1 text-center">
+                <button type="button" onclick="selectProductionPipelineStep(1)" id="prodStepBtn1" class="prod-step-btn p-1.5 rounded-lg border border-[#30679D] bg-[#30679D] text-white font-bold text-[10.5px] transition cursor-pointer flex flex-col items-center gap-0.5 shadow-2xs">
+                  <span>🍒 1. 체리 수확</span>
+                  <span class="text-[9px] opacity-85 font-mono-code">고도·품종</span>
+                </button>
+                <button type="button" onclick="selectProductionPipelineStep(2)" id="prodStepBtn2" class="prod-step-btn p-1.5 rounded-lg border border-[#BDB989]/60 bg-white dark:bg-[#162231] text-[#1E3B5C] dark:text-[#F0F0D8] hover:border-[#30679D] font-bold text-[10.5px] transition cursor-pointer flex flex-col items-center gap-0.5">
+                  <span>💧 2. 정제 가공</span>
+                  <span class="text-[9px] text-[#5A758D] dark:text-[#97B6CB] font-mono-code">수세·자연건조</span>
+                </button>
+                <button type="button" onclick="selectProductionPipelineStep(3)" id="prodStepBtn3" class="prod-step-btn p-1.5 rounded-lg border border-[#BDB989]/60 bg-white dark:bg-[#162231] text-[#1E3B5C] dark:text-[#F0F0D8] hover:border-[#30679D] font-bold text-[10.5px] transition cursor-pointer flex flex-col items-center gap-0.5">
+                  <span>🌱 3. 생두 완성</span>
+                  <span class="text-[9px] text-[#5A758D] dark:text-[#97B6CB] font-mono-code">수분11%·보존</span>
+                </button>
+                <button type="button" onclick="selectProductionPipelineStep(4)" id="prodStepBtn4" class="prod-step-btn p-1.5 rounded-lg border border-[#BDB989]/60 bg-white dark:bg-[#162231] text-[#1E3B5C] dark:text-[#F0F0D8] hover:border-[#30679D] font-bold text-[10.5px] transition cursor-pointer flex flex-col items-center gap-0.5">
+                  <span>☕ 4. 원두 로스팅</span>
+                  <span class="text-[9px] text-[#8C4B2E] dark:text-[#DFB995] font-mono-code">열분해 ↓</span>
+                </button>
+              </div>
+              <!-- 단계별 핵심 요약 설명 박스 -->
+              <div id="productionStageDetailBox" class="mt-2 p-2 rounded-lg bg-white dark:bg-[#0F1824] border border-[#BDB989]/50 dark:border-[#264363] text-[11.5px] text-[#1E3B5C] dark:text-[#F0F0D8] leading-relaxed">
+                <strong class="text-[#30679D] dark:text-[#97B6CB]">🍒 STEP 1. 커피 체리 수확:</strong> 고산지 일교차가 클수록 체리 과육이 천천히 익으며 유기산(산미)과 자당(단맛·고소함의 전구체)이 생두 씨앗 내부에 조밀하게 농축됩니다.
+              </div>
             </div>
 
             <!-- Single Origin View -->
@@ -3345,7 +3263,7 @@
                 <span id="beanAltitudeText" class="font-mono-code font-semibold text-[#1E3B5C]">1,950m (산미 +0.82 보정)</span>
               </div>
               <div class="flex justify-between items-center">
-                <span class="text-[#5A758D]">품종 및 가공 (사실정보)</span>
+                <span class="text-[#5A758D]">품종 및 산지 주력 가공법</span>
                 <span id="beanProcessText" class="font-medium text-[#1E3B5C]">Heirloom · Washed</span>
               </div>
               <div class="p-2 bg-[#F8F9FA] rounded border border-[#BDB989]/60">
@@ -3364,7 +3282,7 @@
               <div class="p-2.5 bg-white border border-[#BDB989] rounded-lg space-y-2 mt-1.5 shadow-xs text-sm">
                 <div class="flex items-center justify-between border-b border-[#BDB989]/40 pb-1">
                   <span class="font-bold text-[#1E3B5C] flex items-center gap-1 text-sm">
-                    <span class="text-sm">🧬</span> 품종 계보 & 가공 원리
+                    <span class="text-sm">🧬</span> 품종 계보 &amp; 생두 정제 가공 원리
                   </span>
                   <span id="ontologySpeciesBadge" class="font-mono-code px-1.5 py-0.2 rounded bg-[#516B50]/15 text-[#516B50] border border-[#516B50]/30 font-semibold text-[11px]">
                     100% 아라비카
@@ -3380,14 +3298,31 @@
                   <div id="ontologyLineageTree" class="text-[#2C3E50] leading-tight bg-[#F8F9FA] p-1.5 rounded border border-[#BDB989]/40 font-mono-code break-words flex flex-wrap gap-1 items-center text-xs"></div>
                 </div>
 
-                <!-- Processing Chemistry & Directional Rules -->
-                <div class="space-y-0.5">
+                <!-- Processing Chemistry & Directional Rules + 4대 가공법 비교 탭 -->
+                <div class="space-y-1">
                   <div class="flex items-center justify-between text-sm">
-                    <span class="font-bold text-[#1E3B5C]">가공 메커니즘 (Processing):</span>
+                    <span class="font-bold text-[#1E3B5C]">산지 가공 메커니즘 (Processing):</span>
                     <span id="ontologyProcessName" class="font-semibold text-[#30679D] text-xs"></span>
                   </div>
                   <p id="ontologyProcessPrinciple" class="text-[#374836] leading-snug bg-[#F8F9FA] p-1.5 rounded border border-[#BDB989]/30 text-xs"></p>
                   <div id="ontologyRulesList" class="flex flex-wrap gap-1 pt-0.5"></div>
+
+                  <!-- 4대 생두 가공 방식 비교 스위치 (지식 습득 강화) -->
+                  <div class="pt-1.5 mt-1 border-t border-[#BDB989]/30">
+                    <div class="flex items-center justify-between text-[10.5px] text-[#5A758D] mb-1">
+                      <span class="font-bold text-[#1E3B5C] dark:text-[#F0F0D8]">💧 4대 생두 가공법별 맛 변화 비교:</span>
+                      <span class="font-mono-code text-[10px]">체리 ➔ 생두 핵심 공정</span>
+                    </div>
+                    <div class="grid grid-cols-4 gap-1 text-[10.5px] font-bold">
+                      <button type="button" onclick="compareGreenProcessMethod('washed')" data-proc-tab="washed" class="green-proc-tab-btn py-1 px-1.5 rounded bg-[#30679D] text-white transition cursor-pointer">워시드(수세)</button>
+                      <button type="button" onclick="compareGreenProcessMethod('natural')" data-proc-tab="natural" class="green-proc-tab-btn py-1 px-1.5 rounded bg-[#F8F9FA] text-[#1E3B5C] border border-[#BDB989]/50 hover:border-[#30679D] transition cursor-pointer">내추럴(건조)</button>
+                      <button type="button" onclick="compareGreenProcessMethod('honey')" data-proc-tab="honey" class="green-proc-tab-btn py-1 px-1.5 rounded bg-[#F8F9FA] text-[#1E3B5C] border border-[#BDB989]/50 hover:border-[#30679D] transition cursor-pointer">허니(펄프드)</button>
+                      <button type="button" onclick="compareGreenProcessMethod('wethulled')" data-proc-tab="wethulled" class="green-proc-tab-btn py-1 px-1.5 rounded bg-[#F8F9FA] text-[#1E3B5C] border border-[#BDB989]/50 hover:border-[#30679D] transition cursor-pointer">웻헐링(습식)</button>
+                    </div>
+                    <div id="greenProcessCompareDesc" class="mt-1 p-1.5 rounded bg-[#FAF9ED] dark:bg-[#121E2C] border border-[#BDB989]/50 text-[11px] text-[#2C3E50] dark:text-[#97B6CB] leading-snug">
+                      <strong class="text-[#30679D]">워시드(Washed):</strong> 체리 과육과 점액질을 물로 깨끗이 발효·세척 후 건조합니다. 생두 자체의 <strong class="text-[#516B50]">맑고 화사한 산미와 꽃향기</strong>가 가장 선명하게 드러납니다.
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Flavor Ontology Nodes -->
@@ -3397,18 +3332,9 @@
                 </div>
               </div>
 
-              <!-- Direction 1: Verified Roastery Single-Origin Channels (No Blend Spam) -->
-              <div id="verifiedSingleMatchSection" class="p-2.5 bg-white border border-[#516B50]/60 rounded-lg space-y-2 mt-1.5 shadow-xs text-xs">
-                <div class="flex items-center justify-between gap-1 border-b border-[#BDB989]/40 pb-1.5">
-                  <span class="font-bold text-[#1E3B5C] flex items-center gap-1 text-[13px]">
-                    <span>🏛️</span> 검증 로스터리 싱글오리진 직영몰
-                  </span>
-                  <span class="font-mono-code px-2 py-0.5 rounded bg-[#516B50]/15 text-[#516B50] font-semibold text-[11px]">광고·블렌드 노이즈 차단</span>
-                </div>
-                <p class="text-xs text-[#5A758D] leading-relaxed">
-                  오픈마켓 검색에는 광고·다산지 묶음 블렌드가 섞일 수 있어, 직거래 로스터리의 <strong class="text-[#1E3B5C]">공식 싱글오리진 라인업</strong>을 1순위로 추천합니다. (시즌별 입고 변동)
-                </p>
-                <div id="verifiedSingleMatchBox" class="space-y-2"></div>
+              <!-- Legacy verifiedSingleMatchBox kept hidden here because verified roasteries are now unified in Tile 6 Sortable Commerce Hub -->
+              <div id="verifiedSingleMatchSection" class="hidden" aria-hidden="true">
+                <div id="verifiedSingleMatchBox"></div>
               </div>
             </div>
 
@@ -3423,7 +3349,7 @@
                   <span id="blendDeltaBadge" class="font-mono-code px-1.5 py-0.5 bg-[#30679D]/15 text-[#30679D] rounded font-semibold text-[10.5px]">싱글 대비 +9%</span>
                 </div>
 
-                <!-- 4 Preset Blend Archetype Chips -->
+                <!-- 6 Preset Blend Archetype Chips -->
                 <div>
                   <span class="text-[10px] text-[#5A758D] font-mono-code block mb-1">🏺 대표 블렌드 프리셋:</span>
                   <div id="blendPresetChips" class="grid grid-cols-2 gap-1.5">
@@ -3455,7 +3381,7 @@
                   <div id="blendPresetNote" class="hidden mt-1 text-[10px] text-[#5A758D] leading-snug"></div>
                 </div>
 
-                <!-- A안: 구성 원두 3종 개별 구매 + 그램(g) 배합 계산기 -->
+                <!-- 구성 원두 3종 개별 구매 + 그램(g) 배합 계산기 -->
                 <div>
                   <div class="flex flex-wrap items-center justify-between gap-1 text-[10.5px] text-[#5A758D] mb-1.5">
                     <span>구성 원두 3종 (개별 구매 후 후블렌딩):</span>
@@ -3475,7 +3401,7 @@
                   </div>
                 </div>
 
-                <!-- B안: 실제 배합이 확인된 시판 블렌드 비교 -->
+                <!-- 실제 배합이 확인된 시판 블렌드 비교 -->
                 <div id="verifiedBlendMatchSection" class="pt-2 border-t border-[#BDB989]/40">
                   <div class="flex items-center justify-between text-[10.5px] text-[#5A758D] mb-1">
                     <span class="font-bold text-[#1E3B5C]">🏪 비슷한 실제 시판 블렌드</span>
@@ -3518,19 +3444,41 @@
             </div>
           </div>
 
-          <div class="mt-3 pt-2 border-t border-[#BDB989]/40 text-[#5A758D] font-mono-code text-[11px]">
-            기준 1400m 고도 보정 적용 (±1.0 제한)</div>
+          <div class="mt-3 pt-2 border-t border-[#BDB989]/40 flex items-center justify-between text-[#5A758D] font-mono-code text-[11px]">
+            <span>기준 1400m 고도 보정 적용 (±1.0 제한)</span>
+            <button type="button" onclick="focusStorylineSection('roastTileCard')" class="text-[#30679D] font-bold hover:underline cursor-pointer">다음: 원두 로스팅(STEP 4) ↓</button>
+          </div>
         </div>
-          <!-- 6. ROASTING -->
-          <div id="roastTileCard" class="bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="roastTileCard" data-tile-label="6. 로스팅">
+
+          <!-- 5. ROASTING: GREEN BEAN TO ROASTED BEAN SIMULATOR (목적 2-B: 생두 → 원두 열분해 지식) -->
+          <div id="roastTileCard" class="bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="roastTileCard" data-tile-label="5. 생두→원두 로스팅 과정">
           <div class="space-y-2.5">
             <div class="flex items-center justify-between pb-2 border-b border-[#BDB989]/60">
               <div class="flex items-center gap-1.5">
-                <h3 class="font-bold font-space tracking-wider text-[#1E3B5C] text-sm">ROASTING</h3>
+                <span class="text-sm">🔥</span>
+                <h3 class="font-bold font-space tracking-wider text-[#1E3B5C] text-sm">GREEN ➔ ROASTED (생두 → 원두 로스팅 과정)</h3>
               </div>
               <span id="cardRoastLevelBadge" class="font-mono-code px-2 py-0.5 rounded bg-[#1E3B5C] text-[#F0F0D8] font-bold text-[11px]">
                 City (219°C · Medium)
               </span>
+            </div>
+
+            <!-- 생두(Green Bean) vs 원두(Roasted Bean) 물리화학적 변환 비교 배너 -->
+            <div class="grid grid-cols-2 gap-2 p-2 rounded-xl bg-[#FAF9ED] dark:bg-[#121E2C] border border-[#BDB989]/60 dark:border-[#264363] text-[11px]">
+              <div class="p-1.5 rounded-lg bg-white dark:bg-[#162231] border border-[#516B50]/35">
+                <div class="font-bold text-[#516B50] dark:text-[#86EFAC] flex items-center justify-between">
+                  <span>🌱 생두 (Green Bean)</span>
+                  <span class="font-mono-code text-[9.5px]">HS 0901.11</span>
+                </div>
+                <div class="text-[#5A758D] dark:text-[#97B6CB] mt-0.5 leading-snug">수분 10~12% · 클로로겐산·자당 응축 상태 (풀냄새·떫은맛, 음용 불가)</div>
+              </div>
+              <div class="p-1.5 rounded-lg bg-white dark:bg-[#162231] border border-[#30679D]/35">
+                <div class="font-bold text-[#30679D] dark:text-[#97B6CB] flex items-center justify-between">
+                  <span>☕ 원두 (Roasted Bean)</span>
+                  <span class="font-mono-code text-[9.5px]">HS 0901.21</span>
+                </div>
+                <div class="text-[#5A758D] dark:text-[#97B6CB] mt-0.5 leading-snug">196~245°C 열분해 · <strong class="text-[#1E3B5C] dark:text-[#F0F0D8]">산미(약배전) ➔ 고소·단맛(중배전) ➔ 쓴맛(강배전)</strong> 발현</div>
+              </div>
             </div>
 
             <!-- Interactive Roast Level Stepper & Slider -->
@@ -3549,9 +3497,9 @@
               <div class="pt-1">
                 <input type="range" id="tileRoastSlider" min="0" max="7" value="3" step="0.05" class="w-full cursor-pointer">
                 <div class="flex justify-between text-[#5A758D] font-mono-code mt-0.5 text-[11px]">
-                  <span>Light (196°C)</span>
-                  <span class="text-[#1E3B5C] dark:text-[#97B6CB] font-semibold">City (219°C)</span>
-                  <span>Dark (245°C)</span>
+                  <span>Light · 산미 보존 (196°C)</span>
+                  <span class="text-[#1E3B5C] dark:text-[#97B6CB] font-semibold">City · 고소·균형 (219°C)</span>
+                  <span>Dark · 쓴맛·바디 (245°C)</span>
                 </div>
               </div>
             </div>
@@ -3613,16 +3561,14 @@
               </div>
             </div>
 
-            <!-- Characteristic Archival Dossier Trigger Card (A안: '배전 풍미 방향성' 하단 특징화된 원두 리포트 발급 카드) -->
+            <!-- Characteristic Archival Dossier Trigger Card -->
             <div id="roastDossierTriggerCard" class="mt-2.5 p-2.5 rounded-xl border-2 border-[#BDB989] dark:border-[#30679D] bg-gradient-to-r from-[#FAF9ED] via-white to-[#F0F0D8] dark:from-[#15273C] dark:via-[#122336] dark:to-[#0F1E2E] shadow-xs hover:shadow-md hover:border-[#30679D] dark:hover:border-[#97B6CB] transition-all duration-200 cursor-pointer group select-none relative overflow-hidden" onclick="openCoffeeDossierModal()" title="현재 산지 및 실시간 배전 프로필 기준 공식 아카이벌 원두 리포트 발급">
-              <!-- Background Ambient Watermark -->
               <div class="absolute -right-2 -bottom-2 text-[#BDB989]/15 dark:text-[#30679D]/15 font-serif-en text-4xl font-bold select-none pointer-events-none">
                 DOSSIER
               </div>
 
               <div class="flex items-center justify-between gap-2.5 relative z-10">
                 <div class="flex items-center gap-2.5 min-w-0">
-                  <!-- Gold Embossed Wax Seal Badge -->
                   <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#BDB989] via-[#966138] to-[#78482B] dark:from-[#30679D] dark:via-[#264363] dark:to-[#1E3B5C] flex items-center justify-center text-white shrink-0 shadow-xs border border-white/50 group-hover:scale-105 transition-transform duration-200">
                     <span class="text-sm">📜</span>
                   </div>
@@ -3640,7 +3586,6 @@
                   </div>
                 </div>
 
-                <!-- Action Pill -->
                 <div class="shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#30679D] group-hover:bg-[#1E3B5C] dark:bg-[#F0F0D8] dark:group-hover:bg-white text-[#FAF9ED] dark:text-[#0A0F17] font-bold text-[11px] font-space tracking-tight transition-all duration-200 shadow-2xs group-hover:translate-x-0.5">
                   <span>리포트 발급</span>
                   <span class="text-xs">➔</span>
@@ -3650,8 +3595,137 @@
           </div>
 
           <div class="mt-3 pt-2 border-t border-[#BDB989]/40 flex justify-between items-center text-[#5A758D] font-mono-code text-[11px]">
-            <span>배전 물리화학 규칙</span>
-            <span class="text-[#30679D] font-semibold">196°C ~ 245°C</span>
+            <span>배전 물리화학 규칙 (196°C ~ 245°C)</span>
+            <button type="button" onclick="focusStorylineSection('customsChannelsCard')" class="text-[#30679D] font-bold hover:underline cursor-pointer">다음: 3대 정렬 구매처 보기 ↓</button>
+          </div>
+        </div>
+
+          <!-- 6. SORTABLE COMMERCE HUB & CUSTOMS (목적 3: 리뷰 좋은 순 · 리뷰 많은 순 · 최저가 구매처 제공) -->
+          <div id="customsChannelsCard" class="w-full bg-white sketch-border rounded-xl p-4 shadow-sm flex flex-col justify-between dynamic-tile" data-tile-id="customsChannelsCard" data-tile-label="6. 맞춤 원두·생두 구매처">
+          <div>
+            <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#BDB989]/60">
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="text-sm">🛒</span>
+                <h3 class="font-bold font-space tracking-wider text-[#1E3B5C] text-sm whitespace-nowrap">PURCHASE CHANNELS (맞춤 원두·생두 구매처)</h3>
+              </div>
+              <span class="font-mono-code px-2 py-0.5 bg-[#30679D]/12 text-[#30679D] rounded font-bold text-[11px] whitespace-nowrap" title="리뷰 좋은 순 · 리뷰 많은 순 · 최저가 순 3대 정렬 지원">
+                STEP 3 · 3대 정렬 구매
+              </span>
+            </div>
+
+            <!-- 목적 3 핵심: 3대 구매 정렬 탭 (리뷰 좋은 순 / 리뷰 많은 순 / 최저가 순) -->
+            <div class="space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="text-xs font-bold text-[#1E3B5C] dark:text-[#F0F0D8] flex items-center gap-1.5">
+                  <span>🎯</span>
+                  <span id="commerceTargetOriginLabel">에티오피아 예가체프 구매처</span>
+                </div>
+                <span id="commerceSortDescBadge" class="font-mono-code text-[10.5px] font-semibold text-[#516B50] dark:text-[#86EFAC]">⭐ 평점·만족도 최우수 기준</span>
+              </div>
+
+              <!-- 3-Way Sort Switcher Tabs -->
+              <div class="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-[#FAF9ED] dark:bg-[#121E2C] border border-[#BDB989]/70 dark:border-[#264363]" role="tablist" aria-label="구매처 정렬 기준 선택">
+                <button type="button" id="sortTabRating" onclick="setCommerceSortMode('rating')" role="tab" aria-selected="true" class="commerce-sort-tab-btn py-1.5 px-2 rounded-lg bg-[#1E3B5C] text-[#F0F0D8] font-bold text-xs transition flex items-center justify-center gap-1 cursor-pointer shadow-xs">
+                  <span>⭐</span><span>리뷰 좋은 순</span>
+                </button>
+                <button type="button" id="sortTabReviews" onclick="setCommerceSortMode('reviews')" role="tab" aria-selected="false" class="commerce-sort-tab-btn py-1.5 px-2 rounded-lg bg-transparent text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] font-bold text-xs transition flex items-center justify-center gap-1 cursor-pointer">
+                  <span>💬</span><span>리뷰 많은 순</span>
+                </button>
+                <button type="button" id="sortTabPrice" onclick="setCommerceSortMode('price')" role="tab" aria-selected="false" class="commerce-sort-tab-btn py-1.5 px-2 rounded-lg bg-transparent text-[#5A758D] dark:text-[#97B6CB] hover:text-[#1E3B5C] font-bold text-xs transition flex items-center justify-center gap-1 cursor-pointer">
+                  <span>💰</span><span>최저가 순</span>
+                </button>
+              </div>
+
+              <!-- Dynamic Sorted Purchase Cards List -->
+              <div id="commerceSortableList" class="space-y-2"></div>
+
+              <!-- Direct Search & Specialty Roastery Pool Quick Bar (원두 / 생두 직결) -->
+              <div class="p-2.5 bg-[#F8F9FA] dark:bg-[#121E2C] rounded-xl border border-[#BDB989]/60 dark:border-[#264363] space-y-2 text-xs">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-[#1E3B5C] dark:text-[#F0F0D8] flex items-center gap-1">
+                    <span>🔗</span><span>전체 마켓 &amp; 생두 도매 바로가기</span>
+                  </span>
+                  <span class="font-mono-code text-[10px] text-[#5A758D]">원두(0901.21) · 생두(0901.11)</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                  <a id="naverSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-white hover:bg-[#03c75a]/10 hover:border-[#03c75a] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="네이버 쇼핑 검색 결과 보기">
+                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#03c75a] flex items-center gap-1 truncate text-[11px]">
+                      <span class="font-bold text-[#03c75a]">N</span>
+                      <span id="naverSearchLabel" class="truncate">네이버 원두</span>
+                    </span>
+                    <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
+                  </a>
+                  <a id="amazonSearchLink" href="#" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-white hover:bg-[#30679D]/15 hover:border-[#30679D] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="Amazon 글로벌 직구 검색">
+                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#30679D] flex items-center gap-1 truncate text-[11px]">
+                      <span>📦</span>
+                      <span id="amazonSearchLabel" class="truncate">Amazon 직구</span>
+                    </span>
+                    <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
+                  </a>
+                  <a id="naverGreenSearchLink" href="https://www.almacielo.com" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-white hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="국내 대표 스페셜티 생두 판매처 알마씨엘로">
+                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#516B50] flex items-center gap-1 truncate text-[11px]">
+                      <span>🌱</span>
+                      <span id="naverGreenSearchLabel" class="truncate">알마씨엘로 생두</span>
+                    </span>
+                    <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
+                  </a>
+                  <a id="almacieloSearchLink" href="https://gsc.coffee" target="_blank" class="flex items-center justify-between px-2 py-1.5 bg-white hover:bg-[#516B50]/15 hover:border-[#516B50] border border-[#BDB989]/60 rounded-lg transition group shadow-2xs" title="국내 최대 생두 수입·유통사 GSC 인터내셔날">
+                    <span class="font-bold text-[#1E3B5C] group-hover:text-[#516B50] flex items-center gap-1 truncate text-[11px]">
+                      <span>🏢</span>
+                      <span id="almacieloSearchLabel" class="truncate">GSC 생두 도매</span>
+                    </span>
+                    <span class="text-[#5A758D] shrink-0 font-mono-code text-[10px]">↗</span>
+                  </a>
+                </div>
+                <div class="pt-1 flex flex-wrap items-center gap-1 text-[10px] font-mono-code">
+                  <span class="text-[#5A758D] shrink-0 mr-0.5">검증 로스터리 직영몰:</span>
+                  <a id="roasterMomosLink" href="https://momos.co.kr/shop" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#1E3B5C] hover:text-white text-[#1E3B5C] font-semibold transition" title="모모스커피 공식몰 바로가기">모모스커피 ↗</a>
+                  <a href="https://coffeelibre.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="커피리브레 공식몰">커피리브레 ↗</a>
+                  <a href="https://www.beanbrothers.co.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="빈브라더스 공식몰">빈브라더스 ↗</a>
+                  <a href="https://terarosa.com" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="테라로사 공식몰">테라로사 ↗</a>
+                  <a href="https://fritz.co.kr" target="_blank" class="px-2 py-0.5 rounded-full bg-white border border-[#BDB989]/50 hover:bg-[#30679D] hover:text-white text-[#1E3B5C] transition" title="프릳츠 공식몰">프릳츠 ↗</a>
+                </div>
+              </div>
+
+              <!-- 관세청 통관 요건 & 예상 해상 운송 경로 (보조 정보 아코디언) -->
+              <details class="group rounded-xl border border-[#BDB989]/60 bg-[#F8F9FA] dark:bg-[#121E2C] p-2.5 text-xs">
+                <summary class="font-bold text-[#1E3B5C] dark:text-[#F0F0D8] cursor-pointer flex items-center justify-between select-none">
+                  <span class="flex items-center gap-1.5"><span>🏛️</span><span>관세청 통관 요건 (생두 2% · 원두 8%) &amp; 산지 해상 운송 경로</span></span>
+                  <span class="font-mono-code text-[10px] text-[#30679D] group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <div class="mt-2.5 space-y-2 pt-2 border-t border-[#BDB989]/40">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div class="p-2 bg-white rounded-lg border border-[#BDB989]/60 font-mono-code text-xs">
+                      <div class="flex justify-between items-center">
+                        <span class="text-[#5A758D] font-bold">생두 0901.11</span>
+                        <span class="font-bold text-[#1E3B5C]">관세 2%</span>
+                      </div>
+                      <span class="text-[#516B50] font-semibold block mt-0.5 truncate text-[11px]">식물검역증명서 필수</span>
+                    </div>
+                    <div class="p-2 bg-white rounded-lg border border-[#BDB989]/60 font-mono-code text-xs">
+                      <div class="flex justify-between items-center">
+                        <span class="text-[#5A758D] font-bold">원두 0901.21</span>
+                        <span class="font-bold text-[#1E3B5C]">관세 8%</span>
+                      </div>
+                      <span class="text-[#30679D] font-semibold block mt-0.5 truncate text-[11px]">식약처 정밀검사</span>
+                    </div>
+                  </div>
+                  <div id="shippingRouteBlock" class="p-2 bg-white rounded-lg border border-[#BDB989]/60 font-mono-code text-[11px] space-y-1">
+                    <div class="font-bold text-[#1E3B5C] text-xs flex items-center gap-1"><span>🚢</span><span>예상 운송 경로</span></div>
+                    <div id="shippingRouteBody" class="space-y-1 text-[#374836]"></div>
+                    <div class="text-[10px] text-[#5A758D]/80 leading-snug">직선거리 기반 추정치이며 실제 선박 스케줄과 다를 수 있습니다.</div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="mt-2.5 pt-2 border-t border-[#BDB989]/40 space-y-1 text-[#5A758D] font-mono-code leading-tight">
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="font-bold text-[#1E3B5C] dark:text-[#97B6CB]">CLIP 2027.01 · 3대 정렬 커머스</span>
+              <span class="text-[10px]">공정위 준수</span>
+            </div>
           </div>
         </div>
         </div>
@@ -4031,19 +4105,19 @@
           topRegionId: "mandheling",
           countryName: "인도네시아",
           regionName: "만델링",
-          tasteMood: "묵직한 바디",
-          icon: "🪵",
+          tasteMood: "묵직·쓴 맛 (강배전)",
+          icon: "🍫",
           metric: "",
-          badge: "주간 바디 추천",
+          badge: "주간 쓴 맛 추천",
           terroir: "1,450m ASL · 웻헐링(Giling Basah) · 토바 호수 화산암",
-          cupNotes: "다크초콜릿, 허브 흙내음, 중후한 풀바디",
-          tagline: "묵직한 흙내음과 다크초콜릿의 긴 여운",
+          cupNotes: "다크초콜릿 쌉싸름함, 허브 흙내음, 중후한 풀바디",
+          tagline: "묵직한 흙내음과 다크초콜릿의 쌉싸름한 쓴 맛 여운",
           tasteQuery: "인도네시아 만델링",
           tastePreset: { a: 1, s: 2, b: 5, n: 3 },
-          roastTip: "중후한 흙내음과 다크초콜릿 여운을 위해 [프렌치(French) 강배전] 추천",
+          roastTip: "중후한 흙내음과 다크초콜릿 쌉싸름함을 위해 [비엔나·프렌치 강배전] 추천",
           recommendedRoastLevel: 5,
-          placeholder: "인도네시아 만델링 (묵직한 흙내음과 다크초콜릿 바디) 또는 자유 검색...",
-          subNote: "다크초콜릿 · 스파이시 흙내음 · 중후한 풀바디"
+          placeholder: "인도네시아 만델링 (묵직한 흙내음과 다크초콜릿 쓴 맛) 또는 자유 검색...",
+          subNote: "다크초콜릿 쓴 맛 · 스파이시 흙내음 · 중후한 풀바디"
         }
       },
       month: {
@@ -4091,7 +4165,7 @@
           countryName: "코스타리카",
           regionName: "타라쥬",
           tasteMood: "청량한 산미·꿀단맛",
-          icon: "🍫",
+          icon: "🍯",
           metric: "",
           badge: "월간 밸런스 추천",
           terroir: "1,650m ASL · 워시드(Washed) · 태평양 분지 고지대 토양",
@@ -4109,19 +4183,19 @@
           topRegionId: "toraja",
           countryName: "인도네시아",
           regionName: "토라자",
-          tasteMood: "스파이시 바디",
-          icon: "🪵",
+          tasteMood: "스파이시·쓴 맛",
+          icon: "🍫",
           metric: "",
-          badge: "월간 바디 추천",
+          badge: "월간 쓴 맛 추천",
           terroir: "1,700m ASL · 웻헐링 / 워시드 · 술라웨시 산악 고원",
-          cupNotes: "스파이시 허브, 오크통 풍미, 진한 카카오 바디",
-          tagline: "쌉싸름한 카카오닙스와 스파이시한 오크통 바디",
+          cupNotes: "스파이시 허브, 오크통 풍미, 진한 카카오 쌉싸름함",
+          tagline: "쌉싸름한 카카오닙스와 스파이시한 오크통 쓴 맛·바디",
           tasteQuery: "인도네시아 토라자",
           tastePreset: { a: 1, s: 3, b: 5, n: 4 },
-          roastTip: "스파이시한 허브향과 묵직한 바디감을 위해 [풀시티(Full City)] 추천",
-          recommendedRoastLevel: 4,
-          placeholder: "인도네시아 토라자 (진한 카카오와 스파이시 풀바디) 또는 자유 검색...",
-          subNote: "스파이시 허브 · 오크통 · 진한 카카오 바디"
+          roastTip: "스파이시한 허브향과 다크 카카오 쓴 맛을 위해 [풀시티·비엔나 강배전] 추천",
+          recommendedRoastLevel: 5,
+          placeholder: "인도네시아 토라자 (진한 카카오 쓴 맛과 스파이시 풀바디) 또는 자유 검색...",
+          subNote: "스파이시 허브 · 오크통 · 진한 카카오 쓴 맛"
         }
       }
     };
@@ -4359,6 +4433,11 @@
       if (isTrendBean && data) {
         const targetRegion = Array.isArray(REGIONS_DATA) ? REGIONS_DATA.find(r => r.id === data.topRegionId) : null;
         if (targetRegion) {
+          if (typeof data.recommendedRoastLevel === "number" && typeof setRoastLevel === "function") {
+            const roastCheck = document.getElementById("checkRoastMode");
+            if (roastCheck && currentTasteCategory === "body") roastCheck.checked = true;
+            setRoastLevel(data.recommendedRoastLevel, false);
+          }
           const queryTitle = `${data.countryName} ${data.regionName}`;
           const badgeDesc = `${data.badge || "인기 원두"}: ${data.countryName} ${data.regionName}`;
           if (typeof selectSpecificRegion === "function") {
@@ -8813,6 +8892,9 @@
         const altitudePill = document.getElementById("editorialAltitudePill");
         const varietalText = document.getElementById("editorialVarietalText");
         const processText = document.getElementById("editorialProcessText");
+        const moodLabelEl = document.getElementById("editorialTasteMoodLabel");
+        const roastBadgeEl = document.getElementById("editorialRoastRecommendBadge");
+        const terroirSumEl = document.getElementById("editorialTerroirSummaryText");
 
         if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "알마씨엘로 생두" : "비슷한 시판 블렌드";
         if (editorialGlobalTitle) editorialGlobalTitle.textContent = currentHudTab === "green" ? "GSC 생두 도매" : "블렌드 아마존 직구";
@@ -8824,6 +8906,9 @@
         if (altitudePill) altitudePill.textContent = "3산지 맞춤 배합";
         if (varietalText) varietalText.textContent = `${ratioSummary}`;
         if (processText) processText.textContent = "후배전 블렌딩 (Post-Roast)";
+        if (moodLabelEl) moodLabelEl.textContent = "☕ AI 3원두 맞춤 블렌드";
+        if (roastBadgeEl) roastBadgeEl.textContent = "산지별 후배전(Post-Roast) 배합";
+        if (terroirSumEl) terroirSumEl.textContent = `주요 배합 산지: ${ratioSummary} · 각 원두의 생두 특성에 맞춰 개별 로스팅 후 블렌딩하여 균형감을 완성합니다.`;
         const dossierBtnText = document.querySelector("#editorialDossierBtn span.tracking-tight");
         if (dossierBtnText) dossierBtnText.textContent = "블렌드 원두 리포트(Dossier) 발급";
       } else if (activeRegionRef) {
@@ -8874,6 +8959,9 @@
         const altitudePill = document.getElementById("editorialAltitudePill");
         const varietalText = document.getElementById("editorialVarietalText");
         const processText = document.getElementById("editorialProcessText");
+        const moodLabelEl = document.getElementById("editorialTasteMoodLabel");
+        const roastBadgeEl = document.getElementById("editorialRoastRecommendBadge");
+        const terroirSumEl = document.getElementById("editorialTerroirSummaryText");
         const dossierBtnText = document.querySelector("#editorialDossierBtn span.tracking-tight");
 
         if (editorialNaverTitle) editorialNaverTitle.textContent = currentHudTab === "green" ? "알마씨엘로 생두" : "싱글 네이버 쇼핑";
@@ -8887,14 +8975,368 @@
         if (altitudePill) altitudePill.textContent = `${Number(activeRegionRef.altitude).toLocaleString()}m 고산지`;
         if (varietalText) varietalText.textContent = `${activeRegionRef.varietal || "Heirloom"} 품종`;
         if (processText) processText.textContent = activeRegionRef.process || "Washed / Natural";
+
+        const moodStr = (typeof REGION_TASTE_MOODS !== "undefined" && REGION_TASTE_MOODS[activeRegionRef.id])
+          ? REGION_TASTE_MOODS[activeRegionRef.id]
+          : "스페셜티 밸런스";
+        if (moodLabelEl) {
+          const iconPrefix = activeRegionRef.acidity >= 7.5 ? "🌸" : (activeRegionRef.body >= 7.5 ? "🍫" : (activeRegionRef.nutty >= 7.5 ? "🥜" : "🍯"));
+          moodLabelEl.textContent = `${iconPrefix} ${moodStr}`;
+        }
+        if (roastBadgeEl) {
+          const recRoast = activeRegionRef.acidity >= 7.5 ? "권장: 하이~시티 (약중배전)" : (activeRegionRef.body >= 7.8 ? "권장: 풀시티~비엔나 (중강배전)" : "권장: 시티~풀시티 (중배전)");
+          roastBadgeEl.textContent = recRoast;
+        }
+        if (terroirSumEl) {
+          const ont = (typeof ONTOLOGY_DATA !== "undefined") ? ONTOLOGY_DATA[activeRegionRef.id] : null;
+          const flavorStr = (ont && ont.flavorNodes && ont.flavorNodes.length) ? ont.flavorNodes.join(", ") : (activeRegionRef.notes || "복합 아로마");
+          terroirSumEl.textContent = `대표 컵노트: ${flavorStr} · ${Number(activeRegionRef.altitude).toLocaleString()}m 고지대 테루아와 ${activeRegionRef.process || "정제"} 생두 공정이 만듭니다.`;
+        }
         if (dossierBtnText) dossierBtnText.textContent = "이 산지 원두 리포트(Dossier) 발급";
       }
+
+      if (typeof renderSortableCommerceHub === "function") {
+        renderSortableCommerceHub();
+      }
+    }
+
+    // ================= v2.0 OPTION A: STORYLINE, PRODUCTION PIPELINE & 3-WAY SORTABLE COMMERCE HUB =================
+    let currentProductionStep = 2;
+    let currentCommerceSortMode = "rating";
+
+    function focusStorylineSection(tileId) {
+      const el = document.getElementById(tileId);
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.classList.add("ring-2", "ring-[#30679D]", "ring-offset-2");
+      setTimeout(() => {
+        el.classList.remove("ring-2", "ring-[#30679D]", "ring-offset-2");
+      }, 1500);
+    }
+
+    function applyQuickTastePreset(presetKey) {
+      if (typeof clearForcedBlend === "function") clearForcedBlend();
+      const roastCheck = document.getElementById("checkRoastMode");
+      if (presetKey === "acidity") {
+        sA.value = 5; sS.value = 3; sB.value = 2; sN.value = 2;
+        if (roastCheck) roastCheck.checked = false;
+        if (typeof setRoastLevel === "function") setRoastLevel(2, false);
+      } else if (presetKey === "nutty") {
+        sA.value = 2; sS.value = 4; sB.value = 4; sN.value = 5;
+        if (roastCheck) roastCheck.checked = false;
+        if (typeof setRoastLevel === "function") setRoastLevel(3, false);
+      } else if (presetKey === "bitter") {
+        sA.value = 1; sS.value = 2; sB.value = 5; sN.value = 3;
+        if (roastCheck) roastCheck.checked = true;
+        if (typeof setRoastLevel === "function") setRoastLevel(5, false);
+      } else if (presetKey === "balance") {
+        sA.value = 3; sS.value = 4; sB.value = 3; sN.value = 4;
+        if (roastCheck) roastCheck.checked = false;
+        if (typeof setRoastLevel === "function") setRoastLevel(3, false);
+      }
+      if (typeof updateSensoryDials === "function") updateSensoryDials();
+      if (typeof updateFromSliders === "function") updateFromSliders(true);
+    }
+
+    const GREEN_PROCESS_COMPARE_NOTES = {
+      washed: "💧 워시드(Washed · 수세식): 과육 제거 후 수조 발효·세척하여 결점두가 적고 산지의 고유 테루아와 깔끔한 산미(Clean Cup)가 선명합니다.",
+      natural: "☀️ 내추럴(Natural · 자연건조): 수확한 커피 체리 통째로 태양 아래 건조해 과육의 당분과 과일향(베리·와인 노트), 묵직한 단맛이 생두에 스며듭니다.",
+      honey: "🍯 허니/펄프드 내추럴(Honey): 껍질만 벗기고 점액질(Mucilage)을 남긴 채 건조하여 워시드의 깔끔함과 내추럴의 달콤한 바디감을 동시에 얻습니다.",
+      wethulled: "🌿 웻헐링(Wet-Hulled · 인도네시아 길링바사): 수분율 30~35% 반건조 상태에서 파치먼트를 탈곡해 청록색 생두를 만들며, 산미가 낮고 묵직한 바디·허브·다크초콜릿 풍미를 냅니다."
+    };
+
+    function compareGreenProcessMethod(methodKey) {
+      const descEl = document.getElementById("greenProcessCompareDesc");
+      if (descEl && GREEN_PROCESS_COMPARE_NOTES[methodKey]) {
+        descEl.textContent = GREEN_PROCESS_COMPARE_NOTES[methodKey];
+      }
+      document.querySelectorAll(".process-compare-btn").forEach((btn) => {
+        const isSel = btn.getAttribute("data-proc") === methodKey;
+        btn.className = isSel
+          ? "process-compare-btn px-2 py-0.5 rounded text-[11px] font-bold bg-[#30679D] text-white cursor-pointer transition"
+          : "process-compare-btn px-2 py-0.5 rounded text-[11px] font-medium bg-white dark:bg-[#0D1A2B] text-[#5A758D] border border-[#BDB989]/50 cursor-pointer transition";
+      });
+    }
+
+    function selectProductionPipelineStep(stepNum, autoScrollRoast = true) {
+      currentProductionStep = stepNum;
+      const r = activeRegionRef || (Array.isArray(REGIONS_DATA) ? REGIONS_DATA[0] : null);
+      const ont = (r && typeof ONTOLOGY_DATA !== "undefined") ? ONTOLOGY_DATA[r.id] : null;
+      const box = document.getElementById("productionStageDetailBox");
+
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById(`prodStepBtn${i}`);
+        if (!btn) continue;
+        if (i === stepNum) {
+          btn.className = "prod-step-btn flex flex-col items-center py-1 px-1 rounded bg-[#516B50] text-white font-bold text-[11px] cursor-pointer transition shadow-2xs";
+        } else {
+          btn.className = "prod-step-btn flex flex-col items-center py-1 px-1 rounded bg-[#FAF9ED] dark:bg-[#122238] hover:bg-[#516B50]/15 text-[#1E3B5C] dark:text-[#F0F0D8] border border-[#BDB989]/60 font-semibold text-[11px] cursor-pointer transition";
+        }
+      }
+
+      if (!box || !r) return;
+      const cName = `${r.countryName} ${r.name}`;
+      if (stepNum === 1) {
+        box.innerHTML = `<strong class="text-[#1E3B5C] dark:text-[#F0F0D8]">🍒 1단계 [체리 수확 · ${cName}]:</strong> 해발 <strong>${Number(r.altitude).toLocaleString()}m</strong> 고산지대에서 일교차를 견디며 성숙한 <strong>${r.varietal || "Arbica"}</strong> 커피 체리를 수확합니다. 고도가 높을수록 생두 밀도가 단단해지고 유기산과 당분이 응축됩니다.`;
+      } else if (stepNum === 2) {
+        const pName = (ont && ont.processName) ? ont.processName : (r.process || "워시드/내추럴");
+        const pPrinc = (ont && ont.processPrinciple) ? ont.processPrinciple : "체리 과육을 분리하고 발효·건조하여 생두의 클린컵과 향미 전구체를 형성합니다.";
+        box.innerHTML = `<strong class="text-[#1E3B5C] dark:text-[#F0F0D8]">💧 2단계 [정제 가공 · ${pName}]:</strong> ${pPrinc}`;
+      } else if (stepNum === 3) {
+        const flavorList = (ont && ont.flavorNodes) ? ont.flavorNodes.join(" · ") : "산지 고유 테루아";
+        box.innerHTML = `<strong class="text-[#1E3B5C] dark:text-[#F0F0D8]">🌱 3단계 [생두 완성 · Green Bean (HS 0901.11)]:</strong> 수분율 <strong>10~12%</strong>로 건조 및 파치먼트 탈곡·핸드픽 선별을 마친 생두입니다. 아직 풀내음 중심이지만 내부에 <strong>${flavorList}</strong> 향미 전구체(클로로겐산·자당·아미노산)를 품고 있습니다.`;
+      } else if (stepNum === 4) {
+        box.innerHTML = `<strong class="text-[#1E3B5C] dark:text-[#F0F0D8]">☕ 4단계 [원두 로스팅 · Roasted Bean (HS 0901.21)]:</strong> 아래 <strong>5번 로스팅 시뮬레이터</strong>에서 180~240°C 열풍·복사열을 가하면 마이야르 반응과 캐러멜화가 일어나며 산미·단맛·고소함·쓴맛 밸런스가 완성됩니다.`;
+        if (autoScrollRoast) {
+          focusStorylineSection("roastTileCard");
+        }
+      }
+    }
+
+    function syncProductionStorylineUI(region) {
+      if (!region) return;
+      selectProductionPipelineStep(currentProductionStep || 2, false);
+      const procLower = (region.process || "").toLowerCase();
+      if (procLower.includes("wet") || procLower.includes("헐링") || region.countryKey === "indonesia") {
+        compareGreenProcessMethod("wethulled");
+      } else if (procLower.includes("natural") || procLower.includes("내추럴")) {
+        compareGreenProcessMethod("natural");
+      } else if (procLower.includes("honey") || procLower.includes("허니") || procLower.includes("펄프")) {
+        compareGreenProcessMethod("honey");
+      } else {
+        compareGreenProcessMethod("washed");
+      }
+    }
+
+    function setCommerceSortMode(mode) {
+      currentCommerceSortMode = mode || "rating";
+      const tabs = [
+        { id: "sortTabRating", key: "rating" },
+        { id: "sortTabReviews", key: "reviews" },
+        { id: "sortTabPrice", key: "price" }
+      ];
+      tabs.forEach(({ id, key }) => {
+        const btn = document.getElementById(id);
+        if (!btn) return;
+        const isSel = key === currentCommerceSortMode;
+        btn.setAttribute("aria-selected", isSel ? "true" : "false");
+        btn.className = isSel
+          ? "commerce-sort-tab py-1.5 px-2 rounded-md text-xs font-bold bg-[#30679D] text-white shadow-2xs transition cursor-pointer flex items-center justify-center gap-1"
+          : "commerce-sort-tab py-1.5 px-2 rounded-md text-xs font-semibold text-[#1E3B5C] dark:text-[#F0F0D8] hover:bg-white/60 transition cursor-pointer flex items-center justify-center gap-1";
+      });
+      renderSortableCommerceHub();
+    }
+
+    function renderSortableCommerceHub() {
+      const listEl = document.getElementById("commerceSortableList");
+      const modeBadgeEl = document.getElementById("commerceTargetBeanBadge");
+      if (!listEl) return;
+
+      const r = activeRegionRef || (Array.isArray(REGIONS_DATA) ? REGIONS_DATA[0] : null);
+      if (!r) return;
+
+      const isBlend = Boolean(isBlendModeActive && currentBlendRegions && currentBlendRegions.length >= 2);
+      const cName = r.countryName || "에티오피아";
+      const rName = r.name || "예가체프";
+      const cleanEnName = r.enName ? r.enName.replace(/[·,]/g, " ").replace(/\s+/g, " ").trim() : "";
+
+      if (modeBadgeEl) {
+        if (isBlend && window._blendCountries && window._blendCountries.length) {
+          modeBadgeEl.textContent = `블렌드 (${window._blendCountries.join("·")})`;
+        } else {
+          modeBadgeEl.textContent = `${cName} ${rName}`;
+        }
+      }
+
+      const naverBaseQuery = isBlend && window._blendCountries && window._blendCountries.length
+        ? `${window._blendCountries.join(" ")} 스페셜티 블렌드 원두`
+        : `${cName} ${rName} 싱글오리진 원두 -블렌드 -블랜드`;
+      const amazonBaseQuery = isBlend && window._blendCountriesEn && window._blendCountriesEn.length
+        ? `${window._blendCountriesEn.join(" ")} blend whole bean coffee`
+        : `${r.countryEn || ""} ${cleanEnName} whole bean roasted coffee`.replace(/\s+/g, " ").trim();
+
+      // Match roasteries strong in current origin
+      const cKey = r.countryKey || "ethiopia";
+      const roasteryPool = [
+        {
+          roaster: "모모스커피 (Momos Coffee)",
+          rating: 4.96,
+          reviewsCount: 4820,
+          pricePer200g: 18000,
+          strong: ["ethiopia", "colombia", "costarica", "guatemala"],
+          badge: "월드 바리스타 챔피언 로스터리",
+          desc: `${cName} 다이렉트 트레이드 싱글 에스테이트 & 시즈널 로스팅`,
+          url: `https://momos.co.kr/shop?keyword=${encodeURIComponent(cName)}`
+        },
+        {
+          roaster: "커피리브레 (Coffee Libre)",
+          rating: 4.94,
+          reviewsCount: 6350,
+          pricePer200g: 15000,
+          strong: ["ethiopia", "kenya", "costarica", "colombia", "guatemala"],
+          badge: "산지 직거래 마이크로랏",
+          desc: `${cName} ${rName} 싱글오리진 홀빈 및 생두 소분 직영`,
+          url: "https://coffeelibre.kr"
+        },
+        {
+          roaster: "프릳츠 커피 (Fritz Coffee)",
+          rating: 4.93,
+          reviewsCount: 8900,
+          pricePer200g: 16000,
+          strong: ["costarica", "colombia", "ethiopia", "indonesia"],
+          badge: "다이렉트 트레이드 검증",
+          desc: `${cName} 스페셜티 싱글오리진 & 시그니처 블렌드 당일 로스팅`,
+          url: "https://fritz.co.kr"
+        },
+        {
+          roaster: "빈브라더스 (Bean Brothers)",
+          rating: 4.91,
+          reviewsCount: 5400,
+          pricePer200g: 17000,
+          strong: ["ethiopia", "colombia", "brazil"],
+          badge: "맞춤 배전 큐레이션",
+          desc: `${cName} ${rName} 테이스팅 노트 가이드 및 200g 홀빈/분쇄 선택`,
+          url: "https://www.beanbrothers.co.kr"
+        }
+      ];
+
+      const bestRoastery = [...roasteryPool].sort((a, b) => {
+        const aHit = a.strong.includes(cKey) ? 1 : 0;
+        const bHit = b.strong.includes(cKey) ? 1 : 0;
+        if (bHit !== aHit) return bHit - aHit;
+        return b.rating - a.rating;
+      })[0];
+
+      let items = [];
+      if (currentCommerceSortMode === "rating") {
+        items = [
+          {
+            rank: "1위",
+            title: `네이버 쇼핑 · ${isBlend ? "맞춤 블렌드" : `${cName} ${rName}`} [리뷰 좋은 순]`,
+            meta: "★ 4.9+ 구매자 평점 최상위 필터 · 싱글오리진 검증",
+            highlight: "⭐ 평점 4.92~5.0",
+            sub: "실구매자 크레마·향미 만족도 상위 스페셜티 로스터리 상품 모음",
+            cta: "평점순 보기 ↗",
+            url: `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverBaseQuery)}&sort=review_rel`,
+            accent: "bg-[#03c75a] text-white"
+          },
+          {
+            rank: "2위",
+            title: bestRoastery.roaster,
+            meta: `${bestRoastery.badge} · 리뷰 ${bestRoastery.reviewsCount.toLocaleString()}+건`,
+            highlight: `★ ${bestRoastery.rating}`,
+            sub: bestRoastery.desc,
+            cta: "공식몰 직결 ↗",
+            url: bestRoastery.url,
+            accent: "bg-[#1E3B5C] text-white"
+          },
+          {
+            rank: "3위",
+            title: `Amazon Global · ${r.countryEn || "Origin"} Whole Bean [Avg. Review]`,
+            meta: "글로벌 스페셜티 원두 평점 4.5★ 이상 정렬",
+            highlight: "★ 4.7+ Global",
+            sub: `해외 직구 원두 '${amazonBaseQuery}' 고객 평점 최상위 순`,
+            cta: "Amazon 평점순 ↗",
+            url: `https://www.amazon.com/s?k=${encodeURIComponent(amazonBaseQuery)}&s=review-rank`,
+            accent: "bg-[#FF9900] text-[#1E3B5C]"
+          }
+        ];
+      } else if (currentCommerceSortMode === "reviews") {
+        items = [
+          {
+            rank: "1위",
+            title: `네이버 쇼핑 · ${isBlend ? "맞춤 블렌드" : `${cName} ${rName}`} [리뷰 많은 순]`,
+            meta: "누적 실구매 리뷰 최다 검증 · 재구매율 상위",
+            highlight: "💬 리뷰 3,500+건",
+            sub: "가장 많은 홈카페 유저가 구매하고 검증한 베스트셀러 원두 순",
+            cta: "리뷰많은순 ↗",
+            url: `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverBaseQuery)}&sort=review`,
+            accent: "bg-[#03c75a] text-white"
+          },
+          {
+            rank: "2위",
+            title: "프릳츠 · 커피리브레 대용량 데일리 스페셜티",
+            meta: "누적 리뷰 8,900+건 · 신선 당일 배전 발송",
+            highlight: "💬 최다 후기 로스터리",
+            sub: `${cName} 산지 직거래 원두 및 홈카페 데일리 홀빈 최다 리뷰 기록`,
+            cta: "베스트 로스터리 ↗",
+            url: "https://fritz.co.kr",
+            accent: "bg-[#1E3B5C] text-white"
+          },
+          {
+            rank: "3위",
+            title: `Amazon Best Sellers · ${r.countryEn || "Origin"} Coffee`,
+            meta: "글로벌 누적 리뷰 10,000+건 베스트셀러 정렬",
+            highlight: "💬 10,000+ Reviews",
+            sub: `아마존 직구 '${amazonBaseQuery}' 최다 리뷰·인기순`,
+            cta: "Amazon 인기순 ↗",
+            url: `https://www.amazon.com/s?k=${encodeURIComponent(amazonBaseQuery)}&s=exact-aware-popularity-rank`,
+            accent: "bg-[#FF9900] text-[#1E3B5C]"
+          }
+        ];
+      } else {
+        items = [
+          {
+            rank: "1위",
+            title: `네이버 쇼핑 · ${isBlend ? "맞춤 블렌드" : `${cName} ${rName}`} [최저가 순]`,
+            meta: "200g / 500g / 1kg 용량별 100g당 최저가 비교",
+            highlight: "💰 최저가 자동정렬",
+            sub: "동일 산지 원두의 오픈마켓 최저가 및 무료배송 혜택 즉시 비교",
+            cta: "최저가 비교 ↗",
+            url: `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(naverBaseQuery)}&sort=price_asc`,
+            accent: "bg-[#03c75a] text-white"
+          },
+          {
+            rank: "2위",
+            title: `알마씨엘로 · GSC ${cName} ${rName} 생두 (홈로스팅 특가)`,
+            meta: "HS 0901.11 생두 · 관세 0~2% · 원두 대비 약 55% 절감",
+            highlight: "💰 1kg 9,000원대~",
+            sub: "직접 로스팅 시 스페셜티 원두를 가장 저렴하게 즐길 수 있는 생두 직영처",
+            cta: "생두 최저가 ↗",
+            url: "https://www.almacielo.com",
+            accent: "bg-[#516B50] text-white"
+          },
+          {
+            rank: "3위",
+            title: `Amazon Price Low-to-High · ${r.countryEn || "Origin"}`,
+            meta: "해외 직구 벌크(1lb~2lb) 가성비 최저가 정렬",
+            highlight: "💰 Low-to-High",
+            sub: `아마존 '${amazonBaseQuery}' 낮은 가격순 정렬`,
+            cta: "Amazon 최저가 ↗",
+            url: `https://www.amazon.com/s?k=${encodeURIComponent(amazonBaseQuery)}&s=price-asc-rank`,
+            accent: "bg-[#FF9900] text-[#1E3B5C]"
+          }
+        ];
+      }
+
+      listEl.innerHTML = items.map((item) => `
+        <div class="p-2 rounded-lg bg-[#FAF9ED] dark:bg-[#0D1A2B] border border-[#BDB989]/60 hover:border-[#30679D] transition flex flex-col gap-1">
+          <div class="flex items-center justify-between gap-1.5">
+            <div class="flex items-center gap-1.5 min-w-0">
+              <span class="px-1.5 py-0.5 rounded bg-[#30679D]/15 text-[#30679D] dark:text-[#97B6CB] font-mono-code font-bold text-[10.5px] shrink-0">${item.rank}</span>
+              <span class="font-bold text-[#1E3B5C] dark:text-[#F0F0D8] text-xs truncate">${item.title}</span>
+            </div>
+            <span class="px-1.5 py-0.5 rounded bg-[#EAEAD0] dark:bg-[#1E3B5C] text-[#1E3B5C] dark:text-[#F0F0D8] font-mono-code font-bold text-[10.5px] shrink-0">${item.highlight}</span>
+          </div>
+          <div class="flex items-center justify-between gap-2 pl-1">
+            <div class="min-w-0">
+              <div class="text-[11px] font-semibold text-[#516B50] truncate">${item.meta}</div>
+              <div class="text-[11px] text-[#5A758D] dark:text-[#97B6CB] truncate">${item.sub}</div>
+            </div>
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-full ${item.accent} hover:opacity-90 font-mono-code font-bold text-[11px] shrink-0 transition shadow-2xs">${item.cta}</a>
+          </div>
+        </div>
+      `).join("");
     }
 
     function selectRegion(region, autoNavigate = true, skipBlendRecalc = false) {
       if (typeof closeHudBuyPop === "function") closeHudBuyPop();
       const prevRegionId = activeRegionRef ? activeRegionRef.id : null;
       activeRegionRef = region;
+
+      if (typeof syncProductionStorylineUI === "function") {
+        syncProductionStorylineUI(region);
+      }
 
       // 블렌드 모드에서 산지를 선택한 경우: 선택된 산지를 앵커로 블렌드 재계산 및 카드·배지 동기화
       if (isBlendModeActive && !skipBlendRecalc) {
@@ -9587,7 +10029,7 @@
       if (!isBlend) {
         singleOriginView.classList.remove("hidden");
         blendOriginView.classList.add("hidden");
-        cardMainTitle.textContent = "ORIGIN MATCHING (산지 매칭)";
+        cardMainTitle.textContent = "GREEN BEAN PROCESS (원산지 매칭 & 생두 생산 과정)";
         cardModeBadge.textContent = "Single 1순위";
         document.querySelectorAll(".blend-preset-chip").forEach(btn => {
           btn.classList.remove("active-preset");
@@ -9611,7 +10053,7 @@
       } else {
         singleOriginView.classList.add("hidden");
         blendOriginView.classList.remove("hidden");
-        cardMainTitle.textContent = "AI BLEND (3원두 블렌딩)";
+        cardMainTitle.textContent = "AI BLEND & GREEN BEAN PROCESS (3원두 배합 & 생두 공정)";
         cardModeBadge.textContent = "3원두 배합";
 
         // 블렌드 모드 진입 시 활성 산지(activeRegionRef)가 있으면 해당 산지를 앵커로 블렌드 즉시 산출
@@ -10926,10 +11368,10 @@
       const AXES = {
         a: ["산미", "신맛", "새콤", "시트러스", "베리", "와인", "꽃", "과일", "플로럴", "자스민", "재스민", "자몽", "레몬", "오렌지", "청포도", "사과", "복숭아"],
         s: ["단맛", "달콤", "캐러멜", "초콜릿", "사탕수수", "꿀", "허니", "메이플", "바닐라", "흑설탕", "달달"],
-        b: ["바디", "묵직", "스모키", "진한", "중후", "풍부", "무거운", "오크", "쌉싸름", "다크", "풀바디"],
+        b: ["쓴맛", "쓴 맛", "쓴", "비터", "바디", "묵직", "스모키", "진한", "중후", "풍부", "무거운", "오크", "쌉싸름", "다크", "카카오", "강배전", "풀바디"],
         n: ["고소", "아몬드", "견과", "너티", "헤이즐넛", "호두", "피넛", "땅콩", "마카다미아", "구운"]
       };
-      const NEG = /없|적은|적게|싫|낮|약한|약하|덜|부담|안 ?(신|달|진|고)/;
+      const NEG = /없|적은|적게|싫|낮|약한|약하|덜|부담|안 ?(신|달|진|고|쓴)/;
       const LIGHT = /가벼|라이트|연한|깔끔/;
       const v = { a, s, b, n }, set = {};
 
@@ -10946,6 +11388,13 @@
       if (set.a && v.a === 5 && !set.b) v.b = 2;
       if (set.b && v.b === 5 && !set.a) v.a = 1;
       ({ a, s, b, n } = v);
+
+      const hasBitternessKeyword = /쓴\s?맛|비터|강배전|다크|쌉싸름|스모키/.test(lowerTxt) && v.b === 5;
+      if (hasBitternessKeyword) {
+        const roastCheck = document.getElementById("checkRoastMode");
+        if (roastCheck) roastCheck.checked = true;
+        if (typeof setRoastLevel === "function") setRoastLevel(5, false);
+      }
 
       sA.value = a; sS.value = s; sB.value = b; sN.value = n;
       const mainInput = document.getElementById("tasteInput");
@@ -11160,11 +11609,11 @@
     });
 
     // ================= DYNAMIC TILE EDIT MODE =================
-    const TILE_LAYOUT_STORAGE_KEY = "cobts_map_tile_layout_v1";
-    const TILE_SIZES_STORAGE_KEY = "cobts_map_tile_sizes_v1";
+    const TILE_LAYOUT_STORAGE_KEY = "cobts_map_tile_layout_v2";
+    const TILE_SIZES_STORAGE_KEY = "cobts_map_tile_sizes_v2";
     const DEFAULT_TILE_LAYOUT = {
-      left: ["svgMapContainer", "editorialOriginPopup", "sensorySlidersBlock", "customsChannelsCard"],
-      right: ["recommendationCard", "roastTileCard"],
+      left: ["svgMapContainer", "editorialOriginPopup", "sensorySlidersBlock"],
+      right: ["recommendationCard", "roastTileCard", "customsChannelsCard"],
     };
     let isTileEditMode = false;
     let draggedTileId = null;

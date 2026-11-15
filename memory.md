@@ -1592,11 +1592,48 @@
 
 ---
 
+### 301. 서비스 3대 핵심 목적 기반 v2.0 아키텍처 & UX Flow 개편 (A안: 2컬럼 스토리라인 워크스페이스 전면 적용)
+- **요청 내용**:
+  - 서비스의 3대 핵심 목적(① 원두의 맛 `산미·고소·쓴 맛` 입력 시 원두 제안 및 원산지 안내 → ② 원산지에서 `생두→원두` 생산 과정 지식을 습득 → ③ `리뷰 좋은 순·리뷰 많은 순·최저가 순` 구매처 제공)에 맞춰 아키텍처 및 UX Flow를 검토하고 **A안(2컬럼 스토리라인 워크스페이스)**으로 [`index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html) 전면 개편.
+- **작업 내용 (`CoBTS/index.html`, `CoBTS/architecture-ux-flow-sample.html`)**:
+  1. **목적 1 (맛 입력 `산미·고소·쓴 맛` & 원산지 제안 — 검색뷰 + 맵뷰 좌측 컬럼)**:
+     - **검색뷰(`#heroSearchSection`)**: `TASTE:` 퀵 탭을 `🌸 산미` · `🥜 고소` · `🍫 쓴 맛` · `🍯 밸런스`로 명시화하고, 하단 3대 대표 프리셋 칩을 `🌸 산미 (에티오피아 예가체프)` / `🥜 고소 (브라질 세하두·콜롬비아)` / `🍫 쓴 맛 (인도네시아 만델링·강배전)`으로 개편.
+     - **'쓴 맛(Bitterness)' 키워드 & 배전도 연동 엔진**: `executeTasteSearch()`의 `AXES.b`에 `"쓴맛"`, `"쓴 맛"`, `"쓴"`, `"비터"`, `"강배전"` 등을 추가하고, 쓴맛 검색 또는 `🍫 쓴 맛` 프리셋 선택 시 자동으로 `배전도 연동(checkRoastMode = true)` 및 `비엔나(230°C, Level 5)` 강배전과 결합하여 산미 억제·쌉싸름한 다크초콜릿 풍미를 정확히 추천.
+     - **좌측 컬럼 (`#mapColLeft` — 원산지 탐색 & 미각 조절)**:
+       - `1. 세계 지도 (#svgMapContainer)`
+       - `2. 제안 원두·원산지 브리프 (#editorialOriginPopup)`: 기존 중복 구매 버튼(네이버/아마존/원두·생두 탭)을 제거(레거시 DOM ID는 숨김 보존하여 스크립트 호환성 유지)하고, 추천 원두의 **핵심 향미 무드(`#editorialTasteMoodLabel`) · 권장 배전도(`#editorialRoastRecommendBadge`) · 산지 테루아 한줄 요약(`#editorialTerroirSummaryText`)**과 우측 스토리라인 점프 버튼(`🌱 생두→원두 과정 보기`, `🛒 최저가·리뷰순 구매처`), `원두 리포트(Dossier) 발급` 버튼으로 정돈.
+       - `3. 미각 밸런스 다이얼 (#sensorySlidersBlock)`: 상단에 원클릭 3대 맛 프리셋 바(`applyQuickTastePreset`: `🌸 산미 위주`, `🥜 고소 위주`, `🍫 쓴 맛 (강배전)`, `🍯 밸런스`)를 추가하고 3번 축을 `바디·쓴맛 (Body·Bitter)`으로 개편.
+  2. **목적 2 (`생두 → 원두` 생산 과정 지식 습득 — 맵뷰 우측 컬럼 상·중단)**:
+     - `4. 원산지 생두 생산과정 (#recommendationCard)`:
+       - 상단에 **4단계 생산 파이프라인 스텝 바(`selectProductionPipelineStep(1..4)`)**: `🍒 1. 체리 수확 (고도·품종)` ➔ `💧 2. 정제 가공 (워시드·내추럴)` ➔ `🌱 3. 생두 완성 (HS 0901.11)` ➔ `☕ 4. 원두 로스팅 (HS 0901.21)` 및 단계별 산지 맞춤 해설 박스(`#productionStageDetailBox`) 탑재.
+       - **4대 생두 가공법 비교 스위처(`compareGreenProcessMethod`)**: `💧 워시드` · `☀️ 내추럴` · `🍯 허니` · `🌿 웻헐링` 클릭 시 가공 원리와 향미 차이를 즉시 비교 학습.
+     - `5. 생두→원두 로스팅 과정 (#roastTileCard)`:
+       - 상단에 **`🌱 생두 (Green Bean · HS 0901.11) vs ☕ 원두 (Roasted Bean · HS 0901.21)` 물성·화학 변화 비교 배너**(수분율 10~12%→1~3%, 중량 15~20% 감소, 다공성 부피 팽창 및 가용성 향미 발현)를 추가하고 하단 8단계 열분해 스텝·온도 슬라이더·3D WebGL 원두 뷰어와 직결.
+  3. **목적 3 (`리뷰 좋은 순 · 리뷰 많은 순 · 최저가 순` 통합 구매 허브 — 맵뷰 우측 컬럼 하단)**:
+     - `6. 맞춤 원두·생두 구매처 (#customsChannelsCard)`:
+       - 우측 컬럼 하단(`STEP 3`)으로 이동 배치하여 `[생두 생산 ➔ 원두 로스팅 ➔ 원두·생두 구매]` 스토리라인 완결 (`DEFAULT_TILE_LAYOUT` 및 `cobts_map_tile_layout_v2` 반영).
+       - 상단 3대 정렬 탭(`setCommerceSortMode('rating' | 'reviews' | 'price')`: `⭐ 리뷰 좋은 순`, `💬 리뷰 많은 순`, `💰 최저가 순`) 및 실시간 정렬 리스트(`#commerceSortableList`, `renderSortableCommerceHub()`) 구현.
+       - 산지별 검증 스페셜티 로스터리(모모스·커피리브레·프릳츠·빈브라더스·테라로사), 네이버 쇼핑 정렬 직결(`review_rel` / `review` / `price_asc`), 알마씨엘로·GSC 생두 도매, Amazon 직구 정렬(`review-rank` / `popularity-rank` / `price-asc-rank`) 연동.
+       - 관세청 통관 요건(HS 0901.11 / 0901.21) 및 해상 운송 경로는 하단 접이식(`<details>`) 아코디언으로 깔끔하게 수납.
+- **검증**: `npm run build:css` 빌드 및 `node --check` 자바스크립트 구문 검증 통과.
+
+---
+
+### 302. 에디토리얼 롱리드(Editorial Long-Read) 포맷 검색 결과 샘플 제작
+- **요청 내용**: 검색결과를 `/Users/nelcome/Downloads/ai-trend-web-page.html` 포맷에 맞춰 샘플로 제작.
+- **작업 내용 (`CoBTS/search-result-editorial-sample.html`)**:
+  - Sticky 상단바(브레드크럼·스크롤 진행률 바·라이트/다크 테마 전환·모바일 목차 시트) 구축.
+  - 다크 히어로 영역에 **3대 맛 검색 결과 전환 스위처(`🌸 산미` · `🥜 고소` · `🍫 쓴 맛`)**, 3단계 스토리라인 레일(`.shift`), 5칸 핵심 수치 스트립(`.stats`) 구현.
+  - 좌측 고정 TOC + 760px 아티클 본문 구조로 `01. 제안 원두 & 원산지(등고선 SVG·4축 바)` → `02. 생두 생산과정(4단계 파이프라인·4대 가공법 비교표)` → `03. 생두→원두 로스팅 변화(8단계 인터랙티브 시뮬레이터·물성 비교)` → `04. 맞춤 구매처 3대 정렬 허브(리뷰 좋은 순·리뷰 많은 순·최저가 순)` → `05. 용어 풀이 & 법적 고지` 구현.
+- **검증**: `node --check` 자바스크립트 구문 검증 통과 (`SAMPLE_JS_OK`).
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: 다크모드 4대 감각축 다이얼 및 구성 원두 가독성 최적화 완료.
+- **상태**: v2.0 A안(`index.html`) 개편 및 에디토리얼 롱리드 검색 결과 샘플(`search-result-editorial-sample.html`) 제작·커밋 완료.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. 필요 시 브라우저에서 다크모드 전환 후 4대 감각축 다이얼 및 블렌드 구성 원두 영역 확인.
+  1. `index.html`(A안 2컬럼 워크스페이스)과 `search-result-editorial-sample.html`(에디토리얼 롱리드 리포트 포맷)을 브라우저에서 비교 검토 후 방향성 결정 및 후속 고도화 진행.
 
 
 

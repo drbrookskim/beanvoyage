@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="CoBTS 검색 결과 에디토리얼 리포트 샘플 — 맛 입력(산미·고소·쓴 맛) 기반 원산지 매칭, 생두→원두 생산 과정, 리뷰순·최저가 구매처 안내">
+<title>CoBTS 검색 결과 리포트 · 에티오피아 예가체프</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* Editorial Long-Read Format adapted for CoBTS Coffee Bean Search Result */
+:root {
+  --bg: #f6f2e8; --paper: #fffdf7; --paper-2: #efe9da; --ink: #101a2c; --ink-2: #4a5263; --ink-3: #7d8494;
+  --line: #e2dac6; --gold: #a87a12; --gold-soft: #f4e8c8; --coral: #d8461c; --coral-soft: #fbe3d8;
+  --blue: #2a63d4; --blue-soft: #e2ebfb; --green: #13865a; --green-soft: #dcf1e7; --violet: #6b4fd0; --violet-soft: #ebe5fb;
+  --code: #f0ebde;
+  --shadow: 0 1px 2px rgba(40, 30, 10, .05), 0 12px 32px rgba(40, 30, 10, .07);
+  --sans: "Pretendard Variable", Pretendard, Inter, -apple-system, system-ui, sans-serif;
+  --serif: "Noto Serif KR", "Pretendard Variable", serif;
+  --en: Inter, "Pretendard Variable", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1322; --paper: #111b2e; --paper-2: #17233a; --ink: #f1ede2; --ink-2: #b9bccb; --ink-3: #868ca0;
+    --line: #233150; --gold: #e0b450; --gold-soft: #2b2512; --coral: #ff7a4f; --coral-soft: #351a12;
+    --blue: #79a8ff; --blue-soft: #15223f; --green: #4fd09a; --green-soft: #0f2a20; --violet: #a993ff; --violet-soft: #1f1a3a;
+    --code: #0d1626; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1322; --paper: #111b2e; --paper-2: #17233a; --ink: #f1ede2; --ink-2: #b9bccb; --ink-3: #868ca0;
+  --line: #233150; --gold: #e0b450; --gold-soft: #2b2512; --coral: #ff7a4f; --coral-soft: #351a12;
+  --blue: #79a8ff; --blue-soft: #15223f; --green: #4fd09a; --green-soft: #0f2a20; --violet: #a993ff; --violet-soft: #1f1a3a;
+  --code: #0d1626; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.35);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.82;
+  -webkit-font-smoothing: antialiased; word-break: keep-all; overflow-wrap: break-word; }
+a { color: var(--blue); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+@media (min-width: 640px) { .gutter { padding-left: max(28px, env(safe-area-inset-left, 0px)); padding-right: max(28px, env(safe-area-inset-right, 0px)); } }
+.mono { font-family: var(--mono); }
+.en { font-family: var(--en); }
+
+@font-face { font-family: "Paperlogy"; font-weight: 800; font-style: normal; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2") format("woff2"); }
+@font-face { font-family: "Paperlogy"; font-weight: 700; font-style: normal; font-display: swap; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2") format("woff2"); }
+
+/* ---------- motion primitives ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes pop { 0% { opacity: 0; transform: scale(.55); } 70% { transform: scale(1.06); } 100% { opacity: 1; transform: none; } }
+@keyframes growX { from { transform: scaleX(0); } to { transform: none; } }
+@keyframes growY { from { transform: scaleY(0); } to { transform: none; } }
+@keyframes travel { 0% { left: 0; opacity: 0; } 10% { opacity: 1; } 80% { opacity: 1; } 100% { left: calc(100% - 10px); opacity: 0; } }
+@keyframes drift { to { transform: translate(22px, 22px); } }
+.rv, .pop, .gx, .gy { opacity: 1; }
+.js .rv, .js .pop { opacity: 0; }
+.js .gx { transform: scaleX(0); }
+.in .rv, .rv.in { animation: rise .7s var(--ease) both; animation-delay: var(--d, 0ms); }
+.in .pop { animation: pop .55s var(--ease) both; animation-delay: var(--d, 0ms); }
+.in .gx { transform-origin: left center; animation: growX .9s var(--ease) both; animation-delay: var(--d, 0ms); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .rv, .js .pop { opacity: 1; }
+  .js .gx { transform: none; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+
+/* ---------- top bar ---------- */
+.topbar { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px); border-bottom: 1px solid var(--line); }
+.topbar-in { max-width: 1180px; margin: 0 auto; height: 58px; display: flex; align-items: center; gap: 10px; }
+.crumb { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 14px; color: var(--ink-2); text-decoration: none; }
+.crumb b { color: var(--ink); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.crumb .arch { font-family: var(--en); font-weight: 700; letter-spacing: .04em; white-space: nowrap; color: var(--gold); }
+.crumb .sep { color: var(--ink-3); }
+.topbar .sp { flex: 1; }
+.btn { appearance: none; border: 1px solid var(--line); background: var(--paper); color: var(--ink); height: 36px; padding: 0 13px;
+  border-radius: 999px; font: 600 13px/1 var(--sans); display: inline-flex; align-items: center; gap: 6px; cursor: pointer; text-decoration: none; white-space: nowrap; transition: border-color .2s; }
+.btn:hover { border-color: var(--gold); }
+.btn svg { width: 16px; height: 16px; }
+.progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--gold); transform-origin: left; transform: scaleX(0); }
+@media (max-width: 560px) { .crumb .arch, .crumb .sep { display: none; } .btn .lbl { display: none; } .btn { padding: 0 10px; } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; background: #0c1524; color: #f3efe4; }
+.hero::before { content: ""; position: absolute; inset: -40px; opacity: .5;
+  background-image: radial-gradient(rgba(243,239,228,.16) 1.2px, transparent 1.4px); background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 70% 20%, #000 10%, transparent 75%); mask-image: radial-gradient(ellipse 70% 80% at 70% 20%, #000 10%, transparent 75%);
+  animation: drift 40s linear infinite; }
+.hero-in { position: relative; max-width: 1180px; margin: 0 auto; padding: 56px 0 48px; }
+.hero-top-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.kicker { font: 600 12.5px/1 var(--en); letter-spacing: .18em; text-transform: uppercase; color: #d5a844; display: flex; gap: 10px; align-items: center; }
+.kicker::before { content: ""; width: 26px; height: 1px; background: currentColor; }
+.taste-switcher { display: inline-flex; gap: 6px; padding: 4px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1px solid rgba(243,239,228,.15); }
+.taste-pill { appearance: none; border: 0; background: transparent; color: rgba(243,239,228,.7); font: 600 12.5px/1 var(--sans); padding: 8px 13px; border-radius: 999px; cursor: pointer; transition: all .2s; }
+.taste-pill:hover { color: #fff; }
+.taste-pill.on { background: #d5a844; color: #0c1524; font-weight: 700; }
+
+.hero h1 { font-family: "Paperlogy", var(--sans); font-weight: 800; font-size: clamp(32px, 5.2vw, 58px); line-height: 1.2; letter-spacing: -.02em; margin: 20px 0 16px; max-width: 16em; }
+.hero h1 em { font-style: normal; color: #d5a844; }
+.hero .lede { max-width: 680px; font-size: clamp(16px, 1.7vw, 18.5px); color: rgba(243,239,228,.78); margin: 0; }
+.hero .lede b { color: #f3efe4; }
+.meta { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13.5px; color: rgba(243,239,228,.58); }
+.meta span { display: inline-flex; gap: 6px; align-items: center; }
+
+.shift { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; position: relative; }
+.shift .st { position: relative; padding: 18px 18px 18px 0; }
+.shift .st .n { font: 700 12px/1 var(--mono); color: rgba(243,239,228,.45); }
+.shift .st h3 { margin: 10px 0 6px; font-size: clamp(16px, 2vw, 20px); line-height: 1.35; }
+.shift .st p { margin: 0; font-size: 14px; color: rgba(243,239,228,.65); line-height: 1.6; }
+.shift .st.new h3 { color: #d5a844; }
+.shift .rail { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: rgba(243,239,228,.14); }
+.shift .rail i { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(243,239,228,.4), #d5a844 60%, #4fd09a); transform-origin: left; transform: scaleX(0); }
+.in .shift .rail i { animation: growX 2.2s var(--ease) .4s both; }
+.shift .st::before { content: ""; position: absolute; top: -6px; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #0c1524; border: 2px solid rgba(243,239,228,.45); }
+.shift .st.new::before { border-color: #d5a844; background: #d5a844; box-shadow: 0 0 0 6px rgba(213,168,68,.18); }
+.shift .glow { position: absolute; top: -5px; width: 10px; height: 10px; border-radius: 50%; background: #fff; box-shadow: 0 0 14px 4px rgba(213,168,68,.8); left: 0; opacity: 0; }
+.in .shift .glow { animation: travel 3.6s var(--ease) 1s infinite; }
+@media (max-width: 720px) {
+  .shift { grid-template-columns: minmax(0, 1fr); padding-left: 22px; }
+  .shift .rail { left: 5px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
+  .shift .st { padding: 0 0 22px; }
+  .shift .st::before { left: -22px; top: 4px; }
+  .shift .glow { display: none; }
+}
+
+.stats { margin-top: 34px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid rgba(243,239,228,.12); }
+.stats a { padding: 18px 14px 4px 14px; color: inherit; text-decoration: none; border-right: 1px solid rgba(243,239,228,.08); }
+.stats a:first-child { padding-left: 0; }
+.stats a:last-child { border-right: 0; }
+.stats b { display: block; font: 800 clamp(22px, 3vw, 34px)/1.1 var(--en); letter-spacing: -.02em; color: #f3efe4; font-variant-numeric: tabular-nums; }
+.stats span { display: block; margin-top: 6px; font-size: 12.5px; line-height: 1.45; color: rgba(243,239,228,.58); }
+.stats a:hover b { color: #d5a844; }
+@media (max-width: 820px) { .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } .stats a:nth-child(3) { border-right: 0; } .stats a:nth-child(4) { padding-left: 0; } }
+@media (max-width: 480px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stats a { border-right: 0 !important; padding-left: 0 !important; } }
+
+/* ---------- shell ---------- */
+.shell { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; padding-top: 48px; }
+.toc { position: sticky; top: 82px; align-self: start; max-height: calc(100vh - 100px); overflow: auto; }
+.toc h4 { margin: 0 0 12px; font: 700 11.5px/1 var(--en); letter-spacing: .16em; color: var(--ink-3); }
+.toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+.toc a { display: flex; gap: 10px; padding: 7px 0 7px 14px; margin-left: -1px; border-left: 2px solid transparent; font-size: 14px; line-height: 1.45; color: var(--ink-2); text-decoration: none; }
+.toc a .n { font: 600 11.5px/1.9 var(--mono); color: var(--ink-3); min-width: 18px; }
+.toc a:hover { color: var(--ink); }
+.toc a.on { border-left-color: var(--gold); color: var(--ink); font-weight: 650; }
+.toc a.on .n { color: var(--gold); }
+.toc-mobile { display: none; }
+article { max-width: 760px; min-width: 0; padding-bottom: 40px; }
+@media (max-width: 1000px) {
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 28px; }
+  .toc { display: none; }
+  .toc-mobile { display: block; margin: 0 auto 8px; max-width: 760px; border: 1px solid var(--line); background: var(--paper); border-radius: 14px; }
+  .toc-mobile summary { cursor: pointer; padding: 12px 16px; font-weight: 700; font-size: 14px; list-style: none; display: flex; justify-content: space-between; }
+  .toc-mobile summary::after { content: "+"; color: var(--ink-3); }
+  .toc-mobile[open] summary::after { content: "−"; }
+  .toc-mobile ol { list-style: none; margin: 0; padding: 0 16px 12px; }
+  .toc-mobile a { display: flex; gap: 10px; padding: 6px 0; font-size: 14.5px; color: var(--ink-2); text-decoration: none; }
+  .toc-mobile a .n { font: 600 12px/1.9 var(--mono); color: var(--ink-3); min-width: 20px; }
+  article { margin: 0 auto; width: 100%; }
+}
+
+/* ---------- article typography ---------- */
+section { padding: 40px 0 32px; border-bottom: 1px solid var(--line); }
+section:last-of-type { border-bottom: 0; }
+.sec-label { display: inline-flex; gap: 8px; align-items: center; font: 700 12px/1 var(--en); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.sec-label .num { font-family: var(--mono); }
+h2 { font-family: "Paperlogy", var(--sans); font-weight: 700; font-size: clamp(26px, 3.4vw, 35px); line-height: 1.32; letter-spacing: -.02em; margin: 12px 0 18px; }
+h3 { font-family: "Paperlogy", var(--sans); font-weight: 700; font-size: 20px; line-height: 1.45; letter-spacing: -.015em; margin: 30px 0 10px; }
+h3 .hn { font: 700 13px/1 var(--mono); color: var(--gold); margin-right: 8px; vertical-align: 2px; }
+p { margin: 0 0 16px; }
+mark { background: linear-gradient(transparent 58%, var(--gold-soft) 58%); color: inherit; padding: 0 2px; }
+.standfirst { font-size: 18.5px; line-height: 1.72; color: var(--ink-2); }
+.standfirst b { color: var(--ink); }
+code { font-family: var(--mono); font-size: .86em; background: var(--code); padding: 2px 6px; border-radius: 6px; }
+.callout { border: 1px solid var(--line); border-left: 3px solid var(--gold); background: var(--paper); border-radius: 4px 14px 14px 4px; padding: 16px 20px; margin: 22px 0; font-size: 15.5px; }
+.callout.green { border-left-color: var(--green); }
+.callout .tag { display: inline-block; font: 700 11.5px/1 var(--en); letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.callout.green .tag { color: var(--green); }
+.callout p:last-child { margin-bottom: 0; }
+
+/* ---------- figure shell ---------- */
+.fig { margin: 24px 0 28px; background: var(--paper); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 22px; overflow: hidden; }
+.fig-h { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.fig-h .t { font-weight: 700; font-size: 15.5px; }
+.fig-h .s { font-size: 12.5px; color: var(--ink-3); font-family: var(--mono); }
+figcaption { font-size: 13.5px; color: var(--ink-3); margin-top: 14px; line-height: 1.6; }
+@media (max-width: 560px) { .fig { padding: 16px; border-radius: 14px; } }
+
+/* Sensory bars */
+.race { display: grid; gap: 12px; }
+.race .row { display: grid; grid-template-columns: 96px minmax(0, 1fr) 54px; gap: 12px; align-items: center; font-size: 14px; }
+.race .lbl { color: var(--ink-2); font-weight: 600; line-height: 1.35; }
+.race .track { position: relative; height: 26px; border-radius: 8px; background: var(--paper-2); overflow: hidden; }
+.race .bar { position: absolute; inset: 0; transform-origin: left; border-radius: 8px; transition: width .6s var(--ease); }
+.race .time { font: 700 14px/1 var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Origin mini contour card */
+.origin-map-box { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: center; }
+@media (max-width: 640px) { .origin-map-box { grid-template-columns: 1fr; } }
+.contour-svg { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); display: block; }
+.origin-specs { display: grid; gap: 8px; font-size: 14px; }
+.spec-item { padding: 10px 12px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); }
+.spec-item small { display: block; font: 700 11px/1 var(--mono); color: var(--ink-3); text-transform: uppercase; margin-bottom: 4px; }
+.spec-item b { font-size: 14.5px; color: var(--ink); }
+
+/* Production Pipeline */
+.pipe-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+@media (max-width: 600px) { .pipe-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pstep-btn { appearance: none; border: 1px solid var(--line); background: var(--bg); color: var(--ink-2); border-radius: 12px; padding: 12px 10px; text-align: left; cursor: pointer; transition: all .2s; }
+.pstep-btn:hover { border-color: var(--gold); color: var(--ink); }
+.pstep-btn.on { background: var(--gold-soft); border-color: var(--gold); color: var(--ink); }
+.pstep-btn .sn { font: 700 11px/1 var(--mono); color: var(--gold); display: block; margin-bottom: 4px; }
+.pstep-btn b { font-size: 13.5px; display: block; line-height: 1.3; }
+.pstep-detail { padding: 16px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); font-size: 15px; line-height: 1.7; }
+
+/* Table */
+.tbl-wrap { overflow-x: auto; margin: 20px 0; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; min-width: 580px; font-size: 14px; line-height: 1.55; }
+th, td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+thead th { font-size: 12.5px; background: var(--paper-2); font-family: var(--en); }
+
+/* Roasting simulator */
+.roast-sim { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 22px; align-items: center; }
+@media (max-width: 560px) { .roast-sim { grid-template-columns: 1fr; } }
+.bean-stage { aspect-ratio: 1; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); display: grid; place-items: center; padding: 16px; }
+.roast-ctl label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.roast-ctl input[type="range"] { width: 100%; accent-color: var(--gold); cursor: pointer; }
+.roast-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.rchip { appearance: none; border: 1px solid var(--line); background: var(--bg); color: var(--ink-2); font: 600 12px/1 var(--sans); padding: 7px 10px; border-radius: 999px; cursor: pointer; }
+.rchip.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.vs { margin-top: 18px; display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: stretch; }
+@media (max-width: 560px) { .vs { grid-template-columns: 1fr; } .vs .x { display: none; } }
+.vs > div { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--bg); }
+.vs .x { display: grid; place-items: center; border: 0; background: none; font: 800 13px/1 var(--en); color: var(--ink-3); padding: 0; }
+.vs b { display: block; font: 800 17px/1.25 var(--sans); }
+.vs span { font-size: 13px; color: var(--ink-2); line-height: 1.5; display: block; margin-top: 5px; }
+.vs .w b { color: var(--gold); }
+
+/* Commerce Hub */
+.sort-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 5px; border-radius: 14px; background: var(--paper-2); border: 1px solid var(--line); margin-bottom: 16px; }
+.sort-tab { appearance: none; border: 0; background: transparent; color: var(--ink-2); font: 700 13.5px/1 var(--sans); padding: 11px 8px; border-radius: 10px; cursor: pointer; transition: all .2s; }
+.sort-tab.on { background: var(--paper); color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.shop-list { display: grid; gap: 12px; }
+.shop-card { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 16px; border-radius: 14px; background: var(--bg); border: 1px solid var(--line); transition: border-color .2s, transform .2s; }
+.shop-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+@media (max-width: 560px) { .shop-card { grid-template-columns: 1fr; gap: 10px; } }
+.shop-rk { font: 800 24px/1 var(--en); color: var(--gold); text-align: center; }
+@media (max-width: 560px) { .shop-rk { text-align: left; } }
+.shop-meta { font-size: 12.5px; color: var(--green); font-weight: 700; margin-bottom: 2px; }
+.shop-card h6 { margin: 0 0 4px; font-size: 16px; }
+.shop-card p { margin: 0; font-size: 13.5px; color: var(--ink-2); line-height: 1.5; }
+.shop-cta { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 999px; background: var(--ink); color: var(--bg); font: 700 13px/1 var(--sans); text-decoration: none; white-space: nowrap; }
+.shop-cta:hover { background: var(--gold); color: #0c1524; }
+
+/* glossary & footer */
+.term { text-decoration: underline dotted color-mix(in srgb, var(--gold) 80%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 4px; cursor: help; border-radius: 3px; }
+.term:hover, .term:focus-visible, .term.on { background: var(--gold-soft); outline: none; }
+.tpop { position: absolute; z-index: 30; max-width: min(340px, calc(100vw - 32px)); background: var(--ink); color: var(--bg); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.55; box-shadow: 0 14px 40px rgba(0,0,0,.3); opacity: 0; transform: translateY(4px); transition: opacity .18s, transform .18s; pointer-events: none; }
+.tpop.show { opacity: 1; transform: none; pointer-events: auto; }
+.tpop b { display: block; font: 700 13px var(--mono); color: var(--gold); }
+.tpop .f { display: block; font-weight: 700; margin: 2px 0 4px; }
+.glist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 18px 0 0; }
+@media (max-width: 640px) { .glist { grid-template-columns: minmax(0, 1fr); } }
+.glist .gi { border: 1px solid var(--line); background: var(--paper); border-radius: 14px; padding: 14px 16px; }
+.glist dt b { font: 700 14px var(--mono); color: var(--gold); margin-right: 8px; }
+.glist dt span { font-weight: 700; font-size: 14.5px; }
+.glist dd { margin: 4px 0 0; font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+
+footer.site { border-top: 1px solid var(--line); margin-top: 24px; }
+footer.site .in-wrap { max-width: 1180px; margin: 0 auto; padding: 22px 0 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 22px; font-size: 13.5px; color: var(--ink-3); }
+.totop { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); z-index: 15; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--paper); color: var(--ink); box-shadow: var(--shadow); display: grid; place-items: center; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; transform: translateY(8px); }
+.totop.show { opacity: 1; pointer-events: auto; transform: none; }
+
+/* mobile toc sheet */
+.toc-btn { display: none; }
+@media (max-width: 1000px) { .toc-btn { display: inline-flex; } }
+.sheet { border: 0; padding: 0; margin: auto auto 0; width: 100%; max-width: 560px; max-height: 78vh; border-radius: 20px 20px 0 0;
+  background: var(--paper); color: var(--ink); box-shadow: 0 -10px 40px rgba(0,0,0,.25); }
+.sheet::backdrop { background: rgba(8, 12, 22, .45); }
+.sheet-h { display: flex; justify-content: space-between; align-items: center; padding: 18px 18px 8px; }
+.sheet-x { appearance: none; border: 0; background: var(--paper-2); color: var(--ink-2); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; }
+.sheet ol { list-style: none; margin: 0; padding: 4px 12px 20px; }
+.sheet a { display: flex; gap: 12px; align-items: center; min-height: 44px; padding: 6px 10px; border-radius: 12px; color: var(--ink-2); text-decoration: none; font-size: 15.5px; }
+.sheet a.on { background: var(--gold-soft); color: var(--ink); font-weight: 700; }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="topbar gutter">
+  <div class="topbar-in">
+    <a class="crumb" href="./index.html"><span class="arch">COBTS DOSSIER</span><span class="sep">/</span><b id="crumbBeanName">에티오피아 예가체프 검색 결과</b></a>
+    <span class="sp"></span>
+    <button class="btn toc-btn" id="tocBtn" type="button" aria-haspopup="dialog"><span id="tocCur">목차</span></button>
+    <a class="btn" href="./index.html" title="CoBTS 맵뷰로 돌아가기"><span class="lbl">기존 맵뷰로 보기</span></a>
+    <button class="btn" id="themeBtn" type="button" aria-label="테마 전환"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg><span class="lbl">테마</span></button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<div class="hero gutter" id="hero">
+  <div class="hero-in">
+    <div class="hero-top-row rv" style="--d:0ms">
+      <div class="kicker" id="heroKicker">COBTS SEARCH RESULT · ETHIOPIA ORIGIN</div>
+      <div class="taste-switcher" role="group" aria-label="3대 맛 검색 결과 미리보기 전환">
+        <button type="button" class="taste-pill on" data-sample-taste="acidity">🌸 산미 결과</button>
+        <button type="button" class="taste-pill" data-sample-taste="nutty">🥜 고소 결과</button>
+        <button type="button" class="taste-pill" data-sample-taste="bitter">🍫 쓴 맛 결과</button>
+      </div>
+    </div>
+
+    <h1 class="rv" style="--d:120ms" id="heroTitle">화사한 산미를 찾아서<br><em>에티오피아 예가체프</em></h1>
+    <p class="lede rv" style="--d:240ms" id="heroLede">입력하신 <b>“화사한 산미”</b> 취향에 가장 가까운 원산지는 <b>에티오피아 예가체프(1,950m)</b>입니다. 이 리포트에서는 원산지의 <b>생두 생산 과정</b>과 <b>로스팅 변화</b>를 거쳐, 바로 구매할 수 있는 <b>리뷰순·최저가 판매처</b>까지 한 번에 안내합니다.</p>
+    <div class="meta rv" style="--d:340ms" id="heroMeta">
+      <span>📍 해발 1,950m 고원</span>
+      <span>🌱 워시드(Washed) 생두</span>
+      <span>☕ 권장 배전: 시티(219°C)</span>
+      <span>⏱ 약 2분 읽기</span>
+    </div>
+
+    <div class="shift rv" style="--d:440ms" aria-label="CoBTS 검색 스토리라인 3단계">
+      <div class="rail"><i></i></div><div class="glow"></div>
+      <div class="st"><div class="n">STEP 01 · TASTE &amp; ORIGIN</div><h3>맛 입력 ➔ 원산지 매칭</h3><p id="step1Desc">산미 중심 프로필에 부합하는 에티오피아 예가체프 고원을 1순위로 매칭했습니다.</p></div>
+      <div class="st"><div class="n">STEP 02 · GREEN ➔ ROASTED</div><h3>생두 ➔ 원두 생산 과정</h3><p id="step2Desc">체리 수확부터 워시드 발효, 10~12% 생두 건조, 219°C 로스팅 원리를 익힙니다.</p></div>
+      <div class="st new"><div class="n">STEP 03 · COMMERCE HUB</div><h3>3대 정렬 맞춤 구매처</h3><p>리뷰 좋은 순 · 리뷰 많은 순 · 최저가 순으로 검증된 원두·생두 판매처를 연결합니다.</p></div>
+    </div>
+
+    <div class="stats rv" style="--d:580ms">
+      <a href="#origin"><b id="statMatch">96%</b><span>취향 벡터 일치율</span></a>
+      <a href="#origin"><b id="statAlt">1,950m</b><span>산지 평균 표고 (ASL)</span></a>
+      <a href="#process"><b id="statProc">Washed</b><span>대표 생두 정제 공정</span></a>
+      <a href="#roasting"><b id="statTemp">219°C</b><span>최적 권장 로스팅 온도</span></a>
+      <a href="#commerce"><b id="statRating">4.96★</b><span>최고 평점 검증 로스터리</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="shell gutter">
+  <nav class="toc" aria-label="목차"><h4>CONTENTS</h4><ol id="toc"></ol></nav>
+
+  <article id="article">
+    <details class="toc-mobile"><summary>목차 펼쳐보기</summary><ol id="tocMobile"></ol></details>
+
+    <!-- SECTION 1: ORIGIN & TASTE -->
+    <section id="origin" data-n="01" data-t="제안 원두 &amp; 원산지">
+      <div class="sec-label"><span class="num">01</span><span>TASTE MATCH &amp; ORIGIN</span></div>
+      <h2 id="sec1Title">왜 <mark>에티오피아 예가체프</mark>인가</h2>
+      <p class="standfirst" id="sec1Lead">고도 1,950m의 서늘한 고원 지대와 풍부한 화산재 토양은 커피 체리의 성숙 속도를 늦춰 <b>유기산과 자스민 꽃향 전구체</b>를 생두 내부에 응축시킵니다.</p>
+
+      <figure class="fig" data-fig="origin">
+        <div class="fig-h">
+          <div class="t">원산지 지형 테루아 &amp; 4대 감각 프로파일</div>
+          <div class="s" id="originCoordTag">6.16°N, 38.20°E · YIRGACHEFFE</div>
+        </div>
+        <div class="origin-map-box">
+          <svg class="contour-svg" viewBox="0 0 320 220" aria-label="원산지 등고선 지형 도해">
+            <rect width="320" height="220" fill="none"/>
+            <g stroke="currentColor" stroke-opacity="0.14" fill="none" stroke-width="1">
+              <path d="M20,180 Q90,140 160,155 T300,130"/>
+              <path d="M35,150 Q110,95 170,115 T285,95"/>
+              <path d="M55,120 Q125,60 185,85 T270,70"/>
+              <path d="M85,95 Q145,40 195,62 T245,50"/>
+            </g>
+            <g stroke="var(--gold)" stroke-opacity="0.45" fill="none" stroke-width="1.3">
+              <ellipse cx="165" cy="108" rx="78" ry="46"/>
+              <ellipse cx="165" cy="108" rx="52" ry="30"/>
+              <ellipse cx="165" cy="108" rx="26" ry="15"/>
+            </g>
+            <circle cx="165" cy="108" r="6" fill="var(--coral)"/>
+            <circle cx="165" cy="108" r="12" fill="none" stroke="var(--coral)" stroke-width="1.5" opacity="0.5"/>
+            <text x="165" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="currentColor" id="svgOriginLabel">에티오피아 예가체프 (1,950m)</text>
+          </svg>
+          <div class="origin-specs">
+            <div class="spec-item"><small>VARIETAL &amp; SOIL</small><b id="specVarietal">재래종(Heirloom) · 화산회토</b></div>
+            <div class="spec-item"><small>CUPPING NOTES</small><b id="specNotes">자스민 꽃향, 백도 복숭아, 화사한 감귤 산미</b></div>
+            <div class="spec-item"><small>TASTE BALANCE</small><b id="specMood">산미 중심 · 깔끔한 클린 컵</b></div>
+          </div>
+        </div>
+
+        <div class="race" style="margin-top: 20px;">
+          <div class="row"><div class="lbl">산미 (Acidity)</div><div class="track"><div class="bar gx" id="barAcidity" style="width:92%; background:var(--green);"></div></div><div class="time" id="valAcidity">9.2</div></div>
+          <div class="row"><div class="lbl">단맛 (Sweet)</div><div class="track"><div class="bar gx" id="barSweet" style="width:74%; background:var(--gold);"></div></div><div class="time" id="valSweet">7.4</div></div>
+          <div class="row"><div class="lbl">바디·쓴맛</div><div class="track"><div class="bar gx" id="barBody" style="width:42%; background:var(--coral);"></div></div><div class="time" id="valBody">4.2</div></div>
+          <div class="row"><div class="lbl">고소함 (Nutty)</div><div class="track"><div class="bar gx" id="barNutty" style="width:38%; background:var(--blue);"></div></div><div class="time" id="valNutty">3.8</div></div>
+        </div>
+        <figcaption id="sec1Caption">※ CoBTS 7개국 14개 산지 표준 이론 프로필 기준. 고도가 높을수록 산미 점수가 높아지고 바디·쓴맛은 가벼워지는 경향이 있습니다.</figcaption>
+      </figure>
+    </section>
+
+    <!-- SECTION 2: GREEN BEAN PROCESS -->
+    <section id="process" data-n="02" data-t="원산지 생두 생산과정">
+      <div class="sec-label"><span class="num">02</span><span>GREEN BEAN PRODUCTION</span></div>
+      <h2>원산지에서 <mark>생두가 완성되는</mark> 4단계</h2>
+      <p>우리가 마시는 원두의 맛은 로스팅 전에 이미 절반 이상 결정됩니다. 열매(체리)에서 <span class="term" data-k="파치먼트">파치먼트</span>를 거쳐 수분율 10~12%의 <b>생두(Green Bean)</b>가 되기까지의 여정을 각 단계를 눌러 확인해 보세요.</p>
+
+      <figure class="fig" data-fig="process">
+        <div class="fig-h">
+          <div class="t">생두 → 원두 생산 파이프라인 (클릭하여 단계별 원리 보기)</div>
+          <div class="s">SEED TO CUP PIPELINE</div>
+        </div>
+        <div class="pipe-steps" role="tablist">
+          <button type="button" class="pstep-btn on" data-pstep="1"><span class="sn">STEP 01</span><b>🍒 체리 수확</b></button>
+          <button type="button" class="pstep-btn" data-pstep="2"><span class="sn">STEP 02</span><b>💧 정제 가공</b></button>
+          <button type="button" class="pstep-btn" data-pstep="3"><span class="sn">STEP 03</span><b>🌱 생두 완성</b></button>
+          <button type="button" class="pstep-btn" data-pstep="4"><span class="sn">STEP 04</span><b>☕ 원두 로스팅</b></button>
+        </div>
+        <div class="pstep-detail" id="pstepDetailBox"></div>
+      </figure>
+
+      <h3><span class="hn">2.1</span>가공 방식에 따라 달라지는 생두의 맛</h3>
+      <p>같은 산지의 생두라도 수확 후 과육을 물로 씻어내느냐(<span class="term" data-k="워시드">워시드</span>), 햇볕에 통째로 말리느냐(<span class="term" data-k="내추럴">내추럴</span>)에 따라 최종 컵노트가 크게 달라집니다.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>가공 방식</th><th>핵심 공정</th><th>강조되는 맛</th><th>대표 산지</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>💧 워시드 (Washed)</b></td><td>과육 제거 후 수조 발효·세척</td><td>깔끔한 산미, 꽃향, 클린 컵</td><td>에티오피아 예가체프 · 케냐 · 콜롬비아</td></tr>
+            <tr><td><b>☀️ 내추럴 (Natural)</b></td><td>체리 통째로 태양 건조 후 탈곡</td><td>강한 과일 단맛, 베리·와인 노트</td><td>브라질 세하두 · 에티오피아 시다모</td></tr>
+            <tr><td><b>🍯 허니 (Honey)</b></td><td>점액질을 남긴 채 건조</td><td>꿀 같은 단맛과 부드러운 밸런스</td><td>코스타리카 타라쥬 · 엘살바도르</td></tr>
+            <tr><td><b>🌿 웻헐링 (Wet-Hulled)</b></td><td>수분 30% 반건조 상태에서 탈곡</td><td>낮은 산미, 묵직한 바디·허브·카카오</td><td>인도네시아 만델링 · 토라자</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ROASTING -->
+    <section id="roasting" data-n="03" data-t="생두→원두 로스팅 변화">
+      <div class="sec-label"><span class="num">03</span><span>ROASTING TRANSFORMATION</span></div>
+      <h2>생두가 <mark>원두</mark>로 변하는 열분해의 순간</h2>
+      <p>생두(HS 0901.11)는 풀내음과 단단한 조직을 지닌 원재료입니다. 로스터기 안에서 196°C(1차 크랙)를 넘기며 <span class="term" data-k="마이야르 반응">마이야르 반응</span>과 캐러멜화가 진행되면, 비로소 우리가 아는 향긋한 <b>원두(HS 0901.21)</b>로 거듭납니다.</p>
+
+      <figure class="fig" data-fig="roasting">
+        <div class="fig-h">
+          <div class="t">8단계 배전도 인터랙티브 시뮬레이터</div>
+          <div class="s" id="roastStageTag">CITY · 219°C</div>
+        </div>
+        <div class="roast-sim">
+          <div class="bean-stage">
+            <svg width="110" height="110" viewBox="0 0 100 100" aria-label="로스팅 단계별 원두 색상 변화">
+              <ellipse id="beanBody" cx="50" cy="50" rx="34" ry="42" transform="rotate(-18 50 50)" fill="#6f4324" stroke="#3a2110" stroke-width="2.5"/>
+              <path id="beanCleft" d="M40,14 Q56,48 44,86" fill="none" stroke="#2c1709" stroke-width="3.2" stroke-linecap="round"/>
+              <ellipse id="beanGloss" cx="38" cy="36" rx="8" ry="15" transform="rotate(-22 38 36)" fill="#ffffff" opacity="0.12"/>
+            </svg>
+          </div>
+          <div class="roast-ctl">
+            <label for="roastSlider"><span id="roastNameLbl">4단계 · 시티 (City)</span><span class="mono" id="roastTempLbl">219°C</span></label>
+            <input type="range" id="roastSlider" min="0" max="7" step="1" value="3">
+            <div class="roast-chips" id="roastChips">
+              <button type="button" class="rchip" data-r="0">시나몬</button>
+              <button type="button" class="rchip" data-r="1">뉴잉글랜드</button>
+              <button type="button" class="rchip" data-r="2">아메리칸</button>
+              <button type="button" class="rchip on" data-r="3">시티</button>
+              <button type="button" class="rchip" data-r="4">풀시티</button>
+              <button type="button" class="rchip" data-r="5">비엔나</button>
+              <button type="button" class="rchip" data-r="6">프렌치</button>
+              <button type="button" class="rchip" data-r="7">이탈리안</button>
+            </div>
+            <p id="roastDescLbl" style="margin:12px 0 0; font-size:14px; color:var(--ink-2);">스페셜티 표준 배전도. 산미·단맛·바디의 조화가 가장 균형 잡혀 있으며 산지의 고유 컵노트가 선명하게 드러납니다.</p>
+          </div>
+        </div>
+
+        <div class="vs">
+          <div><b>🌱 생두 (Green Bean)</b><span>수분 10~12% · 밀도 높음 · 풀내음과 유기산 전구체 보유 · HS 0901.11 (관세 0~2%)</span></div>
+          <div class="x">➔</div>
+          <div class="w"><b>☕ 원두 (Roasted Bean)</b><span>수분 1~3% · 중량 15~20% 감소 · 부피 60% 팽창 · 800여 종 향미 발현 · HS 0901.21</span></div>
+        </div>
+      </figure>
+    </section>
+
+    <!-- SECTION 4: COMMERCE HUB -->
+    <section id="commerce" data-n="04" data-t="맞춤 구매처 3대 정렬">
+      <div class="sec-label"><span class="num">04</span><span>VERIFIED COMMERCE HUB</span></div>
+      <h2>지금 바로 구매할 수 있는 <mark>맞춤 판매처</mark></h2>
+      <p>원두의 특징과 생산 과정을 이해했다면, 이제 원하는 기준에 맞춰 원두(또는 홈로스팅용 생두)를 구매할 차례입니다. 아래 탭에서 <b>리뷰 좋은 순 · 리뷰 많은 순 · 최저가 순</b>을 선택하세요.</p>
+
+      <figure class="fig" data-fig="commerce">
+        <div class="fig-h">
+          <div class="t">구매처 정렬 허브 (<span id="commerceTargetLbl">에티오피아 예가체프</span>)</div>
+          <div class="s">3-WAY SORT</div>
+        </div>
+        <div class="sort-tabs" role="tablist">
+          <button type="button" class="sort-tab on" data-sort="rating">⭐ 리뷰 좋은 순</button>
+          <button type="button" class="sort-tab" data-sort="reviews">💬 리뷰 많은 순</button>
+          <button type="button" class="sort-tab" data-sort="price">💰 최저가 순</button>
+        </div>
+        <div class="shop-list" id="shopList"></div>
+      </figure>
+
+      <div class="callout green">
+        <span class="tag">CUSTOMS &amp; IMPORT GUIDE</span>
+        <p><b>자가소비 해외직구 안내:</b> 볶은 원두(HS 0901.21)와 생두(HS 0901.11) 모두 미화 $150 이하(미국발 $200) 자가사용 면세 범위 내에서 간편 통관이 가능하며, 생두는 사업자·홈로스팅 기준 원두 대비 약 50~60% 저렴하게 구매할 수 있습니다.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 5: GLOSSARY -->
+    <section id="glossary" data-n="05" data-t="용어 풀이 &amp; 안내">
+      <div class="sec-label"><span class="num">05</span><span>GLOSSARY &amp; NOTICE</span></div>
+      <h2>커피 용어 풀이</h2>
+      <dl class="glist">
+        <div class="gi"><dt><b>파치먼트</b><span>Parchment</span></dt><dd>생두를 감싸고 있는 얇은 내과피. 탈곡(Hulling)을 거쳐 제거하면 비로소 생두가 됩니다.</dd></div>
+        <div class="gi"><dt><b>워시드</b><span>Washed Process</span></dt><dd>과육을 벗겨내고 물속에서 발효·세척해 깔끔한 산미와 산지 특성을 살리는 정제법입니다.</dd></div>
+        <div class="gi"><dt><b>내추럴</b><span>Natural Process</span></dt><dd>체리를 껍질째 햇볕에 말려 과일의 진한 단맛과 베리·와인 풍미를 부여하는 방식입니다.</dd></div>
+        <div class="gi"><dt><b>마이야르 반응</b><span>Maillard Reaction</span></dt><dd>150°C 이상에서 아미노산과 당분이 반응해 구운 견과·초콜릿 등 복합 향미를 만드는 화학 반응입니다.</dd></div>
+      </dl>
+      <p style="margin-top:24px; font-size:13.5px; color:var(--ink-3);">* 표준적인 이론 값을 기준으로 계산한 추천입니다. 맛은 사람의 입맛과 추출 환경에 따라 다르게 느껴질 수 있습니다.</p>
+    </section>
+  </article>
+</div>
+
+<footer class="site gutter">
+  <div class="in-wrap">
+    <span>CoBTS (Coffee Bean Tracking Service) — Editorial Search Report Sample</span>
+    <span><a href="./index.html">기존 2컬럼 워크스페이스(맵뷰)로 이동 →</a></span>
+  </div>
+</footer>
+
+<button class="totop" id="totop" type="button" aria-label="맨 위로">↑</button>
+<dialog class="sheet" id="tocSheet" aria-label="목차">
+  <div class="sheet-h"><strong>목차</strong><button class="sheet-x" type="button" data-close>✕</button></div>
+  <ol id="tocSheetList"></ol>
+</dialog>
+
+<script>
+(() => {
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
+  const root = document.documentElement;
+
+  /* Theme toggle */
+  $('#themeBtn').onclick = () => {
+    const cur = root.dataset.theme === 'dark' || (!root.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+    root.dataset.theme = cur ? 'light' : 'dark';
+  };
+
+  /* 3 Taste Sample Data */
+  const SAMPLES = {
+    acidity: {
+      kicker: 'COBTS SEARCH RESULT · ETHIOPIA ORIGIN',
+      crumb: '에티오피아 예가체프 검색 결과',
+      title: '화사한 산미를 찾아서<br><em>에티오피아 예가체프</em>',
+      lede: '입력하신 <b>“화사한 산미”</b> 취향에 가장 가까운 원산지는 <b>에티오피아 예가체프(1,950m)</b>입니다. 원산지의 <b>생두 생산 과정</b>과 <b>로스팅 변화</b>를 거쳐, 바로 구매할 수 있는 <b>리뷰순·최저가 판매처</b>까지 안내합니다.',
+      meta: ['📍 해발 1,950m 고원', '🌱 워시드(Washed) 생두', '☕ 권장 배전: 시티(219°C)', '⏱ 약 2분 읽기'],
+      step1: '산미 중심 프로필에 부합하는 에티오피아 예가체프 고원을 1순위로 매칭했습니다.',
+      step2: '체리 수확부터 워시드 발효, 10~12% 생두 건조, 219°C 로스팅 원리를 익힙니다.',
+      stats: { match: '96%', alt: '1,950m', proc: 'Washed', temp: '219°C', rating: '4.96★' },
+      sec1Title: '왜 <mark>에티오피아 예가체프</mark>인가',
+      sec1Lead: '고도 1,950m의 서늘한 고원 지대와 풍부한 화산재 토양은 커피 체리의 성숙 속도를 늦춰 <b>유기산과 자스민 꽃향 전구체</b>를 생두 내부에 응축시킵니다.',
+      coord: '6.16°N, 38.20°E · YIRGACHEFFE',
+      svgLbl: '에티오피아 예가체프 (1,950m)',
+      varietal: '재래종(Heirloom) · 화산회토',
+      notes: '자스민 꽃향, 백도 복숭아, 화사한 감귤 산미',
+      mood: '산미 중심 · 깔끔한 클린 컵',
+      scores: { a: 9.2, s: 7.4, b: 4.2, n: 3.8 },
+      roastIdx: 3,
+      regionQuery: '에티오피아 예가체프',
+      regionEn: 'Ethiopia Yirgacheffe',
+      steps: [
+        '<strong>🍒 1단계 [체리 수확 · 에티오피아 예가체프]:</strong> 해발 1,950m 고산지대에서 일교차를 견디며 천천히 익은 재래종(Heirloom) 커피 체리를 선별 수확합니다.',
+        '<strong>💧 2단계 [정제 가공 · 워시드(Washed)]:</strong> 과육을 벗겨낸 뒤 깨끗한 산간 물에 24~48시간 발효·세척해 잡미를 없애고 자스민·감귤 산미를 또렷하게 남깁니다.',
+        '<strong>🌱 3단계 [생두 완성 · HS 0901.11]:</strong> 아프리칸 베드에서 수분율 10~12%까지 건조하고 파치먼트를 탈곡해 연녹색 스페셜티 생두를 완성합니다.',
+        '<strong>☕ 4단계 [원두 로스팅 · HS 0901.21]:</strong> 약중배전~시티(219°C) 구간에서 로스팅하면 유기산이 파괴되지 않고 화사한 꽃향과 달콤한 복숭아 여운이 살아납니다.'
+      ]
+    },
+    nutty: {
+      kicker: 'COBTS SEARCH RESULT · BRAZIL ORIGIN',
+      crumb: '브라질 세하두 미네이루 검색 결과',
+      title: '구운 아몬드의 고소함<br><em>브라질 세하두 미네이루</em>',
+      lede: '입력하신 <b>“고소한 맛”</b> 취향에 가장 가까운 원산지는 <b>브라질 세하두(1,100m)</b>입니다. 대평원 사바나 기후와 내추럴 건조 공정이 만들어내는 <b>너티한 단맛</b>과 추천 구매처를 확인하세요.',
+      meta: ['📍 해발 1,100m 사바나 고원', '☀️ 내추럴(Natural) 생두', '☕ 권장 배전: 시티+(222°C)', '⏱ 약 2분 읽기'],
+      step1: '고소함·마일드 밸런스에 최적화된 브라질 세하두 미네이루를 1순위로 매칭했습니다.',
+      step2: '완만한 평원 수확 후 내추럴 자연 건조를 거쳐 마이야르 반응을 극대화하는 로스팅을 봅니다.',
+      stats: { match: '95%', alt: '1,100m', proc: 'Natural', temp: '222°C', rating: '4.94★' },
+      sec1Title: '왜 <mark>브라질 세하두 미네이루</mark>인가',
+      sec1Lead: '건조기가 뚜렷한 해발 1,100m 사바나 고원에서는 커피 체리를 나무 위와 파티오에서 햇볕으로 말려 <b>구운 아몬드와 밀크초콜릿 같은 고소함</b>이 돋보입니다.',
+      coord: '18.95°S, 46.99°W · CERRADO MINEIRO',
+      svgLbl: '브라질 세하두 미네이루 (1,100m)',
+      varietal: '카투아이(Catuai) · 문도 노보',
+      notes: '구운 아몬드, 브라운슈가, 마일드 너티 밸런스',
+      mood: '고소함 중심 · 편안한 데일리',
+      scores: { a: 4.5, s: 7.8, b: 6.8, n: 9.1 },
+      roastIdx: 4,
+      regionQuery: '브라질 세하두 미네이루',
+      regionEn: 'Brazil Cerrado Mineiro',
+      steps: [
+        '<strong>🍒 1단계 [체리 수확 · 브라질 세하두]:</strong> 뚜렷한 건기와 완만한 지형 덕분에 균일하게 익은 카투아이·문도 노보 품종을 수확합니다.',
+        '<strong>☀️ 2단계 [정제 가공 · 내추럴(Natural)]:</strong> 물 사용을 최소화하고 과육째 2~3주간 태양 건조해 과육의 당분이 생두 내부로 스며들게 합니다.',
+        '<strong>🌱 3단계 [생두 완성 · HS 0901.11]:</strong> 껍질(허스크) 탈곡 후 스크린 사이즈별 정밀 선별을 거쳐 밀도가 균일한 고소한 생두가 완성됩니다.',
+        '<strong>☕ 4단계 [원두 로스팅 · HS 0901.21]:</strong> 시티~풀시티(222~225°C)로 로스팅하면 마이야르 반응이 활발해져 아몬드·헤이즐넛 고소함이 극대화됩니다.'
+      ]
+    },
+    bitter: {
+      kicker: 'COBTS SEARCH RESULT · INDONESIA ORIGIN',
+      crumb: '인도네시아 만델링 검색 결과',
+      title: '묵직하고 진한 쓴 맛<br><em>인도네시아 수마트라 만델링</em>',
+      lede: '입력하신 <b>“묵직하고 쓴 맛”</b> 취향에 가장 가까운 원산지는 <b>인도네시아 만델링(1,450m)</b>입니다. 특유의 <b>웻헐링 가공</b>과 <b>비엔나 강배전(230°C)</b>이 결합된 다크초콜릿 풍미를 만나보세요.',
+      meta: ['📍 해발 1,450m 토바 호수 화산암', '🌿 웻헐링(Giling Basah)', '☕ 권장 배전: 비엔나 강배전(230°C)', '⏱ 약 2분 읽기'],
+      step1: '낮은 산미·묵직한 쓴 맛(다크 카카오) 요청에 맞춰 만델링 + 강배전을 매칭했습니다.',
+      step2: '수마트라 특유의 반건조 탈곡(웻헐링)과 2차 크랙 이후 강배전 과정을 살펴봅니다.',
+      stats: { match: '97%', alt: '1,450m', proc: 'Wet-Hull', temp: '230°C', rating: '4.93★' },
+      sec1Title: '왜 <mark>인도네시아 만델링</mark>인가',
+      sec1Lead: '화산암 토양과 다습한 수마트라 열대 고원에서 탄생한 <b>웻헐링(Giling Basah)</b> 공법은 산미를 억제하고 <b>다크초콜릿의 쌉싸름함과 중후한 바디</b>를 극대화합니다.',
+      coord: '2.68°N, 98.85°E · MANDHELING',
+      svgLbl: '인도네시아 만델링 (1,450m)',
+      varietal: '아텐(Ateng) · S-795',
+      notes: '다크초콜릿, 스파이시 허브, 중후한 쓴 맛과 긴 여운',
+      mood: '쓴 맛·풀바디 · 2차 크랙 강배전',
+      scores: { a: 2.2, s: 4.8, b: 9.4, n: 6.5 },
+      roastIdx: 5,
+      regionQuery: '인도네시아 만델링',
+      regionEn: 'Indonesia Sumatra Mandheling',
+      steps: [
+        '<strong>🍒 1단계 [체리 수확 · 인도네시아 만델링]:</strong> 토바 호수 주변 해발 1,450m 비옥한 화산재 토양에서 자란 아텐·티피카 계통 체리를 수확합니다.',
+        '<strong>🌿 2단계 [정제 가공 · 웻헐링(Wet-Hulled)]:</strong> 수분 30~35%의 반건조 상태에서 파치먼트를 먼저 벗겨내어 독특한 청록색 생두와 흙내음·허브 바디를 만듭니다.',
+        '<strong>🌱 3단계 [생두 완성 · HS 0901.11]:</strong> 다습한 기후를 이겨내며 최종 건조·선별된 생두는 조직이 팽창해 있어 강배전 열전달이 뛰어납니다.',
+        '<strong>☕ 4단계 [원두 로스팅 · HS 0901.21]:</strong> 2차 크랙 진입 직후인 비엔나(230°C) 강배전으로 볶으면 산미가 사라지고 쌉싸름한 다크초콜릿 쓴 맛이 완성됩니다.'
+      ]
+    }
+  };
+
+  const ROASTS = [
+    { name: '1단계 · 시나몬 (Cinnamon)', short: 'CINNAMON', temp: '196°C', fill: '#a67b51', cleft: '#6a4929', gloss: 0.02, desc: '1차 크랙 직전. 풀내음이 남아 있고 가장 강렬하고 날카로운 과일 산미가 나타납니다.' },
+    { name: '2단계 · 뉴잉글랜드 (New England)', short: 'NEW ENGLAND', temp: '205°C', fill: '#94663f', cleft: '#5a3a1e', gloss: 0.04, desc: '1차 크랙 진행 중. 밝고 생동감 있는 시트러스·베리 산미와 꽃향이 돋보입니다.' },
+    { name: '3단계 · 아메리칸 (American)', short: 'AMERICAN', temp: '210°C', fill: '#825330', cleft: '#472a13', gloss: 0.07, desc: '1차 크랙 종료 직후. 화사한 산미와 산뜻한 단맛이 어우러지는 약중배전입니다.' },
+    { name: '4단계 · 시티 (City)', short: 'CITY', temp: '219°C', fill: '#6f4324', cleft: '#2c1709', gloss: 0.12, desc: '스페셜티 표준 배전도. 산미·단맛·바디의 조화가 가장 균형 잡혀 있으며 산지의 고유 컵노트가 선명하게 드러납니다.' },
+    { name: '5단계 · 풀시티 (Full City)', short: 'FULL CITY', temp: '225°C', fill: '#573219', cleft: '#1e0e04', gloss: 0.22, desc: '2차 크랙 직전. 산미가 부드럽게 가라앉고 캐러멜 단맛과 묵직한 바디감이 올라옵니다.' },
+    { name: '6단계 · 비엔나 (Vienna)', short: 'VIENNA', temp: '230°C', fill: '#432512', cleft: '#120802', gloss: 0.36, desc: '2차 크랙 진입. 표면에 얇은 오일이 배어 나오며 다크초콜릿의 기분 좋은 쓴 맛과 스모키함이 살아납니다.' },
+    { name: '7단계 · 프렌치 (French)', short: 'FRENCH', temp: '240°C', fill: '#301a0d', cleft: '#0a0401', gloss: 0.52, desc: '2차 크랙 활발. 산미는 거의 소멸하고 진한 카카오 쓴 맛과 묵직한 에스프레소·라떼용 바디를 냅니다.' },
+    { name: '8단계 · 이탈리안 (Italian)', short: 'ITALIAN', temp: '245°C', fill: '#221209', cleft: '#050201', gloss: 0.68, desc: '극강배전. 탄화 직전의 강렬한 쓴 맛과 스모키한 여운이 특징입니다.' }
+  ];
+
+  let activeSampleKey = 'acidity';
+  let activeSort = 'rating';
+  let activeStep = 1;
+
+  function applyRoast(idx) {
+    const r = ROASTS[idx] || ROASTS[3];
+    $('#roastSlider').value = idx;
+    $('#roastStageTag').textContent = `${r.short} · ${r.temp}`;
+    $('#roastNameLbl').textContent = r.name;
+    $('#roastTempLbl').textContent = r.temp;
+    $('#roastDescLbl').textContent = r.desc;
+    $('#beanBody').setAttribute('fill', r.fill);
+    $('#beanCleft').setAttribute('stroke', r.cleft);
+    $('#beanGloss').setAttribute('opacity', r.gloss);
+    $$('.rchip').forEach((b, i) => b.classList.toggle('on', i === idx));
+  }
+
+  function renderCommerce() {
+    const d = SAMPLES[activeSampleKey];
+    $('#commerceTargetLbl').textContent = d.regionQuery;
+    const nq = `${d.regionQuery} 싱글오리진 원두 -블렌드 -블랜드`;
+    const aq = `${d.regionEn} whole bean coffee`;
+
+    const data = {
+      rating: [
+        { rk: '1위', meta: '★ 4.9+ 구매자 평점 최상위 · 싱글오리진 검증', title: `네이버 쇼핑 · ${d.regionQuery} [리뷰 좋은 순]`, desc: '실구매자의 향미·신선도 평점이 가장 높은 로스터리 원두 상품만 모아봅니다.', cta: '평점순 보기 ↗', url: `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(nq)}&sort=review_rel` },
+        { rk: '2위', meta: '★ 4.96 · 월드 바리스타 챔피언 스페셜티 로스터리', title: '모모스커피 · 커피리브레 산지 직거래 싱글오리진', desc: `${d.regionQuery} 공식몰 키워드 직결 및 당일 로스팅 발송 검증 채널입니다.`, cta: '공식몰 직결 ↗', url: `https://momos.co.kr/shop?keyword=${encodeURIComponent(d.regionQuery.split(' ')[0])}` },
+        { rk: '3위', meta: '★ 4.7+ Global Avg. Customer Review', title: `Amazon Global · ${d.regionEn} [Review Rank]`, desc: '글로벌 구매자 평균 평점 최상위 원두 직구 리스트입니다.', cta: 'Amazon 평점순 ↗', url: `https://www.amazon.com/s?k=${encodeURIComponent(aq)}&s=review-rank` }
+      ],
+      reviews: [
+        { rk: '1위', meta: '💬 누적 실구매 리뷰 최다 · 재구매율 상위', title: `네이버 쇼핑 · ${d.regionQuery} [리뷰 많은 순]`, desc: '가장 많은 홈카페 유저가 구매하고 리뷰로 검증한 베스트셀러 순입니다.', cta: '리뷰많은순 ↗', url: `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(nq)}&sort=review` },
+        { rk: '2위', meta: '💬 누적 리뷰 8,900+건 · 데일리 스페셜티 로스터리', title: '프릳츠 커피 (Fritz) · 빈브라더스 홀빈 컬렉션', desc: '국내에서 가장 많은 구매 후기가 축적된 대표 스페셜티 원두 공식몰입니다.', cta: '베스트 로스터리 ↗', url: 'https://fritz.co.kr' },
+        { rk: '3위', meta: '💬 10,000+ Global Reviews · Popularity Rank', title: `Amazon Best Sellers · ${d.regionEn}`, desc: '글로벌 누적 리뷰 수 최상위 인기 원두 직구 리스트입니다.', cta: 'Amazon 인기순 ↗', url: `https://www.amazon.com/s?k=${encodeURIComponent(aq)}&s=exact-aware-popularity-rank` }
+      ],
+      price: [
+        { rk: '1위', meta: '💰 100g당 최저가 자동 비교 · 무료배송 필터', title: `네이버 쇼핑 · ${d.regionQuery} [최저가 순]`, desc: '200g / 500g / 1kg 용량별 100g당 최저가 상품을 즉시 비교합니다.', cta: '최저가 비교 ↗', url: `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(nq)}&sort=price_asc` },
+        { rk: '2위', meta: '💰 원두 대비 약 55% 절감 · HS 0901.11 생두 직영', title: `알마씨엘로 · GSC ${d.regionQuery} 생두 소분`, desc: '홈로스팅 시 스페셜티 원두를 가장 저렴하게 즐길 수 있는 국내 최대 생두 판매처입니다.', cta: '생두 최저가 ↗', url: 'https://www.almacielo.com' },
+        { rk: '3위', meta: '💰 1lb~2lb 벌크 가성비 · Price Low-to-High', title: `Amazon 직구 · ${d.regionEn} [낮은 가격순]`, desc: '해외 직구 대용량 홀빈 원두 최저가 정렬 결과입니다.', cta: 'Amazon 최저가 ↗', url: `https://www.amazon.com/s?k=${encodeURIComponent(aq)}&s=price-asc-rank` }
+      ]
+    }[activeSort];
+
+    $('#shopList').innerHTML = data.map(item => `
+      <div class="shop-card">
+        <div class="shop-rk">${item.rk}</div>
+        <div>
+          <div class="shop-meta">${item.meta}</div>
+          <h6>${item.title}</h6>
+          <p>${item.desc}</p>
+        </div>
+        <a class="shop-cta" href="${item.url}" target="_blank" rel="noopener noreferrer">${item.cta}</a>
+      </div>
+    `).join('');
+  }
+
+  function renderSample(key) {
+    activeSampleKey = key;
+    const d = SAMPLES[key];
+    $$('.taste-pill').forEach(b => b.classList.toggle('on', b.dataset.sampleTaste === key));
+    $('#heroKicker').textContent = d.kicker;
+    $('#crumbBeanName').textContent = d.crumb;
+    $('#heroTitle').innerHTML = d.title;
+    $('#heroLede').innerHTML = d.lede;
+    $('#heroMeta').innerHTML = d.meta.map(m => `<span>${m}</span>`).join('');
+    $('#step1Desc').textContent = d.step1;
+    $('#step2Desc').textContent = d.step2;
+    $('#statMatch').textContent = d.stats.match;
+    $('#statAlt').textContent = d.stats.alt;
+    $('#statProc').textContent = d.stats.proc;
+    $('#statTemp').textContent = d.stats.temp;
+    $('#statRating').textContent = d.stats.rating;
+    $('#sec1Title').innerHTML = d.sec1Title;
+    $('#sec1Lead').innerHTML = d.sec1Lead;
+    $('#originCoordTag').textContent = d.coord;
+    $('#svgOriginLabel').textContent = d.svgLbl;
+    $('#specVarietal').textContent = d.varietal;
+    $('#specNotes').textContent = d.notes;
+    $('#specMood').textContent = d.mood;
+
+    $('#barAcidity').style.width = `${d.scores.a * 10}%`; $('#valAcidity').textContent = d.scores.a.toFixed(1);
+    $('#barSweet').style.width = `${d.scores.s * 10}%`; $('#valSweet').textContent = d.scores.s.toFixed(1);
+    $('#barBody').style.width = `${d.scores.b * 10}%`; $('#valBody').textContent = d.scores.b.toFixed(1);
+    $('#barNutty').style.width = `${d.scores.n * 10}%`; $('#valNutty').textContent = d.scores.n.toFixed(1);
+
+    $('#pstepDetailBox').innerHTML = d.steps[activeStep - 1];
+    applyRoast(d.roastIdx);
+    renderCommerce();
+  }
+
+  $$('.taste-pill').forEach(btn => btn.onclick = () => renderSample(btn.dataset.sampleTaste));
+
+  $$('.pstep-btn').forEach(btn => {
+    btn.onclick = () => {
+      activeStep = parseInt(btn.dataset.pstep, 10) || 1;
+      $$('.pstep-btn').forEach(b => b.classList.toggle('on', parseInt(b.dataset.pstep, 10) === activeStep));
+      $('#pstepDetailBox').innerHTML = SAMPLES[activeSampleKey].steps[activeStep - 1];
+    };
+  });
+
+  $('#roastSlider').addEventListener('input', e => applyRoast(parseInt(e.target.value, 10)));
+  $$('.rchip').forEach(b => b.onclick = () => applyRoast(parseInt(b.dataset.r, 10)));
+
+  $$('.sort-tab').forEach(tab => {
+    tab.onclick = () => {
+      activeSort = tab.dataset.sort;
+      $$('.sort-tab').forEach(t => t.classList.toggle('on', t === tab));
+      renderCommerce();
+    };
+  });
+
+  /* Glossary tooltip */
+  const GLOSS = {
+    '파치먼트': ['Parchment', '생두를 감싸고 있는 내과피로, 건조 후 탈곡하여 제거합니다.'],
+    '워시드': ['Washed Process', '과육을 제거하고 물에서 발효·세척해 깔끔한 산미를 살리는 방식.'],
+    '내추럴': ['Natural Process', '커피 체리를 통째로 건조해 진한 단맛과 과일향을 얻는 방식.'],
+    '마이야르 반응': ['Maillard Reaction', '150°C 이상 열분해 중 아미노산과 당분이 반응해 복합 향미를 생성하는 현상.']
+  };
+  const pop = document.createElement('div'); pop.className = 'tpop'; document.body.appendChild(pop);
+  document.addEventListener('click', e => {
+    const t = e.target.closest('.term');
+    if (t && GLOSS[t.dataset.k]) {
+      const [f, ex] = GLOSS[t.dataset.k];
+      pop.innerHTML = `<b>${t.dataset.k}</b><span class="f">${f}</span>${ex}`;
+      const r = t.getBoundingClientRect();
+      pop.style.left = Math.max(16, Math.min(scrollX + r.left, scrollX + innerWidth - 340)) + 'px';
+      pop.style.top = (scrollY + r.bottom + 8) + 'px';
+      pop.classList.add('show');
+    } else if (!e.target.closest('.tpop')) {
+      pop.classList.remove('show');
+    }
+  });
+
+  /* TOC, Scroll Spy, Progress */
+  const secs = $$('article section');
+  const tocHtml = secs.map(s => `<li><a href="#${s.id}"><span class="n">${s.dataset.n}</span><span>${s.dataset.t}</span></a></li>`).join('');
+  $('#toc').innerHTML = tocHtml;
+  $('#tocMobile').innerHTML = tocHtml;
+  $('#tocSheetList').innerHTML = tocHtml;
+  const sheet = $('#tocSheet');
+  $('#tocBtn').onclick = () => sheet.showModal();
+  sheet.addEventListener('click', e => { if (e.target === sheet || e.target.closest('[data-close]') || e.target.closest('a')) sheet.close(); });
+
+  const allLinks = $$('#toc a, #tocMobile a, #tocSheetList a');
+  function onScroll() {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    $('#progress').style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`;
+    $('#totop').classList.toggle('show', scrollY > innerHeight * 0.7);
+    let cur = secs[0];
+    for (const s of secs) if (s.getBoundingClientRect().top < innerHeight * .35) cur = s;
+    allLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur.id));
+    $('#tocCur').textContent = scrollY < innerHeight * .4 ? '목차' : `${cur.dataset.n} ${cur.dataset.t}`;
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  $('#totop').onclick = () => scrollTo({ top: 0, behavior: 'smooth' });
+
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: .15 }) : null;
+  $$('[data-fig]').forEach(f => io ? io.observe(f) : f.classList.add('in'));
+
+  requestAnimationFrame(() => $('#hero').classList.add('in'));
+  renderSample('acidity');
+  onScroll();
+})();
+</script>
+</body>
+</html>
