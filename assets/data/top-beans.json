@@ -1,31 +1,31 @@
 {
-  "updatedAt": "2026-11-10T14:15:18.587Z",
+  "updatedAt": "2026-11-16T00:48:07.900Z",
   "week": {
-    "period": "2026년 11월 3주차",
-    "topRegionId": "huehuetenango",
-    "countryName": "과테말라",
-    "regionName": "우에우에테낭고",
-    "icon": "🍎",
-    "metric": "",
-    "badge": "주간 추천",
-    "terroir": "1,700m ASL · 워시드(Washed) · 쿠추마타네스 산맥",
-    "cupNotes": "붉은 사과, 캐러멜, 은은한 꽃향기, 탄탄한 밸런스",
-    "tagline": "우에우에테낭고 대표 컵노트 및 풍미 프로필",
-    "ctsScore": 86.3,
-    "shoppingRank": 1,
-    "mentionCount": 1420
-  },
-  "month": {
-    "period": "2026년 11월 누적",
+    "period": "2026년 11월 4주차",
     "topRegionId": "narino",
     "countryName": "콜롬비아",
     "regionName": "나리뇨",
     "icon": "🍯",
     "metric": "",
-    "badge": "월간 추천",
+    "badge": "주간 추천",
     "terroir": "1,900m ASL · 워시드(Washed) · 안데스 협곡 미기후",
     "cupNotes": "아카시아 꿀, 감귤류 산미, 실키한 바디감",
     "tagline": "나리뇨 대표 컵노트 및 풍미 프로필",
+    "ctsScore": 88,
+    "shoppingRank": 1,
+    "mentionCount": 1420
+  },
+  "month": {
+    "period": "2026년 11월 누적",
+    "topRegionId": "tarrazu",
+    "countryName": "코스타리카",
+    "regionName": "타라주",
+    "icon": "🍊",
+    "metric": "",
+    "badge": "월간 추천",
+    "terroir": "1,650m ASL · 워시드(Washed) · 태평양 분지 고지대 토양",
+    "cupNotes": "청사과 산미, 아카시아 꿀단맛, 클린 밸런스",
+    "tagline": "타라주 대표 컵노트 및 풍미 프로필",
     "ctsScore": 89.9,
     "shoppingRank": 1,
     "mentionCount": 4280
@@ -33,38 +33,38 @@
   "rankings": [
     {
       "rank": 1,
-      "regionId": "huehuetenango",
-      "name": "과테말라 우에우에테낭고",
+      "regionId": "narino",
+      "name": "콜롬비아 나리뇨",
       "change": "▲ 1",
-      "score": 86.3
+      "score": 88
     },
     {
       "rank": 2,
-      "regionId": "suldeminas",
-      "name": "브라질 설디미나스",
+      "regionId": "sidamo",
+      "name": "에티오피아 시다모",
       "change": "−",
-      "score": 86.1
+      "score": 87.9
     },
     {
       "rank": 3,
-      "regionId": "kirinyaga",
-      "name": "케냐 키리냐가",
+      "regionId": "antigua",
+      "name": "과테말라 안티구아",
       "change": "▲ 2",
-      "score": 84.2
+      "score": 87.9
     },
     {
       "rank": 4,
-      "regionId": "cerrado",
-      "name": "브라질 세라도",
-      "change": "▲ 2",
-      "score": 83.5
-    },
-    {
-      "rank": 5,
       "regionId": "mandheling",
       "name": "인도네시아 만델링",
       "change": "▲ 2",
-      "score": 82.6
+      "score": 86.4
+    },
+    {
+      "rank": 5,
+      "regionId": "nyeri",
+      "name": "케냐 니에리",
+      "change": "▲ 2",
+      "score": 85.6
     }
   ]
 }
