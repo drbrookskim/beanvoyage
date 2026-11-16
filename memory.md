@@ -1629,11 +1629,127 @@
 
 ---
 
+### 303. 맵뷰 2컬럼을 2페이지 워크스페이스(Page 1 ↔ Page 2)로 개편
+- **요청 내용**: 기존 A안 2컬럼 레이아웃을 **2페이지 구조**로 수정.
+- **작업 내용 (`CoBTS/index.html`, `CoBTS/assets/css/tailwind.min.css`)**:
+  - **상단 2페이지 스텝 네비게이션 바 (`#mapPageStepper`, `showMapPage(1|2)`)**:
+    - `1 / 2 · 🌍 원산지 & 미각 탐색` ↔ `2 / 2 · 🌱 생두→원두 & 🛒 구매처` 탭 및 우측 빠른 이동 버튼(`#mapPageQuickNextBtn`) 추가.
+  - **1페이지 (`#mapColLeft` — 목적 1: 맛 입력 & 원산지 탐색)**:
+    - `lg:grid-cols-12` 배치: 좌측 `1. 세계 지도` (`lg:col-span-7 lg:row-span-2 lg:h-[540px]`), 우측 `2. 제안 원두·원산지 브리프` + `3. 미각 밸런스 다이얼` (`lg:col-span-5`), 하단 `2페이지로 이동 ➔` 버튼.
+  - **2페이지 (`#mapColRight` — 목적 2·3: 생두→원두 지식 & 3대 정렬 구매처)**:
+    - 상단 2열(`lg:grid-cols-2`): `4. 원산지 생두 생산과정` + `5. 생두→원두 로스팅 과정`.
+    - 하단 풀와이드(`lg:col-span-2`): `6. 맞춤 원두·생두 구매처 (리뷰 좋은 순 · 리뷰 많은 순 · 최저가 순)` 및 `⬅ 1페이지로 돌아가기` 버튼.
+  - **화면 전환 연동**: `focusStorylineSection(tileId)` 호출 시 대상 타일이 속한 페이지로 자동 전환 후 스크롤, 1페이지 복귀 시 지도 캔버스 재렌더링 및 2페이지 진입 시 3D 원두/슬라이더 리사이즈 동기화.
+
+---
+
+### 304. 검색뷰→맵뷰 상·하 슬라이드 전환 모션 및 원산지 매칭·로스팅 별도 페이지(3페이지) 분리
+- **요청 내용**:
+  1. 첫 화면에서 검색어를 입력하고 검색을 누르면 첫 화면의 중간 부분이 상단으로 이동하면서 다음 페이지 부분이 아래에서 위로 나타나면서 표시되게 할 것.
+  2. 원산지 매칭과 로스팅 과정도 별도의 페이지로 분리하여 보여줄 것.
+- **작업 내용 (`CoBTS/index.html`, `CoBTS/assets/css/tailwind.min.css`)**:
+  - **검색뷰 ➔ 맵뷰 전환 모션 (`showMapScreen`, `.hero-search-docking`, `.map-visible`)**:
+    - 검색 시 `#heroSearchSection`에 `.hero-search-docking`을 적용해 타이틀이 접히고 중간 검색 허브(`#topBeanTrendBanner`)가 상단으로 슬라이드 업(`translateY(-34px) scale(0.95)`)한 뒤 420ms 후 정리되며, 동시에 `#mapExplorerSection`이 `mapSlideUp`(`translateY(64px) → 0`, `0.58s cubic-bezier(0.16, 1, 0.3, 1)`)으로 아래에서 위로 솟아오르며 등장.
+  - **맵뷰 3페이지 분리 (`#mapPageStepper`, `showMapPage(1|2|3)`)**:
+    - **1페이지 (`1 / 3`)**: `🌍 지도 & 미각 탐색` (`#mapColLeft`: 세계 지도 · 제안 원두 브리프 · 미각 밸런스 다이얼)
+    - **2페이지 (`2 / 3`)**: `🌱 원산지 매칭 & 생두` (`#mapColRight`: `#recommendationCard` 독립 풀와이드 페이지)
+    - **3페이지 (`3 / 3`)**: `🔥 로스팅 & 🛒 구매처` (`#mapPage3Roast`: `#roastTileCard` 로스팅 과정 시뮬레이터 + `#customsChannelsCard` 3대 정렬 구매처 허브)
+    - `TILE_LAYOUT_STORAGE_KEY`를 `cobts_map_tile_layout_v3`으로 갱신해 3페이지 푸터 및 타일 배치 호환성 확보.
+- **검증**: `npm run build:css` 빌드 및 `node --check` 자바스크립트 구문 검증 통과 (`3PAGE_TRANSITION_OK`).
+
+---
+
+### 305. 구매처 4페이지 분리 및 첫 검색바→상세 검색바 FLIP 합체 전환 효과 적용
+- **요청 내용**:
+  1. 구매처도 별도 페이지로 분리할 것.
+  2. 첫 검색바가 사라지는 부분은 기존 상세 페이지의 검색바로 합쳐지는 효과를 적용할 것.
+- **작업 내용 (`CoBTS/index.html`, `CoBTS/assets/css/tailwind.min.css`)**:
+  - **첫 검색바 ➔ 상세 검색바 FLIP 합체 모션 (`showMapScreen`)**:
+    - 검색 실행 시 `#topBeanTrendBanner`의 출발 좌표를 측정하고 상세 페이지 `#headerTasteInput` 목적지 좌표를 계산(`dx`, `dy`, `sx`, `sy`)하여, 첫 검색바가 상세 페이지 검색바 위치로 날아가 축소·합체되면서 `#headerSearchGroup`이 링 하이라이트와 함께 바통을 이어받도록 구현. 동시에 `#mapExplorerSection`은 아래에서 위로 슬라이드 업(`mapSlideUp`).
+  - **맵뷰 4페이지 완전 분리 (`#mapPageStepper`, `showMapPage(1|2|3|4)`)**:
+    - **1페이지 (`1 / 4`)**: `🌍 지도 & 미각 탐색` (`#mapColLeft`: 세계 지도 · 제안 원두 브리프 · 미각 밸런스 다이얼)
+    - **2페이지 (`2 / 4`)**: `🌱 원산지 매칭 & 생두` (`#mapColRight`: `#recommendationCard`)
+    - **3페이지 (`3 / 4`)**: `🔥 로스팅 과정` (`#mapPage3Roast`: `#roastTileCard`)
+    - **4페이지 (`4 / 4`)**: `🛒 맞춤 구매처` (`#mapPage4Commerce`: `#customsChannelsCard` — 리뷰 좋은 순 · 리뷰 많은 순 · 최저가 순 3대 정렬 허브 + 관세청 통관·항로)
+    - `TILE_LAYOUT_STORAGE_KEY`를 `cobts_map_tile_layout_v4`로 갱신해 4페이지 타일 편집 모드 호환성 확보.
+- **검증**: `npm run build:css` 빌드 및 `node --check` 자바스크립트 구문 검증 통과 (`4PAGE_FLIP_OK`).
+
+---
+
+### 306. 4페이지 가로 과확장 해소 — B안(중앙 집중형 `max-w-4xl`) 레이아웃 적용
+- **요청 내용**: 각 페이지의 가로로 지나치게 긴 형태를 가독성·편의성 중심으로 검토·샘플 제안 후 **B안(중앙 집중형)**으로 확정 적용.
+- **작업 내용 (`CoBTS/page-layout-ux-samples.html`, `CoBTS/index.html`, `CoBTS/assets/css/tailwind.min.css`)**:
+  - **샘플 비교 (`page-layout-ux-samples.html`)**: A안(60:40 2단 스플릿), B안(중앙 집중형 `896px`), C안(좌측 고정 요약 + 우측 2단) 비교 프리뷰 제작.
+  - **B안 적용 (`index.html`)**:
+    - **1페이지 (`#mapColLeft` · 지도 & 미각)**: `max-w-screen-xl mx-auto w-full` 적용으로 지도(7) + 브리프·다이얼(5)의 웅장한 가독성 유지.
+    - **2페이지 (`#mapColRight` · 원산지 매칭 & 생두)**, **3페이지 (`#mapPage3Roast` · 로스팅 과정)**, **4페이지 (`#mapPage4Commerce` · 맞춤 구매처)**: 각각 `max-w-4xl mx-auto w-full` (`896px`) 중앙 집중형 컨테이너로 감싸 가로 줄 길이를 최적화하고 시선 집중도 극대화.
+- **검증**: `npm run build:css` 빌드 및 `node --check` 자바스크립트 구문 검증 통과 (`OPTION_B_CENTERED_OK`).
+
+---
+
+### 307. Trio Fusion v2 (`Subframe.com × Miro.com × incident.io`) 워크스페이스 전면 적용 및 기능 중복 제거
+- **요청 내용**: `https://www.subframe.com/`, `https://miro.com/`, `https://incident.io/` 3개 사이트의 핵심 UX/UI 특징을 결합하고 페이지 내 중복 컨트롤을 단일화한 **Trio Fusion v2 (`cobts-trio-fusion-v2.html`)** 디자인을 본 서비스(`index.html`)에 변경/적용.
+- **작업 내용 (`CoBTS/index.html`, `CoBTS/cobts-trio-fusion-v2.html`, `CoBTS/assets/css/tailwind.min.css`)**:
+  - **역할 분리 및 중복 기능 제거 (Single Source of Control)**:
+    1. **좌측 Miro 플로팅 툴바 (`#trioFloatingToolbar`)**: 상단 가로 탭 중복을 제거하고 좌측 수직 플로팅 툴바로 단일화하여 `FRAME 01 (🌍 원산지·세계지도)` ~ `FRAME 04 (🛒 맞춤 구매처)` 즉시 포커스 이동 및 `⊞ 2×2 캔버스 보드 전체보기 ↔ 1 단일 프레임 집중 모드` 전환(`toggleTrioBoardMode()`) 지원.
+    2. **중앙 Miro 24px 도트-그리드 보드 & incident.io 에디토리얼 히어로 (`#trioMiroCanvas`, `#trioEditorialHero`, `#mapWorkspaceGrid`)**:
+       - 상단에 `incident.io` 특유의 웜 에디토리얼 세리프 헤드라인(`#trioHeroHeadline`), 플레임 오렌지(`#F25533`) 라이브 상태 필(`#trioHeroStatusText`), 그리고 **Miro 시그니처 옐로 포스트잇(`#trioStickyNotes`, `#FFD02F`)** 컵노트 카드를 배치하고 산지·블렌드·배전도 변경 시 실시간 동기화(`syncTrioEditorialHero()`).
+       - 4대 핵심 영역(`#mapColLeft` Frame 01, `#mapColRight` Frame 02, `#mapPage3Roast` Frame 03, `#mapPage4Commerce` Frame 04)을 Miro 2×2 보드 프레임(`.trio-frame`, `.trio-frame-label`)으로 배치하고, 프레임 간 **실시간 SVG 점선 화살표 커넥터(`#trioBoardWires`, `drawTrioBoardWires()`)**, **이동형 `☕ CoBTS AI 바리스타` 협업 커서(`#trioAiCursor`, `moveTrioAiCursorToFrame()`)**, **우측 하단 Miro 줌 컨트롤 바(`#trioZoomBar`: `− / 100% / + / Fit`)** 탑재.
+    3. **우측 Subframe 정밀 인스펙터 사이드바 (`#trioSubframeInspector`, `336px` 고정)**:
+       - 4대 미각 밸런스 로터리 다이얼(`#sensorySlidersBlock`), 4대 맛 퀵 프리셋(`산미·고소·쓴 맛·단맛균형`), `배전도 연동` 토글, `퀵 로스팅 배전도 슬라이더`(`#trioInspectorRoastSlider`), `공식 원두 감정서(Dossier) 발급` 버튼을 우측 인스펙터 한 곳에만 집약하여 어느 프레임을 보든 스크롤 없이 즉시 조작 가능하도록 구성.
+       - `TILE_LAYOUT_STORAGE_KEY`를 `cobts_map_tile_layout_v5`로 업데이트하고 `DEFAULT_TILE_LAYOUT.inspector = ["sensorySlidersBlock"]`으로 고정해 타일 레이아웃 복원 시에도 미각 다이얼이 인스펙터 내부에 유지되도록 보장.
+- **검증**: `npm run build:css` 빌드 완료, 인라인 스크립트 구문 검사 및 19개 핵심 DOM ID 유일성 검증 통과.
+
+---
+
+### 308. 구형 UX 완전 폐기 및 순수 Trio Fusion v2 (`Subframe × Miro × incident.io`) 단독 아키텍처로 `index.html` 전면 교체
+- **요청 내용**: "기존 ux는 버리고, 새로운 ux만 적용해서 보여줘"
+- **작업 내용 (`CoBTS/index.html`)**:
+  - **구형 레거시 UI 100% 제거**: 기존 첫 화면 히어로, 상단 구형 알약 컨트롤바(`Single/Blend` 알약, `산미 적당히...` 중복 배지, 구형 타일 편집 버튼 등), 무거운 구형 타일 래퍼를 완전히 폐기.
+  - **순수 Trio Fusion v2 (`Subframe.com × Miro.com × incident.io`) 단독 아키텍처 적용**:
+    1. **Subframe.com 56px 상단 바 (`.topbar`)**: `☕ CoBTS` 로고 + `Board / 현재 산지명 · HS 0901.21` 브레드크럼 + 중앙 단일 검색바(`⌘K`, 맛 키워드 및 7대 산지명 즉시 매칭) + `⊞ 2×2 보드 / 🎯 단일 집중` 토글 + `🌙 다크` 토글 + `📜 감정서 발급` 버튼.
+    2. **Subframe.com 332px 우측 고정 인스펙터 (`.inspector`)**:
+       - `Taste / Roast / Export` 3탭
+       - 4대 맛 프리셋(`🌸 산미 중심`, `🥜 고소 중심`, `🍫 쓴 맛(강배전)`, `🍯 단맛·균형`)
+       - 4대 감각 슬라이더(`산미`, `단맛`, `바디·쓴맛`, `고소함` 1~10 조절 시 최적 산지 자동 역추적 및 일치율 실시간 계산, 바디·쓴맛 8 이상 시 비엔나 강배전 자동 연동)
+       - 8단계 로스팅 열분해 슬라이더(`196°C 시나몬 ~ 245°C 이탈리안`)
+       - `📋 이 원두 요약 복사` & `📜 공식 원두 감정서(Dossier) 열기` 및 공정위·식품표시광고 준수 고지문.
+    3. **Miro.com 22px 도트-그리드 캔버스 & 2×2 대형 프레임 보드 (`.canvas`, `.board`, `.frames`)**:
+       - **좌측 플로팅 수직 툴바 (`.toolbar`)**: `🌍 01 원산지 매칭`, `🌱 02 생두 생산과정`, `🔥 03 로스팅 열분해`, `🛒 04 맞춤 구매처` 이동 및 `⊞ 2×2 보드 / 단일 집중` 전환.
+       - **incident.io 에디토리얼 히어로 (`.hero`)**: 플레임 오렌지(`#F25533`) 라이브 상태 배지(`MATCHED · 취향 일치율 96%`), 세리프 헤드라인, 7대 대표 스페셜티 산지(`예가체프 · 니에리 · 세하두 · 우일라 · 만델링 · 안티구아 · 타라주`) 원터치 칩 스트립.
+       - **Frame 01 (`01 · 원산지 매칭`)**: 산지 설명, 인터랙티브 커피벨트 미니 벡터 맵(`#beltMapSvg`, 7대 산지 핀 클릭 연동), 일치율 배지, 재배고도·가공법·품종 3대 스펙, **Miro 시그니처 노란 포스트잇(`.stickies`, `#FFD02F`)** 컵노트.
+       - **Frame 02 (`02 · 생두 생산과정`)**: `incident.io` 스타일 4단계 수직 타임라인(`체리 수확 → 정제 → 건조 → 생두 완성`) + 4대 가공법(`💧 워시드 / ☀️ 내추럴 / 🍯 허니 / 🌿 웻헐링`) 원터치 비교.
+       - **Frame 03 (`03 · 로스팅 열분해`)**: 실시간 원두 색상 변화 비주얼(`#bean`), 온도(`196~245°C`) 및 8단계 컬러 스케일 바, `🌱 생두(HS 0901.11 관세 2%) vs ☕ 원두(HS 0901.21 관세 8%)` 비교 카드.
+       - **Frame 04 (`04 · 맞춤 구매처`)**: `⭐ 리뷰 좋은 순 / 💬 리뷰 많은 순 / 💰 최저가 순` 3탭 세그먼트 정렬, 1~3위 구매처 카드(네이버 쇼핑 싱글오리진 필터·모모스/프릳츠/알마씨엘로·Amazon 직구), 관세청 통관 기준 및 출항지→부산항 경로 바.
+       - **실시간 SVG 점선 화살표 커넥터 (`#wires`)**, **`☕ CoBTS AI 바리스타` 협업 커서 (`#cursor`)**, **우측 하단 Miro 줌 바 (`.zoom`: `− / 100% / + / Fit`)**.
+- **검증**: `node` 인라인 스크립트 구문 검증 통과 (504 lines, 의존성 0, 즉시 렌더링).
+
+### #309 — 순수 Trio Fusion v2 UI 폴리싱, 3D WebGL 원두 초기 렌더링 수정 및 인스펙터 정리
+- **일시**: 2026-11-17
+- **변경 파일**: [`index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html), [`memory.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/memory.md), [`CLAUDE.md`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/CLAUDE.md)
+- **핵심 변경**:
+  1. **타이틀 서체 & 1줄 알약 스트립 & 문장 줄바꿈 & 단일 집중 뷰 확장**:
+     - `Paperlogy` (`700/800/900` woff2) `@font-face` 적용 및 `.hero` 7대 산지 칩 1줄 고정(`flex-wrap: nowrap`)으로 코스타리카 알약 우측 잘림 해결.
+     - `.hero p` `max-width: 960px`, `word-break: keep-all; text-wrap: pretty;` 적용으로 `"이어집니다."`의 마지막 `"다."`만 줄바꿈되는 현상 해결.
+     - `.frames.single-focus` 최대 너비 `1080px`(+31%) 확장 및 `#wires` Miro 쉐브론 화살표(`#dotStart` + `#arr`) 및 Frame 2→3 `.frame-body` 좌표 기반 연결 수정.
+  2. **3D WebGL 원두(`#roastBean3DCanvas`) 초기 미표시 버그 수정**:
+     - `init3DBeanViewer()`가 `$('#logoHome').onclick` 내부에 잘못 중첩되어 초기 실행되지 않던 문제를 해결, IIFE 최상위 초기화 루틴으로 이동해 진입 즉시 3D 원두 렌더링.
+  3. **지도 및 우측 인스펙터 정리**:
+     - Frame 01 지도는 Trio Fusion v2 오리지널 커피벨트 벡터 맵(`.belt-map` / `#beltMapSvg`) 유지로 최종 확정.
+     - 우측 인스펙터(`.inspector`) 상단 `Export` 탭 제거(`Taste` / `Roast` 2탭) 및 하단 `📋 이 원두 요약 복사` 버튼(`#copyBtn`) 삭제.
+- **검증**:
+  - `index.html` 인라인 `<script>` `new Function` 구문 검증 통과.
+  - `#beltMapSvg`, `#roastBean3DCanvas`, `#wires` 존재 및 `copyBtn`/`data-tab="export"`/`svgMapContainer` 제거 확인 완료.
+
+---
+
 ## 📌 [다음 세션 재개 체크포인트 (RESUME CHECKPOINT)]
-- **상태**: v2.0 A안(`index.html`) 개편 및 에디토리얼 롱리드 검색 결과 샘플(`search-result-editorial-sample.html`) 제작·커밋 완료.
+- **상태**: 순수 Trio Fusion v2 (`Subframe.com × Miro.com × incident.io`) 아키텍처 + Paperlogy 서체 + 3D WebGL 원두(`#roastBean3DCanvas`) + `.belt-map` 커피벨트 지도 + 인스펙터 2탭 정리 완료 및 git 커밋 저장.
 - **배포 주소**: `https://drbrookskim.github.io/beanvoyage/`
 - **다음 작업**:
-  1. `index.html`(A안 2컬럼 워크스페이스)과 `search-result-editorial-sample.html`(에디토리얼 롱리드 리포트 포맷)을 브라우저에서 비교 검토 후 방향성 결정 및 후속 고도화 진행.
+  1. 브라우저에서 [`index.html`](file:///Users/nelcome/Codes/Antigravity_code_repository/CoBTS/index.html) 새로고침 후 전체 화면 및 3D 원두·단일 집중 뷰 최종 확인.
+
+
 
 
 
