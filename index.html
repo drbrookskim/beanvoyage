@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   @font-face {
     font-family: 'Paperlogy';
@@ -78,24 +80,29 @@
   button { font-family: inherit; }
 
   /* ===== App Shell (Subframe) ===== */
-  .app { display: grid; grid-template-rows: 56px minmax(0,1fr); height: 100vh; }
+  .app { --inspector-w: 332px; display: grid; grid-template-rows: 56px minmax(0,1fr); height: 100vh; }
   .topbar { display: flex; align-items: center; gap: 12px; padding: 0 16px; background: var(--panel); border-bottom: 1px solid var(--line); z-index: 30; }
   .logo { display: flex; align-items: center; gap: 9px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap; font-size: 15px; cursor: pointer; }
   .logo i { width: 28px; height: 28px; border-radius: 8px; background: var(--flame); color: #fff; display: grid; place-items: center; font-style: normal; font-size: 15px; }
   .crumb { font-size: 13px; color: var(--ink-3); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
   .crumb b { color: var(--ink); font-weight: 800; }
   .crumb .tag { font: 700 10.5px var(--mono); padding: 2px 7px; border-radius: 6px; background: var(--panel-2); color: var(--ink-2); border: 1px solid var(--line); }
-  .search { flex: 1; max-width: 560px; margin: 0 auto; display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 6px 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); transition: border-color .15s, box-shadow .15s; }
+  .search { flex: 1; max-width: 560px; margin: 0 auto; display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 5px 0 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); transition: border-color .15s, box-shadow .15s; }
   .search:focus-within { border-color: var(--flame); box-shadow: 0 0 0 3px var(--flame-soft); background: var(--panel); }
   .search input { flex: 1; border: 0; outline: 0; background: transparent; color: var(--ink); font: 600 13.5px var(--sans); }
-  .search button { height: 28px; padding: 0 10px; border: 0; border-radius: 7px; background: var(--flame); color: #fff; font: 700 11.5px var(--sans); cursor: pointer; }
-  .search kbd { font: 700 10.5px var(--mono); padding: 3px 7px; border-radius: 6px; background: var(--panel); border: 1px solid var(--line); color: var(--ink-2); }
-  .btn-ghost { height: 34px; padding: 0 12px; border-radius: 9px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font-weight: 700; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
+  .search button { height: 28px; padding: 0 12px; border: 0; border-radius: 999px; background: var(--flame); color: #fff; font: 700 11.5px var(--sans); cursor: pointer; }
+  .search kbd { font: 700 10.5px var(--mono); padding: 3px 8px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); color: var(--ink-2); }
+  .btn-ghost { height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font-weight: 700; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
   .btn-ghost:hover { border-color: var(--ink-2); }
-  .btn-primary { height: 34px; padding: 0 14px; border-radius: 9px; border: 0; background: var(--ink); color: var(--bg); font-weight: 800; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
+  .btn-icon { width: 34px; height: 34px; padding: 0; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); display: grid; place-items: center; font-size: 16px; cursor: pointer; flex-shrink: 0; transition: border-color .15s, background .15s, color .15s; }
+  .btn-icon:hover { border-color: var(--ink-2); }
+  .btn-icon.on { border-color: var(--flame); background: var(--flame-soft); color: var(--flame); }
+  .btn-primary { height: 34px; padding: 0 16px; border-radius: 999px; border: 0; background: var(--ink); color: var(--bg); font-weight: 800; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
   .btn-primary:hover { background: var(--flame); color: #fff; }
 
-  .body { display: grid; grid-template-columns: minmax(0,1fr) 332px; min-height: 0; }
+  .body { display: grid; grid-template-columns: minmax(0,1fr) var(--inspector-w); min-height: 0; }
+  .app.inspector-hidden .body { grid-template-columns: minmax(0,1fr); }
+  .app.inspector-hidden .inspector { display: none; }
   @media (max-width: 1080px) { .body { grid-template-columns: 1fr; } .inspector { display: none; } }
 
   /* ===== Miro Infinite Dot Canvas ===== */
@@ -103,19 +110,28 @@
   .board { position: relative; width: 1240px; margin: 0 auto; padding: 36px 40px 120px; transform-origin: top center; transition: transform .25s ease; }
   @media (max-width: 760px) { .board { width: 100%; padding: 20px 14px 100px; } }
 
-  /* Floating vertical toolbar (Miro) = 유일한 단계 네비게이션 */
-  .toolbar { position: fixed; left: 14px; top: 50%; transform: translateY(-50%); z-index: 25; display: flex; flex-direction: column; gap: 4px; padding: 6px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); }
-  .tool { width: 44px; height: 44px; border-radius: 10px; border: 0; background: transparent; color: var(--ink); font-size: 18px; cursor: pointer; position: relative; display: grid; place-items: center; }
-  .tool:hover { background: var(--panel-2); }
-  .tool.on { background: var(--flame-soft); box-shadow: inset 0 0 0 1.5px var(--flame); }
-  .tool span { position: absolute; left: 54px; top: 50%; transform: translateY(-50%); white-space: nowrap; font: 700 12px var(--sans); padding: 5px 10px; border-radius: 7px; background: var(--ink); color: var(--bg); opacity: 0; pointer-events: none; transition: opacity .15s; box-shadow: 0 4px 12px rgba(0,0,0,.18); }
-  .tool:hover span { opacity: 1; }
-  .tool-sep { height: 1px; background: var(--line); margin: 4px 6px; }
-  @media (max-width: 760px) { .toolbar { top: auto; bottom: 12px; left: 50%; transform: translateX(-50%); flex-direction: row; } .tool span, .tool-sep { display: none; } }
+  /* Floating vertical toolbar (Miro + Sidebar Collapse motion) = 유일한 단계 네비게이션 */
+  .toolbar { position: fixed; left: 14px; top: 50%; width: 58px; transform: translateY(-50%); z-index: 25; padding: 8px; border-radius: 20px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); overflow: hidden; }
+  .side-top { position: relative; display: flex; align-items: center; height: 38px; padding: 0 5px; margin-bottom: 6px; }
+  .side-logo { width: 28px; height: 28px; border-radius: 8px; background: var(--flame); color: #fff; display: grid; place-items: center; font-size: 14px; flex: none; }
+  .side-brand { margin-left: 10px; font-size: 13.5px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; }
+  .side-col { position: absolute; right: 0; top: 3px; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--ink); cursor: pointer; display: grid; place-items: center; transition: border-color .15s; }
+  .side-col:hover { border-color: var(--ink-2); }
+  .side-col svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; will-change: transform; }
+  .side-list { position: relative; display: flex; flex-direction: column; gap: 3px; }
+  .side-hl { position: absolute; left: 0; right: 0; top: 0; height: 40px; border-radius: 999px; background: var(--flame-soft); border: 1px solid color-mix(in srgb, var(--flame), transparent 50%); will-change: transform; pointer-events: none; }
+  .tool { position: relative; z-index: 1; height: 40px; padding: 0 10px; border-radius: 999px; border: 0; background: transparent; color: var(--ink-2); font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; white-space: nowrap; transition: color .2s, background .15s; }
+  .tool:hover { color: var(--ink); }
+  .tool.on { color: var(--flame); font-weight: 800; }
+  .tool svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .side-lb { display: inline-block; margin-left: 11px; white-space: nowrap; will-change: transform, opacity; pointer-events: none; }
+  .tool-sep { height: 1px; background: var(--line); margin: 4px 4px; }
+  @media (max-width: 760px) { .toolbar { top: auto; bottom: 12px; left: 50%; width: auto !important; transform: translateX(-50%); } .side-top, .side-hl, .side-lb, .tool-sep { display: none !important; } .side-list { flex-direction: row; } .tool.on { background: var(--flame-soft); } }
 
   /* Zoom controls (Miro) */
-  .zoom { position: fixed; right: 348px; bottom: 16px; z-index: 25; display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 12px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); }
-  .zoom button { width: 34px; height: 32px; border: 0; border-radius: 8px; background: transparent; color: var(--ink); font-weight: 800; cursor: pointer; }
+  .zoom { position: fixed; right: calc(var(--inspector-w) + 16px); bottom: 16px; z-index: 25; display: flex; align-items: center; gap: 2px; padding: 4px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); transition: right .15s ease; }
+  .app.inspector-hidden .zoom { right: 16px; }
+  .zoom button { width: 34px; height: 32px; border: 0; border-radius: 999px; background: transparent; color: var(--ink); font-weight: 800; cursor: pointer; }
   .zoom button:hover { background: var(--panel-2); }
   .zoom output { min-width: 50px; text-align: center; font: 700 12px var(--mono); color: var(--ink-2); }
   @media (max-width: 1080px) { .zoom { right: 16px; } }
@@ -131,17 +147,41 @@
   .hero h1 em { font-style: normal; color: var(--flame); }
   .hero p { max-width: 960px; margin: 0; font-size: 15.5px; line-height: 1.7; color: var(--ink-2); word-break: keep-all; text-wrap: pretty; }
 
-  /* 7-Origin Single-Row Quick Strip on Canvas */
-  .origin-strip { display: flex; flex-wrap: nowrap; gap: 5px; margin: 16px 0 0; overflow-x: auto; scrollbar-width: none; padding-right: 4px; }
-  .origin-strip::-webkit-scrollbar { display: none; }
-  .origin-chip { padding: 5px 8.5px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); font: 700 11px var(--sans); cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; flex-shrink: 0; }
-  .origin-chip:hover { border-color: var(--ink-2); color: var(--ink); }
-  .origin-chip.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-  .origin-chip small { font: 600 9.5px var(--mono); opacity: .7; }
+  /* 15-Origin Fan Cards (DesignBookmark Motion Studies) */
+  .origin-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; width: 100%; margin: 22px 0 6px; position: relative; z-index: 15; }
+  @media (max-width: 900px) { .origin-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .origin-strip { grid-template-columns: 1fr; } }
+  .fan-group { position: relative; height: 176px; border-radius: 18px; background: var(--panel-2); border: 1px solid var(--line); padding: 10px 12px; display: flex; flex-direction: column; align-items: center; transition: border-color .2s; }
+  .fan-group.has-active { border-color: var(--flame); background: color-mix(in srgb, var(--panel-2), var(--flame-soft) 35%); }
+  .fan-group:hover { z-index: 30; border-color: var(--ink-2); }
+  .fan-head { width: 100%; display: flex; justify-content: space-between; align-items: center; font: 700 10.5px var(--mono); color: var(--ink-3); letter-spacing: .04em; z-index: 1; }
+  .fan-group.has-active .fan-head b { color: var(--flame); }
+  .fan { position: relative; width: 122px; height: 132px; margin-top: 6px; }
+  .fan-card { position: absolute; inset: 0; padding: 8px; border-radius: 15px; background: var(--panel); border: 1px solid var(--line); box-shadow: 0 6px 16px rgba(18,17,16,.10); transform-origin: 50% 100%; cursor: pointer; will-change: transform; display: flex; flex-direction: column; text-align: left; color: var(--ink); transition: border-color .15s, box-shadow .15s; }
+  html.dark .fan-card { box-shadow: 0 8px 20px rgba(0,0,0,.45); }
+  .fan-card.on { border-color: var(--flame); box-shadow: 0 0 0 2px var(--flame), 0 8px 20px rgba(242,85,51,.22); }
+  .fan-art { height: 52px; border-radius: 9px; flex-shrink: 0; position: relative; overflow: hidden; }
+  .fan-art::after { content: attr(data-alt); position: absolute; right: 5px; bottom: 4px; font: 700 9px var(--mono); padding: 1px 5px; border-radius: 999px; background: rgba(0,0,0,.45); color: #fff; backdrop-filter: blur(4px); }
+  .fan-n { margin-top: 7px; font: 700 9.5px var(--mono); color: var(--ink-3); display: flex; justify-content: space-between; }
+  .fan-t { margin-top: 2px; font-size: 11.5px; font-weight: 800; line-height: 1.25; color: var(--ink); word-break: keep-all; }
+  .fan-sub { margin-top: auto; font-size: 9.5px; font-weight: 600; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  [data-av]{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),radial-gradient(70% 70% at var(--p1),var(--av-l) 0,transparent 70%),radial-gradient(60% 60% at var(--p2),var(--av-p) 0,transparent 70%),radial-gradient(75% 75% at var(--p3),var(--av-b) 0,transparent 72%),var(--av-a)!important;background-blend-mode:overlay,normal,normal,normal,normal!important}
+  [data-av="1"]{--av-l:#ff8fd0;--av-a:#ff3fa6;--av-b:#6a35ff;--av-p:#ffd3ec;--p1:12.0% 10.0%;--p2:92.0% 8.0%;--p3:88.0% 96.0%}
+  [data-av="2"]{--av-l:#7fe3ff;--av-a:#2b8cff;--av-b:#5a35ff;--av-p:#cdf3ff;--p1:102.9% 65.6%;--p2:34.6% 107.4%;--p3:-5.9% 29.2%}
+  [data-av="3"]{--av-l:#d6ff5a;--av-a:#22d39a;--av-b:#0a8a8f;--av-p:#efffb0;--p1:65.6% -2.9%;--p2:107.4% 65.4%;--p3:29.2% 105.9%}
+  [data-av="4"]{--av-l:#ffb866;--av-a:#ff4a5e;--av-b:#c31f86;--av-p:#ffe0b8;--p1:34.4% 102.9%;--p2:-7.4% 34.6%;--p3:70.8% -5.9%}
+  [data-av="5"]{--av-l:#fff27a;--av-a:#ffa51f;--av-b:#ff4a2e;--av-p:#fff3bf;--p1:-3.6% 62.9%;--p2:34.6% -7.4%;--p3:108.8% 40.1%}
+  [data-av="6"]{--av-l:#7dffea;--av-a:#1fa8ff;--av-b:#3a3cff;--av-p:#c9fff5;--p1:90.0% 12.0%;--p2:92.0% 92.0%;--p3:4.0% 88.0%}
+  [data-av="7"]{--av-l:#ffd3f1;--av-a:#c07bff;--av-b:#ff4f9a;--av-p:#f0dcff;--p1:62.9% 103.6%;--p2:-7.4% 65.4%;--p3:40.1% -8.8%}
+  [data-av="8"]{--av-l:#c2ffd6;--av-a:#2fe08a;--av-b:#0a9a6a;--av-p:#e2ffec;--p1:37.1% -3.6%;--p2:107.4% 34.6%;--p3:59.9% 108.8%}
+  [data-av="9"]{--av-l:#ffe3b5;--av-a:#ff8a6a;--av-b:#ff3f86;--av-p:#ffe6d8;--p1:10.0% 88.0%;--p2:8.0% 8.0%;--p3:96.0% 12.0%}
+  [data-av="10"]{--av-l:#bfa0ff;--av-a:#5a3cff;--av-b:#1a1ab0;--av-p:#e0d2ff;--p1:103.6% 37.1%;--p2:65.4% 107.4%;--p3:-8.8% 59.9%}
+  [data-av="11"]{--av-l:#f6ff86;--av-a:#8ae83a;--av-b:#1fb86a;--av-p:#fbffc8;--p1:-2.9% 34.4%;--p2:65.4% -7.4%;--p3:105.9% 70.8%}
+  [data-av="12"]{--av-l:#ffa3cd;--av-a:#e03cff;--av-b:#6a2cff;--av-p:#ffd2ea;--p1:88.0% 90.0%;--p2:8.0% 92.0%;--p3:12.0% 4.0%}
 
   /* Frames (Miro frame + Subframe card + big tile) */
   .frames { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 72px 80px; padding-left: 56px; }
-  .frames.single-focus { grid-template-columns: 1fr; max-width: 1080px; }
+  .frames.single-focus { grid-template-columns: 1fr; max-width: none; width: 100%; }
   .frames.single-focus .frame-body { padding: 36px; min-height: 570px; gap: 22px; }
   .frames.single-focus .frame h2 { font-size: 32px; }
   .frames.single-focus .muted { font-size: 16px; }
@@ -180,23 +220,58 @@
   .belt-pin.active circle.core { fill: var(--flame); r: 6.5; }
   .belt-pin text { font: 700 9.5px var(--sans); fill: var(--ink); opacity: 0; pointer-events: none; transition: opacity .15s; }
   .belt-pin.active text, .belt-pin:hover text { opacity: 1; }
-  .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-  .stat { padding: 13px; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--line); }
-  .stat small { display: block; font-size: 11px; color: var(--ink-3); font-weight: 700; font-family: var(--mono); }
-  .stat b { display: block; margin-top: 4px; font-size: 17px; font-weight: 800; letter-spacing: -.02em; }
+  .f1-bottom-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; margin-top: auto; }
+  @media (max-width: 640px) { .f1-bottom-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .stat { aspect-ratio: 1 / 1; padding: 12px; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+  .stat small { display: block; font-size: 9.5px; line-height: 1.3; color: var(--ink-3); font-weight: 700; font-family: var(--mono); }
+  .stat b { display: block; font-size: 14.5px; line-height: 1.25; font-weight: 800; letter-spacing: -.02em; word-break: keep-all; }
+  .frames.single-focus .stat { padding: 20px; border-radius: 18px; }
+  .frames.single-focus .stat small { font-size: 11px; }
+  .frames.single-focus .stat b { font-size: 22px; }
   .match { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 16px; border-radius: 14px; background: var(--sage-soft); }
   .match-left { display: flex; align-items: center; gap: 12px; }
   .match b { font: 800 28px var(--sans); color: var(--sage); letter-spacing: -.03em; }
   .match span { font-size: 12.5px; color: var(--ink-2); line-height: 1.45; }
-  .stickies { display: flex; gap: 12px; flex-wrap: wrap; padding-top: 2px; }
-  .sticky { width: 110px; min-height: 84px; padding: 11px; background: var(--sticky); color: #2A2200; font-weight: 800; font-size: 13px; line-height: 1.35; box-shadow: 0 6px 14px rgba(0,0,0,.11); border-radius: 3px; display: flex; flex-direction: column; justify-content: space-between; }
-  .sticky:nth-child(1) { transform: rotate(-2.5deg); }
-  .sticky:nth-child(2) { transform: rotate(1.8deg); background: var(--sticky-2); }
-  .sticky:nth-child(3) { transform: rotate(-1deg); }
-  .sticky.green { transform: rotate(1.6deg); background: var(--sticky-green); color: #193300; }
-  .sticky small { display: block; margin-top: 6px; font: 700 9.5px var(--mono); opacity: .65; }
+  /* Pagination Dots (4th column in #f1) */
+  .f1-pager { display: flex; flex-direction: column; min-width: 0; }
+  .pager-view { width: 100%; aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--panel-2); }
+  .frames.single-focus .pager-view { border-radius: 18px; }
+  .pager-strip { display: flex; height: 100%; will-change: transform; }
+  .pager-sl { position: relative; flex: none; width: 100%; height: 100%; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; color: #2A2200; background: var(--sticky); }
+  .pager-sl:nth-child(2) { background: var(--sticky-2); }
+  .pager-sl:nth-child(4) { background: var(--sticky-green); color: #193300; }
+  .pager-sl b { font-size: 13.5px; line-height: 1.3; font-weight: 800; word-break: keep-all; }
+  .pager-sl small { font: 700 9.5px var(--mono); opacity: .7; }
+  .frames.single-focus .pager-sl { padding: 20px; }
+  .frames.single-focus .pager-sl b { font-size: 20px; }
+  .frames.single-focus .pager-sl small { font-size: 11px; }
+  .pager-dots { position: relative; display: flex; justify-content: center; gap: 10px; margin-top: 8px; height: 18px; align-items: center; }
+  .pager-dots button { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; background: var(--line); cursor: pointer; }
+  .pager-act { position: absolute; left: 0; top: 5px; height: 8px; border-radius: 4px; background: var(--flame); will-change: transform, width; pointer-events: none; }
 
-  /* Frame 2 timeline (incident.io) + 4 Process Compare */
+  /* Frame 2 timeline (incident.io) + SVG Process Diagram + 4 Process Compare */
+  .process-svg-wrap { border-radius: 16px; background: var(--panel-2); border: 1px solid var(--line); padding: 10px 12px; overflow: hidden; }
+  .process-svg-wrap svg { width: 100%; height: auto; display: block; }
+  @keyframes procFlow { to { stroke-dashoffset: -12; } }
+  @keyframes procFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-2.5px); } }
+  @keyframes procPulse { 0%, 100% { opacity: 0.85; } 50% { opacity: 1; } }
+  @keyframes abdRippleOnce { 0% { r: 10; opacity: 0.85; } 100% { r: 30; opacity: 0; } }
+  .proc-arrow { stroke-dasharray: 4 2; animation: procFlow 1.1s linear infinite; }
+  .proc-float { animation: procFloat 2.6s ease-in-out infinite; }
+  .proc-pulse { animation: procPulse 2.2s ease-in-out infinite; }
+  .abd-card { cursor: pointer; transition: transform .42s cubic-bezier(.34,1.56,.64,1), opacity .28s ease; }
+  .frames.single-focus .abd-card.active { opacity: 1; transform: translateY(-7px); }
+  .frames.single-focus .abd-card.done { opacity: 0.78; transform: translateY(0px); }
+  .frames.single-focus .abd-card.wait { opacity: 0.42; transform: translateY(3px); }
+  .abd-traveler { transition: transform .5s cubic-bezier(.35,1.3,.5,1); will-change: transform; pointer-events: none; }
+  .abd-traveler-core { transition: fill .35s ease; }
+  .abd-ripple-active { animation: abdRippleOnce .75s ease-out forwards; }
+  .journey-rail { height: 5px; border-radius: 999px; background: var(--line); overflow: hidden; margin-top: 8px; }
+  .journey-rail-fill { height: 100%; width: 25%; background: linear-gradient(90deg, var(--flame), var(--sage)); border-radius: 999px; transition: width .45s cubic-bezier(.22,1,.36,1); }
+  .journey-controls { display: flex; justify-content: flex-end; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+  .journey-step-btn { padding: 4px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); font: 700 10.5px var(--mono); cursor: pointer; transition: all .15s; }
+  .journey-step-btn:hover { border-color: var(--ink-2); color: var(--ink); }
+  .journey-step-btn.on { background: var(--flame); color: #fff; border-color: var(--flame); }
   .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
   .timeline::before { content: ""; position: absolute; left: 13px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
   .tl { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 14px; padding: 0 0 16px; }
@@ -210,8 +285,8 @@
   .chip.sage { background: var(--sage-soft); color: var(--sage); border-color: transparent; }
   .chip.flame { background: var(--flame-soft); color: var(--flame); border-color: transparent; }
   .tl p { margin: 4px 0 0; font-size: 13.5px; line-height: 1.58; color: var(--ink-2); }
-  .proc-tabs { display: grid; grid-template-columns: repeat(4,1fr); gap: 5px; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--line); }
-  .proc-btn { padding: 7px 6px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-2); font: 700 11.5px var(--sans); cursor: pointer; }
+  .proc-tabs { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--line); }
+  .proc-btn { padding: 7px 6px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-2); font: 700 11.5px var(--sans); cursor: pointer; }
   .proc-btn.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
   .proc-note { font-size: 12.5px; line-height: 1.55; color: var(--ink-2); padding: 10px 12px; border-radius: 10px; background: var(--panel-2); border: 1px solid var(--line); }
 
@@ -238,57 +313,167 @@
   .cmp p { margin: 6px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--ink-2); }
 
   /* Frame 4 commerce */
-  .seg { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; padding: 4px; border-radius: 12px; background: var(--panel-2); border: 1px solid var(--line); }
-  .seg button { height: 38px; border: 0; border-radius: 9px; background: transparent; color: var(--ink-2); font-weight: 800; font-size: 13px; cursor: pointer; }
+  .seg { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; padding: 4px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); }
+  .seg button { height: 38px; border: 0; border-radius: 999px; background: transparent; color: var(--ink-2); font-weight: 800; font-size: 13px; cursor: pointer; }
   .seg button.on { background: var(--panel); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
   .shop { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: center; padding: 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); transition: border-color .15s, transform .15s; }
   .shop:hover { border-color: var(--flame); transform: translateY(-1px); }
   .shop .rk { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font: 800 14px var(--mono); background: var(--panel-2); }
   .shop:first-child .rk { background: var(--sticky); color: #2A2200; }
-  .shop h4 { margin: 0; font-size: 14.5px; font-weight: 800; }
+  .shop h4 { margin: 0; font-size: 14.5px; font-weight: 800; display: flex; align-items: center; gap: 7px; }
+  .shop-site-icon { width: 20px; height: 20px; border-radius: 6px; display: inline-grid; place-items: center; flex-shrink: 0; overflow: hidden; }
   .shop p { margin: 3px 0 0; font-size: 12.5px; color: var(--ink-2); }
-  .shop a { height: 34px; padding: 0 13px; border-radius: 9px; background: var(--ink); color: var(--bg); font-weight: 800; font-size: 12.5px; display: inline-flex; align-items: center; text-decoration: none; white-space: nowrap; }
+  .shop a { height: 34px; padding: 0 14px; border-radius: 999px; background: var(--ink); color: var(--bg); font-weight: 800; font-size: 12.5px; display: inline-flex; align-items: center; text-decoration: none; white-space: nowrap; }
   .shop a:hover { background: var(--flame); color: #fff; }
-  .shops { display: grid; gap: 10px; }
+  .shops { position: relative; height: 256px; margin: 4px 0; }
+  .ex-shop { position: absolute; left: 0; top: 0; width: 100%; height: 72px; border-radius: 20px; background: var(--panel-2); border: 1px solid var(--line); overflow: hidden; cursor: pointer; will-change: transform, height, opacity; transition: border-color .15s; }
+  .ex-shop:hover { border-color: var(--flame); }
+  .ex-thumb { position: absolute; left: 12px; top: 12px; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .ex-rk { position: relative; z-index: 1; padding: 3px 8px; border-radius: 999px; background: rgba(0,0,0,.45); color: #fff; font: 800 12px var(--mono); backdrop-filter: blur(4px); }
+  .ex-head { position: absolute; left: 0; top: 0; will-change: transform; max-width: calc(100% - 140px); }
+  .ex-t { font-size: 14px; font-weight: 800; line-height: 20px; white-space: nowrap; color: var(--ink); display: flex; align-items: center; gap: 6px; margin: 0; }
+  .ex-s { font-size: 12px; line-height: 18px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0; }
+  .ex-price { position: absolute; right: 16px; top: 0; font: 800 11.5px var(--mono); color: var(--flame); will-change: transform; padding: 4px 10px; border-radius: 999px; background: var(--flame-soft); }
+  .ex-more { position: absolute; left: 16px; right: 16px; top: 168px; opacity: 0; will-change: transform, opacity; }
+  .ex-more p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
+  .ex-row { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+  .ex-chip { font: 700 11px var(--mono); padding: 5px 10px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); color: var(--ink-2); white-space: nowrap; }
+  .ex-go { margin-left: auto; height: 32px; padding: 0 14px; border-radius: 999px; background: var(--ink); color: var(--bg); font: 800 12px var(--sans); display: inline-flex; align-items: center; text-decoration: none; white-space: nowrap; }
+  .ex-go:hover { background: var(--flame); color: #fff; }
   .customs-bar { margin-top: auto; padding: 12px 14px; border-radius: 12px; background: var(--panel-2); border: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--ink-2); }
   .customs-bar code { font: 700 11px var(--mono); color: var(--ink); }
 
   /* ===== Subframe Inspector (유일한 조작 패널) ===== */
-  .inspector { background: var(--panel); border-left: 1px solid var(--line); overflow-y: auto; display: flex; flex-direction: column; }
-  .insp-tabs { display: grid; grid-template-columns: repeat(2,1fr); padding: 8px 12px 0; border-bottom: 1px solid var(--line); }
-  .insp-tabs button { padding: 9px 6px; border: 0; background: transparent; font-size: 12.5px; font-weight: 800; color: var(--ink-3); border-bottom: 2px solid transparent; cursor: pointer; }
-  .insp-tabs button.on { color: var(--ink); border-color: var(--flame); }
+  .inspector { position: relative; background: var(--panel); border-left: 1px solid var(--line); overflow-y: auto; display: flex; flex-direction: column; }
+  .insp-resizer { position: absolute; left: 0; top: 0; bottom: 0; width: 7px; cursor: col-resize; z-index: 20; }
+  .insp-resizer::after { content: ""; position: absolute; left: 2px; top: 50%; transform: translateY(-50%); width: 2px; height: 36px; border-radius: 2px; background: var(--line); transition: background .15s, height .15s; }
+  .insp-resizer:hover::after, .insp-resizer.dragging::after { background: var(--flame); height: 64px; }
   .sect { padding: 16px; border-bottom: 1px solid var(--line); }
   .sect h5 { margin: 0 0 12px; display: flex; justify-content: space-between; font: 700 11px var(--mono); letter-spacing: .06em; color: var(--ink-3); text-transform: uppercase; }
   .presets { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; }
-  .preset { padding: 10px 8px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font-weight: 800; font-size: 12.5px; cursor: pointer; text-align: left; line-height: 1.35; transition: all .15s; }
+  .preset { padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font-weight: 800; font-size: 12px; cursor: pointer; text-align: center; line-height: 1.3; transition: all .15s; }
   .preset small { display: block; font-weight: 600; font-size: 10.5px; color: var(--ink-3); margin-top: 2px; }
   .preset.on { border-color: var(--flame); background: var(--flame-soft); }
-  .prop { display: grid; grid-template-columns: 74px 1fr 34px; gap: 10px; align-items: center; margin-bottom: 12px; font-size: 12.5px; font-weight: 700; color: var(--ink-2); }
+  .prop { display: grid; grid-template-columns: 74px 1fr 28px; gap: 8px; align-items: center; margin-bottom: 14px; font-size: 12.5px; font-weight: 700; color: var(--ink-2); }
   .prop:last-child { margin-bottom: 0; }
-  .prop input[type=range] { width: 100%; accent-color: var(--flame); cursor: pointer; }
   .prop output { font: 700 12px var(--mono); color: var(--ink); text-align: right; }
+
+  /* ===== Jelly Slider (Motion Studies) ===== */
+  .jelly-rail { position: relative; height: 28px; touch-action: none; cursor: pointer; user-select: none; -webkit-user-select: none; }
+  .jelly-track { position: absolute; left: 0; right: 0; top: 11px; height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; }
+  .jelly-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--flame); border-radius: 999px; }
+  .jelly-goo { position: absolute; left: -40px; right: -40px; top: -80px; height: 136px; filter: url(#goo); pointer-events: none; z-index: 15; }
+  .jelly-blob { position: absolute; left: 0; top: 0; background: var(--flame); border-radius: 50%; will-change: transform; }
+  .jelly-drop { width: 32px; height: 32px; }
+  .jelly-thumb { width: 24px; height: 24px; }
+  .jelly-drop-label { position: absolute; left: 0; top: 0; width: 32px; height: 32px; display: grid; place-items: center; font: 800 10.5px var(--mono); font-variant-numeric: tabular-nums; color: #fff; pointer-events: none; will-change: transform, opacity; z-index: 16; }
+  .jelly-hit { position: absolute; top: 2px; width: 24px; height: 24px; border-radius: 50%; outline: none; }
+  .jelly-hit:focus-visible { box-shadow: 0 0 0 3px var(--flame-soft); }
   .roast-name { display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; margin-bottom: 8px; }
   .roast-name span { color: var(--flame); font-family: var(--mono); }
   .full { width: 100%; height: 40px; }
   .notice { font-size: 11.5px; line-height: 1.6; color: var(--ink-3); }
 
-  /* ===== Official Dossier Modal ===== */
-  .modal-backdrop { position: fixed; inset: 0; z-index: 60; background: rgba(18,17,16,.55); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 20px; }
+  /* ===== Archival Coffee Dossier Report Modal (CoBTS CERTIFIED) ===== */
+  .modal-backdrop { position: fixed; inset: 0; z-index: 60; background: rgba(15,30,46,.72); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 16px; overflow-y: auto; }
   .modal-backdrop.open { display: flex; }
-  .dossier { width: 100%; max-width: 680px; background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 28px; box-shadow: 0 24px 60px rgba(0,0,0,.3); max-height: 90vh; overflow-y: auto; }
-  .dossier-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
-  .dossier h3 { margin: 6px 0 0; font-family: var(--serif); font-size: 26px; }
-  .dossier-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 18px 0; }
-  .dossier-box { padding: 14px; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--line); }
-  .dossier-box small { font: 700 10.5px var(--mono); color: var(--ink-3); display: block; }
-  .dossier-box b { font-size: 15px; display: block; margin-top: 4px; }
+  .dossier { width: 100%; max-width: 880px; max-height: 92vh; overflow-y: auto; border-radius: 18px; background: var(--panel); border: 2px solid #1E3B5C; color: #1E3B5C; padding: 26px 28px; box-shadow: 0 24px 60px rgba(0,0,0,.35); display: flex; flex-direction: column; gap: 18px; }
+  html.dark .dossier { background: #101B2B; border-color: #30679D; color: #F0F0D8; }
+  .dossier-topbar { display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid rgba(189,185,137,.5); }
+  html.dark .dossier-topbar { border-bottom-color: #264363; }
+  .dossier-cert-badge { display: inline-flex; align-items: center; gap: 8px; font: 700 11.5px var(--mono); color: #30679D; letter-spacing: .08em; text-transform: uppercase; }
+  html.dark .dossier-cert-badge { color: #97B6CB; }
+  .dossier-cert-dot { width: 9px; height: 9px; border-radius: 50%; background: #516B50; animation: procPulse 1.8s infinite; }
+  .dossier-print-btn { padding: 7px 14px; border-radius: 999px; border: 1px solid #30679D; background: #30679D; color: #fff; font: 700 12px var(--sans); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+  .dossier-print-btn:hover { background: #1E3B5C; }
+  .dossier-close-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(189,185,137,.6); background: transparent; color: #5A758D; font-weight: 800; cursor: pointer; display: grid; place-items: center; }
+  .dossier-close-btn:hover { background: rgba(0,0,0,.06); color: #1E3B5C; }
+  html.dark .dossier-close-btn { border-color: #264363; color: #97B6CB; }
+  html.dark .dossier-close-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .dossier-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 2px solid #1E3B5C; }
+  html.dark .dossier-head { border-bottom-color: #30679D; }
+  .dossier-kicker { font: 700 10.5px var(--mono); color: #30679D; letter-spacing: .12em; text-transform: uppercase; }
+  html.dark .dossier-kicker { color: #97B6CB; }
+  .dossier h3 { margin: 4px 0 0; font-family: var(--serif); font-size: clamp(22px, 2.8vw, 28px); display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+  .dossier-en { font-family: Georgia, serif; font-style: italic; font-weight: 400; font-size: 18px; color: #30679D; }
+  html.dark .dossier-en { color: #97B6CB; }
+  .dossier-sub { margin: 4px 0 0; font-size: 12px; color: #5A758D; }
+  html.dark .dossier-sub { color: rgba(151,182,203,.85); }
+  .dossier-meta { text-align: right; font: 600 11px var(--mono); color: #5A758D; flex-shrink: 0; }
+  html.dark .dossier-meta { color: #8FA6B8; }
+  .dossier-serial { display: inline-block; padding: 4px 10px; border-radius: 6px; background: rgba(189,185,137,.22); border: 1px solid rgba(189,185,137,.6); font-weight: 700; color: #78482B; margin-bottom: 5px; }
+  html.dark .dossier-serial { background: rgba(48,103,157,.3); border-color: #30679D; color: #DFB995; }
+  .dossier-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+  @media (max-width: 720px) { .dossier-grid { grid-template-columns: 1fr; } .dossier-meta { text-align: left; } }
+  .dossier-card { padding: 15px 16px; border-radius: 12px; border: 1px solid rgba(189,185,137,.6); background: rgba(250,249,237,.65); display: flex; flex-direction: column; gap: 9px; font-size: 12px; }
+  html.dark .dossier-card { border-color: #264363; background: rgba(15,30,46,.65); }
+  .dossier-card-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 6px; border-bottom: 1px solid rgba(189,185,137,.4); font: 700 11px var(--mono); color: #30679D; text-transform: uppercase; }
+  html.dark .dossier-card-head { border-bottom-color: #264363; color: #97B6CB; }
+  .dossier-kv { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 3px 0; border-bottom: 1px dashed rgba(189,185,137,.35); }
+  .dossier-kv:last-child { border-bottom: 0; }
+  .dossier-kv span { color: #5A758D; }
+  html.dark .dossier-kv span { color: #8FA6B8; }
+  .dossier-kv b { font-weight: 700; text-align: right; }
+  .dossier-bar-row { display: flex; flex-direction: column; gap: 4px; }
+  .dossier-bar-label { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 600; }
+  .dossier-bar-label span:first-child { color: #5A758D; }
+  html.dark .dossier-bar-label span:first-child { color: #8FA6B8; }
+  .dossier-bar-track { height: 7px; border-radius: 999px; background: rgba(189,185,137,.22); overflow: hidden; }
+  .dossier-bar-fill { height: 100%; border-radius: 999px; transition: width .45s ease; }
+  .dossier-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+  .dossier-tag { padding: 3px 9px; border-radius: 999px; background: rgba(48,103,157,.1); border: 1px solid rgba(48,103,157,.3); font-size: 11px; font-weight: 700; }
+  html.dark .dossier-tag { background: rgba(48,103,157,.3); }
+  .dossier-brew-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; text-align: center; font-family: var(--mono); }
+  .dossier-brew-stat { padding: 8px 6px; border-radius: 8px; background: var(--panel); border: 1px solid rgba(189,185,137,.45); }
+  html.dark .dossier-brew-stat { background: #15273C; border-color: #264363; }
+  .dossier-brew-stat b { display: block; font-size: 13.5px; color: #30679D; }
+  html.dark .dossier-brew-stat b { color: #97B6CB; }
+  .dossier-brew-stat small { font-size: 10px; color: #5A758D; }
+  .dossier-links { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+  .dossier-link { padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all .15s; }
+  .dossier-link.primary { background: #30679D; color: #fff; }
+  .dossier-link.primary:hover { background: #1E3B5C; }
+  .dossier-link.secondary { border: 1px solid rgba(30,59,92,.35); background: rgba(30,59,92,.05); color: #1E3B5C; }
+  .dossier-link.secondary:hover { background: #1E3B5C; color: #fff; }
+  html.dark .dossier-link.secondary { border-color: #30679D; background: #15273C; color: #F0F0D8; }
+  .dossier-foot { padding-top: 12px; border-top: 1px solid rgba(189,185,137,.5); display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
+  html.dark .dossier-foot { border-top-color: #264363; }
+  .dossier-foot p { margin: 0; font-size: 11px; line-height: 1.55; color: #5A758D; max-width: 580px; }
+  html.dark .dossier-foot p { color: #8FA6B8; }
+  .dossier-stamp { padding: 5px 12px; border-radius: 6px; border: 2px solid #A33B26; color: #A33B26; font: 800 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; transform: rotate(-2deg); user-select: none; flex-shrink: 0; }
+  html.dark .dossier-stamp { border-color: #D9534F; color: #D9534F; }
+  @media print {
+    body * { visibility: hidden; }
+    #dossierModal, #dossierModal * { visibility: visible; }
+    #dossierModal { position: absolute; inset: 0; background: #fff !important; padding: 0; }
+    .dossier { max-height: none; box-shadow: none; border-width: 1px; }
+    .no-print { display: none !important; }
+  }
+
+  /* ===== Google Maps Origin Modal ===== */
+  .map-sheet { width: 100%; max-width: 860px; background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 20px 22px; box-shadow: 0 24px 60px rgba(0,0,0,.35); display: flex; flex-direction: column; gap: 14px; }
+  .map-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .map-head h3 { margin: 2px 0 0; font-family: var(--serif); font-size: 22px; }
+  .map-meta { font: 700 11px var(--mono); color: var(--ink-3); }
+  .map-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .map-type-group { display: inline-flex; gap: 3px; padding: 3px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); }
+  .map-type-btn { padding: 5px 10px; border: 0; border-radius: 999px; background: transparent; color: var(--ink-2); font: 700 11.5px var(--sans); cursor: pointer; }
+  .map-type-btn.on { background: var(--ink); color: var(--bg); }
+  .map-frame-wrap { width: 100%; height: min(62vh, 480px); border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--panel-2); position: relative; }
+  .map-frame-wrap #googleMapCanvas { width: 100%; height: 100%; display: block; }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="goo" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur id="gooBlur" in="SourceGraphic" stdDeviation="7" result="b"/>
+    <feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10" result="g"/>
+    <feComposite in="SourceGraphic" in2="g" operator="atop"/>
+  </filter>
+</svg>
 <div class="app">
 
-  <!-- TOP BAR (Subframe): 로고 · 현재 산지 브레드크럼 · 유일한 맛/원산지 검색창 · 다크모드 · 감정서 발급 -->
+  <!-- TOP BAR (Subframe): 로고 · 현재 산지 브레드크럼 · 유일한 맛/원산지 검색창 · 테마 · 우측 패널 토글 -->
   <header class="topbar">
     <div class="logo" id="logoHome" title="초기 산미 추천으로 리셋"><i>☕</i>CoBTS</div>
     <div class="crumb">
@@ -302,9 +487,13 @@
       <button type="submit">매칭</button>
       <kbd>⌘K</kbd>
     </form>
-    <button class="btn-ghost" type="button" id="focusToggleBtn" title="2×2 전체 보드 ↔ 단일 프레임 집중 모드 전환">⊞ 2×2 보드</button>
-    <button class="btn-ghost" type="button" id="themeBtn">🌙 다크</button>
-    <button class="btn-primary" type="button" id="openDossierBtn">📜 감정서 발급</button>
+    <button class="btn-icon" type="button" id="themeBtn" title="테마 변경 (라이트/다크)" aria-label="테마 변경">🌙</button>
+    <button class="btn-icon on" type="button" id="inspectorToggleBtn" title="우측 인스펙터 숨김/표시" aria-label="우측 인스펙터 숨김/표시" aria-pressed="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="1.5" y="2.5" width="13" height="11" rx="2"/>
+        <line x1="10.5" y1="2.5" x2="10.5" y2="13.5"/>
+      </svg>
+    </button>
   </header>
 
   <div class="body">
@@ -375,14 +564,15 @@
                 <span class="chip sage" id="f1MoodChip">🌸 플로럴 산미</span>
               </div>
 
-              <div class="stats">
-                <div class="stat"><small>ALTITUDE · 재배 고도</small><b id="f1Alt">1,950m</b></div>
-                <div class="stat"><small>PROCESS · 생두 가공</small><b id="f1Proc">Washed</b></div>
-                <div class="stat"><small>VARIETAL · 품종</small><b id="f1Var">Heirloom</b></div>
+              <div class="f1-bottom-grid">
+                <div class="stat"><small>ALTITUDE<br>재배 고도</small><b id="f1Alt">1,950m</b></div>
+                <div class="stat"><small>PROCESS<br>생두 가공</small><b id="f1Proc">Washed</b></div>
+                <div class="stat"><small>VARIETAL<br>품종</small><b id="f1Var">Heirloom</b></div>
+                <div class="f1-pager" id="f1NotesPager" aria-label="대표 컵노트 슬라이드">
+                  <div class="pager-view"><div class="pager-strip" id="f1Notes"></div></div>
+                  <div class="pager-dots" id="f1Dots" role="tablist" aria-label="컵노트 슬라이드"><span class="pager-act" id="f1Act"></span></div>
+                </div>
               </div>
-
-              <!-- Miro Sticky Notes -->
-              <div class="stickies" id="f1Notes"></div>
             </div>
           </article>
 
@@ -391,6 +581,7 @@
             <div class="frame-label"><span>▢ <b>02 · 생두 생산과정</b></span><span>CHERRY → GREEN BEAN</span></div>
             <div class="frame-body">
               <h2>원산지에서 생두가 되기까지</h2>
+              <div class="process-svg-wrap" id="f2SvgStage" aria-label="원산지에서 생두가 되기까지 과정 도식"></div>
               <ol class="timeline" id="f2Timeline"></ol>
 
               <!-- 4대 가공법 원터치 비교 -->
@@ -426,6 +617,7 @@
                 </div>
               </div>
               <p class="muted" id="roastDesc"></p>
+              <div class="process-svg-wrap" id="f3SvgStage" aria-label="생두가 원두로 변화하는 로스팅 열분해 과정 도식"></div>
               <div class="compare">
                 <div class="cmp" style="background:var(--sage-soft);"><b>🌱 생두 · HS 0901.11 (관세 2%)</b><p>수분 10~12% · 클로로겐산과 자당 응축 상태 · 풀내음으로 그대로 음용 불가</p></div>
                 <div class="cmp" style="background:var(--flame-soft);"><b>☕ 원두 · HS 0901.21 (관세 8%)</b><p>수분 1~3% · 중량 −18% · 부피 +60% · 마이야르·캐러멜화로 800여 종 향미 발현</p></div>
@@ -462,11 +654,7 @@
 
     <!-- SUBFRAME INSPECTOR (우측 고정 단일 조작 패널) -->
     <aside class="inspector" aria-label="Subframe 미각 & 배전 인스펙터">
-      <div class="insp-tabs">
-        <button type="button" class="on" data-tab="taste">Taste</button>
-        <button type="button" data-tab="roast">Roast</button>
-      </div>
-
+      <div class="insp-resizer" id="inspResizer" title="드래그하여 너비 조절 (우측 끝까지 줄이면 숨김)"></div>
       <div class="sect">
         <h5>Taste preset <span>4대 맛 프리셋</span></h5>
         <div class="presets" id="presets">
@@ -485,7 +673,7 @@
       <div class="sect">
         <h5>Roast level <span>8단계 열분해</span></h5>
         <div class="roast-name"><b id="iRoastName">시티 (City)</b><span id="iRoastTemp">219°C</span></div>
-        <input type="range" id="roastRange" min="0" max="7" value="3" style="width:100%;accent-color:var(--flame);cursor:pointer;">
+        <div id="roastSliderMount"></div>
         <div style="display:flex;justify-content:space-between;font:600 10.5px var(--mono);color:var(--ink-3);margin-top:4px;">
           <span>Light 196°C</span>
           <span>City 219°C</span>
@@ -504,15 +692,40 @@
   </div>
 </div>
 
-<!-- Miro left toolbar = 단계 네비게이션 (유일) -->
-<nav class="toolbar" aria-label="보드 프레임 이동">
-  <button class="tool on" data-go="1" type="button">🌍<span>01 원산지 매칭</span></button>
-  <button class="tool" data-go="2" type="button">🌱<span>02 생두 생산과정</span></button>
-  <button class="tool" data-go="3" type="button">🔥<span>03 로스팅 열분해</span></button>
-  <button class="tool" data-go="4" type="button">🛒<span>04 맞춤 구매처</span></button>
-  <div class="tool-sep"></div>
-  <button class="tool" id="toolModeBtn" type="button" title="2×2 전체 보드 ↔ 단일 집중 전환">⊞<span>2×2 보드 / 단일 집중 전환</span></button>
-</nav>
+<!-- Miro left toolbar (Sidebar Collapse) = 단계 네비게이션 -->
+<aside class="toolbar" id="sideToolbar" aria-label="보드 프레임 이동">
+  <div class="side-top">
+    <span class="side-logo">☕</span>
+    <span class="side-lb side-brand">CoBTS</span>
+    <button class="side-col" id="sideColBtn" type="button" aria-label="사이드바 펼치기" aria-expanded="false" title="네비게이션 펼치기/접기">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5 9 12l5.5 5.5"/></svg>
+    </button>
+  </div>
+  <nav class="side-list" id="sideList">
+    <span class="side-hl" id="sideHl"></span>
+    <button class="tool on" data-go="1" type="button" title="01 원산지 매칭">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.6 9h16.8M3.6 15h16.8M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+      <span class="side-lb">01 원산지 매칭</span>
+    </button>
+    <button class="tool" data-go="2" type="button" title="02 생두 생산과정">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V10"/><path d="M12 10c0-4.5 3.5-7 8-7 0 4.5-3.5 7-8 7Z"/><path d="M12 13c0-3.5-3-5.5-7-5.5 0 3.5 3 5.5 7 5.5Z"/></svg>
+      <span class="side-lb">02 생두 생산과정</span>
+    </button>
+    <button class="tool" data-go="3" type="button" title="03 로스팅 열분해">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c2.5 3.2 5 5.5 5 9.5a5 5 0 1 1-10 0c0-2.1 1-4.1 2.2-5.6.2 1.6 1.2 2.6 2.3 2.6 0-2.3.5-4.3.5-6.5Z"/></svg>
+      <span class="side-lb">03 로스팅 열분해</span>
+    </button>
+    <button class="tool" data-go="4" type="button" title="04 맞춤 구매처">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l1 13H5L6 7Z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/></svg>
+      <span class="side-lb">04 맞춤 구매처</span>
+    </button>
+    <div class="tool-sep"></div>
+    <button class="tool" id="toolModeBtn" type="button" title="2×2 전체 보드 ↔ 단일 집중 전환">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.8"/><rect x="13" y="4" width="7" height="7" rx="1.8"/><rect x="4" y="13" width="7" height="7" rx="1.8"/><rect x="13" y="13" width="7" height="7" rx="1.8"/></svg>
+      <span class="side-lb">2×2 / 단일 집중</span>
+    </button>
+  </nav>
+</aside>
 
 <!-- Miro zoom -->
 <div class="zoom">
@@ -522,27 +735,140 @@
   <button type="button" id="zFit" aria-label="맞춤" style="width:auto;padding:0 10px;font-size:12px;">Fit</button>
 </div>
 
-<!-- Official Coffee Dossier Modal -->
+<!-- Archival Coffee Dossier Report Modal (CoBTS CERTIFIED) -->
 <div class="modal-backdrop" id="dossierModal" role="dialog" aria-modal="true" aria-labelledby="dTitle">
   <div class="dossier">
+    <div class="dossier-topbar no-print">
+      <div class="dossier-cert-badge">
+        <span class="dossier-cert-dot"></span>
+        <span>CoBTS OFFICIAL CERTIFICATE</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <button type="button" class="dossier-print-btn" onclick="window.print()">🖨️ 인쇄 / PDF 저장</button>
+        <button type="button" class="dossier-close-btn" id="closeDossierBtn" aria-label="리포트 닫기">✕</button>
+      </div>
+    </div>
+
     <div class="dossier-head">
       <div>
-        <span class="status"><i></i><span>CoBTS OFFICIAL CERTIFICATE</span></span>
-        <h3 id="dTitle">에티오피아 예가체프 공식 감정서</h3>
+        <div class="dossier-kicker">ARCHIVAL SPECIALTY COFFEE DOSSIER</div>
+        <h3>
+          <span id="dTitle">에티오피아 예가체프</span>
+          <span class="dossier-en" id="dEnTitle">Yirgacheffe G1 Washed</span>
+        </h3>
+        <p class="dossier-sub">지리적 테루아 · 식물학 계통 · 4대 감각 스펙트럼 · 골든 브루잉 마스터 레시피</p>
       </div>
-      <div style="display:flex;gap:8px;">
-        <button type="button" class="btn-ghost" onclick="window.print()">🖨️ 인쇄 / PDF</button>
-        <button type="button" class="btn-ghost" id="closeDossierBtn">✕ 닫기</button>
+      <div class="dossier-meta">
+        <div class="dossier-serial" id="dSerial">DOSSIER NO. CoBTS-2026-ETH01</div>
+        <div>발행처: CoBTS Cartography Lab</div>
+        <div id="dDate">2026.11.17 VERIFIED</div>
       </div>
     </div>
-    <p class="muted" id="dSummary" style="margin-top:14px;"></p>
+
     <div class="dossier-grid">
-      <div class="dossier-box"><small>ORIGIN &amp; ALTITUDE</small><b id="dOriginAlt">에티오피아 예가체프 · 1,950m</b></div>
-      <div class="dossier-box"><small>VARIETAL &amp; PROCESS</small><b id="dVarProc">Heirloom · Washed</b></div>
-      <div class="dossier-box"><small>RECOMMENDED ROAST</small><b id="dRoast">시티 (City) · 219°C</b></div>
-      <div class="dossier-box"><small>CUSTOMS &amp; ROUTE</small><b id="dRoute">HS 0901.21 (관세 8%) · 지부티항 → 부산항</b></div>
+      <!-- 01. Terroir -->
+      <div class="dossier-card">
+        <div class="dossier-card-head">
+          <span>01. 산지 테루아 &amp; 식물학 계통</span>
+          <span>TERROIR</span>
+        </div>
+        <div class="dossier-kv"><span>국가 및 산지</span><b id="dOriginAlt">에티오피아 예가체프</b></div>
+        <div class="dossier-kv"><span>재배 표고 (Altitude)</span><b id="dAlt" style="font-family:var(--mono);">1,950m ASL</b></div>
+        <div class="dossier-kv"><span>품종 (Varietal)</span><b id="dVar">Heirloom</b></div>
+        <div class="dossier-kv"><span>가공 방식 (Process)</span><b id="dProc">Washed</b></div>
+        <div class="dossier-kv"><span>해상 운송 경로</span><b id="dRoute" style="font-family:var(--mono);">지부티항 → 부산항</b></div>
+      </div>
+
+      <!-- 02. Sensory -->
+      <div class="dossier-card">
+        <div class="dossier-card-head">
+          <span>02. 4대 감각 스펙트럼 &amp; 컵 노트</span>
+          <span>SENSORY</span>
+        </div>
+        <div class="dossier-bar-row">
+          <div class="dossier-bar-label"><span>산미 (Acidity)</span><span id="dValA" style="font-family:var(--mono);">9.2 / 10</span></div>
+          <div class="dossier-bar-track"><div class="dossier-bar-fill" id="dBarA" style="width:92%;background:#3E8E7E;"></div></div>
+        </div>
+        <div class="dossier-bar-row">
+          <div class="dossier-bar-label"><span>단맛 (Sweetness)</span><span id="dValS" style="font-family:var(--mono);">7.4 / 10</span></div>
+          <div class="dossier-bar-track"><div class="dossier-bar-fill" id="dBarS" style="width:74%;background:#C57B44;"></div></div>
+        </div>
+        <div class="dossier-bar-row">
+          <div class="dossier-bar-label"><span>바디 (Body)</span><span id="dValB" style="font-family:var(--mono);">4.2 / 10</span></div>
+          <div class="dossier-bar-track"><div class="dossier-bar-fill" id="dBarB" style="width:42%;background:#78482B;"></div></div>
+        </div>
+        <div class="dossier-bar-row">
+          <div class="dossier-bar-label"><span>고소함 / 밸런스</span><span id="dValN" style="font-family:var(--mono);">3.8 / 10</span></div>
+          <div class="dossier-bar-track"><div class="dossier-bar-fill" id="dBarN" style="width:38%;background:#516B50;"></div></div>
+        </div>
+        <div>
+          <span style="font-size:10.5px;font-weight:700;color:#5A758D;display:block;margin-bottom:5px;">대표 향미 태그 (Cup Notes):</span>
+          <div class="dossier-tags" id="dFlavorTags"></div>
+        </div>
+      </div>
+
+      <!-- 03. Brewing -->
+      <div class="dossier-card">
+        <div class="dossier-card-head">
+          <span>03. 바리스타 브루잉 &amp; 로스팅 가이드</span>
+          <span>BREWING</span>
+        </div>
+        <div class="dossier-kv"><span>실시간 연동 배전도</span><b id="dRoast" style="font-family:var(--mono);color:#78482B;">City (219°C · 중배전)</b></div>
+        <div class="dossier-kv"><span>추천 추출 기구</span><b id="dDripper">하리오 V60 / 칼리타 웨이브</b></div>
+        <div class="dossier-brew-stats">
+          <div class="dossier-brew-stat"><b id="dBrewTemp">93℃</b><small>추출수 온도</small></div>
+          <div class="dossier-brew-stat"><b id="dBrewRatio">1 : 15</b><small>원두 : 물 비율</small></div>
+          <div class="dossier-brew-stat"><b id="dBrewTime">2m 30s</b><small>총 추출 시간</small></div>
+        </div>
+        <p id="dBrewTip" style="margin:2px 0 0;font-size:11.5px;line-height:1.55;color:#5A758D;"></p>
+      </div>
+
+      <!-- 04. Commerce & Customs -->
+      <div class="dossier-card">
+        <div class="dossier-card-head">
+          <span>04. 통관 요건 &amp; 유통 채널</span>
+          <span>COMMERCE</span>
+        </div>
+        <div class="dossier-kv"><span>관세청 HS-Code</span><b id="dHsCode" style="font-family:var(--mono);">0901.21-0000 (원두 · 관세 8%)</b></div>
+        <div class="dossier-kv"><span>생두 HS-Code</span><b style="font-family:var(--mono);">0901.11-0000 (미배전 · 관세 2%)</b></div>
+        <div class="dossier-kv"><span>식물방역 검역</span><b style="color:#516B50;">농림축산검역본부 정밀검역 필</b></div>
+        <div class="dossier-kv"><span>수입신고 요건</span><b>식품위생법 제19조 적합 판정</b></div>
+        <div class="dossier-links no-print">
+          <a id="dNaverLink" href="#" target="_blank" rel="noopener noreferrer" class="dossier-link primary">🟢 네이버 쇼핑에서 검색 보기 ↗</a>
+          <a id="dMomosLink" href="https://momos.co.kr/shop" target="_blank" rel="noopener noreferrer" class="dossier-link secondary">☕ 모모스커피 공식몰 바로가기 ↗</a>
+          <a id="dAmazonLink" href="#" target="_blank" rel="noopener noreferrer" class="dossier-link secondary">📦 Amazon 해외 직구 유통처 ↗</a>
+        </div>
+      </div>
     </div>
-    <p class="notice" style="margin:0;">* 표준적인 이론 값을 기준으로 계산한 추천입니다. 맛은 사람의 입맛에 따라 다르게 느껴질 수 있습니다.</p>
+
+    <div class="dossier-foot">
+      <p>* 본 리포트는 CoBTS 산지 데이터베이스 및 온톨로지 지식 그래프 표준 이론값을 바탕으로 산출된 아카이벌 감정서입니다. 개인의 추출 환경 및 기호에 따라 미각적 체감은 차이가 있을 수 있습니다.</p>
+      <div class="dossier-stamp">✓ CoBTS CERTIFIED</div>
+    </div>
+  </div>
+</div>
+
+<!-- Google Maps Origin Modal -->
+<div class="modal-backdrop" id="mapModal" role="dialog" aria-modal="true" aria-labelledby="mapModalTitle">
+  <div class="map-sheet">
+    <div class="map-head">
+      <div>
+        <div class="map-meta" id="mapModalMeta">GOOGLE MAPS · 6.16°N, 38.20°E · 1,950m</div>
+        <h3 id="mapModalTitle">에티오피아 예가체프</h3>
+      </div>
+      <div class="map-actions">
+        <div class="map-type-group" id="mapTypeGroup">
+          <button type="button" class="map-type-btn on" data-mt="y">위성</button>
+          <button type="button" class="map-type-btn" data-mt="m">지도</button>
+          <button type="button" class="map-type-btn" data-mt="p">지형</button>
+        </div>
+        <a id="mapExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;">🗺️ Google 지도 열기 ↗</a>
+        <button type="button" class="dossier-close-btn" id="closeMapModalBtn" aria-label="지도 닫기">✕</button>
+      </div>
+    </div>
+    <div class="map-frame-wrap">
+      <div id="googleMapCanvas" aria-label="원산지 Google Maps"></div>
+    </div>
   </div>
 </div>
 
@@ -656,6 +982,126 @@
         ['아프리칸 베드 교반 건조', '점액질이 고르게 스며들도록 수시로 뒤집으며 건조합니다.', 'HONEY DRY'],
         ['생두 완성 (SHB 등급)', '워시드의 깔끔함과 내추럴의 단맛을 겸비한 허니 생두가 완성됩니다.', 'SHB READY']
       ]
+    },
+    panama: {
+      id: 'panama', preset: 'acidity', mood: '🌺 게이샤 플로럴',
+      origin: '파나마 보케테 게이샤', varietal: 'Geisha', alt: '1,750m', proc: 'Washed', procKey: 'washed',
+      port: '🚢 발보아항 → 부산항 (약 23일)', mapXY: [155, 74],
+      title: '세계 스페셜티의 정점,<br><em>파나마 보케테 게이샤</em>',
+      desc: '바루 화산 경사면의 안개와 미기후에서 자란 게이샤 품종이 폭발적인 자스민 꽃향과 베르가못, 열대과일 산미를 선사합니다.',
+      notes: [['🌺 자스민·오렌지꽃', 'FLORAL'], ['🍑 백도·망고', 'TROPICAL'], ['🍵 얼그레이 티', 'BERGAMOT'], ['⛰️ 1,750m Geisha', 'BOQUETE']],
+      target: { a: 10, s: 8, b: 3, n: 3 }, profile: { a: 9.8, s: 8.2, b: 3.2, n: 3.0 }, roast: 1,
+      steps: [
+        ['바루 화산 고원 수확', '1,750m 화산토와 태평양·대서양 양대 해풍이 만나는 구름 숲에서 완숙 체리를 수확합니다.', 'HARVEST'],
+        ['정밀 워시드 발효', '저온 환경에서 천천히 발효·세척해 게이샤 고유의 플로럴 아로마를 순수하게 보존합니다.', 'WASHED'],
+        ['그늘 건조·저온 숙성', '고상식 베드에서 서서히 건조해 수분 10.5%를 맞춥니다.', 'MOISTURE 10.5%'],
+        ['생두 완성 (SHB Geisha)', '엄격한 마이크로랏 선별을 거쳐 세계 최고가 스페셜티 생두로 출하됩니다.', 'SHB GEISHA']
+      ]
+    },
+    jamaica: {
+      id: 'jamaica', preset: 'balance', mood: '👑 황금 밸런스',
+      origin: '자메이카 블루마운틴 No.1', varietal: 'Typica (Blue Mountain)', alt: '1,500m', proc: 'Washed', procKey: 'washed',
+      port: '🚢 킹스턴항 → 부산항 (약 26일)', mapXY: [156, 56],
+      title: '완벽에 가까운 부드러운 조화,<br><em>자메이카 블루마운틴</em>',
+      desc: '안개 낀 블루마운틴 산맥의 비옥한 토양에서 천천히 익은 티피카 품종으로, 쓴맛 없이 은은한 단맛과 실크 같은 바디가 조화를 이룹니다.',
+      notes: [['👑 실키 밸런스', 'BALANCE'], ['🍯 은은한 꿀단맛', 'SWEET'], ['🌰 헤이즐넛', 'NUTTY'], ['🪵 오크통 선적', 'JBM NO.1']],
+      target: { a: 5, s: 8, b: 5, n: 7 }, profile: { a: 5.4, s: 8.2, b: 5.0, n: 7.2 }, roast: 3,
+      steps: [
+        ['블루마운틴 지정 구역 수확', 'JACRA 인증 1,200m 이상 지정 고산 구역에서 완숙 체리를 선별 수확합니다.', 'CERTIFIED'],
+        ['청정 계곡수 워시드', '산간 계곡수로 과육과 점액질을 세척해 잡미 없는 깔끔한 단맛을 만듭니다.', 'WASHED'],
+        ['선별 및 수분 안정화', '건조 후 수개월간 휴지기를 거쳐 향미와 수분(11%)을 균일화합니다.', 'RESTING'],
+        ['전통 나무 배럴 포장', '세계에서 유일하게 마대 대신 오크 나무통(Barrel)에 담아 출하합니다.', 'JBM NO.1']
+      ]
+    },
+    yemen: {
+      id: 'yemen', preset: 'bitter', mood: '🍷 모카 와이니·스파이스',
+      origin: '예멘 모카 마타리', varietal: 'Yemeni Heirloom', alt: '2,100m', proc: 'Natural', procKey: 'natural',
+      port: '🚢 호데이다항 → 부산항 (약 21일)', mapXY: [395, 62],
+      title: '커피 역사의 시원이자 클래식,<br><em>예멘 모카 마타리</em>',
+      desc: '해발 2,100m 계단식 밭에서 전통 내추럴 건조로 만들어져 와인 같은 건포도 풍미, 다크초콜릿, 향신료의 깊은 여운을 남깁니다.',
+      notes: [['🍷 건포도·와이니', 'WINEY'], ['🍫 다크초콜릿', 'MOCHA'], ['🌿 카다몸·스파이스', 'SPICY'], ['⛰️ 2,100m Terrace', 'ANCIENT']],
+      target: { a: 6, s: 7, b: 8, n: 6 }, profile: { a: 6.2, s: 7.4, b: 7.8, n: 6.0 }, roast: 4,
+      steps: [
+        ['고산 계단식 밭 수확', '2,100m 건조 고원 바니 마타르 계곡의 계단식 밭에서 체리를 거둡니다.', 'TERRACE'],
+        ['전통 옥상 내추럴 건조', '물 부족 환경에서 수확한 체리를 돌로 만든 옥상에서 통째로 태양 건조합니다.', 'NATURAL'],
+        ['맷돌 탈곡·수작업 선별', '마른 과육 껍질을 벗기고 불규칙한 소립종 생두를 손으로 골라냅니다.', 'HAND SORT'],
+        ['모카 생두 완성', '초콜릿과 와인 향미가 응축된 정통 예멘 모카 생두가 완성됩니다.', 'MOCHA READY']
+      ]
+    },
+    rwanda: {
+      id: 'rwanda', preset: 'acidity', mood: '🍊 시트러스·블랙티',
+      origin: '르완다 버본 키부', varietal: 'Red Bourbon', alt: '1,800m', proc: 'Washed', procKey: 'washed',
+      port: '🚢 몸바사항 → 부산항 (약 24일)', mapXY: [366, 92],
+      title: '천 개의 언덕이 빚은 홍차 감성,<br><em>르완다 버본 키부</em>',
+      desc: '키부 호수 주변 비옥한 화산토에서 자란 레드 버본을 정밀 세척해 상큼한 붉은 오렌지 산미와 블랙티, 캐러멜 단맛이 어우러집니다.',
+      notes: [['🍊 블러드 오렌지', 'CITRUS'], ['🫖 블랙티(홍차)', 'TEA-LIKE'], ['🍮 캐러멜 단맛', 'BOURBON'], ['⛰️ 1,800m Kivu', 'WASHED']],
+      target: { a: 8, s: 8, b: 5, n: 5 }, profile: { a: 8.2, s: 7.8, b: 4.8, n: 5.0 }, roast: 2,
+      steps: [
+        ['키부 호수 고원 수확', '해발 1,800m 화산토 언덕에서 잘 익은 레드 버본 체리를 수확합니다.', 'HARVEST'],
+        ['워싱 스테이션 이중 세척', '소농들이 모은 체리를 워싱 스테이션에서 플로팅 선별 후 수조 발효합니다.', 'WASHED'],
+        ['고상식 테이블 건조', '햇볕 아래 수시로 뒤집으며 결점두를 1차 제거하고 11%까지 건조합니다.', 'MOISTURE 11%'],
+        ['생두 완성 (FW A1)', '깔끔한 홍차 뉘앙스의 르완다 스페셜티 버본 생두가 출하됩니다.', 'RWANDA A1']
+      ]
+    },
+    peru: {
+      id: 'peru', preset: 'nutty', mood: '🌱 유기농 마일드·고소',
+      origin: '페루 찬차마요 유기농', varietal: 'Typica · Caturra', alt: '1,550m', proc: 'Washed', procKey: 'washed',
+      port: '🚢 카야오항 → 부산항 (약 30일)', mapXY: [168, 102],
+      title: '안데스의 청정 유기농 데일리,<br><em>페루 찬차마요</em>',
+      desc: '안데스 동부 열대 고원의 소농 협동조합이 유기농법으로 재배해 부드러운 사과 산미와 구운 견과, 밀크초콜릿의 편안한 균형을 보여줍니다.',
+      notes: [['🌰 구운 헤이즐넛', 'NUTTY'], ['🍫 밀크초콜릿', 'SOFT COCOA'], ['🍏 은은한 청사과', 'MILD'], ['🌱 유기농·공정무역', 'ORGANIC']],
+      target: { a: 5, s: 7, b: 6, n: 8 }, profile: { a: 5.0, s: 7.4, b: 5.8, n: 7.8 }, roast: 3,
+      steps: [
+        ['안데스 유기농 수확', '화학 비료 없이 쉐이드 트리(그늘나무) 아래서 자란 체리를 수확합니다.', 'ORGANIC'],
+        ['소농 협동 워시드 정제', '과육 제거 후 18~24시간 발효 및 청정 산간수로 세척합니다.', 'WASHED'],
+        ['태양광 건조', '고지대 파티오와 솔라 드라이어에서 수분율 11%까지 건조합니다.', 'SOLAR DRY'],
+        ['생두 완성 (Grade 1)', '부드럽고 마시기 편한 페루 유기농 스페셜티 생두가 완성됩니다.', 'SHB ORGANIC']
+      ]
+    },
+    honduras: {
+      id: 'honduras', preset: 'balance', mood: '🍮 흑설탕·사과 밸런스',
+      origin: '온두라스 마르칼라 SHG', varietal: 'Parainema · Catuai', alt: '1,500m', proc: 'Washed', procKey: 'washed',
+      port: '🚢 푸에르토코르테스항 → 부산항 (약 25일)', mapXY: [143, 62],
+      title: '중미의 숨은 보석 같은 단맛,<br><em>온두라스 마르칼라 SHG</em>',
+      desc: '중미 최대 생산국 온두라스의 대표 고산지 마르칼라에서 자라 흑설탕의 진한 단맛과 잘 익은 사과, 시트러스 산미가 조화롭습니다.',
+      notes: [['🍮 흑설탕·캐러멜', 'BROWN SUGAR'], ['🍎 붉은 사과', 'CRISP'], ['🍊 감귤 단맛', 'CITRUS'], ['⛰️ 1,500m SHG', 'MARCALA']],
+      target: { a: 6, s: 8, b: 6, n: 7 }, profile: { a: 6.4, s: 8.4, b: 6.0, n: 6.8 }, roast: 3,
+      steps: [
+        ['마르칼라 고산 수확', '해발 1,500m 이상 산간 분지에서 당도가 오른 체리를 수확합니다.', 'SHG HARVEST'],
+        ['워시드 · 허니 정제', '깔끔한 수세식 또는 점액질을 남긴 정제 공정으로 단맛을 응축합니다.', 'WASHED'],
+        ['고산 건조장 건조', '습도가 높은 산간 기후에 맞춰 솔라 돔 건조장에서 균일하게 말립니다.', 'SOLAR DOME'],
+        ['생두 완성 (SHG 등급)', 'Strict High Grown(SHG) 등급의 탄탄한 온두라스 생두가 출하됩니다.', 'SHG READY']
+      ]
+    },
+    india: {
+      id: 'india', preset: 'bitter', mood: '🌬️ 몬순 스파이스·묵직',
+      origin: '인도 몬순 말라바 AA', varietal: 'Kent · S.795', alt: '1,100m', proc: 'Monsooned', procKey: 'natural',
+      port: '🚢 망갈로르항 → 부산항 (약 14일)', mapXY: [486, 66],
+      title: '계절풍이 빚어낸 산미 제로 바디,<br><em>인도 몬순 말라바 AA</em>',
+      desc: '서고츠 산맥에서 수확한 생두를 인도양 몬순 습풍에 12~16주간 노출해, 산미를 극도로 낮추고 크리미한 바디와 스파이시한 단맛을 극대화했습니다.',
+      notes: [['🌬️ 몬순 에이징', 'MONSOONED'], ['🍫 다크코코아·향신료', 'SPICY'], ['🥃 크리미 풀바디', 'LOW ACID'], ['⛰️ 1,100m Malabar', 'INDIA AA']],
+      target: { a: 1, s: 6, b: 9, n: 7 }, profile: { a: 1.4, s: 6.2, b: 9.0, n: 7.4 }, roast: 5,
+      steps: [
+        ['서고츠 고원 체리 수확', '카르나타카·케랄라 쉐이드 트리 아래서 자란 아라비카 체리를 수확합니다.', 'HARVEST'],
+        ['건식 1차 건조·탈곡', '과육째 햇볕에 건조해 파치먼트를 벗긴 일반 내추럴 생두를 준비합니다.', 'NATURAL'],
+        ['몬순 해풍 숙성 (12~16주)', '개방형 해안 창고에서 남서 몬순 습풍을 맞히며 생두를 2배 가까이 부풀립니다.', 'MONSOONING'],
+        ['생두 완성 (말라바 AA)', '연한 황금빛을 띠며 산미가 거의 없는 에스프레소 최적 생두가 완성됩니다.', 'MALABAR AA']
+      ]
+    },
+    vietnam: {
+      id: 'vietnam', preset: 'bitter', mood: '☕ 진한 코코아·로부스타',
+      origin: '베트남 달랏 · 부온마투옷', varietal: 'Robusta · Catimor', alt: '650m', proc: 'Natural', procKey: 'natural',
+      port: '🚢 호치민항 → 부산항 (약 7일)', mapXY: [532, 68],
+      title: '강렬한 크레마와 진한 바디의 원천,<br><em>베트남 달랏 · 부온마투옷</em>',
+      desc: '세계 2위 커피 대국 베트남의 적색 현무암 고원에서 자라 묵직한 다크코코아 쓴맛과 구운 땅콩의 고소함, 풍부한 에스프레소 크레마를 선사합니다.',
+      notes: [['☕ 두터운 크레마', 'CREMA'], ['🍫 진한 다크코코아', 'BITTER'], ['🥜 구운 땅콩·곡물', 'ROASTED NUT'], ['🌋 650m Basalt', 'VIETNAM']],
+      target: { a: 1, s: 5, b: 10, n: 8 }, profile: { a: 1.5, s: 4.8, b: 9.8, n: 8.0 }, roast: 6,
+      steps: [
+        ['중부 고원 현무암 토양 수확', '닥락(부온마투옷)과 람동(달랏) 고원에서 완숙 체리를 대량 수확합니다.', 'HARVEST'],
+        ['내추럴 · 허니 건조', '건기 강렬한 태양 아래 파티오에서 10~14일간 빠르게 건조합니다.', 'NATURAL'],
+        ['스크린·컬러 소팅', '광학 선별기로 결점두를 걸러내 파인 로부스타/아라비카 등급을 맞춥니다.', 'FINE SORT'],
+        ['생두 완성 (HS 0901.11)', '에스프레소 블렌드와 카페 쓰어다(연유커피)의 핵심 베이스 생두로 출하됩니다.', 'GREEN READY']
+      ]
     }
   };
 
@@ -705,15 +1151,108 @@
     return bestId;
   }
 
-  function renderOriginStripAndMap() {
+  const FAN_REGIONS = [
+    { key: 'africa', label: '🌍 아프리카 · 중동', ids: ['yirgacheffe', 'nyeri', 'rwanda', 'yemen'], avs: [5, 4, 9, 1] },
+    { key: 'central', label: '🌎 중미 · 카리브', ids: ['antigua', 'tarrazu', 'panama', 'jamaica', 'honduras'], avs: [3, 11, 7, 6, 2] },
+    { key: 'south', label: '🌎 남미', ids: ['cerrado', 'huila', 'peru'], avs: [5, 8, 3] },
+    { key: 'asia', label: '🌏 아시아', ids: ['mandheling', 'india', 'vietnam'], avs: [10, 4, 12] }
+  ];
+  let fanGroupsReady = false;
+  const fanGroupStates = [];
+
+  function initOriginFanCards() {
     const strip = $('#originStrip');
-    strip.innerHTML = Object.values(ORIGINS).map(o => `
-      <button type="button" class="origin-chip ${o.id === st.originId ? 'on' : ''}" data-oid="${o.id}">
-        <span>${o.origin}</span><small>${o.alt}</small>
-      </button>
+    const { S, step } = Motion;
+    strip.innerHTML = FAN_REGIONS.map(reg => `
+      <div class="fan-group" data-reg="${reg.key}">
+        <div class="fan-head"><b>${reg.label}</b><span>${reg.ids.length} ORIGINS</span></div>
+        <div class="fan">
+          ${reg.ids.map((id, idx) => {
+            const o = ORIGINS[id];
+            const av = reg.avs[idx % reg.avs.length];
+            const num = String(idx + 1).padStart(2, '0');
+            return `
+              <button type="button" class="fan-card" data-oid="${o.id}" data-i="${idx}" title="${o.origin} (${o.alt} · ${o.proc})">
+                <div class="fan-art" data-av="${av}" data-alt="${o.alt}"></div>
+                <div class="fan-n"><span>${num}</span><span>${o.proc.split(' ')[0]}</span></div>
+                <div class="fan-t">${o.origin}</div>
+                <div class="fan-sub">${o.mood}</div>
+              </button>`;
+          }).join('')}
+        </div>
+      </div>
     `).join('');
-    $$('#originStrip .origin-chip').forEach(btn => {
-      btn.onclick = () => selectOrigin(btn.dataset.oid, true);
+
+    $$('#originStrip .fan-group').forEach(groupEl => {
+      const fanEl = groupEl.querySelector('.fan');
+      const cards = [...groupEl.querySelectorAll('.fan-card')].map((el, i) => ({
+        el,
+        i,
+        oid: el.dataset.oid,
+        lift: S(0, 420, 20),
+        sc: S(1, 420, 22)
+      }));
+      const f = S(0, 220, 18);
+      const mid = (cards.length - 1) / 2;
+      let hot = -1, inside = false;
+
+      function setHot(idx) {
+        hot = idx;
+        cards.forEach(c => {
+          const isHot = c.i === hot;
+          const isSel = c.oid === st.originId;
+          c.lift.t = isHot ? -20 : 0;
+          c.sc.t = isHot ? 1.07 : 1;
+          c.el.style.zIndex = isHot ? 10 : (isSel && !inside ? 6 : cards.length - Math.abs(Math.round(c.i - mid)));
+        });
+      }
+      setHot(-1);
+
+      groupEl.addEventListener('pointerenter', () => { inside = true; f.t = 1; });
+      groupEl.addEventListener('pointerleave', () => { inside = false; f.t = 0; setHot(-1); });
+      cards.forEach(c => {
+        c.el.addEventListener('pointerenter', () => { if (inside) setHot(c.i); });
+        c.el.addEventListener('click', () => {
+          c.lift.v = -240;
+          selectOrigin(c.oid, true);
+        });
+      });
+
+      const state = { groupEl, cards, setHot };
+      fanGroupStates.push(state);
+
+      Motion.register({
+        frame(dt) {
+          step(f, dt);
+          cards.forEach(c => { step(c.lift, dt); step(c.sc, dt); });
+        },
+        render() {
+          const spread = cards.length >= 5 ? 36 : cards.length === 4 ? 44 : 52;
+          cards.forEach(c => {
+            const d = c.i - mid;
+            const x = d * (5 + f.x * (spread - 5));
+            const r = d * (2.5 + f.x * 7.5);
+            const y = Math.abs(d) * f.x * 7 + c.lift.x;
+            c.el.style.transform = `translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${r.toFixed(3)}deg) scale(${c.sc.x.toFixed(4)})`;
+          });
+        }
+      });
+    });
+
+    fanGroupsReady = true;
+  }
+
+  function renderOriginStripAndMap() {
+    if (!fanGroupsReady) initOriginFanCards();
+    fanGroupStates.forEach(({ groupEl, cards, setHot }) => {
+      let hasActive = false;
+      cards.forEach(c => {
+        const active = c.oid === st.originId;
+        if (active) hasActive = true;
+        c.el.classList.toggle('on', active);
+      });
+      groupEl.classList.toggle('has-active', hasActive);
+      setHot(-1);
     });
 
     const pinsG = $('#beltPinsGroup');
@@ -730,34 +1269,440 @@
         `;
       }).join('');
       $$('#beltPinsGroup .belt-pin').forEach(g => {
-        g.onclick = () => selectOrigin(g.dataset.oid, true);
+        g.onclick = e => {
+          e.stopPropagation();
+          const oid = g.dataset.oid;
+          selectOrigin(oid, true);
+          openGoogleMapModal(oid);
+        };
       });
     }
   }
 
-  function renderProps() {
-    $('#props').innerHTML = AXES.map(([k, lbl]) => `
-      <label class="prop"><span>${lbl}</span>
-        <input type="range" min="1" max="10" value="${st.target[k]}" data-k="${k}">
-        <output>${st.target[k]}</output></label>`).join('');
-    $$('#props input').forEach(inp => inp.addEventListener('input', () => {
-      st.target[inp.dataset.k] = +inp.value;
-      inp.nextElementSibling.textContent = inp.value;
-      if (inp.dataset.k === 'b' && st.target.b >= 8 && st.roast < 5) {
-        st.roast = 5;
-        renderRoast();
+  const ORIGIN_COORDS = {
+    yirgacheffe: [6.16, 38.20],
+    nyeri: [-0.42, 36.95],
+    cerrado: [-18.92, -48.28],
+    huila: [2.93, -75.28],
+    mandheling: [2.61, 98.84],
+    antigua: [14.56, -90.73],
+    tarrazu: [9.66, -84.02],
+    panama: [8.78, -82.43],
+    jamaica: [18.04, -76.58],
+    yemen: [15.32, 43.92],
+    rwanda: [-2.07, 29.35],
+    peru: [-11.06, -75.33],
+    honduras: [14.15, -88.03],
+    india: [12.91, 74.86],
+    vietnam: [12.67, 108.04]
+  };
+  let currentMapType = 'y';
+  let currentMapOid = 'yirgacheffe';
+  let leafletMap = null;
+  let leafletTileLayer = null;
+  let leafletMarker = null;
+
+  function renderLeafletOriginMap(lat, lon, d) {
+    const canvas = $('#googleMapCanvas');
+    if (!canvas) return;
+    if (typeof L === 'undefined') {
+      canvas.innerHTML = `<div style="height:100%;display:grid;place-items:center;padding:24px;text-align:center;color:var(--ink-2);">
+        <div><p style="margin:0 0 12px;font-weight:700;">지도 타일 라이브러리를 불러오지 못했습니다.</p>
+        <a href="https://www.google.com/maps/search/?api=1&query=${lat},${lon}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;">🗺️ Google 지도 새 창에서 열기 ↗</a></div></div>`;
+      return;
+    }
+    const tileConfigs = {
+      y: {
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attr: 'Tiles © Esri · World Imagery'
+      },
+      m: {
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attr: '© OpenStreetMap contributors'
+      },
+      p: {
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+        attr: 'Tiles © Esri · World Topo'
       }
-      const bestId = findBestOriginByTarget();
-      if (bestId !== st.originId) {
-        st.originId = bestId;
-        st.preset = ORIGINS[bestId].preset;
-        renderBean();
-        renderShops();
-        renderOriginStripAndMap();
+    };
+    const cfg = tileConfigs[currentMapType] || tileConfigs.y;
+    if (!leafletMap) {
+      leafletMap = L.map('googleMapCanvas', { zoomControl: true }).setView([lat, lon], 9);
+    } else {
+      leafletMap.setView([lat, lon], 9);
+    }
+    if (leafletTileLayer) leafletMap.removeLayer(leafletTileLayer);
+    leafletTileLayer = L.tileLayer(cfg.url, { maxZoom: 18, attribution: cfg.attr }).addTo(leafletMap);
+    if (leafletMarker) leafletMap.removeLayer(leafletMarker);
+    leafletMarker = L.marker([lat, lon]).addTo(leafletMap)
+      .bindPopup(`<b>${d.origin}</b><br>${d.alt} · ${d.proc} · ${d.varietal}`)
+      .openPopup();
+    requestAnimationFrame(() => { if (leafletMap) leafletMap.invalidateSize(true); });
+    setTimeout(() => { if (leafletMap) leafletMap.invalidateSize(true); }, 180);
+  }
+
+  function openGoogleMapModal(oid) {
+    const d = ORIGINS[oid] || ORIGINS.yirgacheffe;
+    const [lat, lon] = ORIGIN_COORDS[d.id] || [6.16, 38.20];
+    currentMapOid = d.id;
+    const latStr = `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? 'N' : 'S'}`;
+    const lonStr = `${Math.abs(lon).toFixed(2)}°${lon >= 0 ? 'E' : 'W'}`;
+    $('#mapModalMeta').textContent = `ORIGIN MAP · ${latStr}, ${lonStr} · ${d.alt}`;
+    $('#mapModalTitle').textContent = `${d.origin} (${d.varietal})`;
+    $('#mapExternalLink').href = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+    $('#mapModal').classList.add('open');
+
+    if (typeof L === 'undefined' && !window._leafletLoading) {
+      window._leafletLoading = true;
+      const sc = document.createElement('script');
+      sc.src = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js';
+      sc.onload = () => renderLeafletOriginMap(lat, lon, d);
+      sc.onerror = () => renderLeafletOriginMap(lat, lon, d);
+      document.head.appendChild(sc);
+      return;
+    }
+    renderLeafletOriginMap(lat, lon, d);
+  }
+
+  $$('#mapTypeGroup .map-type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentMapType = btn.dataset.mt;
+      $$('#mapTypeGroup .map-type-btn').forEach(b => b.classList.toggle('on', b === btn));
+      openGoogleMapModal(currentMapOid);
+    });
+  });
+  $('#closeMapModalBtn').addEventListener('click', () => $('#mapModal').classList.remove('open'));
+  $('#mapModal').addEventListener('click', e => { if (e.target === $('#mapModal')) $('#mapModal').classList.remove('open'); });
+
+  /* ===== Shared Spring Engine (DesignBookmark Motion Studies) ===== */
+  const Motion = (() => {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const S = (x, k = 400, c = 30) => ({ x, v: 0, t: x, k, c });
+    const tune = (s, k, c) => { s.k = k; s.c = reduce ? 2 * Math.sqrt(k) : c; };
+    const step = (s, dt) => { const a = -s.k * (s.x - s.t) - s.c * s.v; s.v += a * dt; s.x += s.v * dt; };
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const timers = [];
+    const after = (sec, fn) => { const t = { t: sec, fn }; timers.push(t); return t; };
+    const comps = [];
+    let last = performance.now();
+    function loop(now) {
+      const dt = Math.min((now - last) / 1000, 1 / 30);
+      last = now;
+      for (let i = timers.length - 1; i >= 0; i--) {
+        if ((timers[i].t -= dt) <= 0) timers.splice(i, 1)[0].fn();
+      }
+      const sub = 4;
+      for (let k = 0; k < sub; k++) comps.forEach(c => c.frame(dt / sub));
+      comps.forEach(c => c.render());
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+    return { S, tune, step, clamp, after, register: c => comps.push(c) };
+  })();
+
+  /* ===== Left Toolbar Sidebar Collapse (DesignBookmark Motion Studies) ===== */
+  const sideNavPick = (() => {
+    const { S, step, clamp, after } = Motion;
+    const side = $('#sideToolbar'), col = $('#sideColBtn'), hl = $('#sideHl');
+    const logo = side ? side.querySelector('.side-logo') : null;
+    const navItems = $$('#sideList .tool[data-go]');
+    if (!side || !col || !hl || !navItems.length) return () => {};
+
+    const labels = $$('#sideToolbar .side-lb').map(el => ({ el, s: S(0, 300, 26) }));
+    const W = S(58, 260, 24);
+    const R = S(1, 300, 22);
+    const Y = S(navItems[0].offsetTop, 380, 28);
+    let open = false;
+
+    function setOpen(o) {
+      open = o;
+      col.setAttribute('aria-expanded', String(o));
+      col.setAttribute('aria-label', o ? '사이드바 접기' : '사이드바 펼치기');
+      W.t = o ? 188 : 58;
+      R.t = o ? 0 : 1;
+      labels.forEach((l, i) => o ? after(.06 + i * .04, () => { if (open) l.s.t = 1; }) : (l.s.t = 0));
+    }
+
+    function pick(idx) {
+      const target = navItems[idx] || navItems[0];
+      if (target) Y.t = target.offsetTop;
+    }
+
+    col.addEventListener('click', () => setOpen(!open));
+
+    Motion.register({
+      frame(dt) {
+        [W, R, Y].forEach(s => step(s, dt));
+        labels.forEach(l => step(l.s, dt));
+      },
+      render() {
+        if (window.innerWidth > 760) {
+          side.style.width = W.x.toFixed(2) + 'px';
+        }
+        col.firstElementChild.style.transform = `rotate(${(180 * R.x).toFixed(2)}deg)`;
+        col.style.right = (clamp(R.x, 0, 1) * 4).toFixed(2) + 'px';
+        if (logo) logo.style.opacity = clamp(1 - R.x * 2, 0, 1).toFixed(3);
+        labels.forEach(l => {
+          const o = clamp(l.s.x, 0, 1);
+          l.el.style.opacity = o.toFixed(3);
+          l.el.style.transform = `translateX(${((1 - o) * -10).toFixed(2)}px)`;
+        });
+        hl.style.transform = `translateY(${Y.x.toFixed(2)}px)`;
+      }
+    });
+
+    return pick;
+  })();
+
+  /* ===== Cup Notes Pagination Dots (DesignBookmark Motion Studies) ===== */
+  const notesPagerGo = (() => {
+    const { S, step, tune, after } = Motion;
+    const strip = $('#f1Notes'), dots = $('#f1Dots'), act = $('#f1Act');
+    if (!strip || !dots || !act) return () => {};
+    const count = 4;
+    const btns = [...Array(count)].map((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', '노트 ' + (i + 1));
+      dots.appendChild(b);
+      return b;
+    });
+    const P = S(0, 170, 22), A = S(0), B = S(0);
+    let cur = 0, clock = 0, userUntil = 0, ready = false;
+
+    function go(i, instant = false) {
+      const dir = i > cur ? 1 : -1;
+      cur = i;
+      btns.forEach((b, k) => b.setAttribute('aria-selected', String(k === i)));
+      P.t = i;
+      const b = btns[i], w = 18;
+      if (!b || !b.offsetWidth) return;
+      const c = b.offsetLeft + b.offsetWidth / 2;
+      A.t = c - w / 2;
+      B.t = c + w / 2;
+      if (instant) {
+        P.x = P.t; P.v = 0;
+        A.x = A.t; A.v = 0;
+        B.x = B.t; B.v = 0;
+      } else if (dir > 0) {
+        tune(B, 520, 34); tune(A, 140, 18);
       } else {
-        renderMatch();
+        tune(A, 520, 34); tune(B, 140, 18);
       }
+    }
+
+    btns.forEach((b, i) => b.addEventListener('click', e => {
+      e.stopPropagation();
+      userUntil = clock + 7;
+      go(i);
     }));
+    (function auto() {
+      if (ready && clock >= userUntil) go((cur + 1) % count);
+      after(1.8, auto);
+    })();
+    new ResizeObserver(() => {
+      if (btns[cur] && btns[cur].offsetWidth) go(cur, true);
+    }).observe(dots);
+
+    Motion.register({
+      frame(dt) {
+        clock += dt;
+        if (!ready && btns[0].offsetWidth) { go(0, true); ready = true; }
+        [P, A, B].forEach(s => step(s, dt));
+      },
+      render() {
+        strip.style.transform = `translateX(${(-P.x * 100).toFixed(3)}%)`;
+        act.style.transform = `translateX(${A.x.toFixed(2)}px)`;
+        act.style.width = Math.max(7, B.x - A.x).toFixed(2) + 'px';
+      }
+    });
+
+    return i => { userUntil = clock + 3; go(i); };
+  })();
+
+  function createJellySlider({ mount, min, max, value: initVal, label, formatDrop, onChange }) {
+    const { S, tune, step, clamp } = Motion;
+    mount.innerHTML = `
+      <div class="jelly-rail">
+        <div class="jelly-track"><div class="jelly-fill"></div></div>
+        <div class="jelly-goo"><div class="jelly-blob jelly-drop"></div><div class="jelly-blob jelly-thumb"></div></div>
+        <div class="jelly-drop-label"></div>
+        <div class="jelly-hit" role="slider" tabindex="0" aria-label="${label}" aria-valuemin="${min}" aria-valuemax="${max}" aria-valuenow="${initVal}"></div>
+      </div>`;
+    const rail = mount.querySelector('.jelly-rail');
+    const fill = mount.querySelector('.jelly-fill');
+    const thumb = mount.querySelector('.jelly-thumb');
+    const drop = mount.querySelector('.jelly-drop');
+    const dropLabel = mount.querySelector('.jelly-drop-label');
+    const hit = mount.querySelector('.jelly-hit');
+
+    const T = { follow: [900, 50], bubble: [420, 22], release: [300, 14], glide: [420, 34] };
+    const R = 10, TR = 12, D = 16, OX = 40, OY = 80, CY = 14, RISE = -32, REST_DROP = .48;
+    let Wd = rail.clientWidth || 160;
+    let ratio = (initVal - min) / Math.max(max - min, 1);
+    let currentVal = initVal;
+
+    const span = () => Math.max(Wd - 2 * R, 1);
+    const toX = v => R + ((v - min) / Math.max(max - min, 1)) * span();
+    const toV = x => min + clamp((x - R) / span(), 0, 1) * (max - min);
+
+    const X = S(toX(initVal), ...T.follow);
+    const DX = S(toX(initVal), 260, 18);
+    const DY = S(CY, ...T.bubble);
+    const DS = S(REST_DROP, ...T.bubble);
+    const PS = S(1, 520, 16);
+
+    const rubber = (x, lo, hi, d = 14) =>
+      x < lo ? lo - (1 - 1 / ((lo - x) * .55 / d + 1)) * d :
+      x > hi ? hi + (1 - 1 / ((x - hi) * .55 / d + 1)) * d : x;
+    const localX = e => e.clientX - rail.getBoundingClientRect().left;
+
+    let dragging = false, hover = false, lifted = false;
+    function sync() {
+      const up = dragging || lifted;
+      DY.t = up ? CY + RISE : CY;
+      DS.t = up ? 1 : REST_DROP;
+      PS.t = dragging ? 1.16 : hover ? 1.08 : 1;
+    }
+    function emitIfChanged(val) {
+      if (val !== currentVal) {
+        currentVal = val;
+        if (onChange) onChange(val);
+      }
+    }
+
+    rail.addEventListener('pointerdown', e => {
+      dragging = true;
+      try { rail.setPointerCapture(e.pointerId); } catch {}
+      tune(X, ...T.follow);
+      X.t = rubber(localX(e), R, Wd - R);
+      emitIfChanged(Math.round(toV(clamp(X.t, R, Wd - R))));
+      sync();
+      hit.focus({ preventScroll: true });
+    });
+    rail.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      X.t = rubber(localX(e), R, Wd - R);
+      emitIfChanged(Math.round(toV(clamp(X.t, R, Wd - R))));
+    });
+    const end = () => {
+      if (!dragging) return;
+      dragging = false;
+      tune(X, ...T.release);
+      X.t = clamp(X.t, R, Wd - R);
+      emitIfChanged(Math.round(toV(X.t)));
+      sync();
+    };
+    rail.addEventListener('pointerup', end);
+    rail.addEventListener('pointercancel', end);
+    rail.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hover = true; sync(); } });
+    rail.addEventListener('pointerleave', () => { hover = false; sync(); });
+
+    hit.addEventListener('keydown', e => {
+      const d = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1, PageUp: 2, PageDown: -2 }[e.key];
+      const abs = { Home: min, End: max }[e.key];
+      if (d === undefined && abs === undefined) return;
+      e.preventDefault();
+      const next = abs !== undefined ? abs : clamp(currentVal + d, min, max);
+      tune(X, ...T.glide);
+      X.t = toX(next);
+      emitIfChanged(next);
+      lifted = true;
+      sync();
+    });
+    hit.addEventListener('focus', () => { if (hit.matches(':focus-visible')) { lifted = true; sync(); } });
+    hit.addEventListener('blur', () => { lifted = false; sync(); });
+
+    new ResizeObserver(() => {
+      const w = rail.clientWidth;
+      if (!w || w === Wd) return;
+      Wd = w;
+      X.x = X.t = DX.x = DX.t = toX(min + ratio * (max - min));
+      X.v = DX.v = 0;
+    }).observe(rail);
+
+    Motion.register({
+      frame(dt) {
+        DX.t = X.x;
+        if (Wd > 2 * R) ratio = (toV(X.t) - min) / Math.max(max - min, 1);
+        step(X, dt); step(DX, dt); step(DY, dt); step(DS, dt); step(PS, dt);
+      },
+      render() {
+        const x = X.x;
+        const v = clamp(Math.round(toV(x)), min, max);
+        const st = 1 + Math.min(Math.abs(X.v) / 2400, .4);
+        thumb.style.transform = `translate(${x - TR + OX}px,${CY - TR + OY}px) scale(${st * PS.x},${PS.x / st})`;
+        const tilt = clamp((DX.x - X.x) * .9, -28, 28);
+        const dTr = `translate(${DX.x - D}px,${DY.x - D}px) rotate(${tilt}deg) scale(${DS.x})`;
+        drop.style.transform = `translate(${OX}px,${OY}px) ` + dTr;
+        dropLabel.style.transform = dTr;
+        dropLabel.style.opacity = clamp((DS.x - .7) / .25, 0, 1);
+        dropLabel.textContent = formatDrop ? formatDrop(v) : v;
+        fill.style.width = clamp(x, 0, Math.max(Wd, 0)) * clamp((x - R) / R, 0, 1) + 'px';
+        hit.style.left = x - R + 'px';
+        hit.setAttribute('aria-valuenow', v);
+      }
+    });
+
+    return {
+      setValue(val) {
+        const clamped = clamp(val, min, max);
+        currentVal = clamped;
+        ratio = (clamped - min) / Math.max(max - min, 1);
+        if (!dragging) {
+          tune(X, ...T.glide);
+          X.t = toX(clamped);
+        }
+      }
+    };
+  }
+
+  const propSliders = {};
+  const propOutputs = {};
+
+  function renderProps() {
+    if (!Object.keys(propSliders).length) {
+      $('#props').innerHTML = AXES.map(([k, lbl]) => `
+        <div class="prop"><span>${lbl}</span>
+          <div class="prop-mount" data-k="${k}"></div>
+          <output data-out="${k}">${st.target[k]}</output></div>`).join('');
+      AXES.forEach(([k, lbl]) => {
+        const mount = $(`.prop-mount[data-k="${k}"]`);
+        const out = $(`output[data-out="${k}"]`);
+        propOutputs[k] = out;
+        propSliders[k] = createJellySlider({
+          mount,
+          min: 1,
+          max: 10,
+          value: st.target[k],
+          label: lbl,
+          formatDrop: v => v,
+          onChange: val => {
+            st.target[k] = val;
+            out.textContent = val;
+            if (k === 'b' && st.target.b >= 8 && st.roast < 5) {
+              st.roast = 5;
+              renderRoast();
+            }
+            const bestId = findBestOriginByTarget();
+            if (bestId !== st.originId) {
+              st.originId = bestId;
+              st.preset = ORIGINS[bestId].preset;
+              renderBean();
+              renderShops();
+              renderOriginStripAndMap();
+            } else {
+              renderMatch();
+            }
+          }
+        });
+      });
+    } else {
+      AXES.forEach(([k]) => {
+        propSliders[k].setValue(st.target[k]);
+        if (propOutputs[k]) propOutputs[k].textContent = st.target[k];
+      });
+    }
   }
 
   function renderMatch() {
@@ -766,9 +1711,371 @@
     $('#heroStatus').textContent = `MATCHED · ${ORIGINS[st.originId].origin} · 취향 일치율 ${m}%`;
   }
 
+  const journeyTimers = new Map();
+  function attachJourneyAnimation(stage, prefix, stepConfigs) {
+    if (journeyTimers.has(stage)) {
+      clearInterval(journeyTimers.get(stage));
+      journeyTimers.delete(stage);
+    }
+    const traveler = stage.querySelector(`#${prefix}Traveler`);
+    const beanCore = stage.querySelector(`#${prefix}BeanCore`);
+    const cherryShape = stage.querySelector(`#${prefix}CherryShape`);
+    const beanShape = stage.querySelector(`#${prefix}BeanShape`);
+    const rail = stage.querySelector(`#${prefix}Rail`);
+    const stepBtns = [...stage.querySelectorAll(`#${prefix}Controls .journey-step-btn`)];
+    if (!traveler || !beanCore || !rail) return;
+
+    const centers = [76, 236, 396, 560];
+    let cur = 0;
+    let hopTimer1 = null, hopTimer2 = null;
+
+    function updateCardsAndRail(activeIdx) {
+      stepConfigs.forEach((cfg, i) => {
+        const card = stage.querySelector(`#${prefix}Card${i}`);
+        const rect = stage.querySelector(`#${prefix}Rect${i}`);
+        const bg = stage.querySelector(`#${prefix}BadgeBg${i}`);
+        const txt = stage.querySelector(`#${prefix}BadgeTxt${i}`);
+        if (!card || !rect || !bg || !txt) return;
+        const state = i < activeIdx ? 'done' : i === activeIdx ? 'active' : 'wait';
+        card.setAttribute('class', 'abd-card ' + state);
+        rect.setAttribute('stroke', i === activeIdx ? 'var(--flame)' : i < activeIdx ? 'var(--sage)' : 'var(--line)');
+        rect.setAttribute('stroke-width', i === activeIdx ? '1.8' : '1');
+        bg.setAttribute('fill', i < activeIdx ? 'var(--sage-soft)' : i === activeIdx ? 'var(--flame-soft)' : 'var(--panel-2)');
+        txt.setAttribute('fill', i < activeIdx ? 'var(--sage)' : i === activeIdx ? 'var(--flame)' : 'var(--ink-3)');
+        txt.textContent = i < activeIdx ? '완료 ✓' : i === activeIdx ? '진행중 ●' : '대기';
+      });
+      stepBtns.forEach((b, i) => b.classList.toggle('on', i === activeIdx));
+      rail.style.width = `${((activeIdx + 1) / 4) * 100}%`;
+    }
+
+    function setTravelerAppearance(idx) {
+      const isCherry = !!stepConfigs[idx].isCherry;
+      if (cherryShape && beanShape) {
+        cherryShape.style.display = isCherry ? 'inline' : 'none';
+        beanShape.style.display = isCherry ? 'none' : 'inline';
+      }
+      beanCore.setAttribute('fill', stepConfigs[idx].bean);
+    }
+
+    function go(nextIdx, animateHop = true) {
+      const prevIdx = cur;
+      cur = nextIdx;
+      clearTimeout(hopTimer1);
+      clearTimeout(hopTimer2);
+
+      stepConfigs.forEach((_, i) => {
+        const src = stage.querySelector(`#${prefix}Src${i}`);
+        if (src) src.style.opacity = '1';
+      });
+
+      updateCardsAndRail(cur);
+
+      if (!animateHop || nextIdx === 0 || Math.abs(nextIdx - prevIdx) !== 1) {
+        traveler.style.opacity = '0';
+        traveler.style.transform = `translate(${centers[cur]}px, 0px)`;
+        return;
+      }
+
+      const prevSrc = stage.querySelector(`#${prefix}Src${prevIdx}`);
+      if (prevSrc) prevSrc.style.opacity = '0.18';
+      setTravelerAppearance(prevIdx);
+      traveler.style.transition = 'none';
+      traveler.style.transform = `translate(${centers[prevIdx]}px, 0px) scale(1)`;
+      traveler.style.opacity = '1';
+      traveler.getBoundingClientRect();
+
+      const midX = (centers[prevIdx] + centers[cur]) / 2;
+      requestAnimationFrame(() => {
+        if (!stage.isConnected) return;
+        traveler.style.transition = 'transform .26s cubic-bezier(.25,.8,.4,1), opacity .18s ease';
+        traveler.style.transform = `translate(${midX}px, -28px) scale(1.12)`;
+      });
+
+      hopTimer1 = setTimeout(() => {
+        if (!stage.isConnected) return;
+        setTravelerAppearance(cur);
+        traveler.style.transition = 'transform .26s cubic-bezier(.4,0,.2,1), opacity .2s ease';
+        traveler.style.transform = `translate(${centers[cur]}px, 0px) scale(1)`;
+      }, 270);
+
+      hopTimer2 = setTimeout(() => {
+        if (!stage.isConnected) return;
+        traveler.style.opacity = '0';
+        if (prevSrc) prevSrc.style.opacity = '1';
+        const rip = stage.querySelector(`#${prefix}Ripple${cur}`);
+        if (rip) {
+          rip.classList.remove('abd-ripple-active');
+          rip.getBoundingClientRect();
+          rip.classList.add('abd-ripple-active');
+        }
+        const art = stage.querySelector(`#${prefix}Art${cur}`);
+        if (art) {
+          art.animate(
+            [{ transform: 'scale(1)' }, { transform: 'scale(1.12)' }, { transform: 'scale(1)' }],
+            { duration: 360, easing: 'cubic-bezier(.34,1.56,.64,1)' }
+          );
+        }
+      }, 540);
+    }
+
+    stepBtns.forEach((b, i) => {
+      b.addEventListener('click', e => {
+        e.stopPropagation();
+        go(i, true);
+      });
+    });
+    stepConfigs.forEach((_, i) => {
+      const card = stage.querySelector(`#${prefix}Card${i}`);
+      if (card) {
+        card.addEventListener('click', e => {
+          e.stopPropagation();
+          go(i, true);
+        });
+      }
+    });
+
+    go(0, false);
+    const tid = setInterval(() => {
+      if (!stage.isConnected) { clearInterval(tid); return; }
+      go((cur + 1) % 4, true);
+    }, 1850);
+    journeyTimers.set(stage, tid);
+  }
+
+  function renderProcessSvg(procKey, origin) {
+    const stage = $('#f2SvgStage');
+    if (!stage) return;
+    const alt = origin ? origin.alt : '1,950m';
+    const moisture = procKey === 'wethulled' ? '12%' : '11%';
+
+    const procVisual = {
+      washed: {
+        title: '워시드 · 수세 발효',
+        sub: '과육 제거 후 수조 세척',
+        art: `
+          <rect x="196" y="42" width="76" height="44" rx="7" fill="var(--panel)" stroke="var(--line)" stroke-width="1.5"/>
+          <path d="M198 58 Q208 52 218 58 T238 58 T258 58 T270 58 L270 84 L198 84 Z" fill="#4BA3C3" opacity="0.28">
+            <animate attributeName="d" dur="2.6s" repeatCount="indefinite"
+              values="M198 58 Q208 52 218 58 T238 58 T258 58 T270 58 L270 84 L198 84 Z;
+                      M198 58 Q208 63 218 58 T238 58 T258 58 T270 58 L270 84 L198 84 Z;
+                      M198 58 Q208 52 218 58 T238 58 T258 58 T270 58 L270 84 L198 84 Z"/>
+          </path>
+          <path d="M198 58 Q208 52 218 58 T238 58 T258 58 T270 58" fill="none" stroke="#4BA3C3" stroke-width="1.8">
+            <animate attributeName="d" dur="2.6s" repeatCount="indefinite"
+              values="M198 58 Q208 52 218 58 T238 58 T258 58 T270 58;
+                      M198 58 Q208 63 218 58 T238 58 T258 58 T270 58;
+                      M198 58 Q208 52 218 58 T238 58 T258 58 T270 58"/>
+          </path>
+          <g class="proc-float">
+            <ellipse cx="218" cy="72" rx="6.5" ry="4.5" fill="#D4C7A5" stroke="#8C7A5B" stroke-width="1.2"/>
+            <ellipse cx="234" cy="69" rx="6.5" ry="4.5" fill="#D4C7A5" stroke="#8C7A5B" stroke-width="1.2"/>
+            <ellipse cx="250" cy="73" rx="6.5" ry="4.5" fill="#D4C7A5" stroke="#8C7A5B" stroke-width="1.2"/>
+          </g>
+          <circle cx="224" cy="52" r="2.2" fill="#4BA3C3">
+            <animate attributeName="cy" values="55;45;55" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.9;0.2;0.9" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="244" cy="50" r="1.8" fill="#4BA3C3">
+            <animate attributeName="cy" values="53;44;53" dur="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2.4s" repeatCount="indefinite"/>
+          </circle>
+        `
+      },
+      natural: {
+        title: '내추럴 · 과육 건조',
+        sub: '체리 통째로 태양 건조',
+        art: `
+          <g>
+            <circle cx="258" cy="43" r="9" fill="#FFD02F" opacity="0.95"/>
+            <path d="M258 29 V32 M258 54 V57 M244 43 H247 M269 43 H272 M248 33 L251 36 M265 50 L268 53 M248 53 L251 50 M265 36 L268 33" stroke="#F5A623" stroke-width="1.7" stroke-linecap="round"/>
+            <animateTransform attributeName="transform" type="rotate" from="0 258 43" to="360 258 43" dur="18s" repeatCount="indefinite"/>
+          </g>
+          <line x1="200" y1="82" x2="268" y2="82" stroke="var(--ink-3)" stroke-width="2.2" stroke-linecap="round"/>
+          <g class="proc-float">
+            <circle cx="214" cy="73" r="7" fill="#D9483B"/>
+            <circle cx="231" cy="72" r="7" fill="#C43B2E"/>
+            <circle cx="248" cy="73" r="7" fill="#D9483B"/>
+            <circle cx="212" cy="71" r="2" fill="#FF9A8B" opacity="0.75"/>
+            <circle cx="229" cy="70" r="2" fill="#FF9A8B" opacity="0.75"/>
+            <circle cx="246" cy="71" r="2" fill="#FF9A8B" opacity="0.75"/>
+          </g>
+        `
+      },
+      honey: {
+        title: '허니 · 점액질 건조',
+        sub: '당분 코팅 상태 건조',
+        art: `
+          <g class="proc-float">
+            <ellipse cx="234" cy="65" rx="22" ry="16" fill="#F5A623" opacity="0.32" stroke="#E08E0B" stroke-width="1.6" stroke-dasharray="3 2"/>
+            <ellipse cx="234" cy="65" rx="14" ry="10" fill="#E6C280" stroke="#9A6B25" stroke-width="1.5"/>
+            <path d="M223 65 Q234 60 245 65" fill="none" stroke="#9A6B25" stroke-width="1.4" stroke-linecap="round"/>
+          </g>
+          <path d="M258 43 C261 47 262 50 258 54 C254 50 255 47 258 43 Z" fill="#F5A623">
+            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.8s" repeatCount="indefinite"/>
+          </path>
+        `
+      },
+      wethulled: {
+        title: '웻헐링 · 반건조 탈곡',
+        sub: '수분 30% 파치먼트 제거',
+        art: `
+          <g class="proc-float">
+            <path d="M212 58 C207 67 212 78 221 80" fill="none" stroke="#B89B6A" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M256 58 C261 67 256 78 247 80" fill="none" stroke="#B89B6A" stroke-width="2.6" stroke-linecap="round"/>
+            <ellipse cx="234" cy="67" rx="14" ry="10" fill="#4E8A67" stroke="#2D6A4F" stroke-width="1.6"/>
+            <path d="M223 67 Q234 62 245 67" fill="none" stroke="#2D6A4F" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <text x="234" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="var(--sage)">30~35% H2O</text>
+        `
+      }
+    }[procKey] || { title: '워시드 · 수세 발효', sub: '과육 제거 후 수조 세척', art: '' };
+
+    stage.innerHTML = `
+      <div class="journey-controls" id="f2Controls" aria-label="생두 생산과정 단계 선택">
+        <button type="button" class="journey-step-btn on" data-step="0">STEP 1</button>
+        <button type="button" class="journey-step-btn" data-step="1">STEP 2</button>
+        <button type="button" class="journey-step-btn" data-step="2">STEP 3</button>
+        <button type="button" class="journey-step-btn" data-step="3">STEP 4</button>
+      </div>
+      <svg viewBox="0 -22 640 184" role="img" aria-label="원산지 수확부터 ${procVisual.title}, 건조, 생두 완성까지의 4단계 과정">
+        <defs>
+          <marker id="procArr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+            <path d="M1.5 2 L7.5 5 L1.5 8" fill="none" stroke="var(--flame)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+          <linearGradient id="greenBeanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#9BC49E"/>
+            <stop offset="100%" stop-color="#4E8A67"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Step 1: 체리 수확 -->
+        <g class="abd-card active" id="f2Card0">
+          <rect x="6" y="8" width="140" height="144" rx="13" fill="var(--panel)" stroke="var(--line)" id="f2Rect0"/>
+          <rect x="14" y="15" width="52" height="17" rx="8.5" id="f2BadgeBg0"/>
+          <text x="40" y="26.5" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="9.5" font-weight="800" id="f2BadgeTxt0">진행중 ●</text>
+          <rect x="92" y="15" width="46" height="16" rx="8" fill="var(--sage-soft)"/>
+          <text x="115" y="26.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="var(--sage)">${alt}</text>
+          <circle cx="76" cy="70" r="10" fill="none" stroke="#E04638" stroke-width="2" opacity="0" id="f2Ripple0"/>
+          <g class="proc-float">
+            <path d="M36 48 Q72 50 110 42" fill="none" stroke="#6B533B" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M50 48 Q38 35 30 42 Q37 53 50 48 Z" fill="#4E8A67"/>
+            <path d="M94 45 Q107 31 116 39 Q108 50 94 45 Z" fill="#4E8A67"/>
+            <line x1="56" y1="49" x2="54" y2="63" stroke="#6B533B" stroke-width="1.6"/>
+            <line x1="76" y1="48" x2="76" y2="65" stroke="#6B533B" stroke-width="1.6"/>
+            <line x1="94" y1="46" x2="97" y2="62" stroke="#6B533B" stroke-width="1.6"/>
+            <circle cx="54" cy="71" r="8" fill="#D9483B"/>
+            <g id="f2Src0" style="transition:opacity .15s;">
+              <circle cx="76" cy="73" r="8.5" fill="#E04638"/>
+              <circle cx="73.5" cy="70.5" r="2.4" fill="#FF9A8B" opacity="0.8"/>
+            </g>
+            <circle cx="97" cy="70" r="8" fill="#C43B2E"/>
+            <circle cx="51.5" cy="68.5" r="2.2" fill="#FF9A8B" opacity="0.8"/>
+            <circle cx="94.5" cy="67.5" r="2.2" fill="#FF9A8B" opacity="0.8"/>
+          </g>
+          <text x="76" y="114" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="13.5" font-weight="800" fill="var(--ink)">완숙 체리 수확</text>
+          <text x="76" y="133" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="11" fill="var(--ink-2)">고산지 핸드피킹</text>
+        </g>
+
+        <!-- Arrow 1 -> 2 -->
+        <line x1="149" y1="80" x2="162" y2="80" class="proc-arrow" stroke="var(--flame)" stroke-width="2" marker-end="url(#procArr)"/>
+
+        <!-- Step 2: 정제·가공 (Dynamic) -->
+        <g class="abd-card wait" id="f2Card1">
+          <rect x="166" y="8" width="140" height="144" rx="13" fill="var(--panel)" stroke="var(--flame)" stroke-width="1.5" id="f2Rect1"/>
+          <rect x="174" y="15" width="52" height="17" rx="8.5" id="f2BadgeBg1"/>
+          <text x="200" y="26.5" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="9.5" font-weight="800" id="f2BadgeTxt1">대기</text>
+          <text x="266" y="26.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="var(--flame)">STEP 02</text>
+          <circle cx="236" cy="70" r="10" fill="none" stroke="#4BA3C3" stroke-width="2" opacity="0" id="f2Ripple1"/>
+          <g id="f2Art1" style="transform-box:fill-box;transform-origin:center;"><g id="f2Src1" style="transition:opacity .15s;">${procVisual.art}</g></g>
+          <text x="236" y="114" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="13.5" font-weight="800" fill="var(--ink)">${procVisual.title}</text>
+          <text x="236" y="133" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="11" fill="var(--ink-2)">${procVisual.sub}</text>
+        </g>
+
+        <!-- Arrow 2 -> 3 -->
+        <line x1="309" y1="80" x2="322" y2="80" class="proc-arrow" stroke="var(--flame)" stroke-width="2" marker-end="url(#procArr)"/>
+
+        <!-- Step 3: 건조 -->
+        <g class="abd-card wait" id="f2Card2">
+          <rect x="326" y="8" width="140" height="144" rx="13" fill="var(--panel)" stroke="var(--line)" id="f2Rect2"/>
+          <rect x="334" y="15" width="52" height="17" rx="8.5" id="f2BadgeBg2"/>
+          <text x="360" y="26.5" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="9.5" font-weight="800" id="f2BadgeTxt2">대기</text>
+          <rect x="412" y="15" width="46" height="16" rx="8" fill="var(--flame-soft)"/>
+          <text x="435" y="26.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="var(--flame)">${moisture}</text>
+          <circle cx="396" cy="70" r="10" fill="none" stroke="#FFD02F" stroke-width="2" opacity="0" id="f2Ripple2"/>
+          <g id="f2Art2" style="transform-box:fill-box;transform-origin:center;">
+            <g>
+              <circle cx="364" cy="48" r="8.5" fill="#FFD02F"/>
+              <path d="M364 34 V37 M364 59 V62 M350 48 H353 M375 48 H378 M354 38 L356 40 M372 56 L374 58 M354 58 L356 56 M372 40 L374 38" stroke="#F5A623" stroke-width="1.6" stroke-linecap="round"/>
+              <animateTransform attributeName="transform" type="rotate" from="0 364 48" to="360 364 48" dur="22s" repeatCount="indefinite"/>
+            </g>
+            <line x1="354" y1="82" x2="438" y2="82" stroke="#8C7A5B" stroke-width="2.4" stroke-linecap="round"/>
+            <line x1="366" y1="82" x2="366" y2="91" stroke="#8C7A5B" stroke-width="2.2"/>
+            <line x1="426" y1="82" x2="426" y2="91" stroke="#8C7A5B" stroke-width="2.2"/>
+            <g class="proc-float">
+              <ellipse cx="372" cy="76" rx="6" ry="3.8" fill="#D4C7A5" stroke="#8C7A5B" stroke-width="1.1"/>
+              <ellipse cx="388" cy="76" rx="6" ry="3.8" fill="#C9B991" stroke="#8C7A5B" stroke-width="1.1"/>
+              <g id="f2Src2" style="transition:opacity .15s;"><ellipse cx="404" cy="76" rx="6" ry="3.8" fill="#D4C7A5" stroke="#8C7A5B" stroke-width="1.1"/></g>
+              <ellipse cx="420" cy="76" rx="6" ry="3.8" fill="#C9B991" stroke="#8C7A5B" stroke-width="1.1"/>
+            </g>
+          </g>
+          <text x="396" y="114" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="13.5" font-weight="800" fill="var(--ink)">균일 태양 건조</text>
+          <text x="396" y="133" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="11" fill="var(--ink-2)">아프리칸 베드 · 파티오</text>
+        </g>
+
+        <!-- Arrow 3 -> 4 -->
+        <line x1="469" y1="80" x2="482" y2="80" class="proc-arrow" stroke="var(--flame)" stroke-width="2" marker-end="url(#procArr)"/>
+
+        <!-- Step 4: 생두 완성 -->
+        <g class="abd-card wait" id="f2Card3">
+          <rect x="486" y="8" width="148" height="144" rx="13" fill="var(--panel)" stroke="var(--sage)" stroke-width="1.5" id="f2Rect3"/>
+          <rect x="494" y="15" width="52" height="17" rx="8.5" id="f2BadgeBg3"/>
+          <text x="520" y="26.5" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="9.5" font-weight="800" id="f2BadgeTxt3">대기</text>
+          <text x="592" y="26.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" fill="var(--sage)">STEP 04</text>
+          <circle cx="560" cy="70" r="10" fill="none" stroke="#5CC596" stroke-width="2" opacity="0" id="f2Ripple3"/>
+          <g id="f2Art3" style="transform-box:fill-box;transform-origin:center;">
+            <g class="proc-float">
+              <g transform="translate(536, 66) rotate(-18)">
+                <ellipse cx="0" cy="0" rx="15.5" ry="11.5" fill="url(#greenBeanGrad)" stroke="#2D6A4F" stroke-width="1.5"/>
+                <path d="M-12 0 C-4 -3.8 4 3.8 12 0" fill="none" stroke="#2D6A4F" stroke-width="1.6" stroke-linecap="round"/>
+              </g>
+              <g transform="translate(578, 69) rotate(14)">
+                <ellipse cx="0" cy="0" rx="16.5" ry="12" fill="url(#greenBeanGrad)" stroke="#2D6A4F" stroke-width="1.5"/>
+                <path d="M-13 0 C-4 3.8 4 -3.8 13 0" fill="none" stroke="#2D6A4F" stroke-width="1.6" stroke-linecap="round"/>
+              </g>
+            </g>
+          </g>
+          <text x="560" y="114" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="13.5" font-weight="800" fill="var(--ink)">생두 완성 · 선별</text>
+          <text x="560" y="133" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--sage)">HS 0901.11 READY</text>
+        </g>
+
+        <!-- Traveling Morphing Cherry -> Bean (Option A) -->
+        <g class="abd-traveler" id="f2Traveler" style="transform:translate(76px, 0px)">
+          <g id="f2CherryShape" transform="translate(0, 78)">
+            <path d="M0 -8 Q2 -16 8 -18" fill="none" stroke="#6B533B" stroke-width="2" stroke-linecap="round"/>
+            <path d="M2 -14 Q10 -20 14 -13 Q8 -9 2 -14 Z" fill="#4E8A67"/>
+            <circle cx="0" cy="0" r="10.5" fill="#E04638" stroke="#7A1D15" stroke-width="1.4"/>
+            <circle cx="-3.5" cy="-3.5" r="2.6" fill="#FF9A8B" opacity="0.85"/>
+          </g>
+          <g id="f2BeanShape" transform="translate(0, 80) rotate(-14)" style="display:none;">
+            <ellipse cx="0" cy="0" rx="13" ry="9.5" class="abd-traveler-core" id="f2BeanCore" fill="#D4C7A5" stroke="#18120E" stroke-width="1.5"/>
+            <path d="M-9.5 0 C-3 -2.8 3 2.8 9.5 0" fill="none" stroke="#18120E" stroke-width="1.4" stroke-linecap="round"/>
+          </g>
+        </g>
+      </svg>
+      <div class="journey-rail"><div class="journey-rail-fill" id="f2Rail"></div></div>
+    `;
+    attachJourneyAnimation(stage, 'f2', [
+      { bean: '#E04638', isCherry: true },
+      { bean: '#D4C7A5' },
+      { bean: '#C9934C' },
+      { bean: '#5CC596' }
+    ]);
+  }
+
   function setProcTab(procKey) {
     $$('#procTabs .proc-btn').forEach(b => b.classList.toggle('on', b.dataset.proc === procKey));
     if (PROC_NOTES[procKey]) $('#procNote').innerHTML = PROC_NOTES[procKey];
+    renderProcessSvg(procKey, ORIGINS[st.originId]);
   }
 
   function renderBean() {
@@ -781,7 +2088,8 @@
     $('#f1Proc').textContent = d.proc;
     $('#f1Var').textContent = d.varietal;
     $('#f1MoodChip').textContent = d.mood;
-    $('#f1Notes').innerHTML = d.notes.map(([t, c], idx) => `<div class="sticky ${idx === 3 ? 'green' : ''}">${t}<small>${c}</small></div>`).join('');
+    $('#f1Notes').innerHTML = d.notes.map(([t, c]) => `<div class="pager-sl"><small>${c}</small><b>${t}</b></div>`).join('');
+    notesPagerGo(0);
     $('#f4Title').textContent = `${d.origin} 구매처`;
     $('#shipPort').textContent = d.port;
     $('#cursorLabel').textContent = `☕ CoBTS AI 바리스타 · ${d.origin.split(' ')[1] || d.origin}`;
@@ -797,9 +2105,167 @@
 
   const ROAST_GLOSS = [0.08, 0.12, 0.16, 0.24, 0.34, 0.50, 0.72, 0.88];
 
+  function renderRoastSvg(roastIdx) {
+    const stage = $('#f3SvgStage');
+    if (!stage) return;
+    const r = ROASTS[roastIdx] || ROASTS[3];
+    const beanColor = r[3];
+    const temp = r[2];
+    const crackText = roastIdx >= 5 ? '2차 크랙 활발' : '1차 크랙 돌파';
+    const hasOil = roastIdx >= 5;
+
+    stage.innerHTML = `
+      <div class="journey-controls" id="f3Controls" aria-label="로스팅 열분해 단계 선택">
+        <button type="button" class="journey-step-btn on" data-step="0">STEP 1</button>
+        <button type="button" class="journey-step-btn" data-step="1">STEP 2</button>
+        <button type="button" class="journey-step-btn" data-step="2">STEP 3</button>
+        <button type="button" class="journey-step-btn" data-step="3">STEP 4</button>
+      </div>
+      <svg viewBox="0 -22 640 172" role="img" aria-label="생두 투입부터 마이야르 반응, 크랙, ${r[0]} 원두 완성까지의 열분해 과정">
+        <defs>
+          <marker id="roastArr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+            <path d="M1.5 2 L7.5 5 L1.5 8" fill="none" stroke="var(--flame)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+          <linearGradient id="roastGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#9BC49E"/>
+            <stop offset="100%" stop-color="#4E8A67"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Step 1: 생두 투입 -->
+        <g class="abd-card active" id="f3Card0">
+          <rect x="6" y="8" width="140" height="132" rx="13" fill="var(--panel)" stroke="var(--line)" id="f3Rect0"/>
+          <rect x="14" y="14" width="52" height="17" rx="8.5" id="f3BadgeBg0"/>
+          <text x="40" y="25.5" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="9.5" font-weight="800" id="f3BadgeTxt0">진행중 ●</text>
+          <rect x="92" y="15" width="46" height="15" rx="7.5" fill="var(--sage-soft)"/>
+          <text x="115" y="25.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--sage)">11% H2O</text>
+          <circle cx="76" cy="64" r="10" fill="none" stroke="#5CC596" stroke-width="2" opacity="0" id="f3Ripple0"/>
+          <g class="proc-float" id="f3Src0" style="transition:opacity .15s;">
+            <g transform="translate(76, 62) rotate(-12)">
+              <ellipse cx="0" cy="0" rx="17" ry="12" fill="url(#roastGreenGrad)" stroke="#2D6A4F" stroke-width="1.5"/>
+              <path d="M-13 0 C-4 -3.8 4 3.8 13 0" fill="none" stroke="#2D6A4F" stroke-width="1.6" stroke-linecap="round"/>
+            </g>
+          </g>
+          <text x="76" y="106" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="13" font-weight="800" fill="var(--ink)">생두 투입</text>
+          <text x="76" y="124" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="10.5" fill="var(--ink-2)">수분 증발 · 흡열</text>
+        </g>
+
+        <!-- Arrow 1 -> 2 -->
+        <line x1="149" y1="74" x2="162" y2="74" class="proc-arrow" stroke="var(--flame)" stroke-width="2" marker-end="url(#roastArr)"/>
+
+        <!-- Step 2: 마이야르 반응 -->
+        <g class="abd-card wait" id="f3Card1">
+          <rect x="166" y="8" width="140" height="132" rx="13" fill="var(--panel)" stroke="var(--line)" id="f3Rect1"/>
+          <rect x="174" y="14" width="52" height="17" rx="8.5" id="f3BadgeBg1"/>
+          <text x="200" y="25.5" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="9.5" font-weight="800" id="f3BadgeTxt1">대기</text>
+          <text x="266" y="25.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--ink-3)">MAILLARD</text>
+          <circle cx="236" cy="64" r="10" fill="none" stroke="#C9934C" stroke-width="2" opacity="0" id="f3Ripple1"/>
+          <g>
+            <path d="M222 44 Q218 36 224 30" fill="none" stroke="#E08E0B" stroke-width="1.6" stroke-linecap="round" opacity="0.75">
+              <animate attributeName="opacity" values="0.2;0.9;0.2" dur="1.8s" repeatCount="indefinite"/>
+            </path>
+            <path d="M236 42 Q232 34 238 28" fill="none" stroke="#F25533" stroke-width="1.6" stroke-linecap="round" opacity="0.75">
+              <animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.8s" repeatCount="indefinite"/>
+            </path>
+            <path d="M250 44 Q246 36 252 30" fill="none" stroke="#E08E0B" stroke-width="1.6" stroke-linecap="round" opacity="0.75">
+              <animate attributeName="opacity" values="0.3;0.85;0.3" dur="2.1s" repeatCount="indefinite"/>
+            </path>
+          </g>
+          <g class="proc-float" id="f3Art1" style="transform-box:fill-box;transform-origin:center;">
+            <g id="f3Src1" style="transition:opacity .15s;" transform="translate(236, 65) rotate(8)">
+              <ellipse cx="0" cy="0" rx="18" ry="12.5" fill="#C9934C" stroke="#7A5220" stroke-width="1.5"/>
+              <path d="M-14 0 C-4 -4 4 4 14 0" fill="none" stroke="#7A5220" stroke-width="1.6" stroke-linecap="round"/>
+            </g>
+          </g>
+          <text x="236" y="106" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="13" font-weight="800" fill="var(--ink)">마이야르 · 갈변</text>
+          <text x="236" y="124" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="10.5" fill="var(--ink-2)">150~190°C 향기 전구체</text>
+        </g>
+
+        <!-- Arrow 2 -> 3 -->
+        <line x1="309" y1="74" x2="322" y2="74" class="proc-arrow" stroke="var(--flame)" stroke-width="2" marker-end="url(#roastArr)"/>
+
+        <!-- Step 3: 크랙 & 팽창 -->
+        <g class="abd-card wait" id="f3Card2">
+          <rect x="326" y="8" width="140" height="132" rx="13" fill="var(--panel)" stroke="var(--flame)" stroke-width="1.4" id="f3Rect2"/>
+          <rect x="334" y="14" width="52" height="17" rx="8.5" id="f3BadgeBg2"/>
+          <text x="360" y="25.5" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="9.5" font-weight="800" id="f3BadgeTxt2">대기</text>
+          <rect x="412" y="15" width="46" height="15" rx="7.5" fill="var(--flame-soft)"/>
+          <text x="435" y="25.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--flame)">+60% VOL</text>
+          <circle cx="396" cy="64" r="10" fill="none" stroke="#F25533" stroke-width="2" opacity="0" id="f3Ripple2"/>
+          <g id="f3Art2" style="transform-box:fill-box;transform-origin:center;">
+            <g transform="translate(396, 63)">
+              <path d="M-24 -10 L-30 -15 M24 -10 L30 -15 M-25 8 L-31 12 M25 8 L31 12" stroke="var(--flame)" stroke-width="1.8" stroke-linecap="round">
+                <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite"/>
+              </path>
+              <g id="f3Src2" style="transition:opacity .15s;" transform="rotate(-8)">
+                <ellipse cx="0" cy="0" rx="20" ry="14" fill="#8C5832" stroke="#4D2C16" stroke-width="1.5"/>
+                <path d="M-16 0 C-5 -5 5 5 16 0" fill="none" stroke="#4D2C16" stroke-width="1.7" stroke-linecap="round"/>
+              </g>
+            </g>
+          </g>
+          <text x="396" y="106" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="13" font-weight="800" fill="var(--ink)">${crackText}</text>
+          <text x="396" y="124" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="10.5" fill="var(--ink-2)">캐러멜화 · 부피 팽창</text>
+        </g>
+
+        <!-- Arrow 3 -> 4 -->
+        <line x1="469" y1="74" x2="482" y2="74" class="proc-arrow" stroke="var(--flame)" stroke-width="2" marker-end="url(#roastArr)"/>
+
+        <!-- Step 4: 원두 완성 -->
+        <g class="abd-card wait" id="f3Card3">
+          <rect x="486" y="8" width="148" height="132" rx="13" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.4" id="f3Rect3"/>
+          <rect x="494" y="14" width="52" height="17" rx="8.5" id="f3BadgeBg3"/>
+          <text x="520" y="25.5" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="9.5" font-weight="800" id="f3BadgeTxt3">대기</text>
+          <rect x="582" y="15" width="44" height="15" rx="7.5" fill="var(--ink)"/>
+          <text x="604" y="25.5" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--bg)">${temp}°C</text>
+          <circle cx="560" cy="64" r="10" fill="none" stroke="${beanColor}" stroke-width="2" opacity="0" id="f3Ripple3"/>
+          <g class="proc-float" id="f3Art3" style="transform-box:fill-box;transform-origin:center;">
+            <g transform="translate(560, 63) rotate(12)">
+              <ellipse cx="0" cy="0" rx="21" ry="14.5" fill="${beanColor}" stroke="#1E1008" stroke-width="1.5"/>
+              <path d="M-16 0 C-5 -5 5 5 16 0" fill="none" stroke="#1E1008" stroke-width="1.8" stroke-linecap="round"/>
+              ${hasOil ? `<ellipse cx="-6" cy="-5" rx="6" ry="2.2" fill="#FFF" opacity="0.28" transform="rotate(-18 -6 -5)"/>` : ''}
+            </g>
+          </g>
+          <text x="560" y="106" text-anchor="middle" font-family="Pretendard, sans-serif" font-size="13" font-weight="800" fill="var(--ink)">${r[0].split(' ')[0]} 완성</text>
+          <text x="560" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="var(--flame)">800+ 향미 발현</text>
+        </g>
+
+        <!-- Traveling Morphing Bean (Option A) -->
+        <g class="abd-traveler" id="f3Traveler" style="transform:translate(76px, 0px)">
+          <g transform="translate(0, 74) rotate(-14)">
+            <ellipse cx="0" cy="0" rx="13" ry="9.5" class="abd-traveler-core" id="f3BeanCore" fill="#5CC596" stroke="#18120E" stroke-width="1.5"/>
+            <path d="M-9.5 0 C-3 -2.8 3 2.8 9.5 0" fill="none" stroke="#18120E" stroke-width="1.4" stroke-linecap="round"/>
+          </g>
+        </g>
+      </svg>
+      <div class="journey-rail"><div class="journey-rail-fill" id="f3Rail"></div></div>
+    `;
+    attachJourneyAnimation(stage, 'f3', [
+      { bean: '#5CC596' },
+      { bean: '#C9934C' },
+      { bean: '#8C5832' },
+      { bean: beanColor }
+    ]);
+  }
+
+  let roastJelly = null;
   function renderRoast() {
     const r = ROASTS[st.roast];
-    $('#roastRange').value = st.roast;
+    if (!roastJelly) {
+      roastJelly = createJellySlider({
+        mount: $('#roastSliderMount'),
+        min: 0,
+        max: 7,
+        value: st.roast,
+        label: '배전 단계',
+        formatDrop: v => ROASTS[v][2] + '°',
+        onChange: val => {
+          st.roast = val;
+          renderRoast();
+        }
+      });
+    } else {
+      roastJelly.setValue(st.roast);
+    }
     $('#iRoastName').textContent = r[0];
     $('#iRoastTemp').textContent = r[2] + '°C';
     $('#heroRoastChip').textContent = `권장 배전: ${r[0]} (${r[2]}°C)`;
@@ -816,35 +2282,175 @@
     if (bean3DRenderer) {
       bean3DRenderer.updateRoast(r[3], ROAST_GLOSS[st.roast] || 0.24, st.roast);
     }
+    renderRoastSvg(st.roast);
     $('#scale').innerHTML = ROASTS.map((x, i) => `<i class="${i === st.roast ? 'on' : ''}" data-r="${i}" style="background:${x[3]}" title="${x[0]} ${x[2]}°C"></i>`).join('');
     $$('#scale i').forEach(el => {
       el.onclick = () => { st.roast = +el.dataset.r; renderRoast(); };
     });
   }
 
+  const MOMOS_URLS = {
+    yirgacheffe: 'https://momos.co.kr/Ethiopia',
+    nyeri: 'https://momos.co.kr/Kenya',
+    cerrado: 'https://momos.co.kr/Brazil',
+    huila: 'https://momos.co.kr/Columbia',
+    mandheling: 'https://momos.co.kr/SingleEstate',
+    antigua: 'https://momos.co.kr/Guatemala',
+    tarrazu: 'https://momos.co.kr/CostaRica',
+    panama: 'https://momos.co.kr/SingleEstate',
+    jamaica: 'https://momos.co.kr/SingleEstate',
+    yemen: 'https://momos.co.kr/SingleEstate',
+    rwanda: 'https://momos.co.kr/SingleEstate',
+    peru: 'https://momos.co.kr/SingleEstate',
+    honduras: 'https://momos.co.kr/SingleEstate',
+    india: 'https://momos.co.kr/CoffeeBeans',
+    vietnam: 'https://momos.co.kr/CoffeeBeans'
+  };
+
+  const SHOP_ICONS = {
+    naver: `<span class="shop-site-icon" style="background:#03C75A;" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.2 2.2h2.3l3 4.3V2.2h2.3v7.6H7.5l-3-4.3v4.3H2.2V2.2z" fill="#fff"/></svg></span>`,
+    momos: `<span class="shop-site-icon" style="background:#1E3B5C;" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><ellipse cx="6" cy="6" rx="4.2" ry="3.2" transform="rotate(-25 6 6)" fill="#DFB995"/><path d="M3.2 7.2 Q6 5.2 8.8 4.8" stroke="#1E3B5C" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></span>`,
+    fritz: `<span class="shop-site-icon" style="background:#264B82;" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4.2" fill="none" stroke="#fff" stroke-width="1.3"/><path d="M4.3 5.2h3.4l-.4 2.4a1.3 1.3 0 0 1-2.6 0l-.4-2.4z" fill="#FFD02F"/></svg></span>`,
+    almacielo: `<span class="shop-site-icon" style="background:#2D6A4F;" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><ellipse cx="6" cy="6" rx="4.2" ry="3.1" transform="rotate(-20 6 6)" fill="#9BC49E"/><path d="M3.2 6.8 Q6 5.5 8.8 5.2" stroke="#193300" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg></span>`,
+    amazon: `<span class="shop-site-icon" style="background:#232F3E;" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M2.2 7.2 Q6 9.8 9.8 7.2" stroke="#FF9900" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M8.4 6.7 L10.1 7.2 L9.2 8.7" stroke="#FF9900" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`
+  };
+
+  let shopExpandState = null;
+
+  function initExpandShops() {
+    const list = $('#shops');
+    const { S, step, clamp, after } = Motion;
+    const LIST_H = 256, ROW = 72, GAP = 8, PAD = (LIST_H - (3 * ROW + 2 * GAP)) / 2;
+    const avs = [2, 10, 9];
+    list.innerHTML = [0, 1, 2].map(i => `
+      <div class="ex-shop" data-i="${i}">
+        <div class="ex-thumb" data-av="${avs[i]}"><span class="ex-rk">#${i + 1}</span></div>
+        <div class="ex-head"><p class="ex-t"></p><p class="ex-s"></p></div>
+        <span class="ex-price"></span>
+        <div class="ex-more">
+          <p class="ex-desc"></p>
+          <div class="ex-row">
+            <span class="ex-chip ex-c1"></span>
+            <span class="ex-chip ex-c2"></span>
+            <a class="ex-go" href="#" target="_blank" rel="noopener noreferrer">바로가기 ↗</a>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    const els = [...list.querySelectorAll('.ex-shop')];
+    const rows = els.map((el, i) => ({
+      el, i,
+      thumb: el.querySelector('.ex-thumb'),
+      head: el.querySelector('.ex-head'),
+      titleEl: el.querySelector('.ex-t'),
+      subEl: el.querySelector('.ex-s'),
+      price: el.querySelector('.ex-price'),
+      more: el.querySelector('.ex-more'),
+      descEl: el.querySelector('.ex-desc'),
+      c1El: el.querySelector('.ex-c1'),
+      c2El: el.querySelector('.ex-c2'),
+      goEl: el.querySelector('.ex-go'),
+      p: S(0, 240, 21), a: S(0, 260, 28), y: S(PAD + i * (ROW + GAP), 300, 26), o: S(1, 300, 30), s: S(1, 300, 26)
+    }));
+
+    let open = -1;
+    function show(i) {
+      open = i;
+      rows.forEach(r => {
+        const home = PAD + r.i * (ROW + GAP);
+        if (i < 0) {
+          r.p.t = 0; r.a.t = 0; r.y.t = home; r.o.t = 1; r.s.t = 1;
+          r.el.style.zIndex = 1;
+          return;
+        }
+        if (r.i === i) {
+          r.p.t = 1; r.y.t = 0; r.o.t = 1; r.s.t = 1;
+          after(.16, () => { if (open === i) r.a.t = 1; });
+          r.el.style.zIndex = 3;
+        } else {
+          r.a.t = 0; r.p.t = 0; r.o.t = 0; r.s.t = .94;
+          r.y.t = home + (r.i < i ? -24 : 24);
+          r.el.style.zIndex = 1;
+        }
+      });
+    }
+
+    rows.forEach(r => {
+      r.el.addEventListener('click', e => {
+        if (e.target.closest('a.ex-go')) {
+          e.stopPropagation();
+          return;
+        }
+        e.stopPropagation();
+        show(open === r.i ? -1 : r.i);
+      });
+    });
+
+    Motion.register({
+      frame(dt) {
+        rows.forEach(r => [r.p, r.a, r.y, r.o, r.s].forEach(s => step(s, dt)));
+      },
+      render() {
+        const W = list.offsetWidth || 400;
+        rows.forEach(r => {
+          const p = r.p.x, q = clamp(p, 0, 1);
+          const full = 168 + (r.more.offsetHeight || 66) + 14;
+          r.el.style.height = (ROW + p * (full - ROW)).toFixed(2) + 'px';
+          r.el.style.transform = `translateY(${r.y.x.toFixed(2)}px) scale(${r.s.x.toFixed(4)})`;
+          r.el.style.opacity = clamp(r.o.x, 0, 1).toFixed(3);
+          r.el.style.pointerEvents = r.o.t > .5 ? 'auto' : 'none';
+          r.thumb.style.width = (48 + q * (W - 24 - 48)).toFixed(2) + 'px';
+          r.thumb.style.height = Math.max(48, 48 + p * 46).toFixed(2) + 'px';
+          r.thumb.style.borderRadius = (12 + q * 4).toFixed(2) + 'px';
+          r.head.style.transform = `translate(${(72 - 56 * q).toFixed(2)}px,${(16 + 102 * p).toFixed(2)}px)`;
+          r.price.style.transform = `translateY(${(23 + 96 * p).toFixed(2)}px)`;
+          const a = clamp(r.a.x, 0, 1);
+          r.more.style.opacity = a.toFixed(3);
+          r.more.style.transform = `translateY(${((1 - r.a.x) * 10).toFixed(2)}px)`;
+        });
+      }
+    });
+
+    shopExpandState = { rows, show };
+  }
+
   function renderShops() {
+    if (!shopExpandState) initExpandShops();
     const d = ORIGINS[st.originId];
     const nq = encodeURIComponent(`${d.origin} 싱글오리진 원두 -블렌드 -블랜드`);
     const aq = encodeURIComponent(`${d.origin.split(' ')[0]} single origin whole bean coffee`);
+    const momosUrl = MOMOS_URLS[d.id] || 'https://momos.co.kr/CoffeeBeans';
+    const badges = { rating: ['★ TOP', '챔피언', '4.5★+'], reviews: ['BEST', '로스터리', '인기순'], price: ['최저가', '생두 2%', '직구'] }[st.sort];
     const L = {
       rating: [
-        ['네이버 쇼핑 · 리뷰 좋은 순', `${d.origin} 구매자 평점·만족도 최상위 싱글오리진`, `https://search.shopping.naver.com/search/all?query=${nq}&sort=review_rel`],
-        ['모모스커피 공식몰', '월드 바리스타 챔피언 로스터리 · 산지 직거래 싱글오리진', `https://momos.co.kr/shop?keyword=${encodeURIComponent(d.origin.split(' ')[0])}`],
-        ['Amazon · Avg. Customer Review', '글로벌 스페셜티 홀빈 평점 4.5★ 이상 정렬', `https://www.amazon.com/s?k=${aq}&s=review-rank`]
+        [SHOP_ICONS.naver, '네이버 쇼핑 · 리뷰 좋은 순', `${d.origin} · ${d.alt}`, `${d.origin} 구매자 평점·만족도 최상위 싱글오리진`, '국내배송', '싱글오리진', `https://search.shopping.naver.com/search/all?query=${nq}&sort=review_rel`],
+        [SHOP_ICONS.momos, '모모스커피 공식몰 · 싱글오리진', `${d.origin} · 산지 직거래`, '월드 바리스타 챔피언 로스터리 · 산지 직거래 원두 카테고리', '당일발송', '홀빈/분쇄', momosUrl],
+        [SHOP_ICONS.amazon, 'Amazon · Avg. Customer Review', `${d.origin.split(' ')[0]} Whole Bean`, '글로벌 스페셜티 홀빈 평점 4.5★ 이상 정렬', '해외직구', 'Whole Bean', `https://www.amazon.com/s?k=${aq}&s=review-rank`]
       ],
       reviews: [
-        ['네이버 쇼핑 · 리뷰 많은 순', `${d.origin} 누적 실구매 후기 최다 베스트셀러`, `https://search.shopping.naver.com/search/all?query=${nq}&sort=review`],
-        ['프릳츠 · 커피리브레 공식몰', '누적 후기 검증 국내 대표 다이렉트 트레이드 로스터리', 'https://fritz.co.kr'],
-        ['Amazon · Best Sellers & Popularity', '해외 직구 누적 리뷰·인기 최상위 순', `https://www.amazon.com/s?k=${aq}&s=exact-aware-popularity-rank`]
+        [SHOP_ICONS.naver, '네이버 쇼핑 · 리뷰 많은 순', `${d.origin} · 실구매 최다`, `${d.origin} 누적 실구매 후기 최다 베스트셀러`, '누적리뷰', '베스트셀러', `https://search.shopping.naver.com/search/all?query=${nq}&sort=review`],
+        [SHOP_ICONS.fritz, '프릳츠 · 커피리브레 공식몰', '다이렉트 트레이드 로스터리', '누적 후기 검증 국내 대표 다이렉트 트레이드 로스터리', '산지직거래', '국내로스터리', 'https://fritz.co.kr'],
+        [SHOP_ICONS.amazon, 'Amazon · Best Sellers', `${d.origin.split(' ')[0]} Popularity`, '해외 직구 누적 리뷰·인기 최상위 순', '글로벌인기', '해외직구', `https://www.amazon.com/s?k=${aq}&s=exact-aware-popularity-rank`]
       ],
       price: [
-        ['네이버 쇼핑 · 최저가 순', `${d.origin} 200g / 500g / 1kg 용량별 최저가 비교`, `https://search.shopping.naver.com/search/all?query=${nq}&sort=price_asc`],
-        ['알마씨엘로 · GSC 생두 직영', `홈로스팅용 ${d.origin} 생두 (HS 0901.11 · 관세 2%)`, 'https://www.almacielo.com'],
-        ['Amazon · Price: Low to High', '해외 직구 벌크 홀빈 낮은 가격 순 정렬', `https://www.amazon.com/s?k=${aq}&s=price-asc-rank`]
+        [SHOP_ICONS.naver, '네이버 쇼핑 · 최저가 순', `${d.origin} · 용량별 비교`, `${d.origin} 200g / 500g / 1kg 용량별 최저가 비교`, '가격비교', '200g~1kg', `https://search.shopping.naver.com/search/all?query=${nq}&sort=price_asc`],
+        [SHOP_ICONS.almacielo, '알마씨엘로 · GSC 생두 직영', `홈로스팅용 생두 (0901.11)`, `홈로스팅용 ${d.origin} 생두 (HS 0901.11 · 관세 2%)`, '생두 2%', '홈로스팅', 'https://www.almacielo.com'],
+        [SHOP_ICONS.amazon, 'Amazon · Price: Low to High', `${d.origin.split(' ')[0]} Bulk Bean`, '해외 직구 벌크 홀빈 낮은 가격 순 정렬', '벌크직구', '최저가순', `https://www.amazon.com/s?k=${aq}&s=price-asc-rank`]
       ]
     }[st.sort];
-    $('#shops').innerHTML = L.map(([t, p, u], i) => `
-      <div class="shop"><div class="rk">${i + 1}</div><div><h4>${t}</h4><p>${p}</p></div><a href="${u}" target="_blank" rel="noopener noreferrer">바로가기 ↗</a></div>`).join('');
+
+    shopExpandState.rows.forEach((r, i) => {
+      const [icon, t, sub, desc, c1, c2, u] = L[i];
+      r.titleEl.innerHTML = `${icon}<span>${t}</span>`;
+      r.subEl.textContent = sub;
+      r.price.textContent = badges[i];
+      r.descEl.textContent = desc;
+      r.c1El.textContent = c1;
+      r.c2El.textContent = c2;
+      r.goEl.href = u;
+    });
+    shopExpandState.show(-1);
     $$('#seg button').forEach(b => b.classList.toggle('on', b.dataset.s === st.sort));
   }
 
@@ -926,6 +2532,7 @@
       f.classList.toggle('hidden-frame', st.singleFocus && fn !== n);
     });
     $$('.tool[data-go]').forEach(t => t.classList.toggle('on', +t.dataset.go === n));
+    sideNavPick(n - 1);
     drawWires();
     moveCursor();
     if (scroll) {
@@ -937,7 +2544,6 @@
   function toggleSingleFocusMode() {
     st.singleFocus = !st.singleFocus;
     $('#frames').classList.toggle('single-focus', st.singleFocus);
-    $('#focusToggleBtn').textContent = st.singleFocus ? '🎯 단일 집중' : '⊞ 2×2 보드';
     $('#toolModeBtn').classList.toggle('on', st.singleFocus);
     selectFrame(st.frame, false);
     requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
@@ -970,14 +2576,66 @@
     $('#zVal').textContent = Math.round(st.zoom * 100) + '%';
   }
 
+  const DOSSIER_META = {
+    yirgacheffe: { en: 'Yirgacheffe G1 Washed', serial: 'ETH01', dripper: '하리오 V60 / 칼리타 웨이브', temp: '93℃', ratio: '1 : 15', time: '2m 30s', tip: '💡 원두 20g 기준 40ml로 35초간 뜸을 들인 후, 중심부 위주로 부드럽게 2회 나누어 푸어링하면 잡미 없이 화사한 꽃향기를 극대화할 수 있습니다.' },
+    nyeri: { en: 'Nyeri AA Double Washed', serial: 'KEN02', dripper: '하리오 V60 / 오리가미', temp: '94℃', ratio: '1 : 15.5', time: '2m 40s', tip: '💡 높은 추출수 온도(94℃)로 3회 분할 푸어링하면 블랙커런트와 자몽 특유의 선명한 과즙 산미를 끌어올릴 수 있습니다.' },
+    cerrado: { en: 'Cerrado Mineiro Natural', serial: 'BRA03', dripper: '칼리타 웨이브 / 에스프레소', temp: '90℃', ratio: '1 : 14', time: '2m 20s', tip: '💡 90℃의 부드러운 물 온도로 추출하면 구운 아몬드의 고소함과 브라운슈가의 단맛이 텁텁함 없이 깔끔하게 이어집니다.' },
+    huila: { en: 'Huila Supremo Washed', serial: 'COL04', dripper: '하리오 V60 / 클레버', temp: '92℃', ratio: '1 : 15', time: '2m 35s', tip: '💡 균일한 중분쇄로 2m 35s 내외 추출 시 캐러멜 단맛과 구운 호두의 밸런스가 가장 안정적으로 표현됩니다.' },
+    mandheling: { en: 'Sumatra Mandheling G1', serial: 'IDN05', dripper: '고노(Kono) / 프렌치프레스', temp: '89℃', ratio: '1 : 13.5', time: '2m 50s', tip: '💡 89℃ 이하의 물로 천천히 점적 추출하면 다크초콜릿 같은 묵직한 바디와 삼나무 여운을 부드럽게 즐길 수 있습니다.' },
+    antigua: { en: 'Antigua SHB Volcanic', serial: 'GTM06', dripper: '칼리타 웨이브 / 모카포트', temp: '91℃', ratio: '1 : 14.5', time: '2m 35s', tip: '💡 91℃에서 굵은 물줄기로 추출하면 스모키한 다크초콜릿 풍미와 화산토 특유의 단맛이 조화롭게 살아납니다.' },
+    tarrazu: { en: 'Tarrazú SHB Yellow Honey', serial: 'CRI07', dripper: '하리오 V60 / 에어로프레스', temp: '92℃', ratio: '1 : 15', time: '2m 25s', tip: '💡 아카시아 꿀과 오렌지 마멀레이드 노트를 살리기 위해 92℃에서 경쾌한 유속으로 추출하는 것을 권장합니다.' },
+    panama: { en: 'Boquete Geisha SHB', serial: 'PAN08', dripper: '하리오 V60 / 오리가미', temp: '93℃', ratio: '1 : 16', time: '2m 25s', tip: '💡 1:16의 다소 가벼운 비율과 93℃ 추출수로 3회 분할 푸어링하면 자스민 꽃향과 얼그레이 여운이 가장 선명하게 피어납니다.' },
+    jamaica: { en: 'Jamaica Blue Mountain No.1', serial: 'JAM09', dripper: '고노(Kono) / 사이폰', temp: '90℃', ratio: '1 : 15', time: '2m 30s', tip: '💡 90℃의 부드러운 물 온도로 천천히 추출하면 블루마운틴 특유의 실크 같은 목넘김과 은은한 단맛을 온전히 즐길 수 있습니다.' },
+    yemen: { en: 'Yemen Mocha Mattari', serial: 'YEM10', dripper: '칼리타 웨이브 / 이브릭', temp: '91℃', ratio: '1 : 14', time: '2m 40s', tip: '💡 91℃에서 중분쇄로 추출하면 건포도의 와이니한 향미와 다크초콜릿, 스파이시한 여운이 균형을 이룹니다.' },
+    rwanda: { en: 'Rwanda Bourbon Lake Kivu', serial: 'RWA11', dripper: '하리오 V60 / 케멕스', temp: '93℃', ratio: '1 : 15.5', time: '2m 30s', tip: '💡 93℃ 추출수로 맑게 내려내면 블러드 오렌지 산미와 홍차 같은 깔끔한 피니시가 돋보입니다.' },
+    peru: { en: 'Peru Chanchamayo Organic', serial: 'PER12', dripper: '칼리타 웨이브 / 클레버', temp: '91℃', ratio: '1 : 15', time: '2m 30s', tip: '💡 91℃로 부담 없이 추출하면 구운 헤이즐넛과 밀크초콜릿의 편안한 데일리 밸런스를 맛볼 수 있습니다.' },
+    honduras: { en: 'Honduras Marcala SHG', serial: 'HND13', dripper: '하리오 V60 / 칼리타 웨이브', temp: '92℃', ratio: '1 : 15', time: '2m 30s', tip: '💡 92℃에서 2분 30초 내외로 추출하면 흑설탕의 진한 단맛과 붉은 사과 산미가 조화롭게 살아납니다.' },
+    india: { en: 'India Monsooned Malabar AA', serial: 'IND14', dripper: '에스프레소 / 모카포트 / 프렌치프레스', temp: '89℃', ratio: '1 : 13', time: '2m 45s', tip: '💡 산미가 거의 없으므로 89℃ 저온 추출이나 에스프레소로 내리면 크리미한 바디와 스파이시한 고소함이 극대화됩니다.' },
+    vietnam: { en: 'Vietnam Dalat · Buon Ma Thuot', serial: 'VNM15', dripper: '베트남 핀(Phin) / 에스프레소', temp: '92℃', ratio: '1 : 10', time: '4m 00s', tip: '💡 전통 핀 드리퍼에 진하게 추출한 뒤 연유와 얼음을 더하면 정통 카페 쓰어다의 깊은 코코아 바디를 즐길 수 있습니다.' }
+  };
+
   function openDossier() {
     const d = ORIGINS[st.originId], r = ROASTS[st.roast];
-    $('#dTitle').textContent = `${d.origin} 공식 감정서`;
-    $('#dSummary').textContent = `${d.desc} 권장 배전은 ${r[0]}(${r[2]}°C)이며 현재 취향 일치율은 ${matchPct()}%입니다.`;
-    $('#dOriginAlt').textContent = `${d.origin} · ${d.alt}`;
-    $('#dVarProc').textContent = `${d.varietal} · ${d.proc}`;
-    $('#dRoast').textContent = `${r[0]} · ${r[2]}°C (${r[1]})`;
-    $('#dRoute').textContent = `HS 0901.21 (관세 8%) · ${d.port.replace('🚢 ', '')}`;
+    const meta = DOSSIER_META[st.originId] || DOSSIER_META.yirgacheffe;
+    const p = d.profile;
+    $('#dTitle').textContent = d.origin;
+    $('#dEnTitle').textContent = meta.en;
+    $('#dSerial').textContent = `DOSSIER NO. CoBTS-2026-${meta.serial}`;
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    $('#dDate').textContent = `${yyyy}.${mm}.${dd} VERIFIED`;
+
+    $('#dOriginAlt').textContent = d.origin;
+    $('#dAlt').textContent = `${d.alt} ASL`;
+    $('#dVar').textContent = d.varietal;
+    $('#dProc').textContent = d.proc;
+    $('#dRoute').textContent = d.port.replace('🚢 ', '');
+
+    $('#dValA').textContent = `${p.a.toFixed(1)} / 10`;
+    $('#dBarA').style.width = `${Math.min(100, p.a * 10)}%`;
+    $('#dValS').textContent = `${p.s.toFixed(1)} / 10`;
+    $('#dBarS').style.width = `${Math.min(100, p.s * 10)}%`;
+    $('#dValB').textContent = `${p.b.toFixed(1)} / 10`;
+    $('#dBarB').style.width = `${Math.min(100, p.b * 10)}%`;
+    $('#dValN').textContent = `${p.n.toFixed(1)} / 10`;
+    $('#dBarN').style.width = `${Math.min(100, p.n * 10)}%`;
+
+    $('#dFlavorTags').innerHTML = d.notes.map(([t]) => `<span class="dossier-tag">${t}</span>`).join('');
+    $('#dRoast').textContent = `${r[0]} (${r[2]}°C · ${r[1]})`;
+    $('#dDripper').textContent = meta.dripper;
+    $('#dBrewTemp').textContent = meta.temp;
+    $('#dBrewRatio').textContent = meta.ratio;
+    $('#dBrewTime').textContent = meta.time;
+    $('#dBrewTip').textContent = meta.tip;
+
+    const nq = encodeURIComponent(`${d.origin} 싱글오리진 원두 -블렌드 -블랜드`);
+    const aq = encodeURIComponent(`${d.origin.split(' ')[0]} single origin whole bean coffee`);
+    $('#dNaverLink').href = `https://search.shopping.naver.com/search/all?query=${nq}&sort=review_rel`;
+    $('#dMomosLink').href = MOMOS_URLS[d.id] || 'https://momos.co.kr/CoffeeBeans';
+    $('#dAmazonLink').href = `https://www.amazon.com/s?k=${aq}&s=review-rank`;
+
     $('#dossierModal').classList.add('open');
   }
 
@@ -985,32 +2643,79 @@
   $$('.preset').forEach(b => b.addEventListener('click', () => setTastePreset(b.dataset.t)));
   $$('.tool[data-go]').forEach(b => b.addEventListener('click', () => selectFrame(+b.dataset.go)));
   $('#toolModeBtn').onclick = toggleSingleFocusMode;
-  $('#focusToggleBtn').onclick = toggleSingleFocusMode;
   $$('.frame').forEach(f => f.addEventListener('click', e => { if (!e.target.closest('a,button,svg')) selectFrame(+f.dataset.n, false); }));
   $$('#seg button').forEach(b => b.addEventListener('click', () => { st.sort = b.dataset.s; renderShops(); }));
   $$('#procTabs .proc-btn').forEach(b => b.addEventListener('click', () => setProcTab(b.dataset.proc)));
-  $('#roastRange').addEventListener('input', e => { st.roast = +e.target.value; renderRoast(); });
   $('#zIn').onclick = () => setZoom(st.zoom + .1);
   $('#zOut').onclick = () => setZoom(st.zoom - .1);
   $('#zFit').onclick = () => setZoom(Math.min(1, ($('#canvas').clientWidth - 40) / 1240));
   $('#themeBtn').onclick = () => {
     const dark = document.documentElement.classList.toggle('dark');
-    $('#themeBtn').textContent = dark ? '☀️ 라이트' : '🌙 다크';
+    $('#themeBtn').textContent = dark ? '☀️' : '🌙';
     if (typeof window.setMapStyle === 'function') window.setMapStyle(dark ? 3 : 1, false);
   };
+  let lastInspectorWidth = 332;
+  function setInspectorHidden(hidden) {
+    const app = $('.app');
+    app.classList.toggle('inspector-hidden', hidden);
+    if (!hidden) {
+      const w = Math.max(240, lastInspectorWidth);
+      app.style.setProperty('--inspector-w', w + 'px');
+    }
+    $('#inspectorToggleBtn').classList.toggle('on', !hidden);
+    $('#inspectorToggleBtn').setAttribute('aria-pressed', String(!hidden));
+    requestAnimationFrame(() => { drawWires(); moveCursor(); });
+  }
+  $('#inspectorToggleBtn').onclick = () => {
+    const currentlyHidden = $('.app').classList.contains('inspector-hidden');
+    setInspectorHidden(!currentlyHidden);
+  };
+  (() => {
+    const resizer = $('#inspResizer');
+    if (!resizer) return;
+    let dragging = false;
+    resizer.addEventListener('mousedown', e => {
+      e.preventDefault();
+      dragging = true;
+      resizer.classList.add('dragging');
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+    });
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      const app = $('.app');
+      const rawW = window.innerWidth - e.clientX;
+      if (rawW < 265) {
+        dragging = false;
+        resizer.classList.remove('dragging');
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        setInspectorHidden(true);
+        return;
+      }
+      const maxW = Math.min(520, Math.floor(window.innerWidth * 0.45));
+      const w = Math.max(280, Math.min(maxW, rawW));
+      lastInspectorWidth = w;
+      app.classList.remove('inspector-hidden');
+      app.style.setProperty('--inspector-w', w + 'px');
+      $('#inspectorToggleBtn').classList.add('on');
+      $('#inspectorToggleBtn').setAttribute('aria-pressed', 'true');
+      drawWires();
+      moveCursor();
+    });
+    window.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = false;
+      resizer.classList.remove('dragging');
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    });
+  })();
   $('#logoHome').onclick = () => {
     $('#q').value = '화사한 산미가 좋아요';
-  selectOrigin('yirgacheffe', true);
+    selectOrigin('yirgacheffe', true);
     selectFrame(1, true);
   };
-  $$('.insp-tabs button').forEach(btn => {
-    btn.onclick = () => {
-      $$('.insp-tabs button').forEach(b => b.classList.toggle('on', b === btn));
-      if (btn.dataset.tab === 'roast') selectFrame(3, true);
-      else selectFrame(1, true);
-    };
-  });
-  $('#openDossierBtn').onclick = openDossier;
   $('#inspDossierBtn').onclick = openDossier;
   $('#closeDossierBtn').onclick = () => $('#dossierModal').classList.remove('open');
   $('#dossierModal').addEventListener('click', e => { if (e.target === $('#dossierModal')) $('#dossierModal').classList.remove('open'); });
@@ -1018,7 +2723,15 @@
   $('#searchForm').addEventListener('submit', e => {
     e.preventDefault();
     const q = $('#q').value.trim();
-    if (/안티구아|과테말라|스모키/.test(q)) selectOrigin('antigua', true);
+    if (/파나마|게이샤|보케테|얼그레이/.test(q)) selectOrigin('panama', true);
+    else if (/자메이카|블루마운틴|실키/.test(q)) selectOrigin('jamaica', true);
+    else if (/예멘|모카|마타리|와이니|건포도/.test(q)) selectOrigin('yemen', true);
+    else if (/르완다|키부|블랙티|홍차/.test(q)) selectOrigin('rwanda', true);
+    else if (/페루|찬차마요|유기농|공정무역/.test(q)) selectOrigin('peru', true);
+    else if (/온두라스|마르칼라|흑설탕/.test(q)) selectOrigin('honduras', true);
+    else if (/인도|몬순|말라바|스파이스/.test(q)) selectOrigin('india', true);
+    else if (/베트남|달랏|부온마투옷|로부스타|쓰어다|연유/.test(q)) selectOrigin('vietnam', true);
+    else if (/안티구아|과테말라|스모키/.test(q)) selectOrigin('antigua', true);
     else if (/케냐|니에리|자몽|베리/.test(q)) selectOrigin('nyeri', true);
     else if (/콜롬비아|우일라|수프리모|캐러멜/.test(q)) selectOrigin('huila', true);
     else if (/코스타리카|타라주|허니|꿀|단맛|균형|밸런스/.test(q)) selectOrigin('tarrazu', true);
@@ -1033,6 +2746,7 @@
       e.preventDefault(); $('#q').focus(); $('#q').select();
     } else if (e.key === 'Escape') {
       $('#dossierModal').classList.remove('open');
+      $('#mapModal').classList.remove('open');
     }
   });
 
