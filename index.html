@@ -1019,8 +1019,8 @@
       </div>
       <div class="map-actions">
         <div class="map-type-group" id="mapTypeGroup">
-          <button type="button" class="map-type-btn on" data-mt="y">위성</button>
-          <button type="button" class="map-type-btn" data-mt="m">지도</button>
+          <button type="button" class="map-type-btn on" data-mt="m">지도</button>
+          <button type="button" class="map-type-btn" data-mt="y">위성</button>
           <button type="button" class="map-type-btn" data-mt="p">지형</button>
         </div>
         <a id="mapExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;">🗺️ Google 지도 열기 ↗</a>
@@ -2102,7 +2102,7 @@
     india: [12.91, 74.86],
     vietnam: [12.67, 108.04]
   };
-  let currentMapType = 'y';
+  let currentMapType = 'm';
   let currentMapOid = 'yirgacheffe';
   let leafletMap = null;
   let leafletTileLayer = null;
@@ -2131,7 +2131,7 @@
         attr: 'Tiles © Esri · World Topo'
       }
     };
-    const cfg = tileConfigs[currentMapType] || tileConfigs.y;
+    const cfg = tileConfigs[currentMapType] || tileConfigs.m;
     if (!leafletMap) {
       leafletMap = L.map('googleMapCanvas', { zoomControl: true }).setView([lat, lon], 9);
     } else {
