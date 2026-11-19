@@ -109,7 +109,6 @@
   .app.inspector-hidden .inspector { display: none; }
   @media (max-width: 1080px) {
     .body { grid-template-columns: 1fr; }
-    .inspector { position: fixed; right: 0; top: 56px; bottom: 0; z-index: 45; width: min(340px, 88vw); box-shadow: -10px 0 30px rgba(0,0,0,.22); }
     .insp-resizer { display: none; }
   }
 
@@ -537,6 +536,8 @@
     .crumb .tag { display: none; }
     .frames { gap: 40px; padding-left: 64px; }
     .hero { margin-left: 64px; }
+    .inspector { position: fixed; right: 0; top: 56px; bottom: 0; z-index: 45; width: min(340px, 88vw); border-left: 1px solid var(--line); box-shadow: -10px 0 30px rgba(0,0,0,.22); transform: translateX(0); transition: transform .32s cubic-bezier(.22, 1, .36, 1); overflow-y: auto; }
+    .app.inspector-hidden .inspector { display: flex; transform: translateX(calc(100% + 24px)); pointer-events: none; }
   }
   @media (max-width: 920px) {
     .frames { grid-template-columns: 1fr; gap: 36px; padding-left: 64px; }
@@ -1754,7 +1755,7 @@
       }));
       const f = S(0, 220, 18);
       const mid = (cards.length - 1) / 2;
-      let hot = -1, inside = false;
+      let hot = -1, inside = false, pinned = false;
 
       function isCardSelected(c) {
         if (c.kind === 'commercial') return st.blendPillar === 'commercial' && st.blendId === c.bid;
@@ -1770,13 +1771,38 @@
           const isSel = isCardSelected(c);
           c.lift.t = isHot ? -20 : 0;
           c.sc.t = isHot ? 1.07 : 1;
-          c.el.style.zIndex = isHot ? 25 : (isSel && !inside ? 18 : cards.length - Math.abs(Math.round(c.i - mid)));
+          c.el.style.zIndex = isHot ? 25 : (isSel && !inside && !pinned ? 18 : cards.length - Math.abs(Math.round(c.i - mid)));
         });
       }
       setHot(-1);
 
-      groupEl.addEventListener('pointerenter', () => { inside = true; f.t = 1; });
-      groupEl.addEventListener('pointerleave', () => { inside = false; f.t = 0; setHot(-1); });
+      function collapseGroup() {
+        pinned = false;
+        if (!inside) { f.t = 0; setHot(-1); }
+        groupEl.classList.remove('is-pinned');
+      }
+      function expandGroup() {
+        fanGroupStates.forEach(s => { if (s.groupEl !== groupEl && s.collapse) s.collapse(); });
+        pinned = true;
+        f.t = 1;
+        groupEl.classList.add('is-pinned');
+      }
+
+      groupEl.addEventListener('pointerenter', e => {
+        if (e.pointerType !== 'mouse') return;
+        inside = true;
+        f.t = 1;
+      });
+      groupEl.addEventListener('pointerleave', e => {
+        if (e.pointerType !== 'mouse') return;
+        inside = false;
+        if (!pinned) { f.t = 0; setHot(-1); }
+      });
+      groupEl.addEventListener('click', e => {
+        if (e.target.closest('.fan-card')) return;
+        if (pinned) collapseGroup();
+        else expandGroup();
+      });
       if (groupEl.dataset.reg === 'custom') {
         const head = groupEl.querySelector('.fan-head');
         if (head) {
@@ -1870,6 +1896,13 @@
         }
         c.el.addEventListener('click', () => {
           if (c.el.dataset.skipClick === '1') return;
+          if (!pinned && f.x < 0.55) {
+            expandGroup();
+            setHot(c.i);
+            return;
+          }
+          expandGroup();
+          setHot(c.i);
           c.lift.v = -240;
           if (c.kind === 'commercial') {
             st.blendGoalId = null;
@@ -1893,7 +1926,7 @@
         });
       });
 
-      const state = { groupEl, cards, setHot };
+      const state = { groupEl, cards, setHot, collapse: collapseGroup, isPinned: () => pinned };
       fanGroupStates.push(state);
 
       Motion.register({
@@ -1920,12 +1953,20 @@
     });
 
     fanModeRendered = st.mode;
+    if (!window._fanOutsideBound) {
+      window._fanOutsideBound = true;
+      document.addEventListener('pointerdown', e => {
+        if (!e.target.closest('#originStrip')) {
+          fanGroupStates.forEach(s => { if (s.collapse) s.collapse(); });
+        }
+      });
+    }
   }
 
   function renderOriginStripAndMap() {
     if (fanModeRendered !== st.mode) initOriginFanCards();
     const blendMap = new Map(st.blend.map(x => [x.id, x.pct]));
-    fanGroupStates.forEach(({ groupEl, cards, setHot }) => {
+    fanGroupStates.forEach(({ groupEl, cards, setHot, isPinned }) => {
       let hasActive = false;
       cards.forEach(c => {
         if (c.kind === 'commercial') {
@@ -1949,7 +1990,7 @@
         }
       });
       groupEl.classList.toggle('has-active', hasActive);
-      setHot(-1);
+      if (!isPinned || !isPinned()) setHot(-1);
     });
 
     const linksG = $('#beltLinksGroup');
