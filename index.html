@@ -530,6 +530,7 @@
   .blend-brew-list span { display: flex; justify-content: space-between; gap: 8px; }
   .blend-brew-list code { font: 700 11px var(--mono); color: var(--flame); }
   .mobile-insp-handle { display: none; }
+  .blend-touch-ghost { position: fixed !important; inset: auto !important; z-index: 90 !important; pointer-events: none; width: 122px; height: 132px; opacity: .92; transform: translate(-50%, -50%) scale(1.02) !important; box-shadow: 0 16px 32px rgba(0,0,0,.28); border-radius: 15px; }
 
   /* ===== Tablet & Smartphone Responsive Optimization ===== */
   @media (max-width: 1180px) {
@@ -560,7 +561,6 @@
     .app.inspector-hidden .inspector { display: block; transform: translateX(calc(100% + 24px)); pointer-events: none; }
     .mobile-insp-handle { display: flex; flex-direction: column; align-items: center; gap: 5px; position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 46; padding: 12px 7px 12px 9px; border-radius: 16px 0 0 16px; background: var(--panel); border: 1px solid var(--line); border-right: 0; box-shadow: -4px 4px 16px rgba(0,0,0,.16); color: var(--ink); cursor: grab; touch-action: none; user-select: none; transition: right .32s cubic-bezier(.22, 1, .36, 1), border-color .15s, color .15s; }
     .mobile-insp-handle:active { cursor: grabbing; }
-    .blend-touch-ghost { position: fixed; inset: auto !important; z-index: 90; pointer-events: none; width: 122px; height: 132px; opacity: .92; transform: translate(-50%, -50%) scale(1.04); box-shadow: 0 16px 32px rgba(0,0,0,.28); border-radius: 15px; }
     .mobile-insp-handle:hover { border-color: var(--flame); color: var(--flame); }
     .mobile-insp-handle svg { width: 16px; height: 16px; transition: transform .25s ease; }
     .mobile-insp-handle span { font: 800 10px var(--sans); writing-mode: vertical-rl; letter-spacing: .04em; color: var(--flame); }
@@ -1891,6 +1891,7 @@
               try { c.el.setPointerCapture(e.pointerId); } catch (_) {}
               c.el.classList.add('dragging');
               tGhost = c.el.cloneNode(true);
+              tGhost.removeAttribute('style');
               tGhost.className = 'fan-card blend-touch-ghost';
               tGhost.style.left = `${e.clientX}px`;
               tGhost.style.top = `${e.clientY}px`;
