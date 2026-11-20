@@ -3744,30 +3744,49 @@
           </div>`;
       }
     }
+    const ORIGIN_EN_QUERY = {
+      yirgacheffe: 'Ethiopia', nyeri: 'Kenya', rwanda: 'Rwanda', yemen: 'Yemen',
+      antigua: 'Guatemala', tarrazu: 'Costa Rica', panama: 'Panama', jamaica: 'Jamaica', honduras: 'Honduras',
+      cerrado: 'Brazil', huila: 'Colombia', peru: 'Peru',
+      mandheling: 'Sumatra', india: 'India', vietnam: 'Vietnam'
+    };
+    const topBlend = isBlend ? bs.sorted.slice(0, 2) : [];
+    const topKr = topBlend.map(x => ORIGINS[x.id].origin.split(' ')[0]);
+    const topEn = topBlend.map(x => ORIGIN_EN_QUERY[x.id] || ORIGINS[x.id].origin.split(' ')[0]);
+    const topSummary = topBlend.map(x => `${ORIGINS[x.id].origin.split(' ')[0]} ${x.pct}%`).join(' + ');
+
     const nq = isBlend
-      ? encodeURIComponent(`${st.blend.map(x => ORIGINS[x.id].origin.split(' ')[0]).slice(0, 2).join(' ')} 스페셜티 블렌드 원두`)
+      ? encodeURIComponent(`${topKr.join(' ')} 블렌드 원두`)
       : encodeURIComponent(`${d.origin} 싱글오리진 원두 -블렌드 -블랜드`);
     const aq = isBlend
-      ? encodeURIComponent(`${st.blend.map(x => ORIGINS[x.id].origin.split(' ')[0]).slice(0, 2).join(' ')} specialty coffee blend whole bean`)
-      : encodeURIComponent(`${d.origin.split(' ')[0]} single origin whole bean coffee`);
+      ? encodeURIComponent(`${topEn.join(' ')} coffee blend whole bean`)
+      : encodeURIComponent(`${ORIGIN_EN_QUERY[d.id] || d.origin.split(' ')[0]} single origin whole bean coffee`);
+
+    const momosStyle = isBlend
+      ? (bs.profile.a >= 6.5 ? '프루티 봉봉 (화사한 산미형)' : bs.profile.b >= 6.5 ? '에스쇼콜라 (다크·초콜릿)' : '부산 블렌드 (밸런스형)')
+      : '';
+    const fritzStyle = isBlend
+      ? (bs.profile.a >= 6.5 ? '잘 되어 가시나 (산미·과일향)' : bs.profile.b >= 6.5 ? '올드독 (묵직·고소함)' : '서울 시네마 (단맛·균형)')
+      : '';
+
     const momosUrl = isBlend ? 'https://momos.co.kr/CoffeeBeans' : (MOMOS_URLS[d.id] || 'https://momos.co.kr/CoffeeBeans');
-    const subTag = isBlend ? bs.shortLabel : `${d.origin} · ${d.alt}`;
+    const subTag = isBlend ? `1·2순위: ${topSummary}` : `${d.origin} · ${d.alt}`;
     const badges = { rating: ['★ TOP', '챔피언', '4.5★+'], reviews: ['BEST', '로스터리', '인기순'], price: ['최저가', '생두 2%', '직구'] }[st.sort];
     const L = {
       rating: [
-        [SHOP_ICONS.naver, '네이버 쇼핑 · 리뷰 좋은 순', subTag, isBlend ? `${st.blendName} 유사 배합 시그니처 블렌드 평점 최상위` : `${d.origin} 구매자 평점·만족도 최상위 싱글오리진`, '국내배송', isBlend ? '블렌드' : '싱글오리진', `https://search.shopping.naver.com/search/all?query=${nq}&sort=review_rel`],
-        [SHOP_ICONS.momos, isBlend ? '모모스커피 공식몰 · 에스쇼콜라/블렌드' : '모모스커피 공식몰 · 싱글오리진', isBlend ? '시그니처 블렌드 라인업' : `${d.origin} · 산지 직거래`, '월드 바리스타 챔피언 로스터리 · 스페셜티 원두 공식몰', '당일발송', '홀빈/분쇄', momosUrl],
-        [SHOP_ICONS.amazon, 'Amazon · Avg. Customer Review', isBlend ? 'Specialty Coffee Blend' : `${d.origin.split(' ')[0]} Whole Bean`, '글로벌 스페셜티 홀빈 평점 4.5★ 이상 정렬', '해외직구', 'Whole Bean', `https://www.amazon.com/s?k=${aq}&s=review-rank`]
+        [SHOP_ICONS.naver, '네이버 쇼핑 · 리뷰 좋은 순', subTag, isBlend ? `가장 비중 높은 ${topSummary} 조합 블렌드 원두 평점 최상위 검색` : `${d.origin} 구매자 평점·만족도 최상위 싱글오리진`, '국내배송', isBlend ? '유사블렌드' : '싱글오리진', `https://search.shopping.naver.com/search/all?query=${nq}&sort=review_rel`],
+        [SHOP_ICONS.momos, isBlend ? `모모스커피 · ${momosStyle.split(' ')[0]} 추천` : '모모스커피 공식몰 · 싱글오리진', isBlend ? `${topSummary} 성향 유사` : `${d.origin} · 산지 직거래`, isBlend ? `${topSummary} 비율과 가장 유사한 모모스 추천 라인업: ${momosStyle}` : '월드 바리스타 챔피언 로스터리 · 스페셜티 원두 공식몰', '당일발송', '홀빈/분쇄', momosUrl],
+        [SHOP_ICONS.amazon, 'Amazon · Avg. Customer Review', isBlend ? `${topEn.join(' + ')} Blend` : `${ORIGIN_EN_QUERY[d.id] || d.origin.split(' ')[0]} Whole Bean`, isBlend ? `${topEn.join(' & ')} 기반 글로벌 블렌드 홀빈 평점 4.5★+ 검색` : '글로벌 스페셜티 홀빈 평점 4.5★ 이상 정렬', '해외직구', 'Whole Bean', `https://www.amazon.com/s?k=${aq}&s=review-rank`]
       ],
       reviews: [
-        [SHOP_ICONS.naver, '네이버 쇼핑 · 리뷰 많은 순', subTag, isBlend ? `${st.blendName} 스타일 누적 실구매 후기 최다` : `${d.origin} 누적 실구매 후기 최다 베스트셀러`, '누적리뷰', '베스트셀러', `https://search.shopping.naver.com/search/all?query=${nq}&sort=review`],
-        [SHOP_ICONS.fritz, isBlend ? '프릳츠 · 올드독 / 시그니처 블렌드' : '프릳츠 · 커피리브레 공식몰', '다이렉트 트레이드 로스터리', '누적 후기 검증 국내 대표 다이렉트 트레이드 로스터리', '산지직거래', '국내로스터리', 'https://fritz.co.kr'],
-        [SHOP_ICONS.amazon, 'Amazon · Best Sellers', isBlend ? 'Popular Coffee Blends' : `${d.origin.split(' ')[0]} Popularity`, '해외 직구 누적 리뷰·인기 최상위 순', '글로벌인기', '해외직구', `https://www.amazon.com/s?k=${aq}&s=exact-aware-popularity-rank`]
+        [SHOP_ICONS.naver, '네이버 쇼핑 · 리뷰 많은 순', subTag, isBlend ? `${topSummary} 기반 실구매 후기 최다 블렌드 검색` : `${d.origin} 누적 실구매 후기 최다 베스트셀러`, '누적리뷰', '베스트셀러', `https://search.shopping.naver.com/search/all?query=${nq}&sort=review`],
+        [SHOP_ICONS.fritz, isBlend ? `프릳츠 · ${fritzStyle.split(' ')[0]} 추천` : '프릳츠 · 커피리브레 공식몰', isBlend ? `${topSummary} 성향 유사` : '다이렉트 트레이드 로스터리', isBlend ? `${topSummary} 프로파일과 가장 가까운 프릳츠 블렌드: ${fritzStyle}` : '누적 후기 검증 국내 대표 다이렉트 트레이드 로스터리', '산지직거래', '국내로스터리', 'https://fritz.co.kr'],
+        [SHOP_ICONS.amazon, 'Amazon · Best Sellers', isBlend ? `${topEn.join(' + ')} Best Sellers` : `${ORIGIN_EN_QUERY[d.id] || d.origin.split(' ')[0]} Popularity`, isBlend ? `${topEn.join(' & ')} 조합 해외 직구 인기 순위 검색` : '해외 직구 누적 리뷰·인기 최상위 순', '글로벌인기', '해외직구', `https://www.amazon.com/s?k=${aq}&s=exact-aware-popularity-rank`]
       ],
       price: [
-        [SHOP_ICONS.naver, '네이버 쇼핑 · 최저가 순', subTag, isBlend ? `${st.blendName} 200g / 500g / 1kg 최저가 비교` : `${d.origin} 200g / 500g / 1kg 용량별 최저가 비교`, '가격비교', '200g~1kg', `https://search.shopping.naver.com/search/all?query=${nq}&sort=price_asc`],
-        [SHOP_ICONS.almacielo, '알마씨엘로 · GSC 생두 직영', `홈로스팅용 생두 (0901.11)`, isBlend ? `직접 블렌딩용 ${bs.shortLabel} 생두 (HS 0901.11 · 관세 2%)` : `홈로스팅용 ${d.origin} 생두 (HS 0901.11 · 관세 2%)`, '생두 2%', '홈로스팅', 'https://www.almacielo.com'],
-        [SHOP_ICONS.amazon, 'Amazon · Price: Low to High', isBlend ? 'Bulk Coffee Blends' : `${d.origin.split(' ')[0]} Bulk Bean`, '해외 직구 벌크 홀빈 낮은 가격 순 정렬', '벌크직구', '최저가순', `https://www.amazon.com/s?k=${aq}&s=price-asc-rank`]
+        [SHOP_ICONS.naver, '네이버 쇼핑 · 최저가 순', subTag, isBlend ? `${topSummary} 블렌드 200g / 500g / 1kg 최저가 검색` : `${d.origin} 200g / 500g / 1kg 용량별 최저가 비교`, '가격비교', '200g~1kg', `https://search.shopping.naver.com/search/all?query=${nq}&sort=price_asc`],
+        [SHOP_ICONS.almacielo, '알마씨엘로 · GSC 생두 직영', isBlend ? `${topSummary} 생두` : `홈로스팅용 생두 (0901.11)`, isBlend ? `직접 블렌딩용 1·2순위(${topSummary}) 생두 소분 구매 (HS 0901.11 · 관세 2%)` : `홈로스팅용 ${d.origin} 생두 (HS 0901.11 · 관세 2%)`, '생두 2%', '홈로스팅', 'https://www.almacielo.com'],
+        [SHOP_ICONS.amazon, 'Amazon · Price: Low to High', isBlend ? `${topEn.join(' + ')} Bulk` : `${ORIGIN_EN_QUERY[d.id] || d.origin.split(' ')[0]} Bulk Bean`, isBlend ? `${topEn.join(' & ')} 블렌드 벌크 홀빈 낮은 가격 순 검색` : '해외 직구 벌크 홀빈 낮은 가격 순 정렬', '벌크직구', '최저가순', `https://www.amazon.com/s?k=${aq}&s=price-asc-rank`]
       ]
     }[st.sort];
 
