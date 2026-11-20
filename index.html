@@ -497,7 +497,17 @@
   .blend-card-rem { position: absolute; right: 5px; top: 5px; z-index: 2; width: 18px; height: 18px; border-radius: 999px; border: 0; background: rgba(0,0,0,.55); color: #fff; font: 800 11px var(--mono); cursor: pointer; display: grid; place-items: center; padding: 0; backdrop-filter: blur(4px); }
   .blend-card-rem:hover { background: var(--flame); }
   .blend-card-ctrl { display: inline-flex; align-items: center; gap: 6px; padding: 3px 6px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); }
-  .blend-chip-pct { font: 800 11px var(--mono); color: var(--flame); min-width: 34px; text-align: center; }
+  .blend-chip-pct { font: 800 11px var(--mono); color: var(--flame); min-width: 66px; text-align: center; white-space: nowrap; }
+  .blend-chip-pct small { color: var(--ink-2); font-weight: 700; margin-left: 3px; }
+  .blend-gram-bar { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; padding: 4px 10px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--line); }
+  .blend-gram-bar label { font: 700 10.5px var(--mono); color: var(--ink-2); margin-right: 2px; }
+  .blend-gram-chip { border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); font: 700 11px var(--mono); padding: 3px 10px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+  .blend-gram-chip:hover { border-color: var(--flame); color: var(--flame); }
+  .blend-gram-chip.on { background: var(--flame); color: #fff; border-color: var(--flame); }
+  .blend-gram-input { display: inline-flex; align-items: center; gap: 3px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; font: 700 11px var(--mono); color: var(--ink-2); }
+  .blend-gram-input input { width: 48px; border: 0; outline: none; background: transparent; color: var(--ink); font: 700 11px var(--mono); text-align: right; }
+  .blend-flavor-sentence { font-size: 12.5px; font-weight: 600; color: var(--ink); line-height: 1.5; }
+  .blend-flavor-sentence b { color: var(--flame); }
   .blend-chip-btn { width: 22px; height: 22px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); font: 800 12px var(--mono); cursor: pointer; display: grid; place-items: center; padding: 0; }
   .blend-chip-btn:hover { border-color: var(--flame); color: var(--flame); }
   .blend-taste-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 10px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-2); }
@@ -529,6 +539,38 @@
   .blend-brew-list { display: flex; flex-direction: column; gap: 4px; color: var(--ink-2); font-size: 11.5px; }
   .blend-brew-list span { display: flex; justify-content: space-between; gap: 8px; }
   .blend-brew-list code { font: 700 11px var(--mono); color: var(--flame); }
+  .blend-taste-preview { display: none; flex-direction: column; gap: 10px; padding: 12px 14px; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--line); }
+  .blend-taste-preview.open { display: flex; }
+  .blend-anchor-row { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+  .blend-anchor-btn { border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); font: 600 11px var(--sans); padding: 4px 11px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
+  .blend-anchor-btn.on { border-color: var(--select); color: var(--select); background: rgba(66,98,255,.10); }
+  .blend-radar-grid { display: grid; grid-template-columns: 175px 1fr; gap: 12px; align-items: center; }
+  @media (max-width: 680px) { .blend-radar-grid { grid-template-columns: 1fr; } }
+  .blend-radar-box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; display: grid; place-items: center; }
+  .blend-sip-timeline { display: flex; flex-direction: column; gap: 7px; }
+  .blend-sip-step { background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px; }
+  .blend-sip-head { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; margin-bottom: 4px; color: var(--ink); }
+  .blend-sip-head small { color: var(--ink-2); font-weight: 600; }
+  .blend-sip-bg { height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; }
+  .blend-sip-fill { height: 100%; border-radius: 999px; transition: width .25s ease; }
+  .blend-anchor-diff { font: 600 11.5px var(--sans); color: var(--select); background: rgba(66,98,255,.10); border: 1px solid rgba(66,98,255,.25); padding: 7px 10px; border-radius: 9px; }
+  .blend-texture-box { background: var(--panel); border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+  .blend-texture-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--ink-2); }
+  .blend-texture-track { position: relative; height: 8px; border-radius: 999px; background: linear-gradient(90deg, #D8F3DC 0%, #FFE58A 50%, #F8AD9D 100%); }
+  .blend-texture-thumb { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: var(--ink); border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.3); transform: translate(-50%, -50%); transition: left .25s ease; }
+  .blend-texture-desc { font-size: 11.5px; font-weight: 600; color: var(--ink); }
+  .blend-brew-tabs { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .blend-brew-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+  .blend-brew-pill { border: 1px solid var(--line); background: var(--panel-2); color: var(--ink-2); font: 700 11.5px var(--sans); padding: 5px 10px; border-radius: 999px; cursor: pointer; }
+  .blend-brew-pill.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .blend-roast-shift { grid-column: 1 / -1; font: 600 11.5px var(--sans); background: var(--flame-soft); color: var(--flame); padding: 8px 11px; border-radius: 10px; }
+  .blend-shop-grams { display: none; flex-direction: column; gap: 7px; padding: 11px 13px; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--line); }
+  .blend-shop-grams.open { display: flex; }
+  .blend-shop-grams-head { display: flex; justify-content: space-between; align-items: center; font: 700 12px var(--sans); color: var(--ink); }
+  .blend-shop-grams-head small { font: 700 11px var(--mono); color: var(--sage); }
+  .blend-shop-grams-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .blend-shop-gram-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 9px; background: var(--panel); border: 1px solid var(--line); font-size: 11.5px; font-weight: 700; color: var(--ink); }
+  .blend-shop-gram-chip code { font: 700 11.5px var(--mono); color: var(--sage); background: var(--sage-soft); padding: 2px 6px; border-radius: 6px; }
   .mobile-insp-handle { display: none; }
   .blend-touch-ghost { position: fixed !important; inset: auto !important; z-index: 90 !important; pointer-events: none; width: 122px; height: 132px; opacity: .92; transform: translate(-50%, -50%) scale(1.02) !important; box-shadow: 0 16px 32px rgba(0,0,0,.28); border-radius: 15px; }
 
@@ -651,6 +693,19 @@
                 <span>🧪 블렌드 조합 스튜디오</span>
                 <small id="blendSourceTag">시중 시그니처 조합</small>
               </div>
+              <div class="blend-gram-bar" id="blendGramBar" aria-label="총량(g) 기준 환산">
+                <label>총량(g)</label>
+                <button type="button" class="blend-gram-chip" data-g="18">18g</button>
+                <button type="button" class="blend-gram-chip" data-g="20">20g</button>
+                <button type="button" class="blend-gram-chip" data-g="100">100g</button>
+                <button type="button" class="blend-gram-chip on" data-g="200">200g</button>
+                <button type="button" class="blend-gram-chip" data-g="500">500g</button>
+                <button type="button" class="blend-gram-chip" data-g="1000">1kg</button>
+                <span class="blend-gram-input">
+                  <input type="number" id="blendTotalGrams" min="10" max="5000" step="1" value="200" aria-label="직접 총량(g) 입력">
+                  <span>g</span>
+                </span>
+              </div>
               <span class="blend-drop-hint" id="blendDropHint">원산지 카드를 이 영역으로 드래그 앤 드롭하거나 클릭해 조합하세요 (최대 4종)</span>
             </div>
 
@@ -658,7 +713,7 @@
             <div class="blend-recipe-row" id="blendRecipeRow" aria-label="조합된 블렌드 카드 드롭존"></div>
 
             <div class="blend-taste-bar">
-              <span>실시간 블렌드 가중 프로파일</span>
+              <div class="blend-flavor-sentence" id="blendFlavorSentence">실시간 블렌드 가중 프로파일</div>
               <div class="blend-taste-pills" id="blendTastePills"></div>
             </div>
           </div>
@@ -713,6 +768,22 @@
                   <span id="f1MatchSub">입력한 맛과 산지 이론 프로필의 일치율<br>(우측 Subframe 인스펙터에서 실시간 조절)</span>
                 </div>
                 <span class="chip sage" id="f1MoodChip">🌸 플로럴 산미</span>
+              </div>
+
+              <div class="blend-taste-preview" id="f1BlendTastePreview" aria-label="블렌드 맛 레이더 및 음미 타임라인">
+                <div class="blend-anchor-row" id="f1AnchorRow">
+                  <button type="button" class="blend-anchor-btn on" data-anchor="none">비교 기준 없음</button>
+                  <button type="button" class="blend-anchor-btn" data-anchor="starbucks">스타벅스 하우스 블렌드</button>
+                  <button type="button" class="blend-anchor-btn" data-anchor="bluebottle">블루보틀 벨라 도노반</button>
+                  <button type="button" class="blend-anchor-btn" data-anchor="fruity">산미형 스페셜티 드립</button>
+                </div>
+                <div class="blend-radar-grid">
+                  <div class="blend-radar-box">
+                    <svg id="blendRadarSvg" viewBox="0 0 200 200" width="165" height="165" aria-label="블렌드 4축 미각 레이더"></svg>
+                  </div>
+                  <div class="blend-sip-timeline" id="f1SipTimeline"></div>
+                </div>
+                <div class="blend-anchor-diff" id="f1AnchorDiff" style="display:none;"></div>
               </div>
 
               <div class="f1-bottom-grid" id="f1BottomGrid">
@@ -790,6 +861,7 @@
                 <button type="button" data-s="reviews">💬 리뷰 많은 순</button>
                 <button type="button" data-s="price">💰 최저가 순</button>
               </div>
+              <div class="blend-shop-grams" id="f4BlendGrams" aria-label="블렌드 원두별 필요 g 계량표"></div>
               <div class="shops" id="shops"></div>
               <div class="customs-bar">
                 <span>🏛️ 통관 기준: <code>생두 0901.11 (2%·식물검역)</code> · <code>원두 0901.21 (8%·식약처정밀)</code></span>
@@ -1336,11 +1408,82 @@
     blendDesc: COMMERCIAL_BLENDS[0].desc,
     blendSource: '시중 시그니처 조합',
     blend: COMMERCIAL_BLENDS[0].items.map(x => ({ ...x })),
+    blendGrams: 200,
+    blendAnchor: 'none',
+    blendBrew: 'americano',
     sort: 'rating',
     frame: 1,
     zoom: 1,
     singleFocus: false
   };
+
+  const BLEND_ANCHORS = {
+    none: null,
+    starbucks: { name: '스타벅스 하우스 블렌드', profile: { a: 3.2, s: 5.5, b: 8.2, n: 8.0 } },
+    bluebottle: { name: '블루보틀 벨라 도노반', profile: { a: 5.8, s: 7.4, b: 5.4, n: 7.2 } },
+    fruity: { name: '산미형 스페셜티 드립', profile: { a: 8.5, s: 7.0, b: 2.6, n: 4.2 } }
+  };
+
+  function calcBlendGrams(items, total) {
+    const t = Math.max(1, Number(total) || 200);
+    const decimals = t < 100 ? 1 : 0;
+    const factor = Math.pow(10, decimals);
+    const raw = items.map(it => Math.round((t * it.pct / 100) * factor) / factor);
+    const sum = raw.reduce((a, b) => a + b, 0);
+    const diff = Math.round((t - sum) * factor) / factor;
+    if (raw.length) raw[raw.length - 1] = Math.round((raw[raw.length - 1] + diff) * factor) / factor;
+    return raw.map(v => decimals ? v.toFixed(1) : String(Math.round(v)));
+  }
+
+  function getBlendAdjustedProfile(base) {
+    const adj = { ...base };
+    // st.roast: 0..7 (0~2 light, 3~4 city, 5~7 dark)
+    if (st.roast <= 2) { adj.a += 0.8; adj.b -= 0.8; adj.s += 0.2; }
+    else if (st.roast >= 5) { adj.a -= 1.1; adj.b += 1.3; adj.n += 0.5; }
+    if (st.blendBrew === 'latte') { adj.a -= 1.4; adj.s += 1.0; adj.n += 0.9; }
+    Object.keys(adj).forEach(k => { adj[k] = Math.max(1, Math.min(10, adj[k])); });
+    return adj;
+  }
+
+  function buildBlendFlavorSentence(p) {
+    const first = p.a >= 6.8 ? '화사한 꽃·시트러스 산미' : p.a >= 4.5 ? '은은한 과일 산미' : '부드럽고 차분한 첫인상';
+    const mid = p.s >= 7.2 ? '꿀·캐러멜 같은 풍부한 단맛' : '깔끔한 단맛';
+    const end = p.b >= 6.8 ? '다크초콜릿의 묵직한 여운' : p.n >= 7.0 ? '구운 견과류의 고소한 바디감' : '산뜻하고 깔끔한 피니시';
+    return `첫 모금엔 <b>${first}</b>이(가) 느껴지고, 중반부터 <b>${mid}</b>과 함께 <b>${end}</b>이(가) 이어집니다.`;
+  }
+
+  function renderBlendRadar(p, anchorObj) {
+    const svg = $('#blendRadarSvg');
+    if (!svg) return;
+    const cx = 100, cy = 100, r = 64;
+    const axes = [
+      { key: 'a', label: '산미', angle: -Math.PI / 2 },
+      { key: 's', label: '단맛', angle: 0 },
+      { key: 'n', label: '고소함', angle: Math.PI / 2 },
+      { key: 'b', label: '바디·쓴맛', angle: Math.PI }
+    ];
+    const pts = (prof) => axes.map(ax => {
+      const val = (prof[ax.key] / 10) * r;
+      return `${(cx + Math.cos(ax.angle) * val).toFixed(1)},${(cy + Math.sin(ax.angle) * val).toFixed(1)}`;
+    }).join(' ');
+    const grid = [0.25, 0.5, 0.75, 1].map(lv => {
+      const gpts = axes.map(ax => `${(cx + Math.cos(ax.angle) * r * lv).toFixed(1)},${(cy + Math.sin(ax.angle) * r * lv).toFixed(1)}`).join(' ');
+      return `<polygon points="${gpts}" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+    }).join('');
+    const axisLines = axes.map(ax => {
+      const lx = cx + Math.cos(ax.angle) * (r + 19);
+      const ly = cy + Math.sin(ax.angle) * (r + 14) + 4;
+      return `
+        <line x1="${cx}" y1="${cy}" x2="${cx + Math.cos(ax.angle) * r}" y2="${cy + Math.sin(ax.angle) * r}" stroke="var(--line)" stroke-width="1"/>
+        <text x="${lx}" y="${ly}" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--ink-2)">${ax.label}</text>
+      `;
+    }).join('');
+    const anchorPoly = anchorObj
+      ? `<polygon points="${pts(anchorObj.profile)}" fill="rgba(66,98,255,0.12)" stroke="var(--select)" stroke-width="2" stroke-dasharray="4 3"/>`
+      : '';
+    const mainPoly = `<polygon points="${pts(p)}" fill="rgba(242,85,51,0.22)" stroke="var(--flame)" stroke-width="2.5"/>`;
+    svg.innerHTML = grid + axisLines + anchorPoly + mainPoly;
+  }
 
   function getBlendStats() {
     const items = st.blend.length ? st.blend : [{ id: st.originId, pct: 100 }];
@@ -1562,6 +1705,7 @@
 
     const droppedOid = lastDroppedBlendOid;
     lastDroppedBlendOid = null;
+    const grams = calcBlendGrams(st.blend, st.blendGrams);
 
     recipeRow.innerHTML = st.blend.map((item, idx) => {
       const o = ORIGINS[item.id];
@@ -1572,7 +1716,7 @@
         <div class="blend-card-slot ${isDropped ? 'just-dropped' : ''}" data-slot-oid="${item.id}">
           <div class="blend-square-card">
             <div class="fan-art" data-av="${av}" data-alt="${o.alt}">
-              <span class="fan-pct" style="display:inline-block;">${item.pct}%</span>
+              <span class="fan-pct" style="display:inline-block;">${item.pct}% · ${grams[idx]}g</span>
               ${st.blend.length > 1 ? `<button type="button" class="blend-card-rem blend-chip-btn" data-act="rem" data-oid="${item.id}" title="제거">×</button>` : ''}
             </div>
             <div class="fan-n"><span>${num}</span><span>${o.proc.split(' ')[0]}</span></div>
@@ -1581,7 +1725,7 @@
           </div>
           <div class="blend-card-ctrl">
             <button type="button" class="blend-chip-btn" data-act="dec" data-oid="${item.id}" title="10% 감소">−</button>
-            <span class="blend-chip-pct">${item.pct}%</span>
+            <span class="blend-chip-pct">${item.pct}%<small>(${grams[idx]}g)</small></span>
             <button type="button" class="blend-chip-btn" data-act="inc" data-oid="${item.id}" title="10% 증가">+</button>
           </div>
         </div>
@@ -1619,7 +1763,10 @@
     });
 
     const bs = getBlendStats();
-    $('#blendTastePills').innerHTML = AXES.map(([k, lbl]) => `<span>${lbl} ${bs.profile[k].toFixed(1)}</span>`).join('');
+    const adj = getBlendAdjustedProfile(bs.profile);
+    const sentEl = $('#blendFlavorSentence');
+    if (sentEl) sentEl.innerHTML = buildBlendFlavorSentence(adj);
+    $('#blendTastePills').innerHTML = AXES.map(([k, lbl]) => `<span>${lbl} ${adj[k].toFixed(1)}</span>`).join('');
   }
 
   function setMode(mode) {
@@ -2978,6 +3125,38 @@
             </div>`;
         }).join('');
       }
+      const tastePrevEl = $('#f1BlendTastePreview');
+      if (tastePrevEl) {
+        tastePrevEl.classList.add('open');
+        const adj = getBlendAdjustedProfile(bs.profile);
+        const anchorObj = BLEND_ANCHORS[st.blendAnchor] || null;
+        renderBlendRadar(adj, anchorObj);
+        const sipData = [
+          { title: '1. 첫인상 (향 · 산미)', sub: adj.a >= 6.5 ? '플로럴 · 시트러스' : '구수하고 안정적', val: adj.a * 10, color: '#F25533' },
+          { title: '2. 중반 (단맛 · 바디)', sub: adj.s >= 7 ? '꿀 · 캐러멜 두께감' : '가볍고 깔끔함', val: ((adj.s + adj.n) / 2) * 10, color: '#2D6A4F' },
+          { title: '3. 여운 (애프터테이스트)', sub: adj.b >= 6.5 ? '다크초콜릿 롱피니시' : '깔끔한 클린컵', val: ((adj.b + adj.s) / 2) * 10, color: '#3E2723' }
+        ];
+        const sipEl = $('#f1SipTimeline');
+        if (sipEl) {
+          sipEl.innerHTML = sipData.map(s => `
+            <div class="blend-sip-step">
+              <div class="blend-sip-head"><span>${s.title}</span><small>${s.sub}</small></div>
+              <div class="blend-sip-bg"><div class="blend-sip-fill" style="width:${Math.min(100, s.val).toFixed(0)}%;background:${s.color};"></div></div>
+            </div>`).join('');
+        }
+        const diffEl = $('#f1AnchorDiff');
+        if (diffEl) {
+          if (anchorObj) {
+            const da = (adj.a - anchorObj.profile.a).toFixed(1);
+            const ds = (adj.s - anchorObj.profile.s).toFixed(1);
+            const db = (adj.b - anchorObj.profile.b).toFixed(1);
+            diffEl.style.display = 'block';
+            diffEl.textContent = `파란 점선(${anchorObj.name}) 대비 → 산미 ${da > 0 ? '+' + da : da} · 단맛 ${ds > 0 ? '+' + ds : ds} · 바디·쓴맛 ${db > 0 ? '+' + db : db}`;
+          } else {
+            diffEl.style.display = 'none';
+          }
+        }
+      }
       $('#f1Notes').innerHTML = bs.notes.map(([t, c]) => `<div class="pager-sl"><small>${c}</small><b>${t}</b></div>`).join('');
       notesPagerGo(0);
 
@@ -3001,6 +3180,17 @@
       });
       const isPost = altSpread >= 450 || Object.keys(procTotals).length >= 2;
 
+      const wildScore = sorted.reduce((acc, x) => {
+        const pk = ORIGINS[x.id].procKey || 'washed';
+        const w = pk === 'wethulled' ? 90 : pk === 'natural' ? 72 : pk === 'honey' ? 52 : 20;
+        return acc + w * (x.pct / 100);
+      }, 0);
+      const textureDesc = wildScore < 38
+        ? '수세식 비중이 높아 차(Tea)처럼 맑고 깔끔하게 떨어지는 질감입니다.'
+        : wildScore > 62
+        ? '내추럴·웻헐링 비중이 높아 시럽처럼 묵직하고 복합적인 바디감이 느껴집니다.'
+        : '워시드의 깔끔함과 내추럴/허니의 단맛·바디가 균형을 이룬 데일리 질감입니다.';
+
       const synEl = $('#f2BlendSynergy');
       if (synEl) {
         synEl.classList.add('open');
@@ -3010,6 +3200,11 @@
           </div>
           <div class="proc-mix-legend">
             ${Object.entries(procTotals).map(([pk, pct]) => `<span><i class="proc-mix-dot" style="background:${procColors[pk] || '#888'};"></i>${procNames[pk] || pk} ${pct}%</span>`).join('')}
+          </div>
+          <div class="blend-texture-box">
+            <div class="blend-texture-labels"><span>💧 맑고 깔끔함</span><span>⚖️ 균형</span><span>🍯 묵직·복합적</span></div>
+            <div class="blend-texture-track"><div class="blend-texture-thumb" style="left:${Math.max(6, Math.min(94, wildScore)).toFixed(0)}%;"></div></div>
+            <div class="blend-texture-desc">${textureDesc}</div>
           </div>
           <div class="blend-method-note">
             ${isPost
@@ -3056,6 +3251,8 @@
     $$('.f1-single-stat').forEach(el => { el.style.display = ''; });
     const rolesEl = $('#f1BlendRoles');
     if (rolesEl) rolesEl.classList.remove('open');
+    const tastePrevEl = $('#f1BlendTastePreview');
+    if (tastePrevEl) tastePrevEl.classList.remove('open');
     $('#f1Alt').textContent = d.alt;
     $('#f1Proc').textContent = d.proc;
     $('#f1Var').textContent = d.varietal;
@@ -3270,7 +3467,11 @@
     renderRoastSvg(st.roast);
     $('#scale').innerHTML = ROASTS.map((x, i) => `<i class="${i === st.roast ? 'on' : ''}" data-r="${i}" style="background:${x[3]}" title="${x[0]} ${x[2]}°C"></i>`).join('');
     $$('#scale i').forEach(el => {
-      el.onclick = () => { st.roast = +el.dataset.r; renderRoast(); };
+      el.onclick = () => {
+        st.roast = +el.dataset.r;
+        renderRoast();
+        if (st.mode === 'blend') { renderBlendStudio(); renderBean(); }
+      };
     });
 
     const singleCmp = $('#f3SingleCompare');
@@ -3286,8 +3487,30 @@
         const isBright = bs.profile.a >= 6.5;
         const isDark = bs.profile.b >= 7.2;
         const brewTemp = isDark ? '90~91°C' : isBright ? '93~94°C' : '92°C';
-        const pairing = isDark ? '카페라떼 · 플랫화이트' : isBright ? '핸드드립 · 아이스 브루' : '아메리카노 · 라떼 겸용';
+        const singleDose = st.blendGrams <= 30 ? st.blendGrams : (st.blendBrew === 'drip' ? 20 : 18.5);
+        const singleGrams = calcBlendGrams(st.blend, singleDose);
+        const doseLabel = st.blendBrew === 'drip'
+          ? `물 300ml · ${isBright ? '93°C' : '91°C'} · 중분쇄`
+          : st.blendBrew === 'latte'
+          ? `에스프레소 34g + 우유 180ml · 90~91°C`
+          : `에스프레소 ${isDark ? '34g' : '38g'} + 물 150ml · ${brewTemp}`;
+        const roastShiftMsg = st.roast <= 2
+          ? '라이트·미디엄 배전 → 산미 +0.8 ↑ · 쓴맛 −0.8 ↓ (꽃·과일향 극대화)'
+          : st.roast >= 5
+          ? '풀시티·강배전 → 산미 −1.1 ↓ · 쓴맛 +1.3 ↑ · 고소함 +0.5 ↑'
+          : '시티 중배전 → 산미와 단맛의 표준 밸런스 유지';
+        const brewShiftMsg = st.blendBrew === 'latte'
+          ? ' + 우유 희석으로 산미가 부드러워지고 고소·단맛이 강조됨'
+          : '';
         blendGuide.innerHTML = `
+          <div class="blend-brew-tabs">
+            <div class="blend-brew-pills">
+              <button type="button" class="blend-brew-pill ${st.blendBrew === 'americano' ? 'on' : ''}" data-brew="americano">☕ 아메리카노</button>
+              <button type="button" class="blend-brew-pill ${st.blendBrew === 'latte' ? 'on' : ''}" data-brew="latte">🥛 카페라떼</button>
+              <button type="button" class="blend-brew-pill ${st.blendBrew === 'drip' ? 'on' : ''}" data-brew="drip">🫖 핸드드립</button>
+            </div>
+          </div>
+          <div class="blend-roast-shift">🔥 ${roastShiftMsg}${brewShiftMsg}</div>
           <div class="blend-brew-card">
             <b>🔥 원두별 권장 로스팅 포인트</b>
             <div class="blend-brew-list">
@@ -3299,13 +3522,20 @@
             </div>
           </div>
           <div class="blend-brew-card">
-            <b>☕ 추천 추출 레시피</b>
+            <b>☕ 1잔 추출 레시피 (${singleDose}g 기준)</b>
             <div class="blend-brew-list">
-              <span><span>에스프레소 도징 · 수율</span><code>18.5g → ${isDark ? '34g' : '38g'}</code></span>
-              <span><span>추출 수온 · 시간</span><code>${brewTemp} · ${isDark ? '26~28s' : '28~31s'}</code></span>
-              <span><span>추천 음료 페어링</span><code>${pairing}</code></span>
+              <span><span>1잔 배합 계량</span><code>${st.blend.map((it, i) => `${ORIGINS[it.id].origin.split(' ')[1] || ORIGINS[it.id].origin} ${singleGrams[i]}g`).join(' + ')}</code></span>
+              <span><span>추출 가이드</span><code>${doseLabel}</code></span>
             </div>
           </div>`;
+        blendGuide.querySelectorAll('.blend-brew-pill').forEach(btn => {
+          btn.onclick = () => {
+            st.blendBrew = btn.dataset.brew;
+            renderRoast();
+            renderBlendStudio();
+            renderBean();
+          };
+        });
       }
     } else {
       $('#f3LabelTitle').textContent = '03 · 로스팅 열분해';
@@ -3447,6 +3677,25 @@
     const d = ORIGINS[st.originId];
     const isBlend = st.mode === 'blend';
     const bs = isBlend ? getBlendStats() : null;
+    const f4GramsEl = $('#f4BlendGrams');
+    if (f4GramsEl) {
+      f4GramsEl.classList.toggle('open', isBlend);
+      if (isBlend) {
+        const grams = calcBlendGrams(st.blend, st.blendGrams);
+        f4GramsEl.innerHTML = `
+          <div class="blend-shop-grams-head">
+            <span>⚖️ 내 블렌드 계량 체크리스트</span>
+            <small>총 ${st.blendGrams}g 기준</small>
+          </div>
+          <div class="blend-shop-grams-list">
+            ${st.blend.map((it, i) => `
+              <span class="blend-shop-gram-chip">
+                <span>${ORIGINS[it.id].origin}</span>
+                <code>${grams[i]}g (${it.pct}%)</code>
+              </span>`).join('')}
+          </div>`;
+      }
+    }
     const nq = isBlend
       ? encodeURIComponent(`${st.blend.map(x => ORIGINS[x.id].origin.split(' ')[0]).slice(0, 2).join(' ')} 스페셜티 블렌드 원두`)
       : encodeURIComponent(`${d.origin} 싱글오리진 원두 -블렌드 -블랜드`);
@@ -3827,6 +4076,35 @@
   });
   const blendStudioEl = $('#blendStudio');
   if (blendStudioEl) {
+    $$('#blendGramBar .blend-gram-chip').forEach(btn => {
+      btn.onclick = () => {
+        st.blendGrams = Number(btn.dataset.g) || 200;
+        const inp = $('#blendTotalGrams');
+        if (inp) inp.value = st.blendGrams;
+        $$('#blendGramBar .blend-gram-chip').forEach(b => b.classList.toggle('on', Number(b.dataset.g) === st.blendGrams));
+        renderBlendStudio();
+        renderRoast();
+        renderShops();
+      };
+    });
+    const gramInput = $('#blendTotalGrams');
+    if (gramInput) {
+      gramInput.oninput = () => {
+        const v = Math.max(10, Math.min(5000, Number(gramInput.value) || 200));
+        st.blendGrams = v;
+        $$('#blendGramBar .blend-gram-chip').forEach(b => b.classList.toggle('on', Number(b.dataset.g) === v));
+        renderBlendStudio();
+        renderRoast();
+        renderShops();
+      };
+    }
+    $$('#f1AnchorRow .blend-anchor-btn').forEach(btn => {
+      btn.onclick = () => {
+        st.blendAnchor = btn.dataset.anchor;
+        $$('#f1AnchorRow .blend-anchor-btn').forEach(b => b.classList.toggle('on', b.dataset.anchor === st.blendAnchor));
+        renderBean();
+      };
+    });
     blendStudioEl.addEventListener('dragover', e => {
       e.preventDefault();
       if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
