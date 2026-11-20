@@ -529,7 +529,7 @@
   .proc-mix-legend { display: flex; flex-wrap: wrap; gap: 8px 12px; font: 700 11px var(--mono); color: var(--ink-2); }
   .proc-mix-legend span { display: inline-flex; align-items: center; gap: 5px; }
   .proc-mix-dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
-  .blend-method-note { font-size: 12px; line-height: 1.55; color: var(--ink-2); padding: 9px 11px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); }
+  .blend-method-note { font-size: 12px; line-height: 1.55; color: var(--ink-2); padding: 12px 22px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); }
   .blend-method-note b { color: var(--ink); }
   .blend-brew-grid { display: none; grid-template-columns: 1fr 1fr; gap: 10px; }
   .blend-brew-grid.open { display: grid; }
@@ -548,13 +548,13 @@
   @media (max-width: 680px) { .blend-radar-grid { grid-template-columns: 1fr; } }
   .blend-radar-box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; display: grid; place-items: center; }
   .blend-sip-timeline { display: flex; flex-direction: column; gap: 7px; }
-  .blend-sip-step { background: var(--panel); border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px; }
+  .blend-sip-step { background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; }
   .blend-sip-head { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; margin-bottom: 4px; color: var(--ink); }
   .blend-sip-head small { color: var(--ink-2); font-weight: 600; }
   .blend-sip-bg { height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; }
   .blend-sip-fill { height: 100%; border-radius: 999px; transition: width .25s ease; }
   .blend-anchor-diff { font: 600 11.5px var(--sans); color: var(--select); background: rgba(66,98,255,.10); border: 1px solid rgba(66,98,255,.25); padding: 7px 10px; border-radius: 9px; }
-  .blend-texture-box { background: var(--panel); border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+  .blend-texture-box { background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 12px 22px; display: flex; flex-direction: column; gap: 6px; }
   .blend-texture-labels { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--ink-2); }
   .blend-texture-track { position: relative; height: 8px; border-radius: 999px; background: linear-gradient(90deg, #D8F3DC 0%, #FFE58A 50%, #F8AD9D 100%); }
   .blend-texture-thumb { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: var(--ink); border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.3); transform: translate(-50%, -50%); transition: left .25s ease; }
@@ -569,8 +569,13 @@
   .blend-shop-grams-head { display: flex; justify-content: space-between; align-items: center; font: 700 12px var(--sans); color: var(--ink); }
   .blend-shop-grams-head small { font: 700 11px var(--mono); color: var(--sage); }
   .blend-shop-grams-list { display: flex; flex-wrap: wrap; gap: 6px; }
-  .blend-shop-gram-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border-radius: 9px; background: var(--panel); border: 1px solid var(--line); font-size: 11.5px; font-weight: 700; color: var(--ink); }
-  .blend-shop-gram-chip code { font: 700 11.5px var(--mono); color: var(--sage); background: var(--sage-soft); padding: 2px 6px; border-radius: 6px; }
+  .blend-shop-gram-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); font-size: 11.5px; font-weight: 700; color: var(--ink); }
+  .blend-shop-gram-chip code { font: 700 11.5px var(--mono); color: var(--sage); background: var(--sage-soft); padding: 2px 8px; border-radius: 999px; }
+  .dot-rating-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 11px 14px; border-radius: 13px; background: var(--panel-2); border: 1px solid var(--line); text-align: center; }
+  .dot-rating-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .dot-rating-label { font-size: 12px; font-weight: 700; color: var(--ink-2); }
+  .dot-rating-dots { display: inline-flex; align-items: center; gap: 4px; }
+  .dot-rating-val { font: 700 10px var(--mono); color: var(--ink-3); }
   .mobile-insp-handle { display: none; }
   .blend-touch-ghost { position: fixed !important; inset: auto !important; z-index: 90 !important; pointer-events: none; width: 122px; height: 132px; opacity: .92; transform: translate(-50%, -50%) scale(1.02) !important; box-shadow: 0 16px 32px rgba(0,0,0,.28); border-radius: 15px; }
 
@@ -769,6 +774,8 @@
                 </div>
                 <span class="chip sage" id="f1MoodChip">🌸 플로럴 산미</span>
               </div>
+
+              <div class="dot-rating-bar" id="f1DotRatingBar" aria-label="산미·무게감·로스팅레벨 5점 도트"></div>
 
               <div class="blend-taste-preview" id="f1BlendTastePreview" aria-label="블렌드 맛 레이더 및 음미 타임라인">
                 <div class="blend-anchor-row" id="f1AnchorRow">
@@ -1483,6 +1490,43 @@
       : '';
     const mainPoly = `<polygon points="${pts(p)}" fill="rgba(242,85,51,0.22)" stroke="var(--flame)" stroke-width="2.5"/>`;
     svg.innerHTML = grid + axisLines + anchorPoly + mainPoly;
+  }
+
+  function renderDotSvg(type) {
+    if (type === 'full') return '<svg width="13" height="13" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="var(--ink-2)"/></svg>';
+    if (type === 'half') return '<svg width="13" height="13" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="var(--ink-2)" stroke-width="1.3"/><path d="M7 1.5 A5.5 5.5 0 0 0 7 12.5 Z" fill="var(--ink-2)"/></svg>';
+    return '<svg width="13" height="13" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="none" stroke="var(--ink-2)" stroke-width="1.3"/></svg>';
+  }
+
+  function renderDotRow(score5) {
+    const s = Math.round(Math.max(0.5, Math.min(5, score5)) * 2) / 2;
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+      if (s >= i) html += renderDotSvg('full');
+      else if (s >= i - 0.5) html += renderDotSvg('half');
+      else html += renderDotSvg('empty');
+    }
+    return { html, score: s.toFixed(1) };
+  }
+
+  function renderF1DotRating() {
+    const el = $('#f1DotRatingBar');
+    if (!el) return;
+    const p = st.mode === 'blend'
+      ? getBlendAdjustedProfile(getBlendStats().profile)
+      : ORIGINS[st.originId].profile;
+    const roast5 = 1 + (st.roast / 7) * 4;
+    const metrics = [
+      { label: '산미', ...renderDotRow(p.a / 2) },
+      { label: '무게감', ...renderDotRow(p.b / 2) },
+      { label: '로스팅레벨', ...renderDotRow(roast5) }
+    ];
+    el.innerHTML = metrics.map(m => `
+      <div class="dot-rating-col">
+        <span class="dot-rating-label">${m.label}</span>
+        <div class="dot-rating-dots">${m.html}</div>
+        <span class="dot-rating-val">${m.score} / 5.0</span>
+      </div>`).join('');
   }
 
   function getBlendStats() {
@@ -3234,6 +3278,7 @@
       $('#shipPort').textContent = d.port;
       $('#cursorLabel').textContent = `☕ CoBTS AI 블렌더 · ${st.blend.length}종 조합`;
       $$('.preset').forEach(b => b.classList.toggle('on', b.dataset.t === st.preset));
+      renderF1DotRating();
       renderMatch();
       return;
     }
@@ -3282,6 +3327,7 @@
       </li>`).join('');
     setProcTab(d.procKey);
     $$('.preset').forEach(b => b.classList.toggle('on', b.dataset.t === st.preset));
+    renderF1DotRating();
     renderMatch();
   }
 
@@ -3465,6 +3511,7 @@
       bean3DRenderer.updateRoast(r[3], ROAST_GLOSS[st.roast] || 0.24, st.roast);
     }
     renderRoastSvg(st.roast);
+    renderF1DotRating();
     $('#scale').innerHTML = ROASTS.map((x, i) => `<i class="${i === st.roast ? 'on' : ''}" data-r="${i}" style="background:${x[3]}" title="${x[0]} ${x[2]}°C"></i>`).join('');
     $$('#scale i').forEach(el => {
       el.onclick = () => {
